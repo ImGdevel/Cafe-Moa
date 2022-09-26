@@ -13,6 +13,7 @@ const Tab = createBottomTabNavigator();
 const SettingsStack = createNativeStackNavigator();
 const HomeStack = createNativeStackNavigator();
 // 하윙
+// 성공!
 export default function App() {
   return (
     <NavigationContainer>
