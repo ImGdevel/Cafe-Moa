@@ -12,8 +12,7 @@ import ProfileScreen from "./screens/Profile";
 const Tab = createBottomTabNavigator();
 const SettingsStack = createNativeStackNavigator();
 const HomeStack = createNativeStackNavigator();
-// 하윙
-// 성공!
+// 프로젝트 시작
 export default function App() {
   return (
     <NavigationContainer>

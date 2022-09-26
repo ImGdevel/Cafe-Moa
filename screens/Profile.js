@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, View, Text } from 'react-native';
+import { Button, View, Text, StyleSheet } from 'react-native';
 import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
 
 function ProfileScreen({ navigation }) {
@@ -26,4 +26,13 @@ function ProfileScreen({ navigation }) {
     );
 }
 
-  export default ProfileScreen;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
+export default ProfileScreen;
