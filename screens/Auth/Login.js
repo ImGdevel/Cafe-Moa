@@ -1,10 +1,23 @@
-import * as React from 'react';
-import { Button, View, Text, TextInput, StyleSheet } from 'react-native';
+import React from 'react';
 
-function LoginScreen({ navigation }) {
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  KeyboardAvoidingView,
+} from 'react-native';
+
+function LoginScreen({navigation: {navigate}}) {
   return (
     <View style={styles.container}>
-      <View>
+      <Text>Hi</Text>
+      <View style={styles.topArea}>
+      <Text>Hello</Text>
+      </View>
+      <View style={styles.textArea}>
 
       </View>
     </View>
@@ -14,10 +27,21 @@ function LoginScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'green',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  topArea: {
+    flex: 1,
+    backgroundColor: 'blue',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  textArea: {
+    flex: 1,
+    backgroundColor: 'red',
     alignItems: 'center',
     justifyContent: 'center',
   },
 });
-
 export default LoginScreen;
