@@ -3,43 +3,79 @@ import { View, Text, Button, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "./screens/Home";
-import DetailsScreen from "./screens/Details";
-import SignUpScreen from "./screens/SignUp";
-import SettingsScreen from "./screens/Settings";
-import ProfileScreen from "./screens/Profile";
+
+import LoginScreen from "./screens/Auth/Login"
+import RegisterScreen from "./screens/Auth/Register"
+import HomeScreen from "./screens/Home/Home";
+import DetailsScreen from "./screens/Home/Details";
+import SettingsScreen from "./screens/Home/Settings";
+import ProfileScreen from "./screens/Home/Profile";
 
 const Tab = createBottomTabNavigator();
-const SettingsStack = createNativeStackNavigator();
-const HomeStack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator();
+
 // 프로젝트 시작
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator screenOptions={{ headerShown: false }}>
-        <Tab.Screen name="First">
+      <Stack.Navigator>
+        {/*______로그인 페이지________*/}
+        <Stack.Screen
+          name="Auth"
+          component={Auth}
+          options={{headerShown: false}}
+        />
+
+        {/*____본격적으로 앱 내용________*/}
+        <Stack.Screen name="InApp">
           {() => (
-            <SettingsStack.Navigator>
-              <SettingsStack.Screen
-                name="Settings"
-                component={SettingsScreen}
-              />
-              <SettingsStack.Screen name="Profile" component={ProfileScreen} />
-            </SettingsStack.Navigator>
+            <Tab.Navigator screenOptions={{ headerShown: false }}>
+            <Tab.Screen name="First">
+              {Home}
+            </Tab.Screen>
+            <Tab.Screen name="Second">
+              {Temp}
+            </Tab.Screen>
+          </Tab.Navigator>
           )}
-        </Tab.Screen>
-        <Tab.Screen name="Second">
-          {() => (
-            <HomeStack.Navigator>
-              <HomeStack.Screen name="Home" component={HomeScreen} />
-              <HomeStack.Screen name="Details" component={DetailsScreen} />
-            </HomeStack.Navigator>
-          )}
-        </Tab.Screen>
-      </Tab.Navigator>
+        </Stack.Screen>
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
+
+const Auth = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Register"
+        component={RegisterScreen}
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const Home = () => {
+  <Stack.Navigator>
+    <Stack.Screen name="Settings" component={SettingsScreen}/>
+    <Stack.Screen name="Profile" component={ProfileScreen} />
+  </Stack.Navigator>
+}
+
+const Temp = () => {
+  <Stack.Navigator>
+    <Stack.Screen name="Home" component={HomeScreen} />
+    <Stack.Screen name="Details" component={DetailsScreen} />
+  </Stack.Navigator>
+}
+
+
 
 const styles = StyleSheet.create({
   container: {
