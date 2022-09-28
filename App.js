@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
+import StartPageScreen from "./screens/Auth/StartPage"
 import LoginScreen from "./screens/Auth/Login"
 import RegisterScreen from "./screens/Auth/Register"
 import HomeScreen from "./screens/Home/Home";
@@ -19,6 +20,11 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen
+          name="Start"
+          component={StartPageScreen}
+          options={{headerShown: false}}
+        />
         {/*______로그인 페이지________*/}
         <Stack.Screen
           name="Auth"
@@ -27,9 +33,9 @@ export default function App() {
         />
 
         {/*____본격적으로 앱 내용________*/}
-        <Stack.Screen name="InApp">
+        <Stack.Screen name="InApp" options={{headerShown: false}}>
           {() => (
-            <Tab.Navigator screenOptions={{ headerShown: false }}>
+            <Tab.Navigator screenOptions={{headerShown: false}}>
             <Tab.Screen name="First">
               {Home}
             </Tab.Screen>
@@ -62,20 +68,23 @@ const Auth = () => {
 };
 
 const Home = () => {
-  <Stack.Navigator>
-    <Stack.Screen name="Settings" component={SettingsScreen}/>
-    <Stack.Screen name="Profile" component={ProfileScreen} />
-  </Stack.Navigator>
+  return(
+    <Stack.Navigator>
+      <Stack.Screen name="Settings" component={SettingsScreen}/>
+      <Stack.Screen name="Profile" component={ProfileScreen}/>
+    </Stack.Navigator>
+  )
+
 }
 
 const Temp = () => {
-  <Stack.Navigator>
-    <Stack.Screen name="Home" component={HomeScreen} />
-    <Stack.Screen name="Details" component={DetailsScreen} />
-  </Stack.Navigator>
+  return(
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Details" component={DetailsScreen} />
+    </Stack.Navigator>
+  )
 }
-
-
 
 const styles = StyleSheet.create({
   container: {
