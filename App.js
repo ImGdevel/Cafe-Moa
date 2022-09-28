@@ -3,14 +3,13 @@ import { View, Text, Button, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
 import StartPageScreen from "./screens/Auth/StartPage"
 import LoginScreen from "./screens/Auth/Login"
 import RegisterScreen from "./screens/Auth/Register"
-import HomeScreen from "./screens/Home/Home";
-import DetailsScreen from "./screens/Home/Details";
-import SettingsScreen from "./screens/Home/Settings";
-import ProfileScreen from "./screens/Home/Profile";
+import HomeScreen from "./screens/InApp/Home";
+import DetailsScreen from "./screens/InApp/Details";
+import SettingsScreen from "./screens/InApp/Settings";
+import ProfileScreen from "./screens/InApp/Profile";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -85,12 +84,3 @@ const Temp = () => {
     </Stack.Navigator>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
