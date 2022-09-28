@@ -70,8 +70,8 @@ const Auth = () => {
 const Home = () => {
   return(
     <Stack.Navigator>
-      <Stack.Screen name="Settings" component={SettingsScreen}/>
-      <Stack.Screen name="Profile" component={ProfileScreen}/>
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Details" component={DetailsScreen} />
     </Stack.Navigator>
   )
 
@@ -80,8 +80,8 @@ const Home = () => {
 const Temp = () => {
   return(
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Details" component={DetailsScreen} />
+      <Stack.Screen name="Settings" component={SettingsScreen}/>
+      <Stack.Screen name="Profile" component={ProfileScreen}/>
     </Stack.Navigator>
   )
 }
