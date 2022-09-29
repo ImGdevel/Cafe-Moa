@@ -2,11 +2,19 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
+    display: "flex",
     flex: 1,
     backgroundColor: "white",
   },
-  pageTitle: {
-    fontSize: 40,
+  imgBox: {
+    display: "inline",
+  },
+  cafeLogo: {
+    width: 100,
+    height: 100,
+  },
+  cafeTitle: {
+    fontSize: 25,
   },
 });
 

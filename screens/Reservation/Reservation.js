@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, View, Text, StyleSheet } from "react-native";
+import { Button, View, Text, Image } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
 import getReserveStyle from "../../styles/screens/ReserveStyle";
@@ -8,14 +8,15 @@ function ReservationScreen({ navigation }) {
   const [selectedSeat, setSelectedSeat] = useState("1");
   return (
     <View style={getReserveStyle.container}>
-      <Text style={getReserveStyle.pageTitle}>Reservation Screen</Text>
-
       <React.Fragment>
+        <View style={getReserveStyle.imgBox}>
+          <Image
+            source={require("../../img/coffeebayLogo_test.jpg")}
+            style={getReserveStyle.cafeLogo}
+          />
+        </View>
         <React.Fragment>
-          <Text>Here is image box</Text>
-        </React.Fragment>
-        <React.Fragment>
-          <Text>Here is Cafe Name span</Text>
+          <Text style={getReserveStyle.cafeTitle}>Coffee Bay</Text>
           <Text>Here is Cafe Info span</Text>
         </React.Fragment>
       </React.Fragment>
