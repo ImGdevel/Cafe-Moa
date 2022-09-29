@@ -14,7 +14,7 @@ function HomeScreen({ navigation }) {
         onPress={() => navigation.navigate('MyPage')}
       />
     </View>
-  );
+  ); 
 }
 
 const styles = StyleSheet.create({

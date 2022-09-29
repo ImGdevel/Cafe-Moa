@@ -22,8 +22,8 @@ function RegisterScreen({navigation}) {
   }
   function GoToHomeScreen(){
     navigation.navigate('InApp')
-  }
-
+  } 
+ 
   return (
   <KeyboardAvoidingView style={styles.container} >
     <View style={{flex: 1}}></View>

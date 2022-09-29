@@ -10,7 +10,7 @@ function StartPageScreen({ navigation }) {
     function GoToLoginScreen(){
         navigation.navigate('Auth')
     }
-
+ 
   return (
      <View style={styles.container}>
         <View style={styles.iconArea}>

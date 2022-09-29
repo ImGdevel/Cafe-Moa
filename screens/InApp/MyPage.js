@@ -7,7 +7,7 @@ function MyPageScreen({ navigation }) {
       <Text>MyPage Screen</Text>
     </View>
   );
-}
+} 
 
 const styles = StyleSheet.create({
   container: {

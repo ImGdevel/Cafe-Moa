@@ -19,7 +19,7 @@ const Stack = createNativeStackNavigator();
 
 // 프로젝트 시작
 export default function App() {
-  return (
+  return ( 
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen

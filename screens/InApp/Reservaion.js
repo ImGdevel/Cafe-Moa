@@ -8,7 +8,7 @@ function ReservaionScreen({ navigation }) {
 
     </View>
   );
-}
+} 
 
 const styles = StyleSheet.create({
   container: {
