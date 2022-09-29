@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { Button, View, Text, StyleSheet } from 'react-native';
 
-function CafeImfomationScreen({ navigation }) {
+function FindScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text>Cafe Imfomation</Text>
+      <Text>Cafe List</Text>
       <Button
-        title="카페예약"
-        onPress={() => navigation.navigate('CafeReservaion')}
+        title="카페정보"
+        onPress={() => navigation.navigate('Imfomation')}
       />
     </View>
   );
@@ -22,4 +22,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CafeImfomationScreen;
+export default FindScreen;

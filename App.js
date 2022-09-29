@@ -9,9 +9,9 @@ import LoginScreen from "./screens/Auth/Login"
 import RegisterScreen from "./screens/Auth/Register"
 import HomeScreen from "./screens/InApp/Home";
 import MyPageScreen from "./screens/InApp/MyPage";
-import CafeListScreen from  "./screens/InApp/CafeList";
-import CafeImfomationScreen from  "./screens/InApp/CafeImfomation";
-import CafeReservaionScreen from  "./screens/InApp/CafeReservaion";
+import FindScreen from  "./screens/InApp/Find";
+import ImfomationScreen from  "./screens/InApp/Imfomation";
+import ReservaionScreen from  "./screens/InApp/Reservaion";
 
 
 const Tab = createBottomTabNavigator();
@@ -41,7 +41,7 @@ export default function App() {
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="MyPage" component={MyPageScreen} />
             <Stack.Screen name="Cafe">
-              {CafeListNavigation}
+              {CafeNavigation}
             </Stack.Screen>
           </Stack.Navigator>
           )}
@@ -68,12 +68,12 @@ const Auth = () => {
   );
 };
 
-const CafeListNavigation = () => {
+const CafeNavigation = () => {
   return(
     <Stack.Navigator>
-      <Stack.Screen name="CafeList" component={CafeListScreen}/>
-      <Stack.Screen name="CafeImfomation" component={CafeImfomationScreen}/>
-      <Stack.Screen name="CafeReservaion" component={CafeReservaionScreen}/>
+      <Stack.Screen name="Find" component={FindScreen}/>
+      <Stack.Screen name="Imfomation" component={ImfomationScreen}/>
+      <Stack.Screen name="Reservaion" component={ReservaionScreen}/>
     </Stack.Navigator>
   )
 }
