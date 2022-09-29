@@ -1,18 +1,16 @@
-import * as React from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import * as React from "react"
+import { NavigationContainer } from "@react-navigation/native"
+import { createNativeStackNavigator } from "@react-navigation/native-stack"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 
 import StartPageScreen from "./screens/Auth/StartPage"
 import LoginScreen from "./screens/Auth/Login"
 import RegisterScreen from "./screens/Auth/Register"
-import HomeScreen from "./screens/InApp/Home";
-import MyPageScreen from "./screens/InApp/MyPage";
-import FindScreen from  "./screens/InApp/Find";
-import ImfomationScreen from  "./screens/InApp/Imfomation";
-import ReservaionScreen from  "./screens/InApp/Reservaion";
-
+import HomeScreen from "./screens/InApp/Home"
+import MyPageScreen from "./screens/InApp/MyPage"
+import FindScreen from  "./screens/InApp/Find"
+import ImfomationScreen from  "./screens/InApp/Imfomation"
+import ReservaionScreen from  "./screens/InApp/Reservaion"
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -71,9 +69,9 @@ const Auth = () => {
 const CafeNavigation = () => {
   return(
     <Stack.Navigator>
-      <Stack.Screen name="Find" component={FindScreen}/>
-      <Stack.Screen name="Imfomation" component={ImfomationScreen}/>
-      <Stack.Screen name="Reservaion" component={ReservaionScreen}/>
+      <Stack.Screen name="Find" component={FindScreen} options={{headerShown: false}}/>
+      <Stack.Screen name="Imfomation" component={ImfomationScreen} options={{headerShown: false}}/>
+      <Stack.Screen name="Reservaion" component={ReservaionScreen} options={{headerShown: false}}/>
     </Stack.Navigator>
   )
 }
