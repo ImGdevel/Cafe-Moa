@@ -71,9 +71,9 @@ const Auth = () => {
 const CafeNavigation = () => {
   return(
     <Stack.Navigator>
-      <Stack.Screen name="Find" component={FindScreen}/>
-      <Stack.Screen name="Imfomation" component={ImfomationScreen}/>
-      <Stack.Screen name="Reservaion" component={ReservaionScreen}/>
+      <Stack.Screen name="Find" component={FindScreen} options={{headerShown: false}}/>
+      <Stack.Screen name="Imfomation" component={ImfomationScreen} options={{headerShown: false}}/>
+      <Stack.Screen name="Reservaion" component={ReservaionScreen} options={{headerShown: false}}/>
     </Stack.Navigator>
   )
 }
