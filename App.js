@@ -3,13 +3,16 @@ import { View, Text, Button, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
 import StartPageScreen from "./screens/Auth/StartPage"
 import LoginScreen from "./screens/Auth/Login"
 import RegisterScreen from "./screens/Auth/Register"
 import HomeScreen from "./screens/InApp/Home";
-import DetailsScreen from "./screens/InApp/Details";
-import SettingsScreen from "./screens/InApp/Settings";
-import ProfileScreen from "./screens/InApp/Profile";
+import MyPageScreen from "./screens/InApp/MyPage";
+import CafeListScreen from  "./screens/InApp/CafeList";
+import CafeImfomationScreen from  "./screens/InApp/CafeImfomation";
+import CafeReservaionScreen from  "./screens/InApp/CafeReservaion";
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -34,14 +37,13 @@ export default function App() {
         {/*____본격적으로 앱 내용________*/}
         <Stack.Screen name="InApp" options={{headerShown: false}}>
           {() => (
-            <Tab.Navigator screenOptions={{headerShown: false}}>
-            <Tab.Screen name="First">
-              {Home}
-            </Tab.Screen>
-            <Tab.Screen name="Second">
-              {Temp}
-            </Tab.Screen>
-          </Tab.Navigator>
+            <Stack.Navigator screenOptions={{headerShown: false}}>
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="MyPage" component={MyPageScreen} />
+            <Stack.Screen name="Cafe">
+              {CafeListNavigation}
+            </Stack.Screen>
+          </Stack.Navigator>
           )}
         </Stack.Screen>
       </Stack.Navigator>
@@ -66,21 +68,12 @@ const Auth = () => {
   );
 };
 
-const Home = () => {
+const CafeListNavigation = () => {
   return(
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Details" component={DetailsScreen} />
-    </Stack.Navigator>
-  )
-
-}
-
-const Temp = () => {
-  return(
-    <Stack.Navigator>
-      <Stack.Screen name="Settings" component={SettingsScreen}/>
-      <Stack.Screen name="Profile" component={ProfileScreen}/>
+      <Stack.Screen name="CafeList" component={CafeListScreen}/>
+      <Stack.Screen name="CafeImfomation" component={CafeImfomationScreen}/>
+      <Stack.Screen name="CafeReservaion" component={CafeReservaionScreen}/>
     </Stack.Navigator>
   )
 }

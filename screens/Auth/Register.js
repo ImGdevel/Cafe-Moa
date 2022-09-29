@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -11,6 +11,12 @@ import {
 
 function RegisterScreen({navigation}) {
 
+  const [UserId,setUserId] = useState("");
+  const [userPassword,setUserPassword] = useState("");
+  const [userEmail,setUserEmail] = useState("");
+
+
+
   function GoToRgisterScreen(){
     navigation.navigate('Register')
   }
@@ -18,7 +24,7 @@ function RegisterScreen({navigation}) {
     navigation.navigate('InApp')
   }
 
-return (
+  return (
   <KeyboardAvoidingView style={styles.container} >
     <View style={{flex: 1}}></View>
     <View style={styles.contentArea}>
@@ -32,6 +38,20 @@ return (
         <TextInput style={styles.textBox} placeholder={'비밀번호 재확인'}></TextInput>
       </View>
 
+      <TextInput
+          style={styles.textBox}
+          placeholder={'아이디'}
+          onChangeText={(userId) => setUserId(userId)}
+          autoCapitalize="none"
+          returnKeyType="next"
+          onSubmitEditing={() =>
+            passwordInputRef.current && passwordInputRef.current.focus()
+          }
+          blurOnSubmit={false}
+        />
+
+      
+
       <View style={styles.btnArea}>
         <TouchableOpacity style={styles.btnLogin} onPress = {GoToHomeScreen}>
           <Text style={{ color: 'white', fontSize: 20,}}>회원가입</Text>
@@ -41,7 +61,7 @@ return (
     </View>
     <View style={{flex: 1}}></View>
   </KeyboardAvoidingView>
-);
+  );
 }
 
 const styles = StyleSheet.create({
