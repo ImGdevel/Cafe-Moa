@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { Button, View, Text, StyleSheet } from 'react-native';
+import * as React from "react";
+import { Button, View, Text, StyleSheet } from "react-native";
 
 function RegisterScreen({ navigation }) {
   return (
@@ -7,7 +7,7 @@ function RegisterScreen({ navigation }) {
       <Text>Register Screen</Text>
       <Button
         title="Go to Login"
-        onPress={() => navigation.navigate('Login')}
+        onPress={() => navigation.navigate("Login")}
       />
     </View>
   );
@@ -16,9 +16,9 @@ function RegisterScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 

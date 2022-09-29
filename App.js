@@ -34,8 +34,8 @@ export default function App() {
         <Stack.Screen name="InApp">
           {() => (
             <Tab.Navigator screenOptions={{ headerShown: false }}>
-              <Tab.Screen name="First">{Home}</Tab.Screen>
-              <Tab.Screen name="Second">{Temp}</Tab.Screen>
+              <Tab.Screen name="First" component={HomeScreen} />
+              <Tab.Screen name="Second" component={ReservationScreen} />
             </Tab.Navigator>
           )}
         </Stack.Screen>
