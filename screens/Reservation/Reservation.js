@@ -2,20 +2,13 @@ import React, { useState } from "react";
 import { Button, View, Text, StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
-{
-  /*___const seats = () => {
-  {
-    value: "seat number";
-    label: "Seat Number";
-  }
-};___*/
-}
+import getReserveStyle from "../../styles/screens/ReserveStyle";
 
 function ReservationScreen({ navigation }) {
   const [selectedSeat, setSelectedSeat] = useState("1");
   return (
-    <View style={styles.container}>
-      <Text style={styles.pageTitle}>Reservation Screen</Text>
+    <View style={getReserveStyle.container}>
+      <Text style={getReserveStyle.pageTitle}>Reservation Screen</Text>
 
       <React.Fragment>
         <React.Fragment>
@@ -46,15 +39,5 @@ function ReservationScreen({ navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  pageTitle: {
-    fontSize: 40,
-  },
-});
 
 export default ReservationScreen;
