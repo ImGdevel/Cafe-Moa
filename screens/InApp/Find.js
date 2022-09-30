@@ -29,6 +29,34 @@ function FindScreen({ navigation }) {
             imformation = {"--카페정보--"}
             navigation = {navigation}
           />
+          <CafeTable
+            name = {"카페이름"} 
+            location = {"위치"}
+            imgae = {""}
+            imformation = {"--카페정보--"}
+            navigation = {navigation}
+          />
+          <CafeTable
+            name = {"카페이름"} 
+            location = {"위치"}
+            imgae = {""}
+            imformation = {"--카페정보--"}
+            navigation = {navigation}
+          />
+          <CafeTable
+            name = {"카페이름"} 
+            location = {"위치"}
+            imgae = {""}
+            imformation = {"--카페정보--"}
+            navigation = {navigation}
+          />
+          <CafeTable
+            name = {"카페이름"} 
+            location = {"위치"}
+            imgae = {""}
+            imformation = {"--카페정보--"}
+            navigation = {navigation}
+          />
         </ScrollView>
       </View>
     </View>

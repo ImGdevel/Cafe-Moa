@@ -4,11 +4,12 @@ import { Button, View, Text, StyleSheet } from 'react-native';
 function ImfomationScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text>Cafe Imfomation</Text>
-      <Button
-        title="카페예약"
-        onPress={() => navigation.navigate('Reservaion')}
-      />
+      <Text>카폐 정보 페이지 입니다.</Text>
+      
+      
+      
+      
+      <Button title="카페예약 페이지로->"onPress={() => navigation.navigate('Reservaion')}/>
     </View>
   );
 } 

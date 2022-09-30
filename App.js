@@ -9,8 +9,8 @@ import RegisterScreen from "./screens/Auth/Register"
 import HomeScreen from "./screens/InApp/Home"
 import MyPageScreen from "./screens/InApp/MyPage"
 import FindScreen from  "./screens/InApp/Find"
-import ImfomationScreen from  "./screens/InApp/Imfomation"
-import ReservationScreen from  "./screens/InApp/Reservation"
+import ImfomationScreen from  "./screens/Reservation/Imfomation"
+import ReservationScreen from  "./screens/Reservation/Reservation"
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -76,7 +76,6 @@ const CafeNavigation = () => {
       <Stack.Screen 
         name="Imfomation" 
         component={ImfomationScreen} 
-        options={{headerShown: false}}
       />
       <Stack.Screen 
         name="Reservaion" 
@@ -85,4 +84,3 @@ const CafeNavigation = () => {
     </Stack.Navigator>
   )
 }
-

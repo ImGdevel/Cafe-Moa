@@ -4,7 +4,7 @@ import { Button, View, Text, StyleSheet } from 'react-native';
 function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text>Home Screen</Text>
+      <Text>홈 화면 입니다.</Text>
       <Button
         title="카페리스트"
         onPress={() => navigation.navigate('Cafe')}
