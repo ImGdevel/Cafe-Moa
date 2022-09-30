@@ -1,42 +1,46 @@
-import * as React from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import * as React from "react"
+import { NavigationContainer } from "@react-navigation/native"
+import { createNativeStackNavigator } from "@react-navigation/native-stack"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 
-import LoginScreen from "./screens/Auth/Login";
-import RegisterScreen from "./screens/Auth/Register";
-
-import HomeScreen from "./screens/Home/Home";
-import DetailsScreen from "./screens/Home/Details";
-import SettingsScreen from "./screens/Home/Settings";
-import ProfileScreen from "./screens/Home/Profile";
-
-import ReservationScreen from "./screens/Reservation/Reservation.js";
-import FindScreen from "./screens/Reservation/Find";
+import StartPageScreen from "./screens/Auth/StartPage"
+import LoginScreen from "./screens/Auth/Login"
+import RegisterScreen from "./screens/Auth/Register"
+import HomeScreen from "./screens/InApp/Home"
+import MyPageScreen from "./screens/InApp/MyPage"
+import FindScreen from  "./screens/InApp/Find"
+import ImfomationScreen from  "./screens/InApp/Imfomation"
+import ReservationScreen from  "./screens/InApp/Reservation"
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 // 프로젝트 시작
 export default function App() {
-  return (
+  return ( 
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen
+          name="Start"
+          component={StartPageScreen}
+          options={{headerShown: false}}
+        />
         {/*______로그인 페이지________*/}
-        {/*<Stack.Screen
+        <Stack.Screen
           name="Auth"
           component={Auth}
           options={{ headerShown: false }}
-  /> */}
-
+        />
         {/*____본격적으로 앱 내용________*/}
-        <Stack.Screen name="InApp">
+        <Stack.Screen name="InApp" options={{headerShown: false}}>
           {() => (
-            <Tab.Navigator screenOptions={{ headerShown: false }}>
-              <Tab.Screen name="First" component={HomeScreen} />
-              <Tab.Screen name="Second" component={ReservationScreen} />
-            </Tab.Navigator>
+            <Stack.Navigator screenOptions={{headerShown: false}}>
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="MyPage" component={MyPageScreen} />
+            <Stack.Screen name="Cafe">
+              {CafeNavigation}
+            </Stack.Screen>
+          </Stack.Navigator>
           )}
         </Stack.Screen>
       </Stack.Navigator>
@@ -61,26 +65,24 @@ const Auth = () => {
   );
 };
 
-const Home = () => {
-  <Stack.Navigator>
-    <Stack.Screen name="Settings" component={SettingsScreen} />
-    <Stack.Screen name="Profile" component={ProfileScreen} />
-  </Stack.Navigator>;
-};
+const CafeNavigation = () => {
+  return(
+    <Stack.Navigator>
+      <Stack.Screen 
+        name="Find" 
+        component={FindScreen} 
+        options={{headerShown: false}}
+      />
+      <Stack.Screen 
+        name="Imfomation" 
+        component={ImfomationScreen} 
+        options={{headerShown: false}}
+      />
+      <Stack.Screen 
+        name="Reservaion" 
+        component={ReservationScreen}
+      />
+    </Stack.Navigator>
+  )
+}
 
-const Temp = () => {
-  <Stack.Navigator>
-    {/*___카페 예약화면 여기에 임시 저장___*/}
-    <Stack.Screen name="Find" component={FindScreen} />
-    <Stack.Screen name="Reservation" component={ReservationScreen} />
-  </Stack.Navigator>;
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
