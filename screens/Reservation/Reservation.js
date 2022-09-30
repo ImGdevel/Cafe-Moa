@@ -3,30 +3,32 @@ import { Button, View, Text, Image } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
 import getReserveStyle from "../../styles/screens/ReserveStyle";
+import getCafeTableStyle from "../../styles/components/CafeTableStyle";
+import getFindStyle from "../../styles/components/FindStyle";
 
 function ReservationScreen({ navigation }) {
   const [selectedSeat, setSelectedSeat] = useState("1");
   return (
     <View style={getReserveStyle.container}>
-      <React.Fragment>
-        <View style={getReserveStyle.imgBox}>
-          <Image
-            source={require("../../img/coffeebayLogo_test.jpg")}
-            style={getReserveStyle.cafeLogo}
+      <View style={getFindStyle.container}>
+        <View style={getFindStyle.contentContainer}>
+          <CafeTable
+            name={"Coffee Bay"}
+            location={"용인시 처인구"}
+            imgae={""}
+            imformation={"Open : AM 09:00 || Close : PM 22:00"}
           />
         </View>
-        <React.Fragment>
-          <Text style={getReserveStyle.cafeTitle}>Coffee Bay</Text>
-          <Text>Here is Cafe Info span</Text>
-        </React.Fragment>
-      </React.Fragment>
+      </View>
 
-      <React.Fragment>
-        <Text>Here is Cafe Seat's box</Text>
-      </React.Fragment>
+      <View style={getFindStyle.topContainer}>
+        <Image
+          source={require("../../img/anySeatPic_text.png")}
+          style={getReserveStyle.seatPic}
+        />
+      </View>
 
-      <React.Fragment>
-        <Text>Here is for reservation</Text>
+      <View>
         <Picker
           selectedValue={selectedSeat}
           onValueChange={(itemValue, itemIndex) => setSelectedSeat(itemValue)}
@@ -36,8 +38,34 @@ function ReservationScreen({ navigation }) {
         </Picker>
 
         <Button title="예약하기" />
-      </React.Fragment>
+      </View>
     </View>
+  );
+}
+
+function CafeTable(props) {
+  const [cafeName, setCafeName] = useState(props.name);
+  const [cafeLocation, setCafeLocation] = useState(props.location);
+  const [cafeImformation, setCafeImformaion] = useState(props.imformation);
+
+  return (
+    <>
+      <View style={getCafeTableStyle.imageContainer}>
+        <View style={getCafeTableStyle.image}>
+          <Image
+            source={require("../../img/coffeebayLogo_test.jpg")}
+            style={getReserveStyle.cafeLogo}
+          />
+        </View>
+      </View>
+      <View style={getCafeTableStyle.contentContainer}>
+        <View style={getCafeTableStyle.textContent}>
+          <Text style={getCafeTableStyle.nameText}>{cafeName}</Text>
+          <Text style={getCafeTableStyle.contentText}>{cafeLocation}</Text>
+          <Text style={getCafeTableStyle.contentText}>{cafeImformation}</Text>
+        </View>
+      </View>
+    </>
   );
 }
 

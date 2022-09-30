@@ -6,15 +6,18 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
   },
-  imgBox: {
-    display: "inline",
-  },
   cafeLogo: {
     width: 100,
     height: 100,
+    justifyContent: "center",
+    alignItems: "center",
   },
   cafeTitle: {
     fontSize: 25,
+  },
+  seatPic: {
+    width: "100%",
+    height: "100%",
   },
 });
 
