@@ -9,10 +9,11 @@ const firebaseConfig = {
   storageBucket: "cafemoa-f9244.appspot.com",
   messagingSenderId: "571985972680",
   appId: "1:571985972680:web:acfbb695ab86f008d004fd"
-};
+}; 
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+export const MyDatabase = firebase;
 export const dbService = firebase.firestore();
 export const authService = firebase.auth();
