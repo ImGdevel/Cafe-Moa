@@ -9,13 +9,13 @@ import getFindStyle from "../../styles/components/FindStyle";
 function ReservationScreen({ navigation }) {
   const [selectedSeat, setSelectedSeat] = useState("1");
   return (
-    <View style={getReserveStyle.container}>
+    <>
       <View style={getFindStyle.container}>
         <View style={getFindStyle.contentContainer}>
           <CafeTable
             name={"Coffee Bay"}
             location={"용인시 처인구"}
-            imgae={""}
+            image={""}
             imformation={"Open : AM 09:00 || Close : PM 22:00"}
           />
         </View>
@@ -32,6 +32,7 @@ function ReservationScreen({ navigation }) {
         <Picker
           selectedValue={selectedSeat}
           onValueChange={(itemValue, itemIndex) => setSelectedSeat(itemValue)}
+          style={getReserveStyle.picker}
         >
           <Picker.Item label="seat1" value="1" />
           <Picker.Item label="seat2" value="2" />
@@ -39,7 +40,7 @@ function ReservationScreen({ navigation }) {
 
         <Button title="예약하기" />
       </View>
-    </View>
+    </>
   );
 }
 
