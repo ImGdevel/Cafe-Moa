@@ -1,45 +1,117 @@
-import * as React from 'react';
-import { Button, View, Text, StyleSheet } from 'react-native';
-
-function CafeTable(props){
-
-  return(
-    <View>
-
-    </View>
-  );
-}
+import React, {useState, useEffect} from 'react';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableHighlight } from 'react-native';
 
 function FindScreen({ navigation }) {
   return (
-    <View style={styles.container}>
-      <View style={styles.topContainer}></View>
-      <View style={styles.contentContainer}>
-      <Button
-        title="카페정보"
-        onPress={() => navigation.navigate('Imfomation')}
-      />
+    <View style={FindStyles.container}>
+      <View style={FindStyles.topContainer}>
       </View>
-      
+      <View style={FindStyles.contentContainer}>
+        <ScrollView>
+          <CafeTable 
+            name = {"스타벅스"} 
+            location = {"용인시 처인구"}
+            imgae = {""}
+            imformation = {"--카페정보--"}
+            navigation = {navigation}
+          />
+        </ScrollView>
+      </View>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
+const FindStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    //alignItems: 'center',
-    //justifyContent: 'center',
   },
   topContainer: {
     flex: 1,
-    backgroundColor: 'red',
+    backgroundColor: '#ccc',
   },
   contentContainer: {
     flex: 4,
-    backgroundColor: 'green',
+    backgroundColor: '#fff',
   },
 }); 
+
+function CafeTable(props){
+  const [cafeName, setCafeName] = useState(props.name);
+  const [cafeLocation, setCafeLocation] = useState(props.location);
+  const [cafeImformation, setCafeImformaion] = useState(props.imformation);
+
+
+  return(
+    <TouchableHighlight 
+      style={CafeTableStyles.container}
+      onPress={() => props.navigation.navigate('Imfomation')}
+      activeOpacity={0.5}
+      underlayColor="#DDDDDD"
+      ><>
+      <View style={CafeTableStyles.imageContainer}>
+        <View style={CafeTableStyles.image}>
+          <Image/>{/*이지지 삽입*/}
+        </View>
+      </View>
+      <View style={CafeTableStyles.contentContainer}>
+        <View style={CafeTableStyles.textContent}>
+          <Text style={CafeTableStyles.nameText}>{cafeName}</Text>
+          <Text style={CafeTableStyles.contentText}>{cafeLocation}</Text>
+          <Text style={CafeTableStyles.contentText}>{cafeImformation}</Text>
+        </View>
+      </View>
+      </></TouchableHighlight>
+  );
+  
+}
+
+const CafeTableStyles = StyleSheet.create({
+  container: {
+    width:'100%', height:140, 
+    backgroundColor:'white', 
+    flexDirection: 'row', 
+    justifyContent: 'center',
+    borderColor: '#DDD',
+    borderWidth: 1,
+    borderRadius: 10, 
+  },
+  imageContainer: {
+    width:140, height:140, 
+    justifyContent: 'center', 
+    alignItems: 'center',
+  },
+  image:{
+    width:'80%', 
+    height:'80%',
+    borderRadius: 10, 
+    borderColor: '#ddd',
+    borderWidth: 1,
+  },
+  contentContainer: {
+    flex:1,
+    flexDirection: 'column',
+  },
+  textContent:{
+    flex: 1,
+    justifyContent: 'flex-end',
+    paddingLeft: 15,
+  },
+  
+  textContent:{
+    flex: 1,
+    justifyContent: 'center',
+    paddingLeft: 15,
+  },
+  nameText:{
+    fontSize: 22,
+    fontWeight: "700",
+  },
+  contentText:{
+    fontSize: 16,
+    fontWeight: "400",
+  },
+}); 
+
 
 export default FindScreen;
