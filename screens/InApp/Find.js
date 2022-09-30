@@ -15,6 +15,20 @@ function FindScreen({ navigation }) {
             imformation = {"--카페정보--"}
             navigation = {navigation}
           />
+          <CafeTable
+            name = {"스타벅스"} 
+            location = {"제주도"}
+            imgae = {""}
+            imformation = {"--카페정보--"}
+            navigation = {navigation}
+          />
+          <CafeTable
+            name = {"투썸 플레이스"} 
+            location = {"평양"}
+            imgae = {""}
+            imformation = {"--카페정보--"}
+            navigation = {navigation}
+          />
         </ScrollView>
       </View>
     </View>
@@ -111,7 +125,6 @@ const CafeTableStyles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "400",
   },
-}); 
-
+});
 
 export default FindScreen;
