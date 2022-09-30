@@ -15,8 +15,6 @@ function RegisterScreen({navigation}) {
   const [userPassword,setUserPassword] = useState("");
   const [userEmail,setUserEmail] = useState("");
 
-
-
   function GoToRgisterScreen(){
     navigation.navigate('Register')
   }
@@ -37,7 +35,7 @@ function RegisterScreen({navigation}) {
         <TextInput style={styles.textBox} placeholder={'비밀번호'}></TextInput>
         <TextInput style={styles.textBox} placeholder={'비밀번호 재확인'}></TextInput>
       </View>
-
+      {/* 테스트
       <TextInput
           style={styles.textBox}
           placeholder={'아이디'}
@@ -49,6 +47,7 @@ function RegisterScreen({navigation}) {
           }
           blurOnSubmit={false}
         />
+        */}
 
       
 

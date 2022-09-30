@@ -9,8 +9,8 @@ import RegisterScreen from "./screens/Auth/Register"
 import HomeScreen from "./screens/InApp/Home"
 import MyPageScreen from "./screens/InApp/MyPage"
 import FindScreen from  "./screens/InApp/Find"
-import ImfomationScreen from  "./screens/InApp/Imfomation"
-import ReservaionScreen from  "./screens/InApp/Reservaion"
+import ImfomationScreen from  "./screens/Reservation/Imfomation"
+import ReservationScreen from  "./screens/Reservation/Reservation"
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -29,9 +29,8 @@ export default function App() {
         <Stack.Screen
           name="Auth"
           component={Auth}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
-
         {/*____본격적으로 앱 내용________*/}
         <Stack.Screen name="InApp" options={{headerShown: false}}>
           {() => (
@@ -55,12 +54,12 @@ const Auth = () => {
       <Stack.Screen
         name="Login"
         component={LoginScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Register"
         component={RegisterScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
@@ -69,9 +68,19 @@ const Auth = () => {
 const CafeNavigation = () => {
   return(
     <Stack.Navigator>
-      <Stack.Screen name="Find" component={FindScreen} options={{headerShown: false}}/>
-      <Stack.Screen name="Imfomation" component={ImfomationScreen} options={{headerShown: false}}/>
-      <Stack.Screen name="Reservaion" component={ReservaionScreen} options={{headerShown: false}}/>
+      <Stack.Screen 
+        name="Find" 
+        component={FindScreen} 
+        options={{headerShown: false}}
+      />
+      <Stack.Screen 
+        name="Imfomation" 
+        component={ImfomationScreen} 
+      />
+      <Stack.Screen 
+        name="Reservaion" 
+        component={ReservationScreen}
+      />
     </Stack.Navigator>
   )
 }

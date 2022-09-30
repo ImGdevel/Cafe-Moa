@@ -14,7 +14,7 @@ function StartPageScreen({ navigation }) {
   return (
      <View style={styles.container}>
         <View style={styles.iconArea}>
-            <Image style={{width: '40%', resizeMode: 'contain'}} source={require('../../assets/image/IconMoa.png')} />
+            <Image style={{width: '40%', resizeMode: 'contain'}} source={require('../../img/IconMoa.png')} />
         </View>
     </View>
   );

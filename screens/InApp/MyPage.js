@@ -4,7 +4,7 @@ import { Button, View, Text, StyleSheet } from 'react-native';
 function MyPageScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text>MyPage Screen</Text>
+      <Text>마이페이지 입니다.</Text>
     </View>
   );
 } 
