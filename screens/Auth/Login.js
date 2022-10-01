@@ -8,8 +8,19 @@ import {
   TextInput,
   KeyboardAvoidingView,
 } from 'react-native';
+import { useState } from 'react';
 
 function LogInScreen({navigation}) {
+  const [UserId,setUserId] = useState("");
+  const [userPassword,setUserPassword] = useState("");
+  const [errorText, setErrorText] = useState("");
+
+
+
+
+
+
+
 
     function GoToRgisterScreen(){
       navigation.navigate('Register')
@@ -20,16 +31,25 @@ function LogInScreen({navigation}) {
 
   return (
     <KeyboardAvoidingView style={styles.container} >
-      <View style={{flex: 1}}></View>
+      <View style={{flex: 3}}></View>
       <View style={styles.contentArea}>
         <View style={styles.titleText}><Text style={{ fontWeight: "900", fontSize: 50 }}> M O A </Text></View>
         <View style={styles.subTitleText}><Text style={{ fontWeight: "600", fontSize: 30 }}> Login </Text></View>
 
         <View style={styles.formArea}>
-          <TextInput style={styles.textBox} placeholder={'아이디'}></TextInput>
-          <TextInput style={styles.textBox} placeholder={'비밀번호'}></TextInput>
-        </View> 
+          <TextInput 
+            style={styles.textBox} 
+            placeholder={'아이디'}>
+            
 
+          </TextInput>
+          <TextInput 
+            style={styles.textBox} 
+            placeholder={'비밀번호'}>
+
+          </TextInput>
+        </View> 
+        <Text>{errorText}</Text>
         <View style={styles.btnArea}>
           <TouchableOpacity style={styles.btnLogin} onPress = {GoToHomeScreen}>
             <Text style={{ color: 'white', fontSize: 20,}}>로그인</Text>
@@ -40,7 +60,7 @@ function LogInScreen({navigation}) {
         </View>
 
       </View>
-      <View style={{flex: 1}}></View>
+      <View style={{flex: 4}}></View>
     </KeyboardAvoidingView>
   );
 }

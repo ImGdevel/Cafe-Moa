@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, createRef} from 'react';
 import {
   StyleSheet,
   View,
@@ -10,55 +10,110 @@ import {
 } from 'react-native';
 
 function RegisterScreen({navigation}) {
-
-  const [UserId,setUserId] = useState("");
-  const [userPassword,setUserPassword] = useState("");
+  const [userId,setUserId] = useState("");
   const [userEmail,setUserEmail] = useState("");
-
-  function GoToRgisterScreen(){
-    navigation.navigate('Register')
-  }
+  const [userPassword,setUserPassword] = useState("");
+  const [userPasswordChk,setUserPasswordChk] = useState("");
+  const [errorText, setErrorText] = useState("");
+  
+  const idInputRef = createRef();
+  const emailInputRef = createRef();
+  const passwordInputRef = createRef();
+  const passwordChkInputRef = createRef();
+  
   function GoToHomeScreen(){
     navigation.navigate('InApp')
-  } 
+  }
+  
+  function onSubmitApplication(){
+    setErrorText('');
+    if (!userId) {
+      setErrorText('아이디를 입력해주세요');
+      return;
+    }
+    if (!userEmail) {
+      setErrorText('이메일을 입력해주세요');
+      return;
+    }
+    if (!userPassword) {
+      setErrorText("비밀번호를 입력해주세요");
+      return;
+    }
+    if (userPasswordChk != userPassword) {
+      setErrorText("비밀번호가 일치하지 않습니다");
+      return;
+    }
+    
+
+  }
  
   return (
   <KeyboardAvoidingView style={styles.container} >
-    <View style={{flex: 1}}></View>
+    <View style={{flex: 3}}></View>
     <View style={styles.contentArea}>
       <View style={styles.titleText}><Text style={{ fontWeight: "900", fontSize: 50 }}> M O A </Text></View>
       <View style={styles.subTitleText}><Text style={{ fontWeight: "600", fontSize: 30 }}> Sing Up </Text></View>
-
       <View style={styles.formArea}>
-        <TextInput style={styles.textBox} placeholder={'아이디'}></TextInput>
-        <TextInput style={styles.textBox} placeholder={'이메일'}></TextInput>
-        <TextInput style={styles.textBox} placeholder={'비밀번호'}></TextInput>
-        <TextInput style={styles.textBox} placeholder={'비밀번호 재확인'}></TextInput>
-      </View>
-      {/* 테스트
-      <TextInput
-          style={styles.textBox}
+        <TextInput
+          ref={idInputRef}
+          style={styles.textInput}
           placeholder={'아이디'}
           onChangeText={(userId) => setUserId(userId)}
           autoCapitalize="none"
+          blurOnSubmit={false}
+          returnKeyType="next"
+          onSubmitEditing={() =>
+            emailInputRef.current && emailInputRef.current.focus()
+          }
+        />
+        <TextInput
+          ref={emailInputRef}
+          style={styles.textInput}
+          placeholder={'이메일'}
+          keyboardType="email-address"
+          onChangeText={(userEmail) => setUserEmail(userEmail)}
+          autoCapitalize="none"
+          blurOnSubmit={false}
           returnKeyType="next"
           onSubmitEditing={() =>
             passwordInputRef.current && passwordInputRef.current.focus()
           }
-          blurOnSubmit={false}
         />
-        */}
+        <TextInput
+          ref={passwordInputRef}
+          style={styles.textInput}
+          placeholder={'비밀번호'}
+          onChangeText={(userPassword) => setUserPassword(userPassword)}
+          autoCapitalize="none"
+          blurOnSubmit={false}
+          returnKeyType="next"
+          secureTextEntry={true}
+          onSubmitEditing={() =>
+            passwordChkInputRef.current && passwordChkInputRef.current.focus()
+          }
+        />
+        <TextInput
+          ref={passwordChkInputRef}
+          style={styles.textInput}
+          placeholder={'비밀번호 확인'}
+          onChangeText={(userPasswordChk) => setUserPasswordChk(userPasswordChk)}
+          autoCapitalize="none"
+          secureTextEntry={true}
+        />
 
-      
-
+        <Text style={styles.errorText}>{errorText}</Text>
+      </View>
       <View style={styles.btnArea}>
-        <TouchableOpacity style={styles.btnLogin} onPress = {GoToHomeScreen}>
-          <Text style={{ color: 'white', fontSize: 20,}}>회원가입</Text>
+        <TouchableOpacity 
+          style={styles.btnLogin} 
+          onPress = {onSubmitApplication}
+        >
+          <Text style={{ color: 'white', fontSize: 20,}}> 회원가입 </Text>
         </TouchableOpacity>
       </View>
 
     </View>
-    <View style={{flex: 1}}></View>
+    <View style={{flex: 4}}></View>
   </KeyboardAvoidingView>
   );
 }
@@ -120,7 +175,7 @@ btnText:{
   color: 'white',
   fontSize: 20,
 },
-textBox: {
+textInput: {
   marginVertical: 5,
   width: '100%',
   height: 60,
@@ -130,6 +185,11 @@ textBox: {
   paddingHorizontal: 20,
   backgroundColor: '#fff',
   fontSize: 20,
+},
+errorText:{
+  color: 'red',
+  fontSize: 15,
+  fontWeight: '400',
 }
 });
 

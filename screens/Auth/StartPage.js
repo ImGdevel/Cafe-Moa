@@ -2,13 +2,13 @@ import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Image } from 'react-native';
 
 function StartPageScreen({ navigation }) {
-  
+
     useEffect(()=>{
         setTimeout(() => GoToLoginScreen(), 1000);
      }, []);
-
+     
     function GoToLoginScreen(){
-        navigation.navigate('Auth')
+        navigation.replace('Auth')
     }
  
   return (
