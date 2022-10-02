@@ -8,44 +8,38 @@ import {
   TextInput,
   KeyboardAvoidingView,
 } from 'react-native';
+import { dbService } from '../../FireServer';
 
-function RegisterScreen({navigation}) {
-  const [userId,setUserId] = useState("");
-  const [userEmail,setUserEmail] = useState("");
-  const [userPassword,setUserPassword] = useState("");
-  const [userPasswordChk,setUserPasswordChk] = useState("");
-  const [errorText, setErrorText] = useState("");
+function InPutDataScreen({navigation}) {
+  const [cafeName,setcafeName] = useState("");
+  const [cafeLocation,setcafeLocation] = useState("");
+  const [cafeImfo,setcafeImfo] = useState("");
+  const [errorText,setErrorText] = useState("");
   
-  const idInputRef = createRef();
-  const emailInputRef = createRef();
-  const passwordInputRef = createRef();
-  const passwordChkInputRef = createRef();
+
+  const cafeNameInputRef = createRef();
+  const cafeLocationInputRef = createRef();
+  const cafeImfoInputRef = createRef();
   
   function GoToHomeScreen(){
-    navigation.navigate('InPutData')
+    navigation.navigate('InApp')
   }
-  
+  /*
   function onSubmitApplication(){
     setErrorText('');
-    if (!userId) {
-      setErrorText('아이디를 입력해주세요');
+    if (!cafeName || !cafeLocation || !cafeImfo) {
       return;
     }
-    if (!userEmail) {
-      setErrorText('이메일을 입력해주세요');
-      return;
-    }
-    if (!userPassword) {
-      setErrorText("비밀번호를 입력해주세요");
-      return;
-    }
-    if (userPasswordChk != userPassword) {
-      setErrorText("비밀번호가 일치하지 않습니다");
-      return;
-    }
-    GoToHomeScreen()
-
   }
+  */
+  const onSubmitApplication = async() =>{
+    await dbService.collection("CafeData").add({
+        cafeName,
+        cafeLocation,
+        cafeImfo,
+    })
+  }
+
  
   return (
   <KeyboardAvoidingView style={styles.container} >
@@ -55,50 +49,35 @@ function RegisterScreen({navigation}) {
       <View style={styles.subTitleText}><Text style={{ fontWeight: "600", fontSize: 30 }}> Sing Up </Text></View>
       <View style={styles.formArea}>
         <TextInput
-          ref={idInputRef}
+          ref={cafeNameInputRef}
           style={styles.textInput}
-          placeholder={'아이디'}
-          onChangeText={(userId) => setUserId(userId)}
+          placeholder={'카페이름'}
+          onChangeText={(cafeName) => setcafeName(cafeName)}
           autoCapitalize="none"
           blurOnSubmit={false}
           returnKeyType="next"
           onSubmitEditing={() =>
-            emailInputRef.current && emailInputRef.current.focus()
+            cafeLocationInputRef.current && cafeLocationInputRef.current.focus()
           }
         />
         <TextInput
-          ref={emailInputRef}
+          ref={cafeLocationInputRef}
           style={styles.textInput}
-          placeholder={'이메일'}
-          keyboardType="email-address"
-          onChangeText={(userEmail) => setUserEmail(userEmail)}
+          placeholder={'카페위치'}
+          onChangeText={(cafeLocation) => setcafeLocation(cafeLocation)}
           autoCapitalize="none"
           blurOnSubmit={false}
           returnKeyType="next"
           onSubmitEditing={() =>
-            passwordInputRef.current && passwordInputRef.current.focus()
+            cafeImfoInputRef.current && cafeImfoInputRef.current.focus()
           }
         />
         <TextInput
-          ref={passwordInputRef}
+          ref={cafeImfoInputRef}
           style={styles.textInput}
-          placeholder={'비밀번호'}
-          onChangeText={(userPassword) => setUserPassword(userPassword)}
+          placeholder={'정보'}
+          onChangeText={(cafeImfo) => setcafeImfo(cafeImfo)}
           autoCapitalize="none"
-          blurOnSubmit={false}
-          returnKeyType="next"
-          secureTextEntry={true}
-          onSubmitEditing={() =>
-            passwordChkInputRef.current && passwordChkInputRef.current.focus()
-          }
-        />
-        <TextInput
-          ref={passwordChkInputRef}
-          style={styles.textInput}
-          placeholder={'비밀번호 확인'}
-          onChangeText={(userPasswordChk) => setUserPasswordChk(userPasswordChk)}
-          autoCapitalize="none"
-          secureTextEntry={true}
         />
 
         <Text style={styles.errorText}>{errorText}</Text>
@@ -193,4 +172,4 @@ errorText:{
 }
 });
 
-export default RegisterScreen;
+export default InPutDataScreen;

@@ -15,13 +15,6 @@ function LogInScreen({navigation}) {
   const [userPassword,setUserPassword] = useState("");
   const [errorText, setErrorText] = useState("");
 
-
-
-
-
-
-
-
     function GoToRgisterScreen(){
       navigation.navigate('Register')
     }
