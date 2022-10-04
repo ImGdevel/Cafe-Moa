@@ -16,7 +16,7 @@ function ReservationScreen({ navigation }) {
             name={"Coffee Bay"}
             location={"용인시 처인구"}
             imgae={""}
-            imformation={"Open : AM 09:00 || Close : PM 22:00"}
+            information={"Open : AM 09:00 || Close : PM 22:00"}
           />
         </View>
       </View>
@@ -62,7 +62,7 @@ function CafeTable(props) {
         <View style={getCafeTableStyle.textContent}>
           <Text style={getCafeTableStyle.nameText}>{cafeName}</Text>
           <Text style={getCafeTableStyle.contentText}>{cafeLocation}</Text>
-          <Text style={getCafeTableStyle.contentText}>{cafeImformation}</Text>
+          <Text style={getCafeTableStyle.contentText}>{cafeInformation}</Text>
         </View>
       </View>
     </>
