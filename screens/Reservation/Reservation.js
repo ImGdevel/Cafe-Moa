@@ -8,6 +8,7 @@ import getFindStyle from "../../styles/components/FindStyle";
 
 function ReservationScreen({ navigation }) {
   const [selectedSeat, setSelectedSeat] = useState("1");
+
   return (
     <View style={getReserveStyle.container}>
       <View style={getFindStyle.container}>
@@ -37,7 +38,10 @@ function ReservationScreen({ navigation }) {
           <Picker.Item label="seat2" value="2" />
         </Picker>
 
-        <Button title="예약하기" />
+        <Button
+          title="예약하기"
+          onPress={() => navigation.navigate("ReserveEnd")}
+        />
       </View>
     </View>
   );
