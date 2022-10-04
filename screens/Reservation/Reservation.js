@@ -46,7 +46,7 @@ function ReservationScreen({ navigation }) {
 function CafeTable(props) {
   const [cafeName, setCafeName] = useState(props.name);
   const [cafeLocation, setCafeLocation] = useState(props.location);
-  const [cafeImformation, setCafeImformaion] = useState(props.imformation);
+  const [cafeInformation, setCafeInformaion] = useState(props.information);
 
   return (
     <>
