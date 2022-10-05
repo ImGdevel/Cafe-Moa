@@ -30,17 +30,6 @@ function MyPageScreen({ navigation }) {
         <Text style = {{color: 'black', fontSize: 20,}}>회원탈퇴</Text>
       </TouchableOpacity>
     </View>
-
-    
-
-    <View style={styles.btnArea}>
-      <TouchableOpacity style={styles.btnLogin} onPress = {GoToHomeScreen}>
-        <Text style={{ color: 'white', fontSize: 20,}}>로그인</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.btnRegister} onPress = {GoToRgisterScreen}>
-        <Text style={{ color: 'black', fontSize: 20, }}>회원가입</Text>
-      </TouchableOpacity>
-      </View>
     </KeyboardAvoidingView>    
   );
 }
