@@ -28,7 +28,7 @@ function LogInScreen({navigation}) {
         <View style={styles.formArea}>
           <TextInput style={styles.textBox} placeholder={'아이디'}></TextInput>
           <TextInput style={styles.textBox} placeholder={'비밀번호'}></TextInput>
-        </View>
+        </View> 
 
         <View style={styles.btnArea}>
           <TouchableOpacity style={styles.btnLogin} onPress = {GoToHomeScreen}>

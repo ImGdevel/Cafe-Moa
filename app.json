@@ -4,13 +4,13 @@
     "slug": "CafeMoa",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/expo/icon.png",
+    "icon": "./asset/expo/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/expo/splash.png",
+      "image": "./asset/expo/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
-    },
+    }, 
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -22,12 +22,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/expo/adaptive-icon.png",
+        "foregroundImage": "./asset/expo/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
-      "favicon": "./assets/expo/favicon.png"
+      "favicon": "./asset/expo/favicon.png"
     }
   }
 }

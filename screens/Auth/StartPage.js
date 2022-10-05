@@ -10,11 +10,11 @@ function StartPageScreen({ navigation }) {
     function GoToLoginScreen(){
         navigation.navigate('Auth')
     }
-
+ 
   return (
      <View style={styles.container}>
         <View style={styles.iconArea}>
-            <Image style={{width: '55%', resizeMode: 'contain'}} source={require('../../assets/IconMoa.png')} />
+            <Image style={{width: '40%', resizeMode: 'contain'}} source={require('../../img/IconMoa.png')} />
         </View>
     </View>
   );
