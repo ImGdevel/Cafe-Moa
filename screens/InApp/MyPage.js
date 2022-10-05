@@ -34,14 +34,14 @@ function MyPageScreen({ navigation }) {
     
 
     <View style={styles.btnArea}>
-        <TouchableOpacity style={styles.btnLogin} onPress = {GoToHomeScreen}>
-          <Text style={{ color: 'white', fontSize: 20,}}>로그인</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.btnRegister} onPress = {GoToRgisterScreen}>
-          <Text style={{ color: 'black', fontSize: 20, }}>회원가입</Text>
-        </TouchableOpacity>
-        </View>
-      </KeyboardAvoidingView>    
+      <TouchableOpacity style={styles.btnLogin} onPress = {GoToHomeScreen}>
+        <Text style={{ color: 'white', fontSize: 20,}}>로그인</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.btnRegister} onPress = {GoToRgisterScreen}>
+        <Text style={{ color: 'black', fontSize: 20, }}>회원가입</Text>
+      </TouchableOpacity>
+      </View>
+    </KeyboardAvoidingView>    
   );
 }
 
