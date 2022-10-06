@@ -1,26 +1,53 @@
-import * as React from 'react';
-import { Button, View, Text, StyleSheet } from 'react-native';
+import React, { useState } from "react";
+import { Button, View, Text, Image } from "react-native";
 
-function ImfomationScreen({ navigation }) {
+import getInfoStyle from "../../styles/screens/InfoStyle";
+import getCafeTableStyle from "../../styles/components/CafeTableStyle";
+import getFindStyle from "../../styles/components/FindStyle";
+
+function InformationScreen({ navigation }) {
   return (
-    <View style={styles.container}>
-      <Text>카폐 정보 페이지 입니다.</Text>
-      
-      
-      
-      
-      <Button title="카페예약 페이지로->"onPress={() => navigation.navigate('Reservaion')}/>
+    <View style={getInfoStyle.container}>
+      <View style={getFindStyle.container}>
+        <View style={getFindStyle.contentContainer}>
+          <CafeTable
+            name={"Coffee Bay"}
+            location={"용인시 처인구"}
+            imgae={""}
+            information={"Open : AM 09:00 || Close : PM 22:00"}
+          />
+        </View>
+      </View>
+
+      <View style={getFindStyle.topContainer}></View>
     </View>
   );
-} 
+}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+function CafeTable(props) {
+  const [cafeName, setCafeName] = useState(props.name);
+  const [cafeLocation, setCafeLocation] = useState(props.location);
+  const [cafeInformation, setCafeInformaion] = useState(props.information);
 
-export default ImfomationScreen;
+  return (
+    <>
+      <View style={getCafeTableStyle.imageContainer}>
+        <View style={getCafeTableStyle.image}>
+          <Image
+            source={require("../../img/coffeebayLogo_test.jpg")}
+            style={getInfoStyle.cafeLogo}
+          />
+        </View>
+      </View>
+      <View style={getCafeTableStyle.contentContainer}>
+        <View style={getCafeTableStyle.textContent}>
+          <Text style={getCafeTableStyle.nameText}>{cafeName}</Text>
+          <Text style={getCafeTableStyle.contentText}>{cafeLocation}</Text>
+          <Text style={getCafeTableStyle.contentText}>{cafeInformation}</Text>
+        </View>
+      </View>
+    </>
+  );
+}
+
+export default InformationScreen;
