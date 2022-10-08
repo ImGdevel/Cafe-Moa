@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
   KeyboardAvoidingView,
+  ActionSheetIOS,
 } from 'react-native';
 import { SignInUserAccount } from '../../lib/Auth';
 
@@ -26,13 +27,9 @@ function LogInScreen({navigation}) {
     }
 
     function onSubmit(){
-      SignInUserAccount(UserId,userPassword).then((dd)=>{
-        if(dd){
-          GoToHomeScreen();
-          console.log("LogIn");
-        }
-        
-      });
+      SignInUserAccount(UserId,userPassword).then(()=>{
+        GoToHomeScreen()
+      }).catch(()=>{})
     }
 
     
