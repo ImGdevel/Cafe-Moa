@@ -12,7 +12,7 @@ function ImfomationScreen({ navigation }) {
       <Button title="카페예약 페이지로->"onPress={() => navigation.navigate('Reservaion')}/>
     </View>
   );
-} 
+}
 
 const styles = StyleSheet.create({
   container: {
