@@ -8,6 +8,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
 } from 'react-native';
+import { CreateUserAccount } from '../../lib/Auth';
 
 function RegisterScreen({navigation}) {
   const [userId,setUserId] = useState("");
@@ -43,9 +44,10 @@ function RegisterScreen({navigation}) {
       setErrorText("비밀번호가 일치하지 않습니다");
       return;
     }
-    GoToHomeScreen()
+    CreateUserAccount("imdlsrks.mc@gmail.com","123456789a");
 
   }
+  
  
   return (
   <KeyboardAvoidingView style={styles.container} >

@@ -22,6 +22,8 @@ function LogInScreen({navigation}) {
       navigation.navigate('InApp')
     }
 
+    
+
   return (
     <KeyboardAvoidingView style={styles.container} >
       <View style={{flex: 3}}></View>
