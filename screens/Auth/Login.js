@@ -3,11 +3,9 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
   TouchableOpacity,
   TextInput,
   KeyboardAvoidingView,
-  ActionSheetIOS,
 } from 'react-native';
 import { SignInUserAccount } from '../../lib/Auth';
 

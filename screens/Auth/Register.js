@@ -30,7 +30,7 @@ function RegisterScreen({navigation}) {
     setErrorText('');
     if (!userId) {
       setErrorText('아이디를 입력해주세요');
-      //return;
+      return;
     }
     if (!userEmail) {
       setErrorText('이메일을 입력해주세요');
@@ -42,20 +42,16 @@ function RegisterScreen({navigation}) {
     }
     if (userPasswordChk != userPassword) {
       setErrorText("비밀번호가 일치하지 않습니다");
-      //return;
+      return;
     }
     
-    CreateUserAccount(userEmail,userPassword).catch(function(error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      if (errorCode == 'auth/weak-password') {
-        alert('The password is too weak.');
-      } else {
-        alert(errorMessage);
-      }
-      console.log(error);
+    CreateUserAccount(userEmail,userPassword)
+    .then(()=>{
+      GoToHomeScreen()
+    })
+    .catch({
+      
     });
-
   }
   
  

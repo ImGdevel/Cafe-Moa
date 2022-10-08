@@ -83,7 +83,6 @@ function CafeTable(props){
   const [cafeLocation, setCafeLocation] = useState(props.location);
   const [cafeImformation, setCafeImformaion] = useState(props.imformation);
 
-
   return(
     <TouchableHighlight 
       style={CafeTableStyles.container}
