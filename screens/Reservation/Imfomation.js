@@ -1,11 +1,20 @@
 import React, { useState } from "react";
-import { Button, View, Text, Image } from "react-native";
+import {
+  Button,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 
 import getInfoStyle from "../../styles/screens/InfoStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
 
 function InformationScreen({ navigation }) {
+  const [direction, setDirection] = useState("사진");
+
   return (
     <>
       <View style={getInfoStyle.container}>
@@ -20,16 +29,26 @@ function InformationScreen({ navigation }) {
           </View>
         </View>
 
-        <View style={getFindStyle.contentContainer}>
-          <Button title={"사진"} style={getInfoStyle.infoBtn} />
-          <Button title={"좌석배치"} style={getInfoStyle.infoBtn} />
-          <View style={getFindStyle.topContainer}></View>
-        </View>
+        <PreviewLayout
+          selectedValue={direction}
+          values={["사진", "좌석"]}
+          setSelectedValue={setDirection}
+          style={getInfoStyle.contentLayout}
+        >
+          <ScrollView>
+            <CafeTable
+              name={"스타벅스"}
+              location={"용인시 처인구"}
+              imgae={""}
+              imformation={"--카페정보--"}
+            />
+          </ScrollView>
+        </PreviewLayout>
       </View>
 
       <Button
         title={"예약하기"}
-        style={getInfoStyle.infoBtn}
+        style={[{ backgroundColor: "black" }]}
         onPress={() => navigation.navigate("Reservation")}
       />
     </>
@@ -61,5 +80,41 @@ function CafeTable(props) {
     </>
   );
 }
+
+const PreviewLayout = ({
+  label,
+  children,
+  values,
+  selectedValue,
+  setSelectedValue,
+}) => (
+  <View style={{ padding: 10, flex: 1 }}>
+    <Text style={getInfoStyle.label}>{label}</Text>
+    <View style={getInfoStyle.row}>
+      {values.map((value) => (
+        <TouchableOpacity
+          key={value}
+          onPress={() => setSelectedValue(value)}
+          style={[
+            getInfoStyle.button,
+            selectedValue === value && getInfoStyle.selected,
+          ]}
+        >
+          <Text
+            style={[
+              getInfoStyle.buttonLabel,
+              selectedValue === value && getInfoStyle.selectedLabel,
+            ]}
+          >
+            {value}
+          </Text>
+        </TouchableOpacity>
+      ))}
+    </View>
+    <View style={[getInfoStyle.container, { [label]: selectedValue }]}>
+      {children}
+    </View>
+  </View>
+);
 
 export default InformationScreen;

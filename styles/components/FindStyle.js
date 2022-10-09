@@ -10,7 +10,7 @@ const FindStyles = StyleSheet.create({
     backgroundColor: "#ccc",
   },
   contentContainer: {
-    flex: 4,
+    flex: 1,
     backgroundColor: "#fff",
   },
 });

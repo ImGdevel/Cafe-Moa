@@ -2,9 +2,44 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
     flex: 1,
     backgroundColor: "white",
+  },
+  box: {
+    width: 50,
+    height: 50,
+  },
+  row: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  button: {
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    borderRadius: 4,
+    backgroundColor: "#ccc",
+    alignItems: "center",
+    marginHorizontal: "1%",
+    marginBottom: 5,
+    minWidth: "48%",
+    textAlign: "center",
+  },
+  selected: {
+    backgroundColor: "black",
+    borderWidth: 0,
+  },
+  buttonLabel: {
+    fontSize: 12,
+    fontWeight: "500",
+    color: "black",
+  },
+  selectedLabel: {
+    color: "white",
+  },
+  label: {
+    textAlign: "center",
+    marginBottom: 10,
+    fontSize: 24,
   },
   cafeLogo: {
     width: 100,
@@ -18,10 +53,6 @@ const styles = StyleSheet.create({
   seatPic: {
     width: "100%",
     height: "100%",
-  },
-  infoBtn: {
-    flex: 1,
-    width: "50%",
   },
 });
 
