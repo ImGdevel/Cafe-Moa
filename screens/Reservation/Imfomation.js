@@ -9,7 +9,7 @@ function ImfomationScreen({ navigation }) {
       
       
       
-      <Button title="카페예약 페이지로->"onPress={() => navigation.navigate('Reservaion')}/>
+      <Button title="카페예약 페이지로->"onPress={() => navigation.navigate('Reservation')}/>
     </View>
   );
 } 
