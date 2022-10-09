@@ -37,8 +37,39 @@ function InformationScreen({ navigation }) {
             style={getInfoStyle.contentLayout}
           >
             <View style={getInfoStyle.picArea}>
-              <ScrollView>{/*___Insert Image___*/}</ScrollView>
+              <ScrollView>
+                <View style={getInfoStyle.imageContainer}>
+                  <View style={getInfoStyle.image}>
+                    <Image
+                      source={require("../../img/coffeebayLogo_test.jpg")}
+                      style={getInfoStyle.cafeLogo}
+                    />
+                  </View>
+                </View>
+                <View style={getInfoStyle.imageContainer}>
+                  <View style={getInfoStyle.image}>
+                    <Image
+                      source={require("../../img/coffeebayLogo_test.jpg")}
+                      style={getInfoStyle.cafeLogo}
+                    />
+                  </View>
+                </View>
+                <View style={getInfoStyle.imageContainer}>
+                  <View style={getInfoStyle.image}>
+                    <Image
+                      source={require("../../img/coffeebayLogo_test.jpg")}
+                      style={getInfoStyle.cafeLogo}
+                    />
+                  </View>
+                </View>
+              </ScrollView>
             </View>
+            {/*___<View style={getInfoStyle.image}>
+              <Image
+                source={require("../../img/coffeebayLogo_test.jpg")}
+                style={getInfoStyle.cafeLogo}
+              />
+  </View>___*/}
           </PreviewLayout>
         </View>
 

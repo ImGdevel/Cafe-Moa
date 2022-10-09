@@ -46,6 +46,19 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontSize: 24,
   },
+  imageContainer: {
+    width: 140,
+    height: 140,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  image: {
+    width: "80%",
+    height: "80%",
+    borderRadius: 10,
+    borderColor: "#ddd",
+    borderWidth: 1,
+  },
   cafeLogo: {
     width: 100,
     height: 100,
@@ -61,7 +74,10 @@ const styles = StyleSheet.create({
   },
   picArea: {
     flex: 1,
-    backgroundColor: "red",
+    justifyContent: "space-evenly",
+    borderWidth: 1,
+    borderColor: "#DDD",
+    borderRadius: 10,
   },
   reserveButton: {
     backgroundColor: "black",
