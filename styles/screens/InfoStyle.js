@@ -19,6 +19,10 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
+  infoBtn: {
+    flex: 1,
+    width: "50%",
+  },
 });
 
 export default styles;
