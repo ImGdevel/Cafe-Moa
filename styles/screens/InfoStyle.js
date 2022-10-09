@@ -3,7 +3,12 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: "column",
     backgroundColor: "white",
+  },
+  contentLayout: {
+    flex: 3,
+    backgroundColor: "blue",
   },
   box: {
     width: 50,
@@ -55,7 +60,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   picArea: {
-    flex: 5,
+    flex: 1,
     backgroundColor: "red",
   },
   reserveButton: {

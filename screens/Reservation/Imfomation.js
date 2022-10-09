@@ -29,25 +29,27 @@ function InformationScreen({ navigation }) {
           </View>
         </View>
 
-        <PreviewLayout
-          selectedValue={direction}
-          values={["사진", "좌석"]}
-          setSelectedValue={setDirection}
-          style={getInfoStyle.contentLayout}
-        >
-          <View style={getInfoStyle.picArea}>
-            <ScrollView>{/*___Insert Image___*/}</ScrollView>
-          </View>
-        </PreviewLayout>
-      </View>
+        <View style={{ flex: 4.5 }}>
+          <PreviewLayout
+            selectedValue={direction}
+            values={["사진", "좌석"]}
+            setSelectedValue={setDirection}
+            style={getInfoStyle.contentLayout}
+          >
+            <View style={getInfoStyle.picArea}>
+              <ScrollView>{/*___Insert Image___*/}</ScrollView>
+            </View>
+          </PreviewLayout>
+        </View>
 
-      <View style={getInfoStyle.btnContainer}>
-        <TouchableOpacity
-          style={getInfoStyle.reserveButton}
-          onPress={() => navigation.navigate("Reservation")}
-        >
-          <Text style={{ color: "white", fontSize: 20 }}>예약하기</Text>
-        </TouchableOpacity>
+        <View style={getInfoStyle.btnContainer}>
+          <TouchableOpacity
+            style={getInfoStyle.reserveButton}
+            onPress={() => navigation.navigate("Reservation")}
+          >
+            <Text style={{ color: "white", fontSize: 20 }}>예약하기</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </>
   );
