@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, View, Text, Image } from "react-native";
+import { Button, View, Text, Image, TouchableOpacity } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
 import getReserveStyle from "../../styles/screens/ReserveStyle";
@@ -17,20 +17,22 @@ function ReservationScreen({ navigation }) {
             name={"Coffee Bay"}
             location={"용인시 처인구"}
             imgae={""}
-            information={"Open : AM 09:00 || Close : PM 22:00"}
+            information={"--카페정보--"}
           />
         </View>
       </View>
 
-      <View style={getFindStyle.topContainer}>
+      <View style={getReserveStyle.seatContainer}>
         <Image
           source={require("../../img/anySeatPic_text.png")}
+          resizeMode="stretch"
           style={getReserveStyle.seatPic}
         />
       </View>
 
-      <View>
+      <View style={getReserveStyle.pickerBox}>
         <Picker
+          style={getReserveStyle.picker}
           selectedValue={selectedSeat}
           onValueChange={(itemValue, itemIndex) => setSelectedSeat(itemValue)}
         >
@@ -38,10 +40,12 @@ function ReservationScreen({ navigation }) {
           <Picker.Item label="seat2" value="2" />
         </Picker>
 
-        <Button
-          title="예약하기"
+        <TouchableOpacity
+          style={getReserveStyle.reserveBtn}
           onPress={() => navigation.navigate("ReserveEnd")}
-        />
+        >
+          <Text style={{ color: "white", fontSize: 15 }}>예약하기</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -54,19 +58,21 @@ function CafeTable(props) {
 
   return (
     <>
-      <View style={getCafeTableStyle.imageContainer}>
-        <View style={getCafeTableStyle.image}>
-          <Image
-            source={require("../../img/coffeebayLogo_test.jpg")}
-            style={getReserveStyle.cafeLogo}
-          />
+      <View style={getCafeTableStyle.container}>
+        <View style={getCafeTableStyle.imageContainer}>
+          <View style={getCafeTableStyle.image}>
+            <Image
+              source={require("../../img/coffeebayLogo_test.jpg")}
+              style={getReserveStyle.cafeLogo}
+            />
+          </View>
         </View>
-      </View>
-      <View style={getCafeTableStyle.contentContainer}>
-        <View style={getCafeTableStyle.textContent}>
-          <Text style={getCafeTableStyle.nameText}>{cafeName}</Text>
-          <Text style={getCafeTableStyle.contentText}>{cafeLocation}</Text>
-          <Text style={getCafeTableStyle.contentText}>{cafeInformation}</Text>
+        <View style={getCafeTableStyle.contentContainer}>
+          <View style={getCafeTableStyle.textContent}>
+            <Text style={getCafeTableStyle.nameText}>{cafeName}</Text>
+            <Text style={getCafeTableStyle.contentText}>{cafeLocation}</Text>
+            <Text style={getCafeTableStyle.contentText}>{cafeInformation}</Text>
+          </View>
         </View>
       </View>
     </>
