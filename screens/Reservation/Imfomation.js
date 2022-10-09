@@ -35,22 +35,20 @@ function InformationScreen({ navigation }) {
           setSelectedValue={setDirection}
           style={getInfoStyle.contentLayout}
         >
-          <ScrollView>
-            <CafeTable
-              name={"스타벅스"}
-              location={"용인시 처인구"}
-              imgae={""}
-              imformation={"--카페정보--"}
-            />
-          </ScrollView>
+          <View style={getInfoStyle.picArea}>
+            <ScrollView>{/*___Insert Image___*/}</ScrollView>
+          </View>
         </PreviewLayout>
       </View>
 
-      <Button
-        title={"예약하기"}
-        style={[{ backgroundColor: "black" }]}
-        onPress={() => navigation.navigate("Reservation")}
-      />
+      <View style={getInfoStyle.btnContainer}>
+        <TouchableOpacity
+          style={getInfoStyle.reserveButton}
+          onPress={() => navigation.navigate("Reservation")}
+        >
+          <Text style={{ color: "white", fontSize: 20 }}>예약하기</Text>
+        </TouchableOpacity>
+      </View>
     </>
   );
 }
@@ -62,19 +60,21 @@ function CafeTable(props) {
 
   return (
     <>
-      <View style={getCafeTableStyle.imageContainer}>
-        <View style={getCafeTableStyle.image}>
-          <Image
-            source={require("../../img/coffeebayLogo_test.jpg")}
-            style={getInfoStyle.cafeLogo}
-          />
+      <View style={getCafeTableStyle.container}>
+        <View style={getCafeTableStyle.imageContainer}>
+          <View style={getCafeTableStyle.image}>
+            <Image
+              source={require("../../img/coffeebayLogo_test.jpg")}
+              style={getInfoStyle.cafeLogo}
+            />
+          </View>
         </View>
-      </View>
-      <View style={getCafeTableStyle.contentContainer}>
-        <View style={getCafeTableStyle.textContent}>
-          <Text style={getCafeTableStyle.nameText}>{cafeName}</Text>
-          <Text style={getCafeTableStyle.contentText}>{cafeLocation}</Text>
-          <Text style={getCafeTableStyle.contentText}>{cafeInformation}</Text>
+        <View style={getCafeTableStyle.contentContainer}>
+          <View style={getCafeTableStyle.textContent}>
+            <Text style={getCafeTableStyle.nameText}>{cafeName}</Text>
+            <Text style={getCafeTableStyle.contentText}>{cafeLocation}</Text>
+            <Text style={getCafeTableStyle.contentText}>{cafeInformation}</Text>
+          </View>
         </View>
       </View>
     </>

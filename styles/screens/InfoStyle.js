@@ -54,6 +54,22 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
+  picArea: {
+    flex: 5,
+    backgroundColor: "red",
+  },
+  reserveButton: {
+    backgroundColor: "black",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 5,
+    marginBottom: 5,
+    width: "80%",
+  },
+  btnContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
 
 export default styles;
