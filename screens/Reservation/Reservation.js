@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import Modal from "react-native-simple-modal";
 
 import getReserveStyle from "../../styles/screens/ReserveStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
