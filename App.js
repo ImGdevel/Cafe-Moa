@@ -79,6 +79,8 @@ const CafeNavigation = () => {
         options={{ headerShown: false }}
         component={ReserveEndScreen}
       />
+      <Stack.Screen name="Imfomation" component={ImfomationScreen} />
+      <Stack.Screen name="Reservation" component={ReservationScreen} />
     </Stack.Navigator>
   );
 };
