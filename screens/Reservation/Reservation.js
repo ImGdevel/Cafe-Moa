@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Button, View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Picker } from "@react-native-picker/picker";
+import Modal from "react-native-simple-modal";
 
 import getReserveStyle from "../../styles/screens/ReserveStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
@@ -8,6 +9,7 @@ import getFindStyle from "../../styles/components/FindStyle";
 
 function ReservationScreen({ navigation }) {
   const [selectedSeat, setSelectedSeat] = useState("1");
+  state = { open: false };
 
   return (
     <View style={getReserveStyle.container}>
