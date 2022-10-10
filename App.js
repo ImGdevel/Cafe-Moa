@@ -11,6 +11,7 @@ import MyPageScreen from "./screens/InApp/MyPage";
 import FindScreen from "./screens/InApp/Find";
 import ImfomationScreen from "./screens/Reservation/Imfomation";
 import ReservationScreen from "./screens/Reservation/Reservation";
+import ReserveEndScreen from "./screens/Reservation/ReserveEnd";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -72,7 +73,12 @@ const CafeNavigation = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen name="Imfomation" component={ImfomationScreen} />
-      <Stack.Screen name="Reservation" component={ReservationScreen} />
+      <Stack.Screen name="Reservaion" component={ReservationScreen} />
+      <Stack.Screen
+        name="ReserveEnd"
+        options={{ headerShown: false }}
+        component={ReserveEndScreen}
+      />
     </Stack.Navigator>
   );
 };

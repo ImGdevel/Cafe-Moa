@@ -11,6 +11,7 @@ import {
 import getInfoStyle from "../../styles/screens/InfoStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
+import * as React from "react";
 
 function InformationScreen({ navigation }) {
   const [direction, setDirection] = useState("사진");
@@ -150,4 +151,4 @@ const PreviewLayout = ({
   </View>
 );
 
-export default InformationScreen;
+export default ImfomationScreen;
