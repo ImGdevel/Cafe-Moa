@@ -4,9 +4,9 @@ import { Button, View, Text, StyleSheet } from 'react-native';
 function ImfomationScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text>카폐 정보 페이지 입니다.</Text>
-      
-      
+      <Text>카폐 정보 페이지</Text>
+      <Text>위치</Text>
+      <Text>카페정보</Text>
       
       
       <Button title="카페예약 페이지로->"onPress={() => navigation.navigate('Reservation')}/>
