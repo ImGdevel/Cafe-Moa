@@ -1,22 +1,36 @@
-import * as React from 'react';
-import { Button, View, Text, StyleSheet } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { Image, Dimensions, TouchableOpacity, View, Text, StyleSheet, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native';
 
 function MyPageScreen({ navigation }) {
+  //const [userId, setUserId] = useState(props.userId);
+
+  function GoToOptionScreen(){
+    //navigation.navigate()
+  };
+
+  function GoToEditProfileScreen(){
+    //
+  };
+
+  function GoToLogoutScreen(){
+    //
+  };
+
+  function GoToDeleteAccountScreen(){
+    //
+  };
+
+
   return (
-    <KeyboardAvoidingView style={styles.container}>
-    {/* 여기부터 수정 구역(KeyboardAvoidingView 포함) */}
-    <View style={styles.contantArea}> {/*필요?*/}
-    <View style={styles.profileText}><Text style={{ fontWeight: "500", fontSize: 40 }}>마이페이지</Text></View>
+  <KeyboardAvoidingView style={styles.container}>
+    <View style={styles.myPageText}><Text style={{ fontWeight: "450", fontSize: 20 }}>마이페이지</Text></View>
+      
+    <View style={styles.upContentContainer}>
+      <Image style={styles.profilePicture} source={require('../../img/initialProfile.jpg')}></Image>
+      <View style={styles.idText}><Text style={{fontWeight: "400", fontSize: 20}}>userId</Text></View>
     </View>
 
-    <View style={styles.profilePicture}>
-    </View>
-
-    <View style={styles.idText}><Text style={{fontSize: 20}}>{...id}</Text></View>
-
-    <View style={styles.horizeLine}></View>
-
-    <View style={styles.btnArea}>
+    <View style={styles.contentContainer}>
       <TouchableOpacity style={styles.btnOption} onPress = {GoToOptionScreen}>
         <Text style = {{color: 'black', fontSize: 20,}}>옵션</Text>
       </TouchableOpacity>
@@ -30,64 +44,94 @@ function MyPageScreen({ navigation }) {
         <Text style = {{color: 'black', fontSize: 20,}}>회원탈퇴</Text>
       </TouchableOpacity>
     </View>
-
-    
-
-    <View style={styles.btnArea}>
-        <TouchableOpacity style={styles.btnLogin} onPress = {GoToHomeScreen}>
-          <Text style={{ color: 'white', fontSize: 20,}}>로그인</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.btnRegister} onPress = {GoToRgisterScreen}>
-          <Text style={{ color: 'black', fontSize: 20, }}>회원가입</Text>
-        </TouchableOpacity>
-        </View>
-      </KeyboardAvoidingView>    
+    </KeyboardAvoidingView>    
   );
 }
 
-
-
-
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 3,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: 'column',
   },
-  //여기부터 수정
-  profileText: {
-    width: 100,
-    height: 100,
-    border: 15,
-    borderRadius: '50%',
+
+  contentContainer: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+
+  upContentContainer: {
+    flex: 0.4,
+    flexDirection: 'row',
+    marginBottom: '30%', 
+  }, 
+
+  myPageText: {
+    marginTop: '10%', 
+  },
+
+  profilePicture: {
+    marginTop: '10%', 
+    marginLeft: '-30%', 
+    width: '30%', 
+    height: '64%', 
+    borderRadius: 75,
+    backgroundColor: 'white',
   },
 
   idText: {
-    /*필요한가?*/
+    marginVertical: '20%', 
+    marginLeft: '10%', 
   },
-
-  horizeLine: {
-    border: 0,
-    width: '50%',
-    height: 10,
-    backgroundColor: '#black',
-  },
-
-  btnArea: {
-    width: '100%',
-    height: 100,
-  },
-
-  btnOption, btnEditProfile, btnLogout, btnDeleteAccount: {
-    margin: 1,
-    width: '100%',
-    height: 60,
-    borderRadius: 7,
+  
+  btnOption: {
+    width: Dimensions.get('window').width, 
+    height: '15%', 
+    borderTopWidth: 1,
+    borderBottomWidth: 0.5,
+    borderColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#white',
+    backgroundColor: 'white',
+    fontSize: 20,
   },
+
+  btnEditProfile: {
+    width: Dimensions.get('window').width, 
+    height: '15%',     
+    borderTopWidth: 0.5,
+    borderBottomWidth: 0.5,
+    borderColor: 'black',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    fontSize: 20,
+  },
+
+  btnLogout: {
+    width: Dimensions.get('window').width, 
+    height: '15%',     
+    borderTopWidth: 0.5,
+    borderBottomWidth: 0.5,
+    borderColor: 'black',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    fontSize: 20,
+  },
+
+  btnDeleteAccount: {
+    width: Dimensions.get('window').width, 
+    height: '15%', 
+    borderTopWidth: 0.5,
+    borderBottomWidth: 1,
+    borderColor: 'black',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    fontSize: 20,
+  }
 });
 
 export default MyPageScreen;
