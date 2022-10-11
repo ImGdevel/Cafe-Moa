@@ -88,11 +88,10 @@ function CafeTable(props) {
   const [cafeName, setCafeName] = useState(props.name);
   const [cafeLocation, setCafeLocation] = useState(props.location);
   const [cafeInformation, setCafeInformaion] = useState(props.information);
-
   return (
     <TouchableHighlight
       style={CafeTableStyles.container}
-      onPress={() => props.navigation.navigate("Information")}
+      onPress={() => props.navigation.navigate("Inforrmation")}
       activeOpacity={0.5}
       underlayColor="#DDDDDD"
     >

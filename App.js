@@ -60,6 +60,11 @@ const Auth = () => {
         component={RegisterScreen}
         options={{ headerShown: false }}
       />
+      <Stack.Screen 
+        name="InPutData" 
+        component={InPutDataScreen}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };
