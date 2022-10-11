@@ -38,7 +38,7 @@ function LogInScreen({navigation}) {
             <Text style={{ color: 'black', fontSize: 20, }}>회원가입</Text>
           </TouchableOpacity>
         </View>
-
+ 
       </View>
       <View style={{flex: 1}}></View>
     </KeyboardAvoidingView>
