@@ -1,5 +1,13 @@
 리엑트 추가 라이브러리 설치
 
+//expo 버전 업데이트
+npm install -g expo-cli
+
+//react-native-picker라이브러리
 npm install react-native-picker/picker --save
+
+
 npm install --save react-native-sqlite-storage
+
+//필수 아닙니다.
 npx expo install react-native-maps
