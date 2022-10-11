@@ -5,9 +5,3 @@ npm install -g expo-cli
 
 //react-native-picker라이브러리
 npm install react-native-picker/picker --save
-
-
-npm install --save react-native-sqlite-storage
-
-//필수 아닙니다.
-npx expo install react-native-maps
