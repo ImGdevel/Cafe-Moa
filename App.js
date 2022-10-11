@@ -9,7 +9,7 @@ import RegisterScreen from "./screens/Auth/Register";
 import HomeScreen from "./screens/InApp/Home";
 import MyPageScreen from "./screens/InApp/MyPage";
 import FindScreen from "./screens/InApp/Find";
-import ImfomationScreen from "./screens/Reservation/Imfomation";
+import InformationScreen from "./screens/Reservation/Information";
 import ReservationScreen from "./screens/Reservation/Reservation";
 import ReserveEndScreen from "./screens/Reservation/ReserveEnd";
 
@@ -72,8 +72,8 @@ const CafeNavigation = () => {
         component={FindScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Imfomation" component={ImfomationScreen} />
-      <Stack.Screen name="Reservaion" component={ReservationScreen} />
+      <Stack.Screen name="Information" component={InformationScreen} />
+      <Stack.Screen name="Reservation" component={ReservationScreen} />
       <Stack.Screen
         name="ReserveEnd"
         options={{ headerShown: false }}

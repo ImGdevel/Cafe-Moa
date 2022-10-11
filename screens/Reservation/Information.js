@@ -1,17 +1,9 @@
 import React, { useState } from "react";
-import {
-  Button,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 
 import getInfoStyle from "../../styles/screens/InfoStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
-import * as React from "react";
 
 function InformationScreen({ navigation }) {
   const [direction, setDirection] = useState("사진");
@@ -151,4 +143,4 @@ const PreviewLayout = ({
   </View>
 );
 
-export default ImfomationScreen;
+export default InformationScreen;
