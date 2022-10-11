@@ -29,9 +29,7 @@ function LogInScreen({navigation}) {
         GoToHomeScreen()
       }).catch(()=>{})
     }
-
     
-
   return (
     <KeyboardAvoidingView style={styles.container} >
       <View style={{flex: 3}}></View>
@@ -55,9 +53,9 @@ function LogInScreen({navigation}) {
              style={styles.textInput}
              placeholder={'비밀번호'}
              onChangeText={(userPassword) => setUserPassword(userPassword)}
-             secureTextEntry={true}
+             secureTextEntry={false}
              autoCapitalize="none"
-          />
+          /> 
         </View> 
         <Text>{errorText}</Text>
         <View style={styles.btnArea}>
@@ -68,8 +66,7 @@ function LogInScreen({navigation}) {
             <Text style={{ color: 'black', fontSize: 20, }}>회원가입</Text>
           </TouchableOpacity>
         </View>
-        
- 
+
       </View>
       <View style={{flex: 4}}></View>
     </KeyboardAvoidingView>
