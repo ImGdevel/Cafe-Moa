@@ -55,7 +55,7 @@ function LogInScreen({navigation}) {
              style={styles.textInput}
              placeholder={'비밀번호'}
              onChangeText={(userPassword) => setUserPassword(userPassword)}
-             secureTextEntry={true}
+             secureTextEntry={false}
              autoCapitalize="none"
           />
         </View> 
@@ -67,9 +67,6 @@ function LogInScreen({navigation}) {
           <TouchableOpacity style={styles.btnRegister} onPress = {GoToRgisterScreen}>
             <Text style={{ color: 'black', fontSize: 20, }}>회원가입</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.btnRegister} onPress = {GoToHomeScreen}>
-            <Text style={{ color: 'black', fontSize: 20, }}>개발자 권한(임시)</Text>
-        </TouchableOpacity>
         </View>
         
  
