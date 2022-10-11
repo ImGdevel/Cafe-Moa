@@ -1,17 +1,83 @@
 import React, { useState } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { Button, View, Text, Image, TouchableOpacity } from "react-native";
+import Modal from "react-native-modal";
 import { Picker } from "@react-native-picker/picker";
 
 import getReserveStyle from "../../styles/screens/ReserveStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
+import getModalStyle from "../../styles/components/ModalStyle";
 
 function ReservationScreen({ navigation }) {
   const [selectedSeat, setSelectedSeat] = useState("1");
-  state = { open: false };
+  const [modalVisible, setModalVisible] = useState(true);
+  const [modalOutput, setModalOutput] = useState("Open Modal");
 
   return (
     <View style={getReserveStyle.container}>
+      <Modal
+        isVisible={modalVisible}
+        useNativeDriver={true}
+        hideModalContentWhileAnimating={true}
+        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+      >
+        <View style={getModalStyle.modalView}>
+          <View style={getModalStyle.modalWrapper}>
+            <Text style={getModalStyle.modalGradeText}>선택지</Text>
+          </View>
+
+          <TouchableOpacity
+            style={getModalStyle.modalButton}
+            onPress={() => {
+              setModalOutput("선택 1");
+              setModalVisible(false);
+            }}
+          >
+            <Text style={{ alignSelf: "center" }}>09:00</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={getModalStyle.modalButton}
+            onPress={() => {
+              setModalOutput("선택 1");
+              setModalVisible(false);
+            }}
+          >
+            <Text style={{ alignSelf: "center" }}>10:00</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={getModalStyle.modalButton}
+            onPress={() => {
+              setModalOutput("선택 1");
+              setModalVisible(false);
+            }}
+          >
+            <Text style={{ alignSelf: "center" }}>11:00</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={getModalStyle.modalButton}
+            onPress={() => {
+              setModalOutput("선택 1");
+              setModalVisible(false);
+            }}
+          >
+            <Text style={{ alignSelf: "center" }}>12:00</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={getModalStyle.modalButton}
+            onPress={() => {
+              setModalOutput("선택 1");
+              setModalVisible(false);
+            }}
+          >
+            <Text style={{ alignSelf: "center" }}>13:00</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+
       <View style={getFindStyle.container}>
         <View style={getFindStyle.contentContainer}>
           <CafeTable
