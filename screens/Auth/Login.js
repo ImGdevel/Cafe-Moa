@@ -65,6 +65,9 @@ function LogInScreen({navigation}) {
           <TouchableOpacity style={styles.btnRegister} onPress = {GoToRgisterScreen}>
             <Text style={{ color: 'black', fontSize: 20, }}>회원가입</Text>
           </TouchableOpacity>
+          <TouchableOpacity style={styles.btnRegister} onPress = {GoToHomeScreen}>
+            <Text style={{ color: 'black', fontSize: 20, }}>관리자 권한 입장</Text>
+          </TouchableOpacity>
         </View>
 
       </View>
