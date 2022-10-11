@@ -14,17 +14,17 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     borderWidth: 1,
-    borderColor: "gray",
+    borderColor: "#ccc",
     backgroundColor: "white",
   },
   modalWrapper: {
-    flex: 1,
+    flex: 0.5,
     width: "100%",
     justifyContent: "center",
   },
   modalGradeText: {
     alignSelf: "center",
-    fontSize: 30,
+    fontSize: 20,
     color: "white",
   },
 });

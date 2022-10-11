@@ -23,7 +23,7 @@ function ReservationScreen({ navigation }) {
       >
         <View style={getModalStyle.modalView}>
           <View style={getModalStyle.modalWrapper}>
-            <Text style={getModalStyle.modalGradeText}>선택지</Text>
+            <Text style={getModalStyle.modalGradeText}>시간을 선택하세요</Text>
           </View>
 
           <TouchableOpacity
@@ -33,7 +33,7 @@ function ReservationScreen({ navigation }) {
               setModalVisible(false);
             }}
           >
-            <Text style={{ alignSelf: "center" }}>09:00</Text>
+            <Text style={{ alignSelf: "center", fontSize: 20 }}>09:00</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -43,7 +43,7 @@ function ReservationScreen({ navigation }) {
               setModalVisible(false);
             }}
           >
-            <Text style={{ alignSelf: "center" }}>10:00</Text>
+            <Text style={{ alignSelf: "center", fontSize: 20 }}>10:00</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -53,7 +53,7 @@ function ReservationScreen({ navigation }) {
               setModalVisible(false);
             }}
           >
-            <Text style={{ alignSelf: "center" }}>11:00</Text>
+            <Text style={{ alignSelf: "center", fontSize: 20 }}>11:00</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -63,7 +63,7 @@ function ReservationScreen({ navigation }) {
               setModalVisible(false);
             }}
           >
-            <Text style={{ alignSelf: "center" }}>12:00</Text>
+            <Text style={{ alignSelf: "center", fontSize: 20 }}>12:00</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -73,7 +73,7 @@ function ReservationScreen({ navigation }) {
               setModalVisible(false);
             }}
           >
-            <Text style={{ alignSelf: "center" }}>13:00</Text>
+            <Text style={{ alignSelf: "center", fontSize: 20 }}>13:00</Text>
           </TouchableOpacity>
         </View>
       </Modal>
@@ -97,6 +97,9 @@ function ReservationScreen({ navigation }) {
         />
       </View>
 
+      <Text style={{ alignSelf: "center" }}>
+        예약 가능한 좌석만 선택창에 표시됩니다.
+      </Text>
       <View style={getReserveStyle.pickerBox}>
         <Picker
           style={getReserveStyle.picker}
