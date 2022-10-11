@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button, View, Text, StyleSheet } from 'react-native';
 
-function ImfomationScreen({ navigation }) {
+function ImformationScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Text>카폐 정보 페이지 입니다.</Text>
@@ -9,7 +9,7 @@ function ImfomationScreen({ navigation }) {
       
       
       
-      <Button title="카페예약 페이지로->"onPress={() => navigation.navigate('Reservaion')}/>
+      <Button title="카페예약 페이지로->"onPress={() => navigation.navigate('Reservation')}/>
     </View>
   );
 }
@@ -23,4 +23,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ImfomationScreen;
+export default ImformationScreen;

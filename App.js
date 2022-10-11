@@ -9,9 +9,9 @@ import RegisterScreen from "./screens/Auth/Register"
 import HomeScreen from "./screens/InApp/Home"
 import MyPageScreen from "./screens/InApp/MyPage"
 import FindScreen from  "./screens/InApp/Find"
-import ImfomationScreen from  "./screens/Reservation/Imfomation"
 import ReservationScreen from  "./screens/Reservation/Reservation"
 import InPutDataScreen from "./screens/ForBusiness/InPutData"
+import ImformationScreen from "./screens/Reservation/Imformation"
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -80,11 +80,11 @@ const CafeNavigation = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen 
-        name="Imfomation" 
-        component={ImfomationScreen} 
+        name="Imformation" 
+        component={ImformationScreen} 
       />
       <Stack.Screen 
-        name="Reservaion" 
+        name="Reservation" 
         component={ReservationScreen}
       />
     </Stack.Navigator>

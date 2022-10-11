@@ -21,7 +21,7 @@ function LogInScreen({navigation}) {
       navigation.navigate('Register')
     }
     function GoToHomeScreen(){
-      navigation.navigate('InApp')
+      navigation.replace('InApp')
     }
 
     function onSubmit(){
