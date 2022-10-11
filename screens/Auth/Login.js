@@ -53,7 +53,7 @@ function LogInScreen({navigation}) {
              style={styles.textInput}
              placeholder={'비밀번호'}
              onChangeText={(userPassword) => setUserPassword(userPassword)}
-             secureTextEntry={true}
+             secureTextEntry={false}
              autoCapitalize="none"
           /> 
         </View> 
