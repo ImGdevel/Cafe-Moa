@@ -72,7 +72,7 @@ function LogInScreen({navigation}) {
         </TouchableOpacity>
         </View>
         
-
+ 
       </View>
       <View style={{flex: 4}}></View>
     </KeyboardAvoidingView>
