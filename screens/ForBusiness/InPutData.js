@@ -3,7 +3,6 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
   TouchableOpacity,
   TextInput,
   KeyboardAvoidingView,
@@ -24,14 +23,6 @@ function InPutDataScreen({navigation}) {
   function GoToHomeScreen(){
     navigation.navigate('InApp')
   }
-  /*
-  function onSubmitApplication(){
-    setErrorText('');
-    if (!cafeName || !cafeLocation || !cafeImfo) {
-      return;
-    }
-  }
-  */
   const onSubmitApplication = async() =>{
     await dbService.collection("CafeData").add({
         cafeName,

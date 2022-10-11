@@ -12,6 +12,7 @@ import FindScreen from "./screens/InApp/Find";
 import InformationScreen from "./screens/Reservation/Information";
 import ReservationScreen from "./screens/Reservation/Reservation";
 import ReserveEndScreen from "./screens/Reservation/ReserveEnd";
+import InPutDataScreen from "./screens/ForBusiness/InPutData";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();

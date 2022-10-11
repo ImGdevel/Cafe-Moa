@@ -91,7 +91,7 @@ function CafeTable(props) {
   return (
     <TouchableHighlight
       style={CafeTableStyles.container}
-      onPress={() => props.navigation.navigate("Inforrmation")}
+      onPress={() => props.navigation.navigate("Information")}
       activeOpacity={0.5}
       underlayColor="#DDDDDD"
     >
