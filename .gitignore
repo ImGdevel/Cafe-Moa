@@ -1,5 +1,12 @@
 node_modules/
+<<<<<<< HEAD
 .expo/ 
+=======
+.package.json
+.package-lock.json
+.expo/
+.env/
+>>>>>>> develop
 dist/
 npm-debug.*
 *.jks
@@ -9,6 +16,11 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> develop
 
 # macOS
 .DS_Store
