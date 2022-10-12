@@ -1,67 +1,61 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  Image,
-  TouchableHighlight,
-} from "react-native";
+import React, {useState, useEffect} from 'react';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableHighlight } from 'react-native';
 
 function FindScreen({ navigation }) {
   return (
     <View style={FindStyles.container}>
-      <View style={FindStyles.topContainer}></View>
+      <View style={FindStyles.topContainer}>
+      </View>
       <View style={FindStyles.contentContainer}>
         <ScrollView>
-          <CafeTable
-            name={"스타벅스"}
-            location={"용인시 처인구"}
-            imgae={""}
-            information={"--카페정보--"}
-            navigation={navigation}
+          <CafeTable 
+            name = {"스타벅스"} 
+            location = {"용인시 처인구"}
+            imgae = {""}
+            imformation = {"--카페정보--"}
+            navigation = {navigation}
           />
           <CafeTable
-            name={"스타벅스"}
-            location={"제주도"}
-            imgae={""}
-            information={"--카페정보--"}
-            navigation={navigation}
+            name = {"스타벅스"} 
+            location = {"제주도"}
+            imgae = {""}
+            imformation = {"--카페정보--"}
+            navigation = {navigation}
           />
           <CafeTable
-            name={"투썸 플레이스"}
-            location={"평양"}
-            imgae={""}
-            information={"--카페정보--"}
-            navigation={navigation}
+            name = {"투썸 플레이스"} 
+            location = {"평양"}
+            imgae = {""}
+            imformation = {"--카페정보--"}
+            navigation = {navigation}
           />
           <CafeTable
-            name={"카페이름"}
-            location={"위치"}
-            imgae={""}
-            information={"--카페정보--"}
-            navigation={navigation}
+            name = {"카페이름"} 
+            location = {"위치"}
+            imgae = {""}
+            imformation = {"--카페정보--"}
+            navigation = {navigation}
           />
           <CafeTable
-            name={"카페이름"}
-            location={"위치"}
-            imgae={""}
-            information={"--카페정보--"}
-            navigation={navigation}
+            name = {"카페이름"} 
+            location = {"위치"}
+            imgae = {""}
+            imformation = {"--카페정보--"}
+            navigation = {navigation}
           />
           <CafeTable
-            name={"카페이름"}
-            location={"위치"}
-            imgae={""}
-            information={"--카페정보--"}
-            navigation={navigation}
+            name = {"카페이름"} 
+            location = {"위치"}
+            imgae = {""}
+            imformation = {"--카페정보--"}
+            navigation = {navigation}
           />
           <CafeTable
-            name={"카페이름"}
-            location={"위치"}
-            imgae={""}
-            information={"--카페정보--"}
-            navigation={navigation}
+            name = {"카페이름"} 
+            location = {"위치"}
+            imgae = {""}
+            imformation = {"--카페정보--"}
+            navigation = {navigation}
           />
         </ScrollView>
       </View>
@@ -72,92 +66,90 @@ function FindScreen({ navigation }) {
 const FindStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
   topContainer: {
     flex: 1,
-    backgroundColor: "#ccc",
+    backgroundColor: '#ccc',
   },
   contentContainer: {
     flex: 4,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
-});
+}); 
 
-function CafeTable(props) {
+function CafeTable(props){
   const [cafeName, setCafeName] = useState(props.name);
   const [cafeLocation, setCafeLocation] = useState(props.location);
-  const [cafeInformation, setCafeInformaion] = useState(props.information);
-  return (
-    <TouchableHighlight
+  const [cafeImformation, setCafeImformaion] = useState(props.imformation);
+
+
+  return(
+    <TouchableHighlight 
       style={CafeTableStyles.container}
-      onPress={() => props.navigation.navigate("Information")}
+      onPress={() => props.navigation.navigate('Imfomation')}
       activeOpacity={0.5}
       underlayColor="#DDDDDD"
-    >
-      <>
-        <View style={CafeTableStyles.imageContainer}>
-          <View style={CafeTableStyles.image}>
-            <Image />
-            {/*이지지 삽입*/}
-          </View>
+      ><>
+      <View style={CafeTableStyles.imageContainer}>
+        <View style={CafeTableStyles.image}>
+          <Image/>{/*이지지 삽입*/}
         </View>
-        <View style={CafeTableStyles.contentContainer}>
-          <View style={CafeTableStyles.textContent}>
-            <Text style={CafeTableStyles.nameText}>{cafeName}</Text>
-            <Text style={CafeTableStyles.contentText}>{cafeLocation}</Text>
-            <Text style={CafeTableStyles.contentText}>{cafeInformation}</Text>
-          </View>
+      </View>
+      <View style={CafeTableStyles.contentContainer}>
+        <View style={CafeTableStyles.textContent}>
+          <Text style={CafeTableStyles.nameText}>{cafeName}</Text>
+          <Text style={CafeTableStyles.contentText}>{cafeLocation}</Text>
+          <Text style={CafeTableStyles.contentText}>{cafeImformation}</Text>
         </View>
-      </>
-    </TouchableHighlight>
+      </View>
+      </></TouchableHighlight>
   );
+  
 }
 
 const CafeTableStyles = StyleSheet.create({
   container: {
-    width: "100%",
-    height: 140,
-    backgroundColor: "white",
-    flexDirection: "row",
-    justifyContent: "center",
-    borderColor: "#DDD",
+    width:'100%', height:140, 
+    backgroundColor:'white', 
+    flexDirection: 'row', 
+    justifyContent: 'center',
+    borderColor: '#DDD',
     borderWidth: 1,
-    borderRadius: 10,
+    borderRadius: 10, 
   },
   imageContainer: {
-    width: 140,
-    height: 140,
-    justifyContent: "center",
-    alignItems: "center",
+    width:140, height:140, 
+    justifyContent: 'center', 
+    alignItems: 'center',
   },
-  image: {
-    width: "80%",
-    height: "80%",
-    borderRadius: 10,
-    borderColor: "#ddd",
+  image:{
+    width:'80%', 
+    height:'80%',
+    borderRadius: 10, 
+    borderColor: '#ddd',
     borderWidth: 1,
   },
   contentContainer: {
-    flex: 1,
-    flexDirection: "column",
+    flex:1,
+    flexDirection: 'column',
   },
-  textContent: {
+  textContent:{
     flex: 1,
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
     paddingLeft: 15,
   },
-
-  textContent: {
+  
+  textContent:{
     flex: 1,
-    justifyContent: "center",
+    justifyContent: 'center',
     paddingLeft: 15,
   },
-  nameText: {
+  nameText:{
     fontSize: 22,
     fontWeight: "700",
   },
-  contentText: {
+  contentText:{
     fontSize: 16,
     fontWeight: "400",
   },
