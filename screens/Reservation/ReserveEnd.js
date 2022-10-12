@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Image, Text } from "react-native";
 
+import getReserveStyle from "../../styles/screens/ReserveEndStyle";
+
 function ReserveEndScreen({ navigation }) {
   useEffect(() => {
     setTimeout(() => GoToHomeScreen(), 1500);
@@ -11,23 +13,11 @@ function ReserveEndScreen({ navigation }) {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.endHeader}>예약이 완료되었습니다.</Text>
+    <View style={getReserveStyle.container}>
+      <Text style={getReserveStyle.endHeader}>예약이 완료되었습니다.</Text>
       <Text>5분 후까지 오지 않을 시 자동취소됩니다.</Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  endHeader: {
-    fontSize: 30,
-  },
-});
 
 export default ReserveEndScreen;

@@ -8,11 +8,14 @@ import {
   TouchableHighlight,
 } from "react-native";
 
+import getCafeTableStyle from "../../styles/components/CafeTableStyle";
+import getFindStyle from "../../styles/components/FindStyle";
+
 function FindScreen({ navigation }) {
   return (
-    <View style={FindStyles.container}>
-      <View style={FindStyles.topContainer}></View>
-      <View style={FindStyles.contentContainer}>
+    <View style={getFindStyle.container}>
+      <View style={{ flex: 0.3, backgroundColor: "#ccc" }}></View>
+      <View style={getFindStyle.contentContainer}>
         <ScrollView>
           <CafeTable
             name={"스타벅스"}
@@ -69,98 +72,34 @@ function FindScreen({ navigation }) {
   );
 }
 
-const FindStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  topContainer: {
-    flex: 1,
-    backgroundColor: "#ccc",
-  },
-  contentContainer: {
-    flex: 4,
-    backgroundColor: "#fff",
-  },
-});
-
 function CafeTable(props) {
   const [cafeName, setCafeName] = useState(props.name);
   const [cafeLocation, setCafeLocation] = useState(props.location);
   const [cafeInformation, setCafeInformaion] = useState(props.information);
   return (
     <TouchableHighlight
-      style={CafeTableStyles.container}
+      style={getCafeTableStyle.container}
       onPress={() => props.navigation.navigate("Information")}
       activeOpacity={0.5}
       underlayColor="#DDDDDD"
     >
       <>
-        <View style={CafeTableStyles.imageContainer}>
-          <View style={CafeTableStyles.image}>
+        <View style={getCafeTableStyle.imageContainer}>
+          <View style={getCafeTableStyle.image}>
             <Image />
             {/*이지지 삽입*/}
           </View>
         </View>
-        <View style={CafeTableStyles.contentContainer}>
-          <View style={CafeTableStyles.textContent}>
-            <Text style={CafeTableStyles.nameText}>{cafeName}</Text>
-            <Text style={CafeTableStyles.contentText}>{cafeLocation}</Text>
-            <Text style={CafeTableStyles.contentText}>{cafeInformation}</Text>
+        <View style={getCafeTableStyle.contentContainer}>
+          <View style={getCafeTableStyle.textContent}>
+            <Text style={getCafeTableStyle.nameText}>{cafeName}</Text>
+            <Text style={getCafeTableStyle.contentText}>{cafeLocation}</Text>
+            <Text style={getCafeTableStyle.contentText}>{cafeInformation}</Text>
           </View>
         </View>
       </>
     </TouchableHighlight>
   );
 }
-
-const CafeTableStyles = StyleSheet.create({
-  container: {
-    width: "100%",
-    height: 140,
-    backgroundColor: "white",
-    flexDirection: "row",
-    justifyContent: "center",
-    borderColor: "#DDD",
-    borderWidth: 1,
-    borderRadius: 10,
-  },
-  imageContainer: {
-    width: 140,
-    height: 140,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  image: {
-    width: "80%",
-    height: "80%",
-    borderRadius: 10,
-    borderColor: "#ddd",
-    borderWidth: 1,
-  },
-  contentContainer: {
-    flex: 1,
-    flexDirection: "column",
-  },
-  textContent: {
-    flex: 1,
-    justifyContent: "flex-end",
-    paddingLeft: 15,
-  },
-
-  textContent: {
-    flex: 1,
-    justifyContent: "center",
-    paddingLeft: 15,
-  },
-  nameText: {
-    fontSize: 22,
-    fontWeight: "700",
-  },
-  contentText: {
-    fontSize: 16,
-    fontWeight: "400",
-  },
-});
 
 export default FindScreen;
