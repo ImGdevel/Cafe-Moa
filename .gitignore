@@ -1,4 +1,6 @@
 node_modules/
+.package.json
+.package-lock.json
 .expo/
 .env/
 dist/
@@ -10,7 +12,8 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
-.env
+
+
 
 # macOS
 .DS_Store
