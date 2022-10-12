@@ -1,46 +1,77 @@
-import React from 'react';
+import React, { useState, createRef } from 'react';
 import {
   StyleSheet,
   View,
   Text,
-  Image,
   TouchableOpacity,
   TextInput,
   KeyboardAvoidingView,
 } from 'react-native';
+import { SignInUserAccount } from '../../lib/Auth';
 
 function LogInScreen({navigation}) {
+  const [UserId,setUserId] = useState("");
+  const [userPassword,setUserPassword] = useState("");
+  const [errorText, setErrorText] = useState("");
+
+  const idInputRef = createRef();
+  const passwordInputRef = createRef();
 
     function GoToRgisterScreen(){
       navigation.navigate('Register')
     }
     function GoToHomeScreen(){
-      navigation.navigate('InApp')
+      navigation.replace('InApp')
     }
 
+    function onSubmit(){
+      SignInUserAccount(UserId,userPassword).then(()=>{
+        GoToHomeScreen()
+      }).catch(()=>{})
+    }
+    
   return (
     <KeyboardAvoidingView style={styles.container} >
-      <View style={{flex: 1}}></View>
+      <View style={{flex: 3}}></View>
       <View style={styles.contentArea}>
         <View style={styles.titleText}><Text style={{ fontWeight: "900", fontSize: 50 }}> M O A </Text></View>
         <View style={styles.subTitleText}><Text style={{ fontWeight: "600", fontSize: 30 }}> Login </Text></View>
-
         <View style={styles.formArea}>
-          <TextInput style={styles.textBox} placeholder={'아이디'}></TextInput>
-          <TextInput style={styles.textBox} placeholder={'비밀번호'}></TextInput>
+          <TextInput
+             ref={idInputRef}
+             style={styles.textInput}
+             placeholder={'아이디'}
+             onChangeText={(userId) => setUserId(userId)}
+             autoCapitalize="none"
+             blurOnSubmit={false}
+             returnKeyType="next"
+             onSubmitEditing={() =>
+             emailInputRef.current && emailInputRef.current.focus()
+          }/>
+          <TextInput
+             ref={passwordInputRef}
+             style={styles.textInput}
+             placeholder={'비밀번호'}
+             onChangeText={(userPassword) => setUserPassword(userPassword)}
+             secureTextEntry={true}
+             autoCapitalize="none"
+          /> 
         </View> 
-
+        <Text>{errorText}</Text>
         <View style={styles.btnArea}>
-          <TouchableOpacity style={styles.btnLogin} onPress = {GoToHomeScreen}>
+          <TouchableOpacity style={styles.btnLogin} onPress = {onSubmit}>
             <Text style={{ color: 'white', fontSize: 20,}}>로그인</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.btnRegister} onPress = {GoToRgisterScreen}>
             <Text style={{ color: 'black', fontSize: 20, }}>회원가입</Text>
           </TouchableOpacity>
+          <TouchableOpacity style={styles.btnRegister} onPress = {GoToHomeScreen}>
+            <Text style={{ color: 'black', fontSize: 20, }}>관리자 권한 입장</Text>
+          </TouchableOpacity>
         </View>
 
       </View>
-      <View style={{flex: 1}}></View>
+      <View style={{flex: 4}}></View>
     </KeyboardAvoidingView>
   );
 }
@@ -102,7 +133,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 20,
   },
-  textBox: {
+  textInput: {
     marginVertical: 5,
     width: '100%',
     height: 60,
