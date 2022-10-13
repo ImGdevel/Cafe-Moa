@@ -3,6 +3,7 @@ import { Button, View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity,
 
 function HomeScreen({ navigation }) {
 
+  
   function NearbyCafe(){
     //navigation.navigate()
   };

@@ -7,7 +7,8 @@ import {
   TextInput,
   KeyboardAvoidingView,
 } from 'react-native';
-import { dbService } from '../../FireServer';
+import { dbService, MyDatabase } from '../../FireServer';
+import { createCafe, createCafe2 } from '../../lib/Database';
 
 function InPutDataScreen({navigation}) {
   const [cafeName,setcafeName] = useState("");
@@ -15,20 +16,51 @@ function InPutDataScreen({navigation}) {
   const [cafeImfo,setcafeImfo] = useState("");
   const [errorText,setErrorText] = useState("");
   
-
   const cafeNameInputRef = createRef();
   const cafeLocationInputRef = createRef();
   const cafeImfoInputRef = createRef();
-  
+
   function GoToHomeScreen(){
     navigation.navigate('InApp')
   }
-  const onSubmitApplication = async() =>{
+
+  const onSubmitApplication2 = async() =>{
     await dbService.collection("CafeData").add({
         cafeName,
         cafeLocation,
         cafeImfo,
     })
+  }
+
+  const onSubmitApplication = async() =>{
+    await dbService.collection("CafeData").doc('dada').collection('user').add({
+        cafeName,
+        cafeLocation,
+        cafeImfo,
+    })
+  }
+
+  useEffect(()=>{
+
+  },[])
+
+  const [cafeNames, setCafeNames] = useState([]);
+
+  const getDataBaseInData = async() =>{
+      const datas = await dbService.collection("CafeData").get();
+      datas.forEach((document)=>{
+        setCafeNames((prev)=>[document.data(),...prev])
+      })
+  }
+
+  const getDataBaseInData2 = async() =>{
+    dbService.collection("CafeData").onSnapshot((snapshot)=>{
+      const cafeArray = snapshot.docs.map((doc)=>({
+        ...doc.data(),
+      }));
+      
+    })
+    
   }
 
  
@@ -81,7 +113,9 @@ function InPutDataScreen({navigation}) {
           <Text style={{ color: 'white', fontSize: 20,}}> 회원가입 </Text>
         </TouchableOpacity>
       </View>
-
+        <View>
+          <Text>{}</Text>
+        </View>
     </View>
     <View style={{flex: 4}}></View>
   </KeyboardAvoidingView>

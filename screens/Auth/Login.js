@@ -68,6 +68,9 @@ function LogInScreen({navigation}) {
           <TouchableOpacity style={styles.btnRegister} onPress = {GoToHomeScreen}>
             <Text style={{ color: 'black', fontSize: 20, }}>관리자 권한 입장</Text>
           </TouchableOpacity>
+          <TouchableOpacity style={styles.btnRegister} onPress = {()=>{ navigation.replace('InPutData')}}>
+            <Text style={{ color: 'black', fontSize: 20, }}>관리자 권한 입장</Text>
+          </TouchableOpacity>
         </View>
 
       </View>
