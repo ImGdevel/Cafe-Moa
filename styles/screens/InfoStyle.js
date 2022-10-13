@@ -53,10 +53,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: "80%",
-    height: "80%",
+    width: 100,
+    height: 100,
     borderRadius: 10,
     borderColor: "#ddd",
+    justifyContent: "center",
+    alignItems: "center",
+    resizeMode: "contain",
     borderWidth: 1,
   },
   cafeLogo: {
@@ -74,7 +77,6 @@ const styles = StyleSheet.create({
   },
   picArea: {
     flex: 1,
-    justifyContent: "space-evenly",
     borderWidth: 1,
     borderColor: "#DDD",
     borderRadius: 10,
@@ -90,6 +92,10 @@ const styles = StyleSheet.create({
   btnContainer: {
     alignItems: "center",
     justifyContent: "center",
+  },
+  listContainer: {
+    marginHorizontal: "8%",
+    marginVertical: "10%",
   },
 });
 
