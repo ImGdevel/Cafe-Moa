@@ -37,46 +37,11 @@ const styles = StyleSheet.create({
     marginLeft: "10%",
   },
 
-  btnOption: {
+  btn: {
     width: Dimensions.get("window").width,
     height: "15%",
+    margin: "1%",
     borderTopWidth: 1,
-    borderBottomWidth: 0.5,
-    borderColor: "black",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-    fontSize: 20,
-  },
-
-  btnEditProfile: {
-    width: Dimensions.get("window").width,
-    height: "15%",
-    borderTopWidth: 0.5,
-    borderBottomWidth: 0.5,
-    borderColor: "black",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-    fontSize: 20,
-  },
-
-  btnLogout: {
-    width: Dimensions.get("window").width,
-    height: "15%",
-    borderTopWidth: 0.5,
-    borderBottomWidth: 0.5,
-    borderColor: "black",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-    fontSize: 20,
-  },
-
-  btnDeleteAccount: {
-    width: Dimensions.get("window").width,
-    height: "15%",
-    borderTopWidth: 0.5,
     borderBottomWidth: 1,
     borderColor: "black",
     justifyContent: "center",

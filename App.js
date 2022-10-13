@@ -38,7 +38,11 @@ export default function App() {
           {() => (
             <Stack.Navigator screenOptions={{ headerShown: false }}>
               <Stack.Screen name="Home" component={HomeScreen} />
-              <Stack.Screen name="MyPage" component={MyPageScreen} />
+              <Stack.Screen
+                name="MyPage"
+                component={MyPageScreen}
+                options={{ headerShown: true }}
+              />
               <Stack.Screen name="Cafe">{CafeNavigation}</Stack.Screen>
             </Stack.Navigator>
           )}
@@ -61,8 +65,8 @@ const Auth = () => {
         component={RegisterScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen 
-        name="InPutData" 
+      <Stack.Screen
+        name="InPutData"
         component={InPutDataScreen}
         options={{ headerShown: false }}
       />
