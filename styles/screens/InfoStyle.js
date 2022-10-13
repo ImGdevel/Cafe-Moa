@@ -41,11 +41,6 @@ const styles = StyleSheet.create({
   selectedLabel: {
     color: "white",
   },
-  label: {
-    textAlign: "center",
-    marginBottom: 10,
-    fontSize: 24,
-  },
   imageContainer: {
     width: 140,
     height: 140,
@@ -73,7 +68,7 @@ const styles = StyleSheet.create({
   },
   seatPic: {
     width: "100%",
-    height: "100%",
+    height: "75%",
   },
   picArea: {
     flex: 1,

@@ -57,6 +57,10 @@ const imgArr = [
     idx: "11",
     src: require("../../img/coffeebayLogo_test.jpg"),
   },
+  {
+    idx: "12",
+    src: require("../../img/anySeatPic_text.png"),
+  },
 ];
 
 function InformationScreen({ navigation }) {
@@ -81,6 +85,7 @@ function InformationScreen({ navigation }) {
             selectedValue={direction}
             values={["사진", "좌석"]}
             setSelectedValue={setDirection}
+            comp="display"
             style={getInfoStyle.contentLayout}
           >
             <FlatList
@@ -154,14 +159,14 @@ function CafeTable(props) {
 }
 
 const PreviewLayout = ({
-  label,
+  comp,
   children,
   values,
   selectedValue,
   setSelectedValue,
 }) => (
   <View style={{ padding: 10, flex: 1 }}>
-    <Text style={getInfoStyle.label}>{label}</Text>
+    <Text style={{ marginBottom: 10, fontSize: 24 }}></Text>
     <View style={getInfoStyle.row}>
       {values.map((value) => (
         <TouchableOpacity
@@ -183,9 +188,19 @@ const PreviewLayout = ({
         </TouchableOpacity>
       ))}
     </View>
-    <View style={[getInfoStyle.container, { [label]: selectedValue }]}>
-      {children}
-    </View>
+    {(() => {
+      if (selectedValue === "사진")
+        return <View style={getInfoStyle.container}>{children}</View>;
+      else
+        return (
+          <View style={{ alignItems: "center", justifyContent: "center" }}>
+            <Image
+              source={require("../../img/anySeatPic_text.png")}
+              style={getInfoStyle.seatPic}
+            />
+          </View>
+        );
+    })()}
   </View>
 );
 
