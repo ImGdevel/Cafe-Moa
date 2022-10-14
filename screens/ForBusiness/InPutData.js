@@ -8,6 +8,8 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import { dbService } from '../../FireServer';
+import { CafeData } from '../../lib/CafeData';
+import { CafeGrape } from '../../lib/DataStructure';
 
 function InPutDataScreen({navigation}) {
   const [cafeName,setcafeName] = useState("");
@@ -19,21 +21,25 @@ function InPutDataScreen({navigation}) {
 
 
   const [cafeDatas, setCafeDatas] = useState([]); //가져와질 데이터
-
+  const [cafeClass, setCafeClass] = useState([]);
   useEffect(()=>{
     //화면 시작시 실행
   },[])
 
   const Button1 = () =>{
-    onSubmitApplication({cafeName,cafeLocation, cafeImfo});
+    //onSubmitApplication({cafeName,cafeLocation, cafeImfo});
+    let datas = new Array();
+    const data = new CafeData("스타벅스", "스타벅스", "처인구","처인구");
+    setCafeClass([data,data])
   }
   const Button2 = () =>{
-    getDataBaseInData2()
+    //getDataBaseInData2()
+    console.log(cafeClass[0].name);
   }
   const Button3 = () =>{
-    console.log(cafeDatas)
-    console.log(cafeDatas[0])
-    console.log(cafeDatas[cafeDatas.length-1])
+    //console.log(cafeDatas)
+    //console.log(cafeDatas[0])
+    //console.log(cafeDatas[cafeDatas.length-1])
   }
 
   //데이터 넣는 메서드
