@@ -7,63 +7,72 @@ import {
   TextInput,
   KeyboardAvoidingView,
 } from 'react-native';
-import { dbService, MyDatabase } from '../../FireServer';
-import { createCafe, createCafe2 } from '../../lib/Database';
+import { dbService } from '../../FireServer';
 
 function InPutDataScreen({navigation}) {
   const [cafeName,setcafeName] = useState("");
   const [cafeLocation,setcafeLocation] = useState("");
   const [cafeImfo,setcafeImfo] = useState("");
-  const [errorText,setErrorText] = useState("");
-  
   const cafeNameInputRef = createRef();
   const cafeLocationInputRef = createRef();
   const cafeImfoInputRef = createRef();
 
-  function GoToHomeScreen(){
-    navigation.navigate('InApp')
-  }
 
-  const onSubmitApplication2 = async() =>{
-    await dbService.collection("CafeData").add({
-        cafeName,
-        cafeLocation,
-        cafeImfo,
-    })
-  }
-
-  const onSubmitApplication = async() =>{
-    await dbService.collection("CafeData").doc('dada').collection('user').add({
-        cafeName,
-        cafeLocation,
-        cafeImfo,
-    })
-  }
+  const [cafeDatas, setCafeDatas] = useState([]); //가져와질 데이터
 
   useEffect(()=>{
-
+    //화면 시작시 실행
   },[])
 
-  const [cafeNames, setCafeNames] = useState([]);
+  const Button1 = () =>{
+    onSubmitApplication({cafeName,cafeLocation, cafeImfo});
+  }
+  const Button2 = () =>{
+    getDataBaseInData2()
+  }
+  const Button3 = () =>{
+    console.log(cafeDatas)
+    console.log(cafeDatas[0])
+    console.log(cafeDatas[cafeDatas.length-1])
+  }
 
-  const getDataBaseInData = async() =>{
-      const datas = await dbService.collection("CafeData").get();
-      datas.forEach((document)=>{
-        setCafeNames((prev)=>[document.data(),...prev])
+  //데이터 넣는 메서드
+  const onSubmitApplication = async({_cafeName,_cafeLocation, _cafeImfo}) =>{
+      await dbService.collection("CafeData").add({
+        name: _cafeName,
+        location: _cafeLocation,
+        info: _cafeImfo,
       })
   }
 
+  //샘플: 컬렉션 안에 컬렉션에 데이터 넣는 메서드
+  const onSubmitApplication2 = async(_cafeName,_cafeLocation, _cafeImfo ) =>{
+    await dbService.collection("CafeData").doc('dada').collection('user').add({
+        name: _cafeName,
+        location: _cafeLocation,
+        info: _cafeImfo,
+    })
+  }
+
+
+  //데이터 가져오기1
+  const getDataBaseInData = async() =>{
+      const datas = await dbService.collection("CafeData").get();
+      datas.forEach((document)=>{
+        setCafeDatas((prev)=>[document.data(),...prev])
+      })
+  }
+
+  //데이터 가져오기2
   const getDataBaseInData2 = async() =>{
     dbService.collection("CafeData").onSnapshot((snapshot)=>{
       const cafeArray = snapshot.docs.map((doc)=>({
         ...doc.data(),
-      }));
-      
-    })
-    
+      }));   
+      setCafeDatas(cafeArray)
+    })    
   }
 
- 
   return (
   <KeyboardAvoidingView style={styles.container} >
     <View style={{flex: 3}}></View>
@@ -103,14 +112,18 @@ function InPutDataScreen({navigation}) {
           autoCapitalize="none"
         />
 
-        <Text style={styles.errorText}>{errorText}</Text>
       </View>
       <View style={styles.btnArea}>
-        <TouchableOpacity 
-          style={styles.btnLogin} 
-          onPress = {onSubmitApplication}
-        >
-          <Text style={{ color: 'white', fontSize: 20,}}> 회원가입 </Text>
+        <TouchableOpacity style={styles.btnLogin} onPress = {Button1}>
+          <Text style={{ color: 'white', fontSize: 20,}}> 데이터 넣기 </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.btnLogin} onPress = {Button2}>
+          <Text style={{ color: 'white', fontSize: 20,}}> 데이터 가져오기 </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.btnLogin} onPress = {Button3}>
+          <Text style={{ color: 'white', fontSize: 20,}}> 콘솔창에 출력하기 </Text>
         </TouchableOpacity>
       </View>
         <View>
