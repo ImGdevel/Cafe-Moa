@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import Modal from "react-native-modal";
 import { Picker } from "@react-native-picker/picker";
 
