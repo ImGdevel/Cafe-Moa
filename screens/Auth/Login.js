@@ -21,7 +21,7 @@ function LogInScreen({navigation}) {
       navigation.navigate('Register')
     }
     function GoToHomeScreen(){
-      navigation.replace('InApp')
+      navigation.navigate('InApp')
     }
 
     function onSubmit(){
@@ -46,7 +46,7 @@ function LogInScreen({navigation}) {
              blurOnSubmit={false}
              returnKeyType="next"
              onSubmitEditing={() =>
-             emailInputRef.current && emailInputRef.current.focus()
+              passwordInputRef.current && passwordInputRef.current.focus()
           }/>
           <TextInput
              ref={passwordInputRef}
@@ -68,7 +68,7 @@ function LogInScreen({navigation}) {
           <TouchableOpacity style={styles.btnRegister} onPress = {GoToHomeScreen}>
             <Text style={{ color: 'black', fontSize: 20, }}>관리자 권한 입장</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.btnRegister} onPress = {()=>{ navigation.replace('InPutData')}}>
+          <TouchableOpacity style={styles.btnRegister} onPress = {()=>{ navigation.navigate('InPutData')}}>
             <Text style={{ color: 'black', fontSize: 20, }}>데이터 관리</Text>
           </TouchableOpacity>
         </View>

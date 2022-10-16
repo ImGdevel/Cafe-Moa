@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import { dbService } from '../../FireServer';
+import { getUserId, getUserIds, signOut } from '../../lib/Auth';
 import { CafeData } from '../../lib/CafeData';
 import { addCafeDatabase, getCafeDatabase, updateCafeDatabase } from '../../lib/Database';
 
@@ -18,7 +19,6 @@ function InPutDataScreen({navigation}) {
   const cafeNameInputRef = createRef();
   const cafeLocationInputRef = createRef();
   const cafeImfoInputRef = createRef();
-
 
   const [cafeDatas, setCafeDatas] = useState([]); //가져와질 데이터
   const [cafeClass, setCafeClass] = useState([]);
@@ -32,47 +32,10 @@ function InPutDataScreen({navigation}) {
     addCafeDatabase(cafeData); 
   }
   const Button2 = () =>{
-
+    getUserIds();
   }
   const Button3 = () =>{
-
-  }
-
-  //데이터 넣는 메서드
-  const onSubmitApplication = async({_cafeName,_cafeLocation, _cafeImfo}) =>{
-      await dbService.collection("CafeData").add({
-        name: _cafeName,
-        location: _cafeLocation,
-        info: _cafeImfo,
-      })
-  }
-
-  //샘플: 컬렉션 안에 컬렉션에 데이터 넣는 메서드
-  const onSubmitApplication2 = async(_cafeName,_cafeLocation, _cafeImfo ) =>{
-    await dbService.collection("CafeData").doc('dada').collection('user').add({
-        name: _cafeName,
-        location: _cafeLocation,
-        info: _cafeImfo,
-    })
-  }
-
-
-  //데이터 가져오기1
-  const getDataBaseInData = async() =>{
-      const datas = await dbService.collection("CafeData").get();
-      datas.forEach((document)=>{
-        setCafeDatas((prev)=>[document.data(),...prev])
-      })
-  }
-
-  //데이터 가져오기2
-  const getDataBaseInData2 = async() =>{
-    dbService.collection("CafeData").onSnapshot((snapshot)=>{
-      const cafeArray = snapshot.docs.map((doc)=>({
-        ...doc.data(),
-      }));   
-      setCafeDatas(cafeArray)
-    })    
+    signOut();
   }
 
   return (
