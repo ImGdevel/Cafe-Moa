@@ -28,23 +28,14 @@ function InPutDataScreen({navigation}) {
 
   const Button1 = () =>{
     //onSubmitApplication({cafeName,cafeLocation, cafeImfo});
-    const cafeData = new CafeData("스타벅스","스타벅스",{latitude:"11312312", longitude:"3123412312"},"처인구",32);
-   
-    console.log(cafeData);
-    
-    addCafeDatabase(cafeData).then((da)=>{
-      console.log(da.id);
-    }
-
-    )
+    const cafeData = new CafeData(cafeName,cafeName,{latitude:"11312312", longitude:"3123412312"},cafeLocation,32);
+    addCafeDatabase(cafeData); 
   }
   const Button2 = () =>{
-    //getDataBaseInData2()
-    updateCafeDatabase(1);
 
   }
   const Button3 = () =>{
-    getCafeDatabase();
+
   }
 
   //데이터 넣는 메서드
