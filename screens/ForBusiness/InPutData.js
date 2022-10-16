@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { dbService } from '../../FireServer';
 import { CafeData } from '../../lib/CafeData';
-import { CafeGrape } from '../../lib/DataStructure';
+import { addCafeDatabase, getCafeDatabase, updateCafeDatabase } from '../../lib/Database';
 
 function InPutDataScreen({navigation}) {
   const [cafeName,setcafeName] = useState("");
@@ -28,18 +28,23 @@ function InPutDataScreen({navigation}) {
 
   const Button1 = () =>{
     //onSubmitApplication({cafeName,cafeLocation, cafeImfo});
-    let datas = new Array();
-    const data = new CafeData("스타벅스", "스타벅스", "처인구","처인구");
-    setCafeClass([data,data])
+    const cafeData = new CafeData("스타벅스","스타벅스",{latitude:"11312312", longitude:"3123412312"},"처인구",32);
+   
+    console.log(cafeData);
+    
+    addCafeDatabase(cafeData).then((da)=>{
+      console.log(da.id);
+    }
+
+    )
   }
   const Button2 = () =>{
     //getDataBaseInData2()
-    console.log(cafeClass[0].name);
+    updateCafeDatabase(1);
+
   }
   const Button3 = () =>{
-    //console.log(cafeDatas)
-    //console.log(cafeDatas[0])
-    //console.log(cafeDatas[cafeDatas.length-1])
+    getCafeDatabase();
   }
 
   //데이터 넣는 메서드
