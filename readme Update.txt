@@ -9,5 +9,5 @@ npm install react-native-picker/picker --save
 //react-native-modal 라이브러리
 npm install react-native-modal
 
-
-
+//이미지 추가
+npx expo install expo-image-picker
