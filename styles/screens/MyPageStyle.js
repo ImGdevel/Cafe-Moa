@@ -12,14 +12,17 @@ const styles = StyleSheet.create({
 
   contentContainer: {
     flex: 1,
-    flexDirection: "column",
     width: "100%",
+    alignItems: "center",
+    justifyContent: "flex-start",
   },
 
   upContentContainer: {
     flex: 0.4,
     flexDirection: "row",
-    marginBottom: "30%",
+    marginBottom: "5%",
+    borderBottomColor: "gray",
+    borderBottomWidth: 1,
   },
 
   myPageText: {
@@ -30,7 +33,7 @@ const styles = StyleSheet.create({
     marginTop: "7%",
     marginLeft: "7%",
     width: "30%",
-    height: "74%",
+    height: "63%",
   },
 
   idText: {
@@ -40,23 +43,23 @@ const styles = StyleSheet.create({
   },
 
   btn: {
-    backgroundColor: "#7AF67A",
+    backgroundColor: "#147814",
     borderWidth: 1,
     borderColor: "black",
     alignItems: "center",
     justifyContent: "center",
     margin: 5,
     height: "20%",
-    width: "100%",
+    width: "93%",
     borderRadius: 5,
   },
   infoBtn: {
-    backgroundColor: "#7AF67A",
+    backgroundColor: "#147814",
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
     borderColor: "black",
-    height: "40%",
+    height: "30%",
     width: "100%",
     borderRadius: 5,
   },
