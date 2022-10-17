@@ -63,7 +63,7 @@ function MyPageScreen({ navigation }) {
           style={getMyPageStyle.btn}
           onPress={GoToDeleteAccountScreen}
         >
-          <Text style={{ color: "black", fontSize: 20 }}>회원탈퇴</Text>
+          <Text style={{ color: "red", fontSize: 20 }}>회원탈퇴</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
