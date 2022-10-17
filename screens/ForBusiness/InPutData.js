@@ -32,7 +32,7 @@ function InPutDataScreen({navigation}) {
     addCafeDatabase(cafeData); 
   }
   const Button2 = () =>{
-    getUserIds();
+    getUserId();
   }
   const Button3 = () =>{
     signOut();
