@@ -62,7 +62,7 @@ function RegisterScreen({ navigation }) {
     onHideUnderlay: () => setIsPress(false),
     onShowUnderlay: () => setIsPress(true),
     onPress: () => {
-      onSubmit;
+      onSubmitApplication;
     }, // <-- "onPress" is apparently required
   };
 
