@@ -119,7 +119,7 @@ function RegisterScreen({ navigation }) {
             style={getRegisterStyle.btnLogin}
             onPress={onSubmitApplication}
           >
-            <Text style={{ color: "white", fontSize: 20 }}> 회원가입 </Text>
+            <Text style={{ color: "black", fontSize: 20 }}> 회원가입 </Text>
           </TouchableOpacity>
         </View>
       </View>

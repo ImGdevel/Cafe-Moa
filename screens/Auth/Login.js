@@ -68,19 +68,19 @@ function LogInScreen({ navigation }) {
         <Text>{errorText}</Text>
         <View style={getLoginStyle.btnArea}>
           <TouchableOpacity style={getLoginStyle.btnLogin} onPress={onSubmit}>
-            <Text style={{ color: "white", fontSize: 20 }}>로그인</Text>
+            <Text style={{ color: "black", fontSize: 20 }}>로그인</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={getLoginStyle.btnRegister}
             onPress={GoToRgisterScreen}
           >
-            <Text style={{ color: "black", fontSize: 20 }}>회원가입</Text>
+            <Text style={{ color: "#ccc", fontSize: 20 }}>회원가입</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={getLoginStyle.btnRegister}
             onPress={GoToHomeScreen}
           >
-            <Text style={{ color: "black", fontSize: 20 }}>
+            <Text style={{ color: "#ccc", fontSize: 20 }}>
               관리자 권한 입장
             </Text>
           </TouchableOpacity>
