@@ -37,7 +37,7 @@ function InPutDataScreen({navigation}) {
   const Button3 = () =>{
     signOut();
   }
-
+  
 
   // 
   // 자료구조 -> database 배열 
