@@ -5,21 +5,22 @@ const styles = StyleSheet.create({
     flex: 3,
     width: "100%",
     height: "100%",
-    backgroundColor: "#fff",
+    backgroundColor: "#ccc",
     flexDirection: "column",
     alignSelf: "center",
   },
 
   contentContainer: {
     flex: 1,
+    backgroundColor: "#ccc",
     width: "100%",
-    alignItems: "center",
     justifyContent: "flex-start",
   },
 
   upContentContainer: {
     flex: 0.4,
     flexDirection: "row",
+    backgroundColor: "white",
     marginBottom: "5%",
     borderBottomColor: "gray",
     borderBottomWidth: 1,
@@ -43,18 +44,16 @@ const styles = StyleSheet.create({
   },
 
   btn: {
-    backgroundColor: "#147814",
-    borderWidth: 1,
-    borderColor: "black",
-    alignItems: "center",
+    borderBottomWidth: 1,
+    backgroundColor: "white",
+    borderColor: "gray",
+    paddingLeft: "5%",
     justifyContent: "center",
-    margin: 5,
-    height: "20%",
-    width: "93%",
-    borderRadius: 5,
+    height: "15%",
+    width: "100%",
   },
   infoBtn: {
-    backgroundColor: "#147814",
+    backgroundColor: "#001D44",
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
@@ -62,6 +61,10 @@ const styles = StyleSheet.create({
     height: "30%",
     width: "100%",
     borderRadius: 5,
+  },
+  bottomContainer: {
+    flex: 1,
+    backgroundColor: "#ccc",
   },
 });
 

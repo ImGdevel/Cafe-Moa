@@ -31,10 +31,6 @@ function MyPageScreen({ navigation }) {
 
   return (
     <KeyboardAvoidingView style={getMyPageStyle.container}>
-      {/*___<View style={getMyPageStyle.myPageText}>
-        <Text style={{ fontWeight: "450", fontSize: 20 }}>마이페이지</Text>
-  </View>___*/}
-
       <View style={getMyPageStyle.upContentContainer}>
         <View style={getMyPageStyle.profilePicture}>
           <Image
@@ -50,7 +46,7 @@ function MyPageScreen({ navigation }) {
             style={getMyPageStyle.infoBtn}
             onPress={GoToEditProfileScreen}
           >
-            <Text style={{ color: "black", fontSize: 20 }}>개인정보변경</Text>
+            <Text style={{ color: "white", fontSize: 20 }}> 개인정보변경</Text>
           </TouchableOpacity>
         </View>
       </View>
