@@ -3,14 +3,17 @@ import { StyleSheet, Dimensions } from "react-native";
 const styles = StyleSheet.create({
   container: {
     flex: 3,
+    width: "100%",
+    height: "100%",
     backgroundColor: "#fff",
-    alignItems: "center",
     flexDirection: "column",
+    alignSelf: "center",
   },
 
   contentContainer: {
     flex: 1,
     flexDirection: "column",
+    width: "100%",
   },
 
   upContentContainer: {
@@ -24,30 +27,38 @@ const styles = StyleSheet.create({
   },
 
   profilePicture: {
-    marginTop: "10%",
-    marginLeft: "-30%",
+    marginTop: "7%",
+    marginLeft: "7%",
     width: "30%",
-    height: "64%",
-    borderRadius: 75,
-    backgroundColor: "white",
+    height: "74%",
   },
 
   idText: {
-    marginVertical: "20%",
+    marginVertical: "10%",
     marginLeft: "10%",
+    width: "50%",
   },
 
   btn: {
-    width: Dimensions.get("window").width,
-    height: "15%",
-    margin: "1%",
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
+    backgroundColor: "#7AF67A",
+    borderWidth: 1,
     borderColor: "black",
-    justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "white",
-    fontSize: 20,
+    justifyContent: "center",
+    margin: 5,
+    height: "20%",
+    width: "100%",
+    borderRadius: 5,
+  },
+  infoBtn: {
+    backgroundColor: "#7AF67A",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: "black",
+    height: "40%",
+    width: "100%",
+    borderRadius: 5,
   },
 });
 

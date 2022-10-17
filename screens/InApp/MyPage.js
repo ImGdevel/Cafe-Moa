@@ -36,12 +36,22 @@ function MyPageScreen({ navigation }) {
   </View>___*/}
 
       <View style={getMyPageStyle.upContentContainer}>
-        <Image
-          style={getMyPageStyle.profilePicture}
-          source={require("../../img/initialProfile.jpg")}
-        ></Image>
+        <View style={getMyPageStyle.profilePicture}>
+          <Image
+            style={{ width: "100%", height: "100%" }}
+            source={require("../../img/initialProfile.jpg")}
+          ></Image>
+        </View>
         <View style={getMyPageStyle.idText}>
-          <Text style={{ fontWeight: "400", fontSize: 20 }}>userId</Text>
+          <Text style={{ fontWeight: "400", fontSize: 20 }}>성 이름</Text>
+          <Text style={{ fontWeight: "400", fontSize: 20 }}>userID</Text>
+          <Text></Text>
+          <TouchableOpacity
+            style={getMyPageStyle.infoBtn}
+            onPress={GoToEditProfileScreen}
+          >
+            <Text style={{ color: "black", fontSize: 20 }}>개인정보변경</Text>
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -49,12 +59,7 @@ function MyPageScreen({ navigation }) {
         <TouchableOpacity style={getMyPageStyle.btn} onPress={GoToOptionScreen}>
           <Text style={{ color: "black", fontSize: 20 }}>옵션</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={getMyPageStyle.btn}
-          onPress={GoToEditProfileScreen}
-        >
-          <Text style={{ color: "black", fontSize: 20 }}>개인정보변경</Text>
-        </TouchableOpacity>
+
         <TouchableOpacity style={getMyPageStyle.btn} onPress={GoToLogoutScreen}>
           <Text style={{ color: "black", fontSize: 20 }}>로그아웃</Text>
         </TouchableOpacity>
