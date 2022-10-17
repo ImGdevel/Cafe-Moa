@@ -85,7 +85,6 @@ function InformationScreen({ navigation }) {
             selectedValue={direction}
             values={["사진", "좌석"]}
             setSelectedValue={setDirection}
-            comp="display"
             style={getInfoStyle.contentLayout}
           >
             <FlatList
@@ -159,7 +158,6 @@ function CafeTable(props) {
 }
 
 const PreviewLayout = ({
-  comp,
   children,
   values,
   selectedValue,

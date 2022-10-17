@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginBottom: 5,
     width: "80%",
+    height: 40,
   },
   btnContainer: {
     alignItems: "center",
