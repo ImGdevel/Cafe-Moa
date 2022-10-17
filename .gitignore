@@ -1,6 +1,5 @@
 node_modules/
 .expo/
-.idea/
 *.json
 dist/
 npm-debug.*
