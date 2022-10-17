@@ -38,6 +38,20 @@ function InPutDataScreen({navigation}) {
     signOut();
   }
 
+
+  // 
+  // 자료구조 -> database 배열 
+  // set예약() -> 좌석 번호 시간  
+  // collection id.doc({ 
+        // 9시: 101010101010
+        // 10시: 183029292
+  //})
+  //
+  // 나중에 카페id -> id -> getSeatDateBase() -> [  9[381029] 10[128039] [1283908132]    ] -> 자료구조 -  
+  // 프론트 -> (?)
+  // 좌석
+  // 
+
   return (
   <KeyboardAvoidingView style={styles.container} >
     <View style={{flex: 3}}></View>
