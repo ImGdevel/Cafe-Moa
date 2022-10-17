@@ -32,13 +32,21 @@ const styles = StyleSheet.create({
     width: "75%",
     height: 100,
   },
-  btnLogin: {
+  btnNormal: {
     margin: 5,
     width: "100%",
     height: 60,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#ccc",
+  },
+  btnPress: {
+    margin: 5,
+    width: "100%",
+    height: 60,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#A0A0FF",
   },
   btnText: {
     color: "white",
