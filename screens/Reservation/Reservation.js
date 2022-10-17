@@ -7,7 +7,6 @@ import getReserveStyle from "../../styles/screens/ReserveStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
 import getModalStyle from "../../styles/components/ModalStyle";
-import { SeatData } from "../../lib/SeatData";
 import { ReservationData } from "../../lib/ReservationData";
 
 function ReservationScreen({ navigation }) {

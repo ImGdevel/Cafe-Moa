@@ -3,6 +3,14 @@
 //expo 버전 업데이트
 npm install -g expo-cli
 
+//firebase
+expo install firebase@8.2.3
+
+//네비게이션
+npm install @react-navigation/native
+npm install @react-navigation/native-stack
+npm install @react-navigation/bottom-tabs
+
 //react-native-picker 라이브러리
 npm install react-native-picker/picker --save
 
