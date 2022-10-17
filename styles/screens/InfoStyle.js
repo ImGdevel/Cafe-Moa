@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
   },
   contentLayout: {
     flex: 3,
-    backgroundColor: "blue",
   },
   box: {
     width: 50,
@@ -30,7 +29,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   selected: {
-    backgroundColor: "black",
+    backgroundColor: "#001D44",
     borderWidth: 0,
   },
   buttonLabel: {
@@ -77,7 +76,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   reserveButton: {
-    backgroundColor: "black",
+    backgroundColor: "#000069",
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 5,
