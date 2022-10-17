@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   reserveButton: {
-    backgroundColor: "#000069",
+    backgroundColor: "#001D44",
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 5,
