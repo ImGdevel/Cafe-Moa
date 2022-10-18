@@ -7,18 +7,12 @@ import getReserveStyle from "../../styles/screens/ReserveStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
 import getModalStyle from "../../styles/components/ModalStyle";
-import { SeatData } from "../../lib/SeatData";
 import { ReservationData } from "../../lib/ReservationData";
 
 function ReservationScreen({ navigation }) {
-  const [reservationDatas, setReservations] = useState("");
-
   const [selectedSeat, setSelectedSeat] = useState("1");
   const [modalVisible, setModalVisible] = useState(true);
   const [modalOutput, setModalOutput] = useState("Open Modal");
-
-  const seatData = new ReservationData(reservationTime, seatData);
-  addReservationDatabase(seatData);
 
   return (
     <View style={getReserveStyle.container}>

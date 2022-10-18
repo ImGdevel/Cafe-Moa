@@ -11,6 +11,8 @@ import { dbService } from '../../FireServer';
 import { getUserId, getUserIds, signOut } from '../../lib/Auth';
 import { CafeData } from '../../lib/CafeData';
 import { addCafeDatabase, getCafeDatabase, updateCafeDatabase } from '../../lib/Database';
+import { getReservation } from '../../lib/getRe';
+import { TimeTable } from '../../lib/ReversationDataStructure';
 
 function InPutDataScreen({navigation}) {
   const [cafeName,setcafeName] = useState("");
@@ -19,6 +21,8 @@ function InPutDataScreen({navigation}) {
   const cafeNameInputRef = createRef();
   const cafeLocationInputRef = createRef();
   const cafeImfoInputRef = createRef();
+  const [cafeTime, setCafeTime] = useState("");
+  const cafeTimeRef = createRef();
 
   const [cafeDatas, setCafeDatas] = useState([]); //가져와질 데이터
   const [cafeClass, setCafeClass] = useState([]);
@@ -32,7 +36,9 @@ function InPutDataScreen({navigation}) {
     addCafeDatabase(cafeData); 
   }
   const Button2 = () =>{
-    getUserId();
+    //getUserId(); //원래 예시
+    //getCafeDatabase(); //나중에 이거 사용 필요?
+    getReservation();
   }
   const Button3 = () =>{
     signOut();
@@ -40,7 +46,8 @@ function InPutDataScreen({navigation}) {
 
 
   // 
-  // 자료구조 -> database 배열 
+  // 1. 자료구조 -> database 배열로 넘기기
+  // 2. firebase에서 자료구조로 옮기기
   // set예약() -> 좌석 번호 시간  
   // collection id.doc({ 
         // 9시: 101010101010
@@ -90,6 +97,13 @@ function InPutDataScreen({navigation}) {
           onChangeText={(cafeImfo) => setcafeImfo(cafeImfo)}
           autoCapitalize="none"
         />
+        {/* <TextInput
+          ref={cafeImfoInputRef}
+          style={styles.textInput}
+          placeholder={'시간과 좌석번호'}
+          onChangeText={(cafeTime) => setcafeTime(cafeTime)}
+          autoCapitalize="none"
+        /> */}
 
       </View>
       <View style={styles.btnArea}>
