@@ -17,29 +17,54 @@ import InPutDataScreen from "./screens/ForBusiness/InPutData";
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
+const InApp = () => {
+  return (
+    <Tab.Navigator initialRouteName="홈">
+      <Tab.Screen name="카페" options={{ headerShown: false }}>
+        {() => (
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Cafe">{CafeNavigation}</Stack.Screen>
+          </Stack.Navigator>
+        )}
+      </Tab.Screen>
+      <Tab.Screen name="홈" options={{ headerShown: false }}>
+        {() => (
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Home" component={HomeScreen} />
+          </Stack.Navigator>
+        )}
+      </Tab.Screen>
+      <Tab.Screen name="마이페이지">
+        {() => (
+          <Stack.Navigator name="InApp" options={{ headerShown: true }}>
+            <Stack.Screen name="MyPage" component={MyPageScreen} />
+          </Stack.Navigator>
+        )}
+      </Tab.Screen>
+    </Tab.Navigator>
+  );
+};
+
 // 프로젝트 시작
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Start"
-          component={StartPageScreen}
-          options={{ headerShown: false }}
-        />
-        {/*______로그인 페이지________*/}
-        <Stack.Screen
-          name="Auth"
-          component={Auth}
-          options={{ headerShown: false }}
-        />
-        {/*____본격적으로 앱 내용________*/}
-        <Stack.Screen name="InApp" options={{ headerShown: false }}>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="로그인">
           {() => (
             <Stack.Navigator screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="Home" component={HomeScreen} />
-              <Stack.Screen name="MyPage" component={MyPageScreen} />
-              <Stack.Screen name="Cafe">{CafeNavigation}</Stack.Screen>
+              <Stack.Screen
+                name="Start"
+                component={StartPageScreen}
+                options={{ headerShown: false }}
+              />
+              {/*______로그인 페이지________*/}
+              <Stack.Screen
+                name="Auth"
+                component={Auth}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen name="InApp" component={InApp} />
             </Stack.Navigator>
           )}
         </Stack.Screen>
@@ -61,8 +86,8 @@ const Auth = () => {
         component={RegisterScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen 
-        name="InPutData" 
+      <Stack.Screen
+        name="InPutData"
         component={InPutDataScreen}
         options={{ headerShown: false }}
       />
