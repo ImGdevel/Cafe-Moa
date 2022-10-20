@@ -2,6 +2,7 @@ import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 import StartPageScreen from "./screens/Auth/StartPage";
 import LoginScreen from "./screens/Auth/Login";
@@ -20,21 +21,57 @@ const Stack = createNativeStackNavigator();
 const InApp = () => {
   return (
     <Tab.Navigator initialRouteName="홈">
-      <Tab.Screen name="카페" options={{ headerShown: false }}>
+      <Tab.Screen
+        name="카페"
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name="cafe-outline"
+              style={{ color: focused ? "#001D44" : "#ccc" }}
+              size={25}
+            />
+          ),
+          headerShown: false,
+        }}
+      >
         {() => (
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Cafe">{CafeNavigation}</Stack.Screen>
           </Stack.Navigator>
         )}
       </Tab.Screen>
-      <Tab.Screen name="홈" options={{ headerShown: false }}>
+      <Tab.Screen
+        name="홈"
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name="home-outline"
+              style={{ color: focused ? "#001D44" : "#ccc" }}
+              size={25}
+            />
+          ),
+          headerShown: false,
+        }}
+      >
         {() => (
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Home" component={HomeScreen} />
           </Stack.Navigator>
         )}
       </Tab.Screen>
-      <Tab.Screen name="마이페이지">
+      <Tab.Screen
+        name="마이페이지"
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name="person-circle-outline"
+              style={{ color: focused ? "#001D44" : "#ccc" }}
+              size={25}
+            />
+          ),
+          headerShown: false,
+        }}
+      >
         {() => (
           <Stack.Navigator name="InApp" options={{ headerShown: true }}>
             <Stack.Screen name="MyPage" component={MyPageScreen} />

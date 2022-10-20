@@ -5,3 +5,6 @@ npm install -g expo-cli
 
 //react-native-picker라이브러리
 npm install react-native-picker/picker --save
+
+//react-native-vector-icons 라이브러리
+npm install react-native-vector-icons
