@@ -135,7 +135,7 @@ function ReservationScreen({ navigation }) {
           <CafeTable
             name={"Coffee Bay"}
             location={"용인시 처인구"}
-            imgae={""}
+            image={""}
             information={"--카페정보--"}
           />
         </View>
