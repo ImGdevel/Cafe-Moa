@@ -19,3 +19,6 @@ npm install react-native-modal
 
 //이미지 추가
 npx expo install expo-image-picker
+
+//지오 로케이션
+npm install --save react-geocode

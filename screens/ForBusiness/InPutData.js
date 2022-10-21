@@ -7,14 +7,13 @@ import {
   TextInput,
   KeyboardAvoidingView,
 } from 'react-native';
-import { dbService } from '../../FireServer';
-import { getUserId, getUserIds, signOut } from '../../lib/Auth';
-import { CafeData } from '../../lib/CafeData';
-import { addCafeDatabase, getCafeDatabase, updateCafeDatabase } from '../../lib/Database';
+import { addCafeDatabase,  testings } from '../../lib/Database';
+import { getRandomCafeData } from '../../lib/RandomCafeData';
 
 function InPutDataScreen({navigation}) {
-  const [cafeName,setcafeName] = useState("");
-  const [cafeLocation,setcafeLocation] = useState("");
+  const [cafeName,setcCafeName] = useState("카페이름");
+  const [cafeLocation,setCafeLocation] = useState({latitude:37.23307, longitude:127.18823});
+  const [cafeAdress,setCafeAdress] = useState();
   const [cafeImfo,setcafeImfo] = useState("");
   const cafeNameInputRef = createRef();
   const cafeLocationInputRef = createRef();
@@ -26,16 +25,21 @@ function InPutDataScreen({navigation}) {
     //화면 시작시 실행
   },[])
 
-  const Button1 = () =>{
-    //onSubmitApplication({cafeName,cafeLocation, cafeImfo});
-    const cafeData = new CafeData(cafeName,cafeName,{latitude:"11312312", longitude:"3123412312"},cafeLocation,32);
-    addCafeDatabase(cafeData); 
+
+
+  const  Button1 = async() =>{
+    var data
+    await getRandomCafeData().then((cafe)=>{
+      data = cafe;
+    });
+    
+    addCafeDatabase(data);
   }
   const Button2 = () =>{
-    getUserId();
+    testings();
   }
   const Button3 = () =>{
-    signOut();
+      
   }
   
 
@@ -63,7 +67,7 @@ function InPutDataScreen({navigation}) {
           ref={cafeNameInputRef}
           style={styles.textInput}
           placeholder={'카페이름'}
-          onChangeText={(cafeName) => setcafeName(cafeName)}
+          onChangeText={(cafeName) => setcCafeName(cafeName)}
           autoCapitalize="none"
           blurOnSubmit={false}
           returnKeyType="next"
@@ -75,7 +79,7 @@ function InPutDataScreen({navigation}) {
           ref={cafeLocationInputRef}
           style={styles.textInput}
           placeholder={'카페위치'}
-          onChangeText={(cafeLocation) => setcafeLocation(cafeLocation)}
+          onChangeText={(cafeLocation) => setCafeLocation(cafeLocation)}
           autoCapitalize="none"
           blurOnSubmit={false}
           returnKeyType="next"
