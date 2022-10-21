@@ -38,7 +38,7 @@ function InPutDataScreen({navigation}) {
   const Button2 = () =>{
     //getUserId(); //원래 예시
     //getCafeDatabase(); //나중에 이거 사용 필요?
-    getReservation();
+    getReservation(); //reservation 테스트시 사용
   }
   const Button3 = () =>{
     signOut();
