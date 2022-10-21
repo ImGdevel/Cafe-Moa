@@ -22,8 +22,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: "white",
     marginBottom: "5%",
-    borderBottomColor: "gray",
-    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
   },
 
   myPageText: {
@@ -44,7 +43,6 @@ const styles = StyleSheet.create({
   },
 
   btn: {
-    borderBottomWidth: 1,
     backgroundColor: "white",
     borderColor: "gray",
     paddingLeft: "5%",
@@ -53,18 +51,16 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   infoBtn: {
-    backgroundColor: "#001D44",
+    backgroundColor: "#ccc",
     alignItems: "center",
     justifyContent: "center",
-    borderWidth: 1,
-    borderColor: "black",
+    borderColor: "001D44",
     height: "30%",
     width: "100%",
-    borderRadius: 5,
   },
   bottomContainer: {
     flex: 1,
-    backgroundColor: "#ccc",
+    backgroundColor: "white",
   },
 });
 
