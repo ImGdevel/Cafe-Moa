@@ -8,9 +8,10 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import { CreateUserAccount } from '../../lib/AuthService';
+import { createUserProfile } from '../../lib/UserDataService';
 
 function RegisterScreen({navigation}) {
-  const [userId,setUserId] = useState("");
+  const [userName,setUserName] = useState("");
   const [userEmail,setUserEmail] = useState("");
   const [userPassword,setUserPassword] = useState("");
   const [userPasswordChk,setUserPasswordChk] = useState("");
@@ -28,8 +29,8 @@ function RegisterScreen({navigation}) {
   function onSubmitApplication(){
     
     setErrorText('');
-    if (!userId) {
-      setErrorText('아이디를 입력해주세요');
+    if (!userName) {
+      setErrorText('이름을 입력해주세요');
       return;
     }
     if (!userEmail) {
@@ -46,11 +47,12 @@ function RegisterScreen({navigation}) {
     }
     
     CreateUserAccount(userEmail,userPassword)
-    .then(()=>{
-      GoToHomeScreen()
+    .then((id)=>{
+      createUserProfile(userName,id,userEmail,userPassword);
+      GoToHomeScreen();
     })
-    .catch({
-      
+    .catch((err)=>{
+      console.log("계정 생성에 실패 했습니다.");
     });
   }
   
@@ -65,8 +67,8 @@ function RegisterScreen({navigation}) {
         <TextInput
           ref={idInputRef}
           style={styles.textInput}
-          placeholder={'아이디'}
-          onChangeText={(userId) => setUserId(userId)}
+          placeholder={'이름'}
+          onChangeText={(userName) => setUserName(userName)}
           autoCapitalize="none"
           blurOnSubmit={false}
           returnKeyType="next"
@@ -77,7 +79,7 @@ function RegisterScreen({navigation}) {
         <TextInput
           ref={emailInputRef}
           style={styles.textInput}
-          placeholder={'이메일'}
+          placeholder={'아이디(이메일)'}
           keyboardType="email-address"
           onChangeText={(userEmail) => setUserEmail(userEmail)}
           autoCapitalize="none"

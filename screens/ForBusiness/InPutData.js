@@ -18,12 +18,18 @@ function InPutDataScreen({navigation}) {
   const cafeImfoInputRef = createRef();
   const [cafeTime, setCafeTime] = useState("");
   const cafeTimeRef = createRef();
+  const [local,setLocal] = useState("");
 
   const [cafeDatas, setCafeDatas] = useState([]); //가져와질 데이터
   const [cafeClass, setCafeClass] = useState([]);
   useEffect(()=>{
-    //화면 시작시 실행
+    setting();
+    
   },[])
+
+  const setting = async() => {
+    setLocal( await getGeoLocation());
+  }
 
   const Button1 = async() =>{
     var data
@@ -33,12 +39,13 @@ function InPutDataScreen({navigation}) {
     addCafeDatabase(data);
   }
   const Button2 = async() =>{
-    let loc = await getGeoLocation();
-    console.log(await getCafeDatabase(loc));
+    let data = await getCafeDatabase(local);
+    console.log(data);
+    console.log(data[0]);
   }
 
   const Button3 = () =>{
-    testings();
+    
   }
 
   return (
