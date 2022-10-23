@@ -1,8 +1,7 @@
 import React, {useState, useEffect, createRef} from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, KeyboardAvoidingView, } from 'react-native';
-import { getRandomCafeData } from '../../lib/Sample';
+import { getRandomCafeData } from '../../lib/TestSample';
 import { getGeoLocation } from '../../lib/LocationService';
-import { createUserProfile } from '../../lib/UserDataService';
 import { 
   addCafeDatabase, 
   getCafeDatabase, 
@@ -38,8 +37,8 @@ function InPutDataScreen({navigation}) {
     console.log(await getCafeDatabase(loc));
   }
 
-  const Button3 = async() =>{
-    await createUserProfile();
+  const Button3 = () =>{
+    testings();
   }
 
   return (
