@@ -22,7 +22,7 @@ function RegisterScreen({navigation}) {
   const passwordChkInputRef = createRef();
   
   function GoToHomeScreen(){
-    navigation.navigate('InPutData')
+    navigation.navigate('InApp')
   }
   
   function onSubmitApplication(){

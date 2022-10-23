@@ -7,12 +7,12 @@ import {
   TextInput,
   KeyboardAvoidingView,
 } from 'react-native';
-import { addCafeDatabase,  testings } from '../../lib/Database';
+import { addCafeDatabase, createUserProfile, getCafeDatabase,  getCurrentLocation,  getGeoLocation, testings, } from '../../lib/Database';
 import { getRandomCafeData } from '../../lib/RandomCafeData';
 
 function InPutDataScreen({navigation}) {
-  const [cafeName,setcCafeName] = useState("카페이름");
-  const [cafeLocation,setCafeLocation] = useState({latitude:37.23307, longitude:127.18823});
+  const [cafeName,setcCafeName] = useState("");
+  const [cafeLocation,setCafeLocation] = useState({latitude:37, longitude:127});
   const [cafeAdress,setCafeAdress] = useState();
   const [cafeImfo,setcafeImfo] = useState("");
   const cafeNameInputRef = createRef();
@@ -27,34 +27,22 @@ function InPutDataScreen({navigation}) {
 
 
 
-  const  Button1 = async() =>{
+const  Button1 = async() =>{
     var data
     await getRandomCafeData().then((cafe)=>{
       data = cafe;
     });
-    
     addCafeDatabase(data);
   }
-  const Button2 = () =>{
-    testings();
-  }
-  const Button3 = () =>{
-      
-  }
-  
 
-  // 
-  // 자료구조 -> database 배열 
-  // set예약() -> 좌석 번호 시간  
-  // collection id.doc({ 
-        // 9시: 101010101010
-        // 10시: 183029292
-  //})
-  //
-  // 나중에 카페id -> id -> getSeatDateBase() -> [  9[381029] 10[128039] [1283908132]    ] -> 자료구조 -  
-  // 프론트 -> (?)
-  // 좌석
-  // 
+  const Button2 = async() =>{
+    let loc = await getGeoLocation();
+    console.log( await getCafeDatabase(loc));
+  }
+
+  const Button3 = async() =>{
+    await createUserProfile();
+  }
 
   return (
   <KeyboardAvoidingView style={styles.container} >
