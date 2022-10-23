@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import { addCafeDatabase, createUserProfile, getCafeDatabase,  getCurrentLocation,  getGeoLocation, testings, } from '../../lib/Database';
 import { getRandomCafeData } from '../../lib/RandomCafeData';
+import { getReservation } from '../../lib/getRe';
+import { TimeTable } from '../../lib/ReversationDataStructure';
 
 function InPutDataScreen({navigation}) {
   const [cafeName,setcCafeName] = useState("");
@@ -18,6 +20,8 @@ function InPutDataScreen({navigation}) {
   const cafeNameInputRef = createRef();
   const cafeLocationInputRef = createRef();
   const cafeImfoInputRef = createRef();
+  const [cafeTime, setCafeTime] = useState("");
+  const cafeTimeRef = createRef();
 
   const [cafeDatas, setCafeDatas] = useState([]); //가져와질 데이터
   const [cafeClass, setCafeClass] = useState([]);
@@ -36,7 +40,9 @@ const  Button1 = async() =>{
   }
 
   const Button2 = async() =>{
-    let loc = await getGeoLocation();
+    let loc = await //getGeoLocation(); //원래 예시
+    //getCafeDatabase(); //나중에 이거 사용 필요?
+    getReservation(); //reservation 테스트시 사용
     console.log( await getCafeDatabase(loc));
   }
 
@@ -82,6 +88,13 @@ const  Button1 = async() =>{
           onChangeText={(cafeImfo) => setcafeImfo(cafeImfo)}
           autoCapitalize="none"
         />
+        {/* <TextInput
+          ref={cafeImfoInputRef}
+          style={styles.textInput}
+          placeholder={'시간과 좌석번호'}
+          onChangeText={(cafeTime) => setcafeTime(cafeTime)}
+          autoCapitalize="none"
+        /> */}
 
       </View>
       <View style={styles.btnArea}>
