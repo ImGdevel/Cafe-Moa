@@ -1,16 +1,16 @@
 import React, {useState, useEffect, createRef} from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  KeyboardAvoidingView,
-} from 'react-native';
-import { addCafeDatabase, createUserProfile, getCafeDatabase,  getCurrentLocation,  getGeoLocation, testings, } from '../../lib/Database';
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, KeyboardAvoidingView, } from 'react-native';
 import { getRandomCafeData } from '../../lib/RandomCafeData';
 import { getReservation } from '../../lib/getRe';
-import { TimeTable } from '../../lib/ReversationDataStructure';
+import { TimeTable } from '../../lib/DataStructure/ReversationDataStructure';
+import { 
+  addCafeDatabase, 
+  createUserProfile, 
+  getCafeDatabase, 
+  getGeoLocation, 
+  testings, 
+} from '../../lib/Database';
+
 
 function InPutDataScreen({navigation}) {
   const [cafeName,setcCafeName] = useState("");
@@ -29,9 +29,7 @@ function InPutDataScreen({navigation}) {
     //화면 시작시 실행
   },[])
 
-
-
-const  Button1 = async() =>{
+  const  Button1 = async() =>{
     var data
     await getRandomCafeData().then((cafe)=>{
       data = cafe;
@@ -40,9 +38,7 @@ const  Button1 = async() =>{
   }
 
   const Button2 = async() =>{
-    let loc = await //getGeoLocation(); //원래 예시
-    //getCafeDatabase(); //나중에 이거 사용 필요?
-    getReservation(); //reservation 테스트시 사용
+    let loc = await getGeoLocation(); //원래 예시
     console.log( await getCafeDatabase(loc));
   }
 
