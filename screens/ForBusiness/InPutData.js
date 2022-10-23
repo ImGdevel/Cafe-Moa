@@ -1,16 +1,13 @@
 import React, {useState, useEffect, createRef} from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, KeyboardAvoidingView, } from 'react-native';
-import { getRandomCafeData } from '../../lib/RandomCafeData';
-import { getReservation } from '../../lib/getRe';
-import { TimeTable } from '../../lib/DataStructure/ReversationDataStructure';
+import { getRandomCafeData } from '../../lib/Sample';
+import { getGeoLocation } from '../../lib/LocationService';
+import { createUserProfile } from '../../lib/UserDataService';
 import { 
   addCafeDatabase, 
-  createUserProfile, 
   getCafeDatabase, 
-  getGeoLocation, 
   testings, 
 } from '../../lib/Database';
-
 
 function InPutDataScreen({navigation}) {
   const [cafeName,setcCafeName] = useState("");
@@ -29,17 +26,16 @@ function InPutDataScreen({navigation}) {
     //화면 시작시 실행
   },[])
 
-  const  Button1 = async() =>{
+  const Button1 = async() =>{
     var data
     await getRandomCafeData().then((cafe)=>{
       data = cafe;
     });
     addCafeDatabase(data);
   }
-
   const Button2 = async() =>{
-    let loc = await getGeoLocation(); //원래 예시
-    console.log( await getCafeDatabase(loc));
+    let loc = await getGeoLocation();
+    console.log(await getCafeDatabase(loc));
   }
 
   const Button3 = async() =>{

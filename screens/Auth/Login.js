@@ -7,7 +7,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
 } from 'react-native';
-import { SignInUserAccount } from '../../lib/Auth';
+import { SignInUserAccount } from '../../lib/AuthService';
 
 function LogInScreen({navigation}) {
   const [UserId,setUserId] = useState("");
