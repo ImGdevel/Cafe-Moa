@@ -44,6 +44,13 @@ function ReservationScreen({ navigation }) {
     );
   }
 
+  const seatArr = ["1", "2", "3", "4", "5", "6"];
+
+  var seatLoop = [];
+  for (let i = 0; i < seatArr.length; i++) {
+    seatLoop.push(<Picker.Item key={i} label={seatArr[i]} value={i + 1} />);
+  }
+
   return (
     <View style={getReserveStyle.container}>
       <Modal
@@ -89,8 +96,7 @@ function ReservationScreen({ navigation }) {
           selectedValue={selectedSeat}
           onValueChange={(itemValue, itemIndex) => setSelectedSeat(itemValue)}
         >
-          <Picker.Item label="seat1" value="1" />
-          <Picker.Item label="seat2" value="2" />
+          {seatLoop}
         </Picker>
 
         <TouchableOpacity
