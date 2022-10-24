@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import Modal from "react-native-modal";
 import { Picker } from "@react-native-picker/picker";
 
@@ -12,6 +12,23 @@ function ReservationScreen({ navigation }) {
   const [selectedSeat, setSelectedSeat] = useState("1");
   const [modalVisible, setModalVisible] = useState(true);
   const [modalOutput, setModalOutput] = useState("Open Modal");
+
+  const timeArr = [
+    "09:00",
+    "09:00",
+    "09:00",
+    "10:00",
+    "11:00",
+    "12:00",
+    "13:00",
+    "14:00",
+    "15:00",
+    "16:00",
+    "17:00",
+    "18:00",
+    "19:00",
+    "20:00",
+  ];
 
   return (
     <View style={getReserveStyle.container}>
@@ -26,55 +43,107 @@ function ReservationScreen({ navigation }) {
             <Text style={getModalStyle.modalGradeText}>시간을 선택하세요</Text>
           </View>
 
-          <TouchableOpacity
-            style={getModalStyle.modalButton}
-            onPress={() => {
-              setModalOutput("선택 1");
-              setModalVisible(false);
-            }}
-          >
-            <Text style={{ alignSelf: "center", fontSize: 20 }}>09:00</Text>
-          </TouchableOpacity>
+          <ScrollView style={getModalStyle.ScrollView}>
+            <TouchableOpacity
+              style={getModalStyle.modalButton}
+              onPress={() => {
+                setModalOutput("선택 1");
+                setModalVisible(false);
+              }}
+            >
+              <Text style={{ alignSelf: "center", fontSize: 20 }}>09:00</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={getModalStyle.modalButton}
-            onPress={() => {
-              setModalOutput("선택 1");
-              setModalVisible(false);
-            }}
-          >
-            <Text style={{ alignSelf: "center", fontSize: 20 }}>10:00</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={getModalStyle.modalButton}
+              onPress={() => {
+                setModalOutput("선택 1");
+                setModalVisible(false);
+              }}
+            >
+              <Text style={{ alignSelf: "center", fontSize: 20 }}>10:00</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={getModalStyle.modalButton}
-            onPress={() => {
-              setModalOutput("선택 1");
-              setModalVisible(false);
-            }}
-          >
-            <Text style={{ alignSelf: "center", fontSize: 20 }}>11:00</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={getModalStyle.modalButton}
+              onPress={() => {
+                setModalOutput("선택 1");
+                setModalVisible(false);
+              }}
+            >
+              <Text style={{ alignSelf: "center", fontSize: 20 }}>11:00</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={getModalStyle.modalButton}
-            onPress={() => {
-              setModalOutput("선택 1");
-              setModalVisible(false);
-            }}
-          >
-            <Text style={{ alignSelf: "center", fontSize: 20 }}>12:00</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={getModalStyle.modalButton}
+              onPress={() => {
+                setModalOutput("선택 1");
+                setModalVisible(false);
+              }}
+            >
+              <Text style={{ alignSelf: "center", fontSize: 20 }}>12:00</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={getModalStyle.modalButton}
-            onPress={() => {
-              setModalOutput("선택 1");
-              setModalVisible(false);
-            }}
-          >
-            <Text style={{ alignSelf: "center", fontSize: 20 }}>13:00</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={getModalStyle.modalButton}
+              onPress={() => {
+                setModalOutput("선택 1");
+                setModalVisible(false);
+              }}
+            >
+              <Text style={{ alignSelf: "center", fontSize: 20 }}>13:00</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={getModalStyle.modalButton}
+              onPress={() => {
+                setModalOutput("선택 1");
+                setModalVisible(false);
+              }}
+            >
+              <Text style={{ alignSelf: "center", fontSize: 20 }}>09:00</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={getModalStyle.modalButton}
+              onPress={() => {
+                setModalOutput("선택 1");
+                setModalVisible(false);
+              }}
+            >
+              <Text style={{ alignSelf: "center", fontSize: 20 }}>09:00</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={getModalStyle.modalButton}
+              onPress={() => {
+                setModalOutput("선택 1");
+                setModalVisible(false);
+              }}
+            >
+              <Text style={{ alignSelf: "center", fontSize: 20 }}>09:00</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={getModalStyle.modalButton}
+              onPress={() => {
+                setModalOutput("선택 1");
+                setModalVisible(false);
+              }}
+            >
+              <Text style={{ alignSelf: "center", fontSize: 20 }}>09:00</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={getModalStyle.modalButton}
+              onPress={() => {
+                setModalOutput("선택 1");
+                setModalVisible(false);
+              }}
+            >
+              <Text style={{ alignSelf: "center", fontSize: 20 }}>09:00</Text>
+            </TouchableOpacity>
+          </ScrollView>
         </View>
       </Modal>
 
@@ -83,7 +152,7 @@ function ReservationScreen({ navigation }) {
           <CafeTable
             name={"Coffee Bay"}
             location={"용인시 처인구"}
-            imgae={""}
+            image={""}
             information={"--카페정보--"}
           />
         </View>

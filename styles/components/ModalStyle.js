@@ -6,19 +6,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "80%",
     height: "80%",
-    backgroundColor: "black",
+    backgroundColor: "#001D44",
     borderRadius: 10,
   },
   modalButton: {
     flex: 1,
     width: "100%",
+    height: 60,
     justifyContent: "center",
-    borderWidth: 1,
+    borderTopWidth: 1,
     borderColor: "#ccc",
     backgroundColor: "white",
   },
   modalWrapper: {
-    flex: 0.5,
+    flex: 0.1,
     width: "100%",
     justifyContent: "center",
   },
@@ -26,6 +27,11 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     fontSize: 20,
     color: "white",
+  },
+  ScrollView: {
+    flex: 1,
+    width: "100%",
+    marginBottom: 20,
   },
 });
 

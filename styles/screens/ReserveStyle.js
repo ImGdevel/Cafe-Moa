@@ -25,10 +25,10 @@ const styles = StyleSheet.create({
     height: "75%",
   },
   reserveBtn: {
-    backgroundColor: "black",
+    backgroundColor: "#001D44",
     alignItems: "center",
     justifyContent: "center",
-    height: "15%",
+    height: 30,
     width: "18%",
     borderRadius: 5,
   },
