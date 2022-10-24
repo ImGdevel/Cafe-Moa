@@ -13,3 +13,18 @@ npm install @react-navigation/bottom-tabs
 
 //react-native-picker 라이브러리
 npm install react-native-picker/picker --save
+
+//react-native-vector-icons 라이브러리
+npm install react-native-vector-icons
+
+//react-native-modal 라이브러리
+npm install react-native-modal
+
+//이미지 추가
+npx expo install expo-image-picker
+
+//지오 로케이션
+npm install --save react-geocode
+
+//지오 로케이션2
+npx expo install expo-location
