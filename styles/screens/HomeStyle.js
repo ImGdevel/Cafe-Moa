@@ -10,15 +10,28 @@ const styles = StyleSheet.create({
 
   homeText: {
     marginTop: "20%",
-    marginBottom: "20%",
+    marginBottom: "2%",
+  },
+
+  btnInfoReservation: {
+    width: Dimensions.get("window").width,
+    height: "38%",
+    borderWidth: 2,
+    borderColor: "#ccc",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    backgroundColor: "white",
+    marginTop: "10%",
+    marginBottom: "5%",
+    paddingLeft: "2%",
   },
 
   btnNearbyCafe: {
     width: Dimensions.get("window").width,
-    height: "20%",
+    height: "15%",
     borderTopWidth: 2,
     borderBottomWidth: 1,
-    borderColor: "black",
+    borderColor: "#ccc",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
@@ -26,10 +39,10 @@ const styles = StyleSheet.create({
 
   btnConfirmReservation: {
     width: Dimensions.get("window").width,
-    height: "20%",
+    height: "15%",
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    borderColor: "black",
+    borderColor: "#ccc",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
@@ -37,10 +50,10 @@ const styles = StyleSheet.create({
 
   btnMyPage: {
     width: Dimensions.get("window").width,
-    height: "20%",
+    height: "15%",
     borderTopWidth: 1,
     borderBottomWidth: 2,
-    borderColor: "black",
+    borderColor: "#ccc",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
