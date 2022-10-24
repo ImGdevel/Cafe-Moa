@@ -18,7 +18,7 @@ function HomeScreen({ navigation }) {
   }
 
   function MyPage() {
-    //
+    // this is for test
   }
 
   return (
