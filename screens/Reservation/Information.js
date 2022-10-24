@@ -1,9 +1,67 @@
 import React, { useState } from "react";
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  FlatList,
+} from "react-native";
 
 import getInfoStyle from "../../styles/screens/InfoStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
+
+const imgArr = [
+  {
+    idx: "1",
+    src: require("../../img/coffeebayLogo_test.jpg"),
+  },
+  {
+    idx: "2",
+    src: require("../../img/coffeebayLogo_test.jpg"),
+  },
+  {
+    idx: "3",
+    src: require("../../img/coffeebayLogo_test.jpg"),
+  },
+  {
+    idx: "4",
+    src: require("../../img/coffeebayLogo_test.jpg"),
+  },
+  {
+    idx: "5",
+    src: require("../../img/coffeebayLogo_test.jpg"),
+  },
+  {
+    idx: "6",
+    src: require("../../img/coffeebayLogo_test.jpg"),
+  },
+  {
+    idx: "7",
+    src: require("../../img/coffeebayLogo_test.jpg"),
+  },
+  {
+    idx: "8",
+    src: require("../../img/coffeebayLogo_test.jpg"),
+  },
+  {
+    idx: "9",
+    src: require("../../img/coffeebayLogo_test.jpg"),
+  },
+  {
+    idx: "10",
+    src: require("../../img/coffeebayLogo_test.jpg"),
+  },
+  {
+    idx: "11",
+    src: require("../../img/coffeebayLogo_test.jpg"),
+  },
+  {
+    idx: "12",
+    src: require("../../img/anySeatPic_text.png"),
+  },
+];
 
 function InformationScreen({ navigation }) {
   const [direction, setDirection] = useState("사진");
@@ -29,34 +87,26 @@ function InformationScreen({ navigation }) {
             setSelectedValue={setDirection}
             style={getInfoStyle.contentLayout}
           >
-            <View style={getInfoStyle.picArea}>
-              <ScrollView>
-                <View style={getInfoStyle.imageContainer}>
-                  <View style={getInfoStyle.image}>
-                    <Image
-                      source={require("../../img/coffeebayLogo_test.jpg")}
-                      style={getInfoStyle.cafeLogo}
-                    />
+            <FlatList
+              keyExtractor={(item) => item.idx}
+              data={imgArr}
+              style={getInfoStyle.picArea}
+              renderItem={({ item }) => (
+                <TouchableOpacity>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: "column",
+                      margin: 10,
+                    }}
+                  >
+                    <Image style={getInfoStyle.image} source={item.src} />
                   </View>
-                </View>
-                <View style={getInfoStyle.imageContainer}>
-                  <View style={getInfoStyle.image}>
-                    <Image
-                      source={require("../../img/coffeebayLogo_test.jpg")}
-                      style={getInfoStyle.cafeLogo}
-                    />
-                  </View>
-                </View>
-                <View style={getInfoStyle.imageContainer}>
-                  <View style={getInfoStyle.image}>
-                    <Image
-                      source={require("../../img/coffeebayLogo_test.jpg")}
-                      style={getInfoStyle.cafeLogo}
-                    />
-                  </View>
-                </View>
-              </ScrollView>
-            </View>
+                </TouchableOpacity>
+              )}
+              numColumns={3}
+            />
+
             {/*___<View style={getInfoStyle.image}>
               <Image
                 source={require("../../img/coffeebayLogo_test.jpg")}
@@ -108,14 +158,13 @@ function CafeTable(props) {
 }
 
 const PreviewLayout = ({
-  label,
   children,
   values,
   selectedValue,
   setSelectedValue,
 }) => (
   <View style={{ padding: 10, flex: 1 }}>
-    <Text style={getInfoStyle.label}>{label}</Text>
+    <Text style={{ marginBottom: 10, fontSize: 24 }}></Text>
     <View style={getInfoStyle.row}>
       {values.map((value) => (
         <TouchableOpacity
@@ -137,9 +186,19 @@ const PreviewLayout = ({
         </TouchableOpacity>
       ))}
     </View>
-    <View style={[getInfoStyle.container, { [label]: selectedValue }]}>
-      {children}
-    </View>
+    {(() => {
+      if (selectedValue === "사진")
+        return <View style={getInfoStyle.container}>{children}</View>;
+      else
+        return (
+          <View style={{ alignItems: "center", justifyContent: "center" }}>
+            <Image
+              source={require("../../img/anySeatPic_text.png")}
+              style={getInfoStyle.seatPic}
+            />
+          </View>
+        );
+    })()}
   </View>
 );
 

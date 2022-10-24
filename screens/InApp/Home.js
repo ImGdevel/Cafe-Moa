@@ -16,6 +16,8 @@ function HomeScreen({ navigation }) {
     //navigation.navigate()
   }
 
+  function NearbyCafe() {}
+
   function ConfirmReservation() {
     //
   }

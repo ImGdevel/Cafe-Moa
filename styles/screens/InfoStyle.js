@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
   },
   contentLayout: {
     flex: 3,
-    backgroundColor: "blue",
   },
   box: {
     width: 50,
@@ -30,7 +29,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   selected: {
-    backgroundColor: "black",
+    backgroundColor: "#001D44",
     borderWidth: 0,
   },
   buttonLabel: {
@@ -41,11 +40,6 @@ const styles = StyleSheet.create({
   selectedLabel: {
     color: "white",
   },
-  label: {
-    textAlign: "center",
-    marginBottom: 10,
-    fontSize: 24,
-  },
   imageContainer: {
     width: 140,
     height: 140,
@@ -53,10 +47,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: "80%",
-    height: "80%",
+    width: 100,
+    height: 100,
     borderRadius: 10,
     borderColor: "#ddd",
+    justifyContent: "center",
+    alignItems: "center",
+    resizeMode: "contain",
     borderWidth: 1,
   },
   cafeLogo: {
@@ -70,26 +67,30 @@ const styles = StyleSheet.create({
   },
   seatPic: {
     width: "100%",
-    height: "100%",
+    height: "75%",
   },
   picArea: {
     flex: 1,
-    justifyContent: "space-evenly",
     borderWidth: 1,
     borderColor: "#DDD",
     borderRadius: 10,
   },
   reserveButton: {
-    backgroundColor: "black",
+    backgroundColor: "#001D44",
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 5,
     marginBottom: 5,
     width: "80%",
+    height: 40,
   },
   btnContainer: {
     alignItems: "center",
     justifyContent: "center",
+  },
+  listContainer: {
+    marginHorizontal: "8%",
+    marginVertical: "10%",
   },
 });
 
