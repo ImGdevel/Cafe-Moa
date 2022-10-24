@@ -14,7 +14,7 @@ import getRegisterStyle from "../../styles/screens/RegisterStyle";
 
 
 function RegisterScreen({navigation}) {
-  const [userId,setUserId] = useState("");
+  const [userName,setUserName] = useState("");
   const [userEmail,setUserEmail] = useState("");
   const [userPassword,setUserPassword] = useState("");
   const [userPasswordChk,setUserPasswordChk] = useState("");
