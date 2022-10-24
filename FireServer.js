@@ -1,6 +1,7 @@
 import firebase from "firebase";
 import "firebase/firestore";
 import "firebase/auth";
+import "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDa6DPB6A3oRKbI8zVkfPJAow81fDJjRkY",
@@ -14,7 +15,12 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+function MapApiKey(){
+  return "AIzaSyDzomyFKwYc6OSUdbTW75L3J9eRBOGTBGU";
+}
 
 export const MyDatabase = firebase;
 export const dbService = firebase.firestore();
 export const authService = firebase.auth();
+export const storageService = firebase.storage();
+export const GoogleMapApiKey = MapApiKey();

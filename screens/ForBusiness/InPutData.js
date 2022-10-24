@@ -1,37 +1,57 @@
 import React, {useState, useEffect, createRef} from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  KeyboardAvoidingView,
-} from 'react-native';
-import { dbService } from '../../FireServer';
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, KeyboardAvoidingView, } from 'react-native';
+import { getRandomCafeData } from '../../lib/TestSample';
+import { getGeoLocation } from '../../lib/LocationService';
+import { 
+  addCafeDatabase, 
+  getCafeDatabase, 
+} from '../../lib/Database';
 
 function InPutDataScreen({navigation}) {
-  const [cafeName,setcafeName] = useState("");
-  const [cafeLocation,setcafeLocation] = useState("");
+  const [cafeName,setcCafeName] = useState("");
+  const [cafeLocation,setCafeLocation] = useState({latitude:37, longitude:127});
+  const [cafeAdress,setCafeAdress] = useState();
   const [cafeImfo,setcafeImfo] = useState("");
-  const [errorText,setErrorText] = useState("");
-  
-
   const cafeNameInputRef = createRef();
   const cafeLocationInputRef = createRef();
   const cafeImfoInputRef = createRef();
-  
-  function GoToHomeScreen(){
-    navigation.navigate('InApp')
-  }
-  const onSubmitApplication = async() =>{
-    await dbService.collection("CafeData").add({
-        cafeName,
-        cafeLocation,
-        cafeImfo,
-    })
+  const [cafeTime, setCafeTime] = useState("");
+  const cafeTimeRef = createRef();
+  const [local,setLocal] = useState("");
+
+  const [cafeDatas, setCafeDatas] = useState([]); //가져와질 데이터
+  const [cafeClass, setCafeClass] = useState([]);
+  useEffect(()=>{
+    setting();
+
+  },[])
+
+  const setting = async() => {
+    setLocal( await getGeoLocation());
   }
 
- 
+  const Button1 = async() =>{
+    var data
+    await getRandomCafeData().then((cafe)=>{
+      data = cafe;
+    });
+
+    addCafeDatabase(data);
+
+
+  }
+  const Button2 = async() =>{
+    let data = await getCafeDatabase(local);
+    console.log(data);
+    console.log(data[0]);
+    let data1 = data[0];
+    console.log(data1.name);
+  }
+
+  const Button3 = () =>{
+    
+  }
+
   return (
   <KeyboardAvoidingView style={styles.container} >
     <View style={{flex: 3}}></View>
@@ -43,7 +63,7 @@ function InPutDataScreen({navigation}) {
           ref={cafeNameInputRef}
           style={styles.textInput}
           placeholder={'카페이름'}
-          onChangeText={(cafeName) => setcafeName(cafeName)}
+          onChangeText={(cafeName) => setcCafeName(cafeName)}
           autoCapitalize="none"
           blurOnSubmit={false}
           returnKeyType="next"
@@ -55,7 +75,7 @@ function InPutDataScreen({navigation}) {
           ref={cafeLocationInputRef}
           style={styles.textInput}
           placeholder={'카페위치'}
-          onChangeText={(cafeLocation) => setcafeLocation(cafeLocation)}
+          onChangeText={(cafeLocation) => setCafeLocation(cafeLocation)}
           autoCapitalize="none"
           blurOnSubmit={false}
           returnKeyType="next"
@@ -70,18 +90,31 @@ function InPutDataScreen({navigation}) {
           onChangeText={(cafeImfo) => setcafeImfo(cafeImfo)}
           autoCapitalize="none"
         />
+        {/* <TextInput
+          ref={cafeImfoInputRef}
+          style={styles.textInput}
+          placeholder={'시간과 좌석번호'}
+          onChangeText={(cafeTime) => setcafeTime(cafeTime)}
+          autoCapitalize="none"
+        /> */}
 
-        <Text style={styles.errorText}>{errorText}</Text>
       </View>
       <View style={styles.btnArea}>
-        <TouchableOpacity 
-          style={styles.btnLogin} 
-          onPress = {onSubmitApplication}
-        >
-          <Text style={{ color: 'white', fontSize: 20,}}> 회원가입 </Text>
+        <TouchableOpacity style={styles.btnLogin} onPress = {Button1}>
+          <Text style={{ color: 'white', fontSize: 20,}}> 데이터 넣기 </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.btnLogin} onPress = {Button2}>
+          <Text style={{ color: 'white', fontSize: 20,}}> 데이터 가져오기 </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.btnLogin} onPress = {Button3}>
+          <Text style={{ color: 'white', fontSize: 20,}}> 콘솔창에 출력하기 </Text>
         </TouchableOpacity>
       </View>
-
+        <View>
+          <Text>{}</Text>
+        </View>
     </View>
     <View style={{flex: 4}}></View>
   </KeyboardAvoidingView>

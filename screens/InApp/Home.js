@@ -1,10 +1,5 @@
-import * as React from "react";
-import {
-  View,
-  Text,
-  KeyboardAvoidingView,
-  TouchableOpacity,
-} from "react-native";
+import * as React from 'react';
+import { Button, View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity, Dimensions} from 'react-native';
 
 import getHomeStyle from "../../styles/screens/HomeStyle";
 

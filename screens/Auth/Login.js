@@ -6,8 +6,8 @@ import {
   TouchableHighlight,
   TextInput,
   KeyboardAvoidingView,
-} from "react-native";
-import { SignInUserAccount } from "../../lib/Auth";
+} from 'react-native';
+import { SignInUserAccount } from '../../lib/Auth';
 
 import getLoginStyle from "../../styles/screens/LoginStyle";
 
@@ -67,7 +67,7 @@ function LogInScreen({ navigation }) {
             blurOnSubmit={false}
             returnKeyType="next"
             onSubmitEditing={() =>
-              emailInputRef.current && emailInputRef.current.focus()
+               passwordInputRef.current && passwordInputRef.current.focus()
             }
           />
           <TextInput
@@ -91,14 +91,14 @@ function LogInScreen({ navigation }) {
           >
             <Text style={{ color: "#ccc", fontSize: 20 }}>회원가입</Text>
           </TouchableOpacity>
-
-          <TouchableOpacity
-            style={getLoginStyle.btnRegister}
-            onPress={GoToHomeScreen}
-          >
-            <Text style={{ color: "#ccc", fontSize: 20 }}>
-              관리자 권한 입장
-            </Text>
+          <TouchableOpacity style={styles.btnRegister} onPress = {GoToRgisterScreen}>
+            <Text style={{ color: 'black', fontSize: 20, }}>회원가입</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.btnRegister} onPress = {GoToHomeScreen}>
+            <Text style={{ color: 'black', fontSize: 20, }}>관리자 권한 입장</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.btnRegister} onPress = {()=>{ navigation.navigate('InPutData')}}>
+            <Text style={{ color: 'black', fontSize: 20, }}>데이터 관리</Text>
           </TouchableOpacity>
         </View>
       </View>
