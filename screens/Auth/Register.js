@@ -3,6 +3,7 @@ import {
   View,
   Text,
   TouchableOpacity,
+  TouchableHighlight,
   TextInput,
   KeyboardAvoidingView,
 } from "react-native";
@@ -51,6 +52,19 @@ function RegisterScreen({ navigation }) {
       })
       .catch({});
   }
+
+  const [isPress, setIsPress] = useState(false);
+
+  const touchProps = {
+    activeOpacity: 1,
+    underlayColor: "#A0A0FF", // <-- "backgroundColor" will be always overwritten by "underlayColor"
+    style: isPress ? getRegisterStyle.btnPress : getRegisterStyle.btnNormal, // <-- but you can still apply other style changes
+    onHideUnderlay: () => setIsPress(false),
+    onShowUnderlay: () => setIsPress(true),
+    onPress: () => {
+      onSubmitApplication;
+    }, // <-- "onPress" is apparently required
+  };
 
   return (
     <KeyboardAvoidingView style={getRegisterStyle.container}>
@@ -115,12 +129,9 @@ function RegisterScreen({ navigation }) {
           <Text style={getRegisterStyle.errorText}>{errorText}</Text>
         </View>
         <View style={getRegisterStyle.btnArea}>
-          <TouchableOpacity
-            style={getRegisterStyle.btnLogin}
-            onPress={onSubmitApplication}
-          >
-            <Text style={{ color: "white", fontSize: 20 }}> 회원가입 </Text>
-          </TouchableOpacity>
+          <TouchableHighlight {...touchProps}>
+            <Text style={{ color: "black", fontSize: 20 }}>회원가입</Text>
+          </TouchableHighlight>
         </View>
       </View>
       <View style={{ flex: 4 }}></View>
