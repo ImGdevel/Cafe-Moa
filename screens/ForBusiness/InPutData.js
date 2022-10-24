@@ -5,7 +5,6 @@ import { getGeoLocation } from '../../lib/LocationService';
 import { 
   addCafeDatabase, 
   getCafeDatabase, 
-  testings, 
 } from '../../lib/Database';
 
 function InPutDataScreen({navigation}) {
@@ -24,7 +23,7 @@ function InPutDataScreen({navigation}) {
   const [cafeClass, setCafeClass] = useState([]);
   useEffect(()=>{
     setting();
-    
+
   },[])
 
   const setting = async() => {
@@ -36,12 +35,17 @@ function InPutDataScreen({navigation}) {
     await getRandomCafeData().then((cafe)=>{
       data = cafe;
     });
+
     addCafeDatabase(data);
+
+
   }
   const Button2 = async() =>{
     let data = await getCafeDatabase(local);
     console.log(data);
     console.log(data[0]);
+    let data1 = data[0];
+    console.log(data1.name);
   }
 
   const Button3 = () =>{
