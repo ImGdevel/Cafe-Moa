@@ -52,12 +52,13 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   infoBtn: {
-    backgroundColor: "#ccc",
+    backgroundColor: "#001D44",
     alignItems: "center",
     justifyContent: "center",
     borderColor: "001D44",
-    height: "30%",
-    width: "100%",
+    borderRadius: 8,
+    height: "34%",
+    width: "94%",
   },
   bottomContainer: {
     flex: 1,

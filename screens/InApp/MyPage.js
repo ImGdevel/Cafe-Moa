@@ -53,17 +53,23 @@ function MyPageScreen({ navigation }) {
 
       <View style={getMyPageStyle.contentContainer}>
         <TouchableOpacity style={getMyPageStyle.btn} onPress={GoToOptionScreen}>
-          <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>옵션</Text>
+          <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>
+            옵션
+          </Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={getMyPageStyle.btn} onPress={GoToLogoutScreen}>
-          <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>로그아웃</Text>
+          <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>
+            로그아웃
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={getMyPageStyle.btn}
           onPress={GoToDeleteAccountScreen}
         >
-          <Text style={{ color: "red", fontWeight: "500", fontSize: 20 }}>회원탈퇴</Text>
+          <Text style={{ color: "red", fontWeight: "500", fontSize: 20 }}>
+            회원탈퇴
+          </Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
