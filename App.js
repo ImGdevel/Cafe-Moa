@@ -1,7 +1,8 @@
-import * as React from "react"
-import { NavigationContainer } from "@react-navigation/native"
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import * as React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 import StartPageScreen from "./screens/Auth/StartPage"
 import LoginScreen from "./screens/Auth/Login"
@@ -15,32 +16,91 @@ import ReservationScreen from  "./screens/Reservation/Reservation"
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
+const InApp = () => {
+  return (
+    <Tab.Navigator initialRouteName="홈">
+      <Tab.Screen
+        name="카페"
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name="cafe-outline"
+              style={{ color: focused ? "#001D44" : "#ccc" }}
+              size={25}
+            />
+          ),
+          headerShown: false,
+        }}
+      >
+        {() => (
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Cafe">{CafeNavigation}</Stack.Screen>
+          </Stack.Navigator>
+        )}
+      </Tab.Screen>
+      <Tab.Screen
+        name="홈"
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name="home-outline"
+              style={{ color: focused ? "#001D44" : "#ccc" }}
+              size={25}
+            />
+          ),
+          headerShown: false,
+        }}
+      >
+        {() => (
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Home" component={HomeScreen} />
+          </Stack.Navigator>
+        )}
+      </Tab.Screen>
+      <Tab.Screen
+        name="마이페이지"
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name="person-circle-outline"
+              style={{ color: focused ? "#001D44" : "#ccc" }}
+              size={25}
+            />
+          ),
+          headerShown: false,
+        }}
+      >
+        {() => (
+          <Stack.Navigator name="InApp" options={{ headerShown: true }}>
+            <Stack.Screen name="MyPage" component={MyPageScreen} />
+          </Stack.Navigator>
+        )}
+      </Tab.Screen>
+    </Tab.Navigator>
+  );
+};
+
 // 프로젝트 시작
 export default function App() {
   return ( 
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Start"
-          component={StartPageScreen}
-          options={{headerShown: false}}
-        />
-        {/*______로그인 페이지________*/}
-        <Stack.Screen
-          name="Auth"
-          component={Auth}
-          options={{ headerShown: false }}
-        />
-        {/*____본격적으로 앱 내용________*/}
-        <Stack.Screen name="InApp" options={{headerShown: false}}>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="로그인">
           {() => (
-            <Stack.Navigator screenOptions={{headerShown: false}}>
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="MyPage" component={MyPageScreen} />
-            <Stack.Screen name="Cafe">
-              {CafeNavigation}
-            </Stack.Screen>
-          </Stack.Navigator>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+              <Stack.Screen
+                name="Start"
+                component={StartPageScreen}
+                options={{ headerShown: false }}
+              />
+              {/*______로그인 페이지________*/}
+              <Stack.Screen
+                name="Auth"
+                component={Auth}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen name="InApp" component={InApp} />
+            </Stack.Navigator>
           )}
         </Stack.Screen>
       </Stack.Navigator>
@@ -59,6 +119,11 @@ const Auth = () => {
       <Stack.Screen
         name="Register"
         component={RegisterScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="InPutData"
+        component={InPutDataScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

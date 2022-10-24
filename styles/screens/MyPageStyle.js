@@ -3,20 +3,26 @@ import { StyleSheet, Dimensions } from "react-native";
 const styles = StyleSheet.create({
   container: {
     flex: 3,
-    backgroundColor: "#fff",
-    alignItems: "center",
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#ccc",
     flexDirection: "column",
+    alignSelf: "center",
   },
 
   contentContainer: {
     flex: 1,
-    flexDirection: "column",
+    backgroundColor: "#ccc",
+    width: "100%",
+    justifyContent: "flex-start",
   },
 
   upContentContainer: {
     flex: 0.4,
     flexDirection: "row",
-    marginBottom: "30%",
+    backgroundColor: "white",
+    marginBottom: "5%",
+    borderBottomColor: "#ccc",
   },
 
   myPageText: {
@@ -24,65 +30,39 @@ const styles = StyleSheet.create({
   },
 
   profilePicture: {
-    marginTop: "10%",
-    marginLeft: "-30%",
+    marginTop: "7%",
+    marginLeft: "7%",
     width: "30%",
-    height: "64%",
-    borderRadius: 75,
-    backgroundColor: "white",
+    height: "63%",
   },
 
   idText: {
-    marginVertical: "20%",
+    marginVertical: "10%",
     marginLeft: "10%",
+    width: "50%",
   },
 
-  btnOption: {
-    width: Dimensions.get("window").width,
-    height: "15%",
-    borderTopWidth: 1,
-    borderBottomWidth: 0.5,
-    borderColor: "black",
-    justifyContent: "center",
-    alignItems: "center",
+  btn: {
     backgroundColor: "white",
-    fontSize: 20,
-  },
-
-  btnEditProfile: {
-    width: Dimensions.get("window").width,
-    height: "15%",
-    borderTopWidth: 0.5,
-    borderBottomWidth: 0.5,
-    borderColor: "black",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-    fontSize: 20,
-  },
-
-  btnLogout: {
-    width: Dimensions.get("window").width,
-    height: "15%",
-    borderTopWidth: 0.5,
-    borderBottomWidth: 0.5,
-    borderColor: "black",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-    fontSize: 20,
-  },
-
-  btnDeleteAccount: {
-    width: Dimensions.get("window").width,
-    height: "15%",
-    borderTopWidth: 0.5,
     borderBottomWidth: 1,
-    borderColor: "black",
+    borderColor: "#ccc",
+    paddingLeft: "5%",
     justifyContent: "center",
+    height: "15%",
+    width: "100%",
+  },
+  infoBtn: {
+    backgroundColor: "#001D44",
     alignItems: "center",
+    justifyContent: "center",
+    borderColor: "001D44",
+    borderRadius: 8,
+    height: "34%",
+    width: "94%",
+  },
+  bottomContainer: {
+    flex: 1,
     backgroundColor: "white",
-    fontSize: 20,
   },
 });
 

@@ -1,24 +1,24 @@
-import * as React from "react";
-import {
-  View,
-  Text,
-  KeyboardAvoidingView,
-  TouchableOpacity,
-} from "react-native";
+import * as React from 'react';
+import { Button, View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity, Dimensions} from 'react-native';
 
 import getHomeStyle from "../../styles/screens/HomeStyle";
 
 function HomeScreen({ navigation }) {
+  function InfoReservation() {
+    //navigation.navigate()
+  }
   function NearbyCafe() {
     //navigation.navigate()
   }
+
+  function NearbyCafe() {}
 
   function ConfirmReservation() {
     //
   }
 
   function MyPage() {
-    //
+    // this is for test
   }
 
   return (
@@ -29,23 +29,37 @@ function HomeScreen({ navigation }) {
 
       <View style={getHomeStyle.contentContainer}>
         <TouchableOpacity
+          style={getHomeStyle.btnInfoReservation}
+          onPress={() => navigation.navigate("Reservation")}
+        >
+          <Text style={{ color: "#ccc", fontSize: 30, margin: 10 }}>
+            예약정보
+          </Text>
+          <Text style={{ color: "#ccc", fontSize: 20, margin: 10 }}>
+            예약된 카페 :
+          </Text>
+          <Text style={{ color: "#ccc", fontSize: 20, margin: 10 }}>
+            예약된 시간 :
+          </Text>
+          <Text style={{ color: "#ccc", fontSize: 20, margin: 10 }}>
+            예약된 좌석 :
+          </Text>
+        </TouchableOpacity>
+        {/*___
+        <TouchableOpacity
           style={getHomeStyle.btnNearbyCafe}
-          onPress={() => navigation.navigate("Cafe")}
+          onPress={() => navigation.navigate("Find")}
         >
           <Text style={{ color: "black", fontSize: 45 }}>주변카페</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={getHomeStyle.btnConfirmReservation}
-          onPress={() => navigation.navigate("Reservation")}
-        >
-          <Text style={{ color: "black", fontSize: 45 }}>예약 확인</Text>
-        </TouchableOpacity>
+
         <TouchableOpacity
           style={getHomeStyle.btnMyPage}
           onPress={() => navigation.navigate("MyPage")}
         >
           <Text style={{ color: "black", fontSize: 45 }}>마이 페이지</Text>
         </TouchableOpacity>
+         ___*/}
       </View>
     </KeyboardAvoidingView>
   );

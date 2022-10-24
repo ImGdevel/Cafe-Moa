@@ -4,33 +4,34 @@ import {
   Text,
   Image,
   TouchableOpacity,
+  TouchableHighlight,
   TextInput,
   KeyboardAvoidingView,
 } from "react-native";
-import { CreateUserAccount } from "../../lib/Auth";
+import { CreateUserAccount } from "../../lib/AuthService"
+import { createUserProfile } from "../../lib/UserDataService"
 
-import getRegisterStyle from "../../styles/screens/RegisterStyle";
-
-function RegisterScreen({ navigation }) {
-  const [userId, setUserId] = useState("");
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
-  const [userPasswordChk, setUserPasswordChk] = useState("");
+function RegisterScreen({navigation}) {
+  const [userId,setUserId] = useState("");
+  const [userEmail,setUserEmail] = useState("");
+  const [userPassword,setUserPassword] = useState("");
+  const [userPasswordChk,setUserPasswordChk] = useState("");
   const [errorText, setErrorText] = useState("");
 
   const idInputRef = createRef();
   const emailInputRef = createRef();
   const passwordInputRef = createRef();
   const passwordChkInputRef = createRef();
-
-  function GoToHomeScreen() {
-    navigation.navigate("InPutData");
+  
+  function GoToHomeScreen(){
+    navigation.navigate('InApp')
   }
-
-  function onSubmitApplication() {
-    setErrorText("");
-    if (!userId) {
-      setErrorText("아이디를 입력해주세요");
+  
+  function onSubmitApplication(){
+    
+    setErrorText('');
+    if (!userName) {
+      setErrorText('이름을 입력해주세요');
       return;
     }
     if (!userEmail) {
@@ -45,13 +46,29 @@ function RegisterScreen({ navigation }) {
       setErrorText("비밀번호가 일치하지 않습니다");
       return;
     }
-
-    CreateUserAccount(userEmail, userPassword)
-      .then(() => {
-        GoToHomeScreen();
-      })
-      .catch({});
+    
+    CreateUserAccount(userEmail,userPassword)
+    .then((id)=>{
+      createUserProfile(userName,id,userEmail,userPassword);
+      GoToHomeScreen();
+    })
+    .catch((err)=>{
+      console.log("계정 생성에 실패 했습니다.");
+    });
   }
+
+  const [isPress, setIsPress] = useState(false);
+
+  const touchProps = {
+    activeOpacity: 1,
+    underlayColor: "#A0A0FF", // <-- "backgroundColor" will be always overwritten by "underlayColor"
+    style: isPress ? getRegisterStyle.btnPress : getRegisterStyle.btnNormal, // <-- but you can still apply other style changes
+    onHideUnderlay: () => setIsPress(false),
+    onShowUnderlay: () => setIsPress(true),
+    onPress: () => {
+      onSubmitApplication;
+    }, // <-- "onPress" is apparently required
+  };
 
   return (
     <KeyboardAvoidingView style={getRegisterStyle.container}>
@@ -67,8 +84,8 @@ function RegisterScreen({ navigation }) {
           <TextInput
             ref={idInputRef}
             style={getRegisterStyle.textInput}
-            placeholder={"아이디"}
-            onChangeText={(userId) => setUserId(userId)}
+            placeholder={"이름"}
+            onChangeText={(userName) => setUserName(userName)}
             autoCapitalize="none"
             blurOnSubmit={false}
             returnKeyType="next"
@@ -79,7 +96,7 @@ function RegisterScreen({ navigation }) {
           <TextInput
             ref={emailInputRef}
             style={getRegisterStyle.textInput}
-            placeholder={"이메일"}
+            placeholder={"아이디(이메일)"}
             keyboardType="email-address"
             onChangeText={(userEmail) => setUserEmail(userEmail)}
             autoCapitalize="none"
@@ -116,12 +133,9 @@ function RegisterScreen({ navigation }) {
           <Text style={getRegisterStyle.errorText}>{errorText}</Text>
         </View>
         <View style={getRegisterStyle.btnArea}>
-          <TouchableOpacity
-            style={getRegisterStyle.btnLogin}
-            onPress={onSubmitApplication}
-          >
-            <Text style={{ color: "white", fontSize: 20 }}> 회원가입 </Text>
-          </TouchableOpacity>
+          <TouchableHighlight {...touchProps}>
+            <Text style={{ color: "black", fontSize: 20 }}>회원가입</Text>
+          </TouchableHighlight>
         </View>
       </View>
       <View style={{ flex: 4 }}></View>
