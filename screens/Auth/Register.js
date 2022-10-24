@@ -10,6 +10,9 @@ import {
 import { CreateUserAccount } from "../../lib/AuthService"
 import { createUserProfile } from "../../lib/UserDataService"
 
+import getRegisterStyle from "../../styles/screens/RegisterStyle";
+
+
 function RegisterScreen({navigation}) {
   const [userId,setUserId] = useState("");
   const [userEmail,setUserEmail] = useState("");
