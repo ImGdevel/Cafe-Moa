@@ -50,10 +50,10 @@ function HomeScreen({ navigation }) {
             예약된 좌석 :
           </Text>
         </TouchableOpacity>
-
+        {/*___
         <TouchableOpacity
           style={getHomeStyle.btnNearbyCafe}
-          onPress={() => navigation.navigate("Cafe")}
+          onPress={() => navigation.navigate("Find")}
         >
           <Text style={{ color: "black", fontSize: 45 }}>주변카페</Text>
         </TouchableOpacity>
@@ -64,6 +64,7 @@ function HomeScreen({ navigation }) {
         >
           <Text style={{ color: "black", fontSize: 45 }}>마이 페이지</Text>
         </TouchableOpacity>
+         ___*/}
       </View>
     </KeyboardAvoidingView>
   );
