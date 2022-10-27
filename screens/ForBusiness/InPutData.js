@@ -25,11 +25,11 @@ function InPutDataScreen({navigation}) {
   const [cafeClass, setCafeClass] = useState([]);
   useEffect(()=>{
     setting();
-
+    
   },[])
 
   const setting = async() => {
-    setLocal( await getGeoLocation());
+    setLocal(await getGeoLocation());
   }
 
   const Button1 = async() =>{
@@ -37,9 +37,7 @@ function InPutDataScreen({navigation}) {
     await getRandomCafeData().then((cafe)=>{
       data = cafe;
     });
-
     addCafeDatabase(data);
-
 
   }
   const Button2 = async() =>{
