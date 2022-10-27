@@ -14,14 +14,21 @@ import { sample_CafeData } from "../../lib/TestSample";
 
 function FindScreen({ navigation }) {
   var cafeLoop = [];
+
   const [sampleData, setSampleData] = useState([]);
-  useEffect(async () => {
+
+  const getData = async () => {
     setSampleData(await sample_CafeData());
-  }, []);
+  };
+
+  useEffect(() => {
+    getData();
+  }, [setSampleData]);
 
   for (let i = 0; i < sampleData.length; i++) {
     cafeLoop.push(
       <CafeTable
+        key={i}
         name={sampleData[i].getName()}
         location={sampleData[i].getAdress()}
         image={""}
