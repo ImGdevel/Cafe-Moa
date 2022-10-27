@@ -10,54 +10,28 @@ import {
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
 
-function FindScreen({ navigation }) {
-  const cafeArr = [
-    {
-      name: "스타벅스",
-      location: "용인시 처인구",
-      image: "",
-      information: "Open : 09:00AM | Close : 21:00PM",
-    },
-    {
-      name: "스타벅스",
-      location: "용인시 처인구",
-      image: "",
-      information: "Open : 09:00AM | Close : 21:00PM",
-    },
-    {
-      name: "스타벅스",
-      location: "용인시 처인구",
-      image: "",
-      information: "Open : 09:00AM | Close : 21:00PM",
-    },
-    {
-      name: "스타벅스",
-      location: "용인시 처인구",
-      image: "",
-      information: "Open : 09:00AM | Close : 21:00PM",
-    },
-    {
-      name: "스타벅스",
-      location: "용인시 처인구",
-      image: "",
-      information: "Open : 09:00AM | Close : 21:00PM",
-    },
-    {
-      name: "스타벅스",
-      location: "용인시 처인구",
-      image: "",
-      information: "Open : 09:00AM | Close : 21:00PM",
-    },
-  ];
+import { sample_CafeData } from "../../lib/TestSample";
 
+function FindScreen({ navigation }) {
   var cafeLoop = [];
-  for (let i = 0; i < cafeArr.length; i++) {
+  const [sampleData, setSampleData] = useState([]);
+  useEffect(async () => {
+    setSampleData(await sample_CafeData());
+  }, []);
+
+  for (let i = 0; i < sampleData.length; i++) {
     cafeLoop.push(
       <CafeTable
-        name={cafeArr[i].name}
-        location={cafeArr[i].location}
-        image={cafeArr[i].image}
-        information={cafeArr[i].information}
+        name={sampleData[i].getName()}
+        location={sampleData[i].getAdress()}
+        image={""}
+        information={
+          "Open : " +
+          sampleData[i].getOpenTime() +
+          ":00 || Close : " +
+          sampleData[i].getCloseTime() +
+          ":00"
+        }
         navigation={navigation}
       />
     );
