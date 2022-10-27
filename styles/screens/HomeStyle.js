@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   btnInfoReservation: {
     width: Dimensions.get("window").width,
     height: "50%",
-    borderWidth: 2,
+    //borderWidth: 2,
     borderColor: "#ccc",
     justifyContent: "center",
     alignItems: "flex-start",
@@ -40,12 +40,15 @@ const styles = StyleSheet.create({
   btnConfirmReservation: {
     width: Dimensions.get("window").width,
     height: "15%",
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
+    //borderTopWidth: 2,
+    //borderBottomWidth: 2,
     borderColor: "#ccc",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
+    borderRadius: 8,
+    backgroundColor: "#001D44",
+    width: "94%",
   },
 
   btnMyPage: {

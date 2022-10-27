@@ -33,17 +33,23 @@ function HomeScreen({ navigation }) {
           onPress={() => navigation.navigate("Reservation")}
         >
           <Text style={{ color: "#ccc", fontSize: 30, margin: 10 }}>
-            예약정보
+            Info Your Reservation
           </Text>
           <Text style={{ color: "#ccc", fontSize: 20, margin: 10 }}>
-            예약된 카페 :
+            cafe name :
           </Text>
           <Text style={{ color: "#ccc", fontSize: 20, margin: 10 }}>
-            예약된 시간 :
+            time :
           </Text>
           <Text style={{ color: "#ccc", fontSize: 20, margin: 10 }}>
-            예약된 좌석 :
+            seat :
           </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={getHomeStyle.btnConfirmReservation}
+          onPress={() => navigation.navigate("ConfirmReservation")}
+        >
+          <Text style={{ color: "black", fontSize: 25, margin : 10}}> ▶자세한 예약정보</Text>
         </TouchableOpacity>
         {/*___
         <TouchableOpacity
@@ -59,7 +65,8 @@ function HomeScreen({ navigation }) {
         >
           <Text style={{ color: "black", fontSize: 45 }}>마이 페이지</Text>
         </TouchableOpacity>
-         ___*/}
+         ___*/
+        }
       </View>
     </KeyboardAvoidingView>
   );
