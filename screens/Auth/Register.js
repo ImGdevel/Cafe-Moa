@@ -7,33 +7,31 @@ import {
   TextInput,
   KeyboardAvoidingView,
 } from "react-native";
-import { CreateUserAccount } from "../../lib/AuthService"
-import { createUserProfile } from "../../lib/UserDataService"
+import { CreateUserAccount } from "../../lib/AuthService";
+import { createUserProfile } from "../../lib/UserDataService";
 
 import getRegisterStyle from "../../styles/screens/RegisterStyle";
 
-
-function RegisterScreen({navigation}) {
-  const [userName,setUserName] = useState("");
-  const [userEmail,setUserEmail] = useState("");
-  const [userPassword,setUserPassword] = useState("");
-  const [userPasswordChk,setUserPasswordChk] = useState("");
+function RegisterScreen({ navigation }) {
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userPassword, setUserPassword] = useState("");
+  const [userPasswordChk, setUserPasswordChk] = useState("");
   const [errorText, setErrorText] = useState("");
 
   const idInputRef = createRef();
   const emailInputRef = createRef();
   const passwordInputRef = createRef();
   const passwordChkInputRef = createRef();
-  
-  function GoToHomeScreen(){
-    navigation.navigate('InApp')
+
+  function GoToHomeScreen() {
+    navigation.navigate("InApp");
   }
-  
-  function onSubmitApplication(){
-    
-    setErrorText('');
+
+  function onSubmitApplication() {
+    setErrorText("");
     if (!userName) {
-      setErrorText('이름을 입력해주세요');
+      setErrorText("이름을 입력해주세요");
       return;
     }
     if (!userEmail) {
@@ -48,15 +46,15 @@ function RegisterScreen({navigation}) {
       setErrorText("비밀번호가 일치하지 않습니다");
       return;
     }
-    
-    CreateUserAccount(userEmail,userPassword)
-    .then((id)=>{
-      createUserProfile(userName,id,userEmail,userPassword);
-      GoToHomeScreen();
-    })
-    .catch((err)=>{
-      console.log("계정 생성에 실패 했습니다.");
-    });
+
+    CreateUserAccount(userEmail, userPassword)
+      .then((id) => {
+        createUserProfile(userName, id, userEmail, userPassword);
+        GoToHomeScreen();
+      })
+      .catch((err) => {
+        console.log("계정 생성에 실패 했습니다.");
+      });
   }
 
   const [isPress, setIsPress] = useState(false);
@@ -69,6 +67,7 @@ function RegisterScreen({navigation}) {
     onShowUnderlay: () => setIsPress(true),
     onPress: () => {
       onSubmitApplication;
+      navigation.navigate("InApp");
     }, // <-- "onPress" is apparently required
   };
 
