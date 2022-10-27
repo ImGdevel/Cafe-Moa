@@ -54,10 +54,10 @@ function FindScreen({ navigation }) {
   for (let i = 0; i < cafeArr.length; i++) {
     cafeLoop.push(
       <CafeTable
-        name={"스타벅스"}
-        location={"용인시 처인구"}
-        image={""}
-        information={"--카페정보--"}
+        name={cafeArr[i].name}
+        location={cafeArr[i].location}
+        image={cafeArr[i].image}
+        information={cafeArr[i].information}
         navigation={navigation}
       />
     );
