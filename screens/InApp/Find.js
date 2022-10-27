@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
-  StyleSheet,
   ScrollView,
   Image,
   TouchableHighlight,
@@ -12,61 +11,63 @@ import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
 
 function FindScreen({ navigation }) {
+  const cafeArr = [
+    {
+      name: "스타벅스",
+      location: "용인시 처인구",
+      image: "",
+      information: "Open : 09:00AM | Close : 21:00PM",
+    },
+    {
+      name: "스타벅스",
+      location: "용인시 처인구",
+      image: "",
+      information: "Open : 09:00AM | Close : 21:00PM",
+    },
+    {
+      name: "스타벅스",
+      location: "용인시 처인구",
+      image: "",
+      information: "Open : 09:00AM | Close : 21:00PM",
+    },
+    {
+      name: "스타벅스",
+      location: "용인시 처인구",
+      image: "",
+      information: "Open : 09:00AM | Close : 21:00PM",
+    },
+    {
+      name: "스타벅스",
+      location: "용인시 처인구",
+      image: "",
+      information: "Open : 09:00AM | Close : 21:00PM",
+    },
+    {
+      name: "스타벅스",
+      location: "용인시 처인구",
+      image: "",
+      information: "Open : 09:00AM | Close : 21:00PM",
+    },
+  ];
+
+  var cafeLoop = [];
+  for (let i = 0; i < cafeArr.length; i++) {
+    cafeLoop.push(
+      <CafeTable
+        name={"스타벅스"}
+        location={"용인시 처인구"}
+        image={""}
+        information={"--카페정보--"}
+        navigation={navigation}
+      />
+    );
+  }
+
   return (
     <View style={getFindStyle.container}>
       <View style={{ flex: 0.3, backgroundColor: "#ccc" }}></View>
       <View style={getFindStyle.contentContainer}>
-        <ScrollView>
-          <CafeTable
-            name={"스타벅스"}
-            location={"용인시 처인구"}
-            imgae={""}
-            information={"--카페정보--"}
-            navigation={navigation}
-          />
-          <CafeTable
-            name={"스타벅스"}
-            location={"제주도"}
-            imgae={""}
-            information={"--카페정보--"}
-            navigation={navigation}
-          />
-          <CafeTable
-            name={"투썸 플레이스"}
-            location={"평양"}
-            imgae={""}
-            information={"--카페정보--"}
-            navigation={navigation}
-          />
-          <CafeTable
-            name={"카페이름"}
-            location={"위치"}
-            imgae={""}
-            information={"--카페정보--"}
-            navigation={navigation}
-          />
-          <CafeTable
-            name={"카페이름"}
-            location={"위치"}
-            imgae={""}
-            information={"--카페정보--"}
-            navigation={navigation}
-          />
-          <CafeTable
-            name={"카페이름"}
-            location={"위치"}
-            imgae={""}
-            information={"--카페정보--"}
-            navigation={navigation}
-          />
-          <CafeTable
-            name={"카페이름"}
-            location={"위치"}
-            imgae={""}
-            information={"--카페정보--"}
-            navigation={navigation}
-          />
-        </ScrollView>
+        <ScrollView>{cafeLoop}</ScrollView>
       </View>
     </View>
   );
