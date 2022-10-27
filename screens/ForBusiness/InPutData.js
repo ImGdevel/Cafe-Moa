@@ -1,11 +1,13 @@
 import React, {useState, useEffect, createRef} from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, KeyboardAvoidingView, } from 'react-native';
-import { getRandomCafeData } from '../../lib/TestSample';
+import { getRandomCafeData, sample_CafeData } from '../../lib/TestSample';
 import { getGeoLocation } from '../../lib/LocationService';
 import { 
   addCafeDatabase, 
-  getCafeDatabase, 
+  getCafeDatabase,
+  testings, 
 } from '../../lib/Database';
+import { CafeData } from '../../lib/CafeData';
 
 function InPutDataScreen({navigation}) {
   const [cafeName,setcCafeName] = useState("");
@@ -49,7 +51,7 @@ function InPutDataScreen({navigation}) {
   }
 
   const Button3 = () =>{
-    
+    testings();
   }
 
   return (
