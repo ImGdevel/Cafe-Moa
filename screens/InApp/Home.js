@@ -49,7 +49,7 @@ function HomeScreen({ navigation }) {
           style={getHomeStyle.btnConfirmReservation}
           onPress={() => navigation.navigate("ConfirmReservation")}
         >
-          <Text style={{ color: "black", fontSize: 25, margin : 10}}> ▶자세한 예약정보</Text>
+          <Text style={{ color: "black", fontSize: 22, margin : 15, padding: 4}}>▶자세한 예약정보</Text>
         </TouchableOpacity>
         {/*___
         <TouchableOpacity

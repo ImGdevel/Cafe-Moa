@@ -47,8 +47,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
     borderRadius: 8,
-    backgroundColor: "#001D44",
+    backgroundColor: "white",
     width: "94%",
+    marginLeft: "43%",
   },
 
   btnMyPage: {
