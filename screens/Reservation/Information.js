@@ -75,13 +75,7 @@ function InformationScreen({ navigation, route }) {
               name={route.params.name}
               location={route.params.location}
               image={""}
-              information={
-                "Open : " +
-                route.params.openTime +
-                ":00 || Close : " +
-                route.params.closeTime +
-                ":00"
-              }
+              information={route.params.information}
               navigation={navigation}
             />
           </View>
@@ -126,7 +120,14 @@ function InformationScreen({ navigation, route }) {
         <View style={getInfoStyle.btnContainer}>
           <TouchableOpacity
             style={getInfoStyle.reserveButton}
-            onPress={() => navigation.navigate("Reservation")}
+            onPress={() =>
+              navigation.navigate("Reservation", {
+                name: route.params.name,
+                location: route.params.location,
+                image: "",
+                information: route.params.information,
+              })
+            }
           >
             <Text style={{ color: "white", fontSize: 20 }}>예약하기</Text>
           </TouchableOpacity>
