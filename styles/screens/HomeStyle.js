@@ -13,6 +13,11 @@ const styles = StyleSheet.create({
     marginBottom: "2%",
   },
 
+  infoContainer: {
+    borderColor: "#ccc",
+    borderWidth: 1,
+  },
+
   btnInfoReservation: {
     width: Dimensions.get("window").width,
     height: "50%",
