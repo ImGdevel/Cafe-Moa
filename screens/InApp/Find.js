@@ -39,6 +39,7 @@ function FindScreen({ navigation }) {
           sampleData[i].getCloseTime() +
           ":00"
         }
+        data={sampleData[i]}
         navigation={navigation}
       />
     );
@@ -58,10 +59,20 @@ function CafeTable(props) {
   const [cafeName, setCafeName] = useState(props.name);
   const [cafeLocation, setCafeLocation] = useState(props.location);
   const [cafeInformation, setCafeInformaion] = useState(props.information);
+  const [sampleData, setSampleData] = useState(props.data);
+
   return (
     <TouchableHighlight
       style={getCafeTableStyle.container}
-      onPress={() => props.navigation.navigate("Information")}
+      onPress={() =>
+        props.navigation.navigate("Information", {
+          name: sampleData.getName(),
+          location: sampleData.getAdress(),
+          image: "",
+          openTime: sampleData.getOpenTime(),
+          closeTime: sampleData.getCloseTime(),
+        })
+      }
       activeOpacity={0.5}
       underlayColor="#DDDDDD"
     >

@@ -63,7 +63,7 @@ const imgArr = [
   },
 ];
 
-function InformationScreen({ navigation }) {
+function InformationScreen({ navigation, route }) {
   const [direction, setDirection] = useState("사진");
 
   return (
@@ -72,10 +72,17 @@ function InformationScreen({ navigation }) {
         <View style={getFindStyle.container}>
           <View style={getFindStyle.contentContainer}>
             <CafeTable
-              name={"Coffee Bay"}
-              location={"용인시 처인구"}
-              imgae={""}
-              information={"Open : AM 09:00 || Close : PM 22:00"}
+              name={route.params.name}
+              location={route.params.location}
+              image={""}
+              information={
+                "Open : " +
+                route.params.openTime +
+                ":00 || Close : " +
+                route.params.closeTime +
+                ":00"
+              }
+              navigation={navigation}
             />
           </View>
         </View>
