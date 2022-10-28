@@ -1,5 +1,5 @@
 import React, {useState, useEffect, createRef} from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, TextInput, KeyboardAvoidingView, } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, KeyboardAvoidingView, Image, } from 'react-native';
 import { getRandomCafeData, sample_CafeData } from '../../lib/TestSample';
 import { getGeoLocation } from '../../lib/LocationService';
 import { 
@@ -8,6 +8,11 @@ import {
   testings, 
 } from '../../lib/Database';
 import { CafeData } from '../../lib/CafeData';
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
+import * as ImagePicker from "expo-image-picker";
+import { storageService } from '../../FireServer';
+
 
 function InPutDataScreen({navigation}) {
   const [cafeName,setcCafeName] = useState("");
@@ -24,8 +29,7 @@ function InPutDataScreen({navigation}) {
   const [cafeDatas, setCafeDatas] = useState([]); //가져와질 데이터
   const [cafeClass, setCafeClass] = useState([]);
   useEffect(()=>{
-    setting();
-    
+    setting();    
   },[])
 
   const setting = async() => {
@@ -41,16 +45,65 @@ function InPutDataScreen({navigation}) {
 
   }
   const Button2 = async() =>{
-    let data = await getCafeDatabase(local);
-    console.log(data);
-    console.log(data[0]);
-    let data1 = data[0];
-    console.log(data1.name);
+    pickImage();
   }
 
-  const Button3 = () =>{
-    testings();
+  const Button3 = async() =>{
+    setImage(await getImage());    
   }
+
+
+  const [url, setUrl] = useState();
+  const [image, setImage] = useState(null);
+
+  const getImage = async key => {
+    let url = '';
+    try {
+      const imageRef = await storageService.ref('Pictures/Image2');
+      url = await imageRef.getDownloadURL();
+      setUrl(url);
+      console.log('imageUrl:', url);
+      return url;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    //이 이미지를 파이어 배이스로!
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
+  const uploadImage = async () => {
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function() {
+        reject(new TypeError('Network request failed'));
+      };
+      xhr.responseType = 'blob';
+      xhr.open('GET', image, true);
+      xhr.send(null);
+    })
+  
+    const ref = storageService.ref().child(`Pictures/Image3`)
+    ref.put(blob)
+  }
+
 
   return (
   <KeyboardAvoidingView style={styles.container} >
@@ -97,7 +150,7 @@ function InPutDataScreen({navigation}) {
           onChangeText={(cafeTime) => setcafeTime(cafeTime)}
           autoCapitalize="none"
         /> */}
-
+      <Image source={{ uri: image }} style={{ width: 100, height: 100 }} />
       </View>
       <View style={styles.btnArea}>
         <TouchableOpacity style={styles.btnLogin} onPress = {Button1}>
