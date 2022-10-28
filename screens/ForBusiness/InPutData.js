@@ -8,6 +8,7 @@ import {
   testings, 
 } from '../../lib/Database';
 import { CafeData } from '../../lib/CafeData';
+import { getUserProfile, sendReservetionToUser, getReservetionToUser, deleteReservationToUser } from '../../lib/UserDataService'; //삭제, 테스트용
 
 function InPutDataScreen({navigation}) {
   const [cafeName,setcCafeName] = useState("");
@@ -37,15 +38,24 @@ function InPutDataScreen({navigation}) {
     await getRandomCafeData().then((cafe)=>{
       data = cafe;
     });
-
     addCafeDatabase(data);
 
+    // 아래는 테스트용, 성공! 삭제 가능
+    //sendReservetionToUser("cafeid", 9, 1);
 
   }
   const Button2 = async() =>{
     let data = await getCafeDatabase(local);
     console.log(data);
     console.log(data[0]);
+
+    // 아래는 테스트 예시, 성공! 삭제 가능
+    // let userdata = await getUserProfile();
+    // console.log(userdata);
+    // let userre = await getReservetionToUser();
+    // console.log(userre);
+    // let userdel = await deleteReservationToUser();
+    // console.log(userdel);
   }
 
   const Button3 = () =>{

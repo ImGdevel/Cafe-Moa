@@ -31,5 +31,3 @@ export const dbService = firebase.firestore();
 export const authService = firebase.auth();
 export const storageService = firebase.storage();
 export const GoogleMapApiKey = MapApiKey();
-
-export const deletefield = firebase.firestore.FieldValue.delete(); 
