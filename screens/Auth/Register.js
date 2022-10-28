@@ -1,8 +1,7 @@
-import React, { useState, useEffect, createRef } from "react";
+import React, { useState,createRef } from "react";
 import {
   View,
   Text,
-  TouchableOpacity,
   TouchableHighlight,
   TextInput,
   KeyboardAvoidingView,
