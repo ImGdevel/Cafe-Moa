@@ -134,7 +134,7 @@ function RegisterScreen({ navigation }) {
           <Text style={getRegisterStyle.errorText}>{errorText}</Text>
         </View>
         <View style={getRegisterStyle.btnArea}>
-          <TouchableHighlight {...touchProps}>
+          <TouchableHighlight {...touchProps} onPress={onSubmitApplication}>
             <Text style={{ color: "black", fontSize: 20 }}>회원가입</Text>
           </TouchableHighlight>
         </View>
