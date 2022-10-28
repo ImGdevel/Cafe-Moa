@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     marginTop: "7%",
     marginLeft: "7%",
     width: "30%",
-    height: "63%",
+    height: "67%",
   },
 
   idText: {
