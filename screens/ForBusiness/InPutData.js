@@ -1,5 +1,5 @@
 import React, {useState, useEffect, createRef} from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, TextInput, KeyboardAvoidingView, } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, KeyboardAvoidingView, Image, } from 'react-native';
 import { getRandomCafeData, sample_CafeData } from '../../lib/TestSample';
 import { getGeoLocation } from '../../lib/LocationService';
 import { 
@@ -7,7 +7,8 @@ import {
   getCafeDatabase,
   testings, 
 } from '../../lib/Database';
-import { CafeData } from '../../lib/CafeData';
+
+
 
 function InPutDataScreen({navigation}) {
   const [cafeName,setcCafeName] = useState("");
@@ -24,8 +25,7 @@ function InPutDataScreen({navigation}) {
   const [cafeDatas, setCafeDatas] = useState([]); //가져와질 데이터
   const [cafeClass, setCafeClass] = useState([]);
   useEffect(()=>{
-    setting();
-    
+    setting();    
   },[])
 
   const setting = async() => {
@@ -48,9 +48,11 @@ function InPutDataScreen({navigation}) {
     console.log(data);
   }
 
-  const Button3 = () =>{
-    testings();
+  const Button3 = async() =>{
+    setImage(await getImage());    
   }
+
+
 
   return (
   <KeyboardAvoidingView style={styles.container} >
@@ -96,8 +98,11 @@ function InPutDataScreen({navigation}) {
           placeholder={'시간과 좌석번호'}
           onChangeText={(cafeTime) => setcafeTime(cafeTime)}
           autoCapitalize="none"
-        /> */}
-
+        /> 
+        <Image source={{ uri: image }} style={{ width: 100, height: 100 }} />
+        */
+        }
+      
       </View>
       <View style={styles.btnArea}>
         <TouchableOpacity style={styles.btnLogin} onPress = {Button1}>
