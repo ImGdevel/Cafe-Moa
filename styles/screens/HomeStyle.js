@@ -26,17 +26,6 @@ const styles = StyleSheet.create({
     paddingLeft: "2%",
   },
 
-  btnNearbyCafe: {
-    width: Dimensions.get("window").width,
-    height: "15%",
-    borderTopWidth: 2,
-    borderBottomWidth: 1,
-    borderColor: "#ccc",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-  },
-
   btnConfirmReservation: {
     width: Dimensions.get("window").width,
     height: "15%",
@@ -50,17 +39,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     width: "94%",
     marginLeft: "43%",
-  },
-
-  btnMyPage: {
-    width: Dimensions.get("window").width,
-    height: "15%",
-    borderTopWidth: 1,
-    borderBottomWidth: 2,
-    borderColor: "#ccc",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
   },
 });
 

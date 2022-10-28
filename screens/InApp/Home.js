@@ -1,5 +1,10 @@
-import * as React from 'react';
-import { Button, View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity, Dimensions} from 'react-native';
+import * as React from "react";
+import {
+  View,
+  Text,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+} from "react-native";
 
 import getHomeStyle from "../../styles/screens/HomeStyle";
 
@@ -30,18 +35,20 @@ function HomeScreen({ navigation }) {
       <View style={getHomeStyle.contentContainer}>
         <TouchableOpacity
           style={getHomeStyle.btnInfoReservation}
-          onPress={() => navigation.navigate("Reservation")}
+          onPress={() => navigation.navigate("ConfirmReservation")}
         >
-          <Text style={{ color: "#ccc", fontSize: 30, margin: 10 }}>
-            Info Your Reservation
-          </Text>
-          <Text style={{ color: "#ccc", fontSize: 20, margin: 10 }}>
+          <View style={getHomeStyle.Infocontainer}>
+            <Text style={{ color: "black", fontSize: 30, margin: 10 }}>
+              예약내역
+            </Text>
+          </View>
+          <Text style={{ color: "#ccc", fontSize: 20, marginHorizontal: 20 }}>
             cafe name :
           </Text>
-          <Text style={{ color: "#ccc", fontSize: 20, margin: 10 }}>
+          <Text style={{ color: "#ccc", fontSize: 20, marginHorizontal: 20 }}>
             time :
           </Text>
-          <Text style={{ color: "#ccc", fontSize: 20, margin: 10 }}>
+          <Text style={{ color: "#ccc", fontSize: 20, marginHorizontal: 20 }}>
             seat :
           </Text>
         </TouchableOpacity>
@@ -49,7 +56,11 @@ function HomeScreen({ navigation }) {
           style={getHomeStyle.btnConfirmReservation}
           onPress={() => navigation.navigate("ConfirmReservation")}
         >
-          <Text style={{ color: "black", fontSize: 22, margin : 15, padding: 4}}>▶자세한 예약정보</Text>
+          <Text
+            style={{ color: "black", fontSize: 22, margin: 15, padding: 4 }}
+          >
+            ▶자세한 예약정보
+          </Text>
         </TouchableOpacity>
         {/*___
         <TouchableOpacity
@@ -65,8 +76,7 @@ function HomeScreen({ navigation }) {
         >
           <Text style={{ color: "black", fontSize: 45 }}>마이 페이지</Text>
         </TouchableOpacity>
-         ___*/
-        }
+         ___*/}
       </View>
     </KeyboardAvoidingView>
   );
