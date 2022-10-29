@@ -13,9 +13,14 @@ import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
 
 function InformationScreen({ navigation, route }) {
-  const {cafeData:cafe} = route.params;
-  const [cafeData, setCafeData] = useState(cafe);
+  const {cafeData:cafe_Data} = route.params;
+  const [cafeData, setCafeData] = useState(cafe_Data);
   const [direction, setDirection] = useState("사진");
+
+
+  const SeatTable = async()=>{
+    
+  }
 
 
   return (
@@ -28,6 +33,7 @@ function InformationScreen({ navigation, route }) {
               location={route.params.location}
               image={route.params.cafeData.getLogo()}
               information={route.params.information}
+              cafeData={cafeData}
               navigation={navigation}
             />
           </View>
@@ -38,8 +44,7 @@ function InformationScreen({ navigation, route }) {
             selectedValue={direction}
             values={["사진", "좌석"]}
             setSelectedValue={setDirection}
-            style={getInfoStyle.contentLayout}
-          >
+            style={getInfoStyle.contentLayout}>
             <FlatList
               keyExtractor={(item) => item.idx}
               data={imgArr}
@@ -74,11 +79,7 @@ function InformationScreen({ navigation, route }) {
             style={getInfoStyle.reserveButton}
             onPress={() =>
               navigation.navigate("Reservation", {
-                name: route.params.name,
-                location: route.params.location,
-                image: "",
-                information: route.params.information,
-                cafeData : cafe
+                cafeData: cafeData,
               })
             }
           >
@@ -92,9 +93,11 @@ function InformationScreen({ navigation, route }) {
 
 //카페 테이블
 function CafeTable(props) {
-  const [cafeName, setCafeName] = useState(props.name);
-  const [cafeLocation, setCafeLocation] = useState(props.location);
-  const [cafeInformation, setCafeInformaion] = useState(props.information);
+  const cafeData = props.cafeData;
+  const [cafeName, setCafeName] = useState(cafeData.getName());
+  const [cafeLocation, setCafeLocation] = useState(cafeData.getAdress(1,3));
+  const [cafeInformation, setCafeInformaion] = useState("Open : "+cafeData.getOpenTime()+":00 ~ Close : " +cafeData.getCloseTime() +":00");
+  const [cafeLogoImage, setCafeLogoImage] = useState(cafeData.getLogo());
 
   return (
     <>
@@ -102,7 +105,7 @@ function CafeTable(props) {
         <View style={getCafeTableStyle.imageContainer}>
           <View style={getCafeTableStyle.image}>
             <Image
-              source={require("../../img/coffeebayLogo_test.jpg")}
+              source={{uri:cafeLogoImage}}
               style={getInfoStyle.cafeLogo}
             />
           </View>

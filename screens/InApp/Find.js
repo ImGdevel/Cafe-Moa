@@ -33,13 +33,12 @@ function FindScreen({ navigation, route }) {
         point = loc 
         console.log("위치정보",point); 
         let cafe_data = await getCafeDatabaseAd(location);
-        console.log("카페 데이터",cafe_data);
         setcafeDatas(cafe_data);
+        console.log("카페 데이터",cafe_data);
+        
         CafeListLoad();
       })
     }
-
-
   };
 
   const CafeListLoad = () => {
@@ -48,21 +47,12 @@ function FindScreen({ navigation, route }) {
       cafeList.push(
         <CafeTable
           key={i}
-          name={cafeDatas[i].getName()}
-          location={cafeDatas[i].getAdress(1,3)}
-          image={cafeDatas[i].getLogo()}
-          information={
-            "Open : " +
-            cafeDatas[i].getOpenTime() +
-            ":00 ~ Close : " +
-            cafeDatas[i].getCloseTime() +
-            ":00"
-          }
           cafeData={cafeDatas[i]}
           navigation={navigation}
         />
       );
     }
+    console.log("페이지 출력");
     setCafeLoop(cafeList);
   }
   return (
@@ -76,20 +66,16 @@ function FindScreen({ navigation, route }) {
 }
 
 function CafeTable(props) {
-  console.log(props.image)
-  const [cafeName, setCafeName] = useState(props.name);
-  const [cafeLocation, setCafeLocation] = useState(props.location);
-  const [cafeInformation, setCafeInformaion] = useState(props.information);
-  const [cafeLogoImage, setCafeLogoImage] = useState(props.image);
+  const cafeData = props.cafeData;
+  const [cafeName, setCafeName] = useState(cafeData.getName());
+  const [cafeLocation, setCafeLocation] = useState(cafeData.getAdress(1,3));
+  const [cafeInformation, setCafeInformaion] = useState("Open : "+cafeData.getOpenTime()+":00 ~ Close : " +cafeData.getCloseTime() +":00");
+  const [cafeLogoImage, setCafeLogoImage] = useState(cafeData.getLogo());
   return (
     <TouchableHighlight
       style={getCafeTableStyle.container}
       onPress={() =>
         props.navigation.navigate("Information", {
-          name: cafeName,
-          location: cafeLocation,
-          image: "",
-          information: cafeInformation,
           cafeData: props.cafeData,
         })
       }
@@ -99,7 +85,7 @@ function CafeTable(props) {
       <>
         <View style={getCafeTableStyle.imageContainer}>
           <View style={getCafeTableStyle.image}>
-            <Image source={{uri:cafeLogoImage}} style={{ width: '100%', height: '100%', borderRadius:20, }} />
+            <Image source={{uri:cafeLogoImage}} style={{ width: '100%', height: '100%', borderRadius:20,}} />
           </View>
         </View>
         <View style={getCafeTableStyle.contentContainer}>
