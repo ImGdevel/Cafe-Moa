@@ -23,8 +23,10 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 function MapApiKey(){
-  return "AIzaSyDzomyFKwYc6OSUdbTW75L3J9eRBOGTBGU";
+  return "AIzaSyAKg9V-QSOU6d51q2eYOJL7fAG1SotIfD8";
 }
+
+
 
 export const MyDatabase = firebase;
 export const dbService = firebase.firestore();
