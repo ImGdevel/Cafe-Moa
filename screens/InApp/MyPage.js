@@ -9,9 +9,19 @@ import {
 } from "react-native";
 
 import getMyPageStyle from "../../styles/screens/MyPageStyle";
+import { signOut } from "../../lib/AuthService";
+import { getUserProfile } from "../../lib/UserDataService";
 
 function MyPageScreen({ navigation }) {
-  //const [userId, setUserId] = useState(props.userId);
+  const [userData, setUserData] = useState([]);
+
+  const getData = async () => {
+    setUserData(await getUserProfile());
+  };
+
+  useEffect(() => {
+    getData();
+  }, [setUserData]);
 
   function GoToOptionScreen() {
     //navigation.navigate()
@@ -22,7 +32,8 @@ function MyPageScreen({ navigation }) {
   }
 
   function GoToLogoutScreen() {
-    //
+    signOut();
+    navigation.navigate("Auth");
   }
 
   function GoToDeleteAccountScreen() {
@@ -39,8 +50,12 @@ function MyPageScreen({ navigation }) {
           ></Image>
         </View>
         <View style={getMyPageStyle.idText}>
-          <Text style={{ fontWeight: "600", fontSize: 25 }}>성 이름</Text>
-          <Text style={{ fontWeight: "400", fontSize: 20 }}>userID</Text>
+          <Text style={{ fontWeight: "600", fontSize: 25 }}>
+            {userData.Name}
+          </Text>
+          <Text style={{ fontWeight: "400", fontSize: 20 }}>
+            {userData.uid}
+          </Text>
           <Text></Text>
           <TouchableOpacity
             style={getMyPageStyle.infoBtn}
