@@ -1,13 +1,14 @@
 import React, {useState, useEffect, createRef} from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, TextInput, KeyboardAvoidingView, } from 'react-native';
-import { getRandomCafeData, sample_CafeData } from '../../lib/TestSample';
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, KeyboardAvoidingView, Image, } from 'react-native';
+import { getRandomCafeData, setSampleImage } from '../../lib/TestSample';
 import { getGeoLocation } from '../../lib/LocationService';
 import { 
   addCafeDatabase, 
   getCafeDatabase,
+  getCafeDatabaseAd,
   testings, 
 } from '../../lib/Database';
-import { CafeData } from '../../lib/CafeData';
+
 import { getUserProfile, sendReservetionToUser, getReservetionToUser, deleteReservationToUser } from '../../lib/UserDataService'; //삭제, 테스트용
 
 function InPutDataScreen({navigation}) {
@@ -24,13 +25,15 @@ function InPutDataScreen({navigation}) {
 
   const [cafeDatas, setCafeDatas] = useState([]); //가져와질 데이터
   const [cafeClass, setCafeClass] = useState([]);
-  useEffect(()=>{
-    setting();
 
+  const [image,setImage] = useState()
+  const [name,setName] = useState()
+  useEffect(()=>{
+    setting();    
   },[])
 
   const setting = async() => {
-    setLocal( await getGeoLocation());
+    setLocal(await getGeoLocation());
   }
 
   const Button1 = async() =>{
@@ -42,14 +45,16 @@ function InPutDataScreen({navigation}) {
 
     // 아래는 테스트용, 성공! 삭제 가능
     //sendReservetionToUser("cafeid", 9, 1);
-
   }
   const Button2 = async() =>{
     let data = await getCafeDatabase(local);
-    console.log(data);
-    console.log(data[0]);
+    if(cafeDatas != null){
+      console.log("?")
+      setName(cafeDatas.getName());
+      setImage(cafeDatas.getLogo());
+    }
 
-    // 아래는 테스트 예시, 성공! 삭제 가능
+        // 아래는 테스트 예시, 성공! 삭제 가능
     // let userdata = await getUserProfile();
     // console.log(userdata);
     // let userre = await getReservetionToUser();
@@ -58,8 +63,13 @@ function InPutDataScreen({navigation}) {
     // console.log(userdel);
   }
 
-  const Button3 = () =>{
-    testings();
+  const Button3 = async() =>{
+    setCafeDatas(await getCafeDatabaseAd(local));
+    if(cafeDatas[0]!=null){
+      
+      setName(cafeDatas[0].getName());
+      setImage(cafeDatas[0].getLogo()); 
+    }
   }
 
   return (
@@ -106,8 +116,15 @@ function InPutDataScreen({navigation}) {
           placeholder={'시간과 좌석번호'}
           onChangeText={(cafeTime) => setcafeTime(cafeTime)}
           autoCapitalize="none"
-        /> */}
-
+        /> 
+        <Image source={{ uri: image }} style={{ width: 100, height: 100 }} />
+        */
+        }
+        <View>
+          <Text>{name}</Text>
+          <Image source={ (image != null) ? { uri: image } : null } style={{ width: 100, height: 100 }} />
+        </View>
+      
       </View>
       <View style={styles.btnArea}>
         <TouchableOpacity style={styles.btnLogin} onPress = {Button1}>
@@ -122,9 +139,6 @@ function InPutDataScreen({navigation}) {
           <Text style={{ color: 'white', fontSize: 20,}}> 콘솔창에 출력하기 </Text>
         </TouchableOpacity>
       </View>
-        <View>
-          <Text>{}</Text>
-        </View>
     </View>
     <View style={{flex: 4}}></View>
   </KeyboardAvoidingView>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { View, Image } from "react-native";
 
 import getStartPageStyle from "../../styles/screens/StartPageStyle";

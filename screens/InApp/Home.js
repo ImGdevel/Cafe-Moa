@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 import React, { useState, useEffect, useTransition } from "react";
+=======
+import * as React from "react";
+import { useState,useEffect } from "react";
+>>>>>>> feature/UserData
 import {
   View,
   Text,
@@ -12,6 +17,7 @@ import { getUserProfile } from "../../lib/UserDataService";
 import { getCurrentUserId } from "../../lib/AuthService";
 
 function HomeScreen({ navigation }) {
+<<<<<<< HEAD
   const [userData, setUserData] = useState(null);
   const [reserveCafeInfo,setReserveCafeInfo] = useState(null);
   const [reserveLoading,setReserveLoading] = useState(false);
@@ -30,6 +36,15 @@ function HomeScreen({ navigation }) {
         }
       })
     }
+=======
+  
+
+  function InfoReservation() {
+    //navigation.navigate()
+  }
+  function NearbyCafe() {
+    //navigation.navigate()
+>>>>>>> feature/UserData
   }
 
 
