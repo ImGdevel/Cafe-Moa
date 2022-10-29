@@ -5,14 +5,19 @@ import {
   ScrollView,
   Image,
   TouchableHighlight,
+  TouchableOpacity,
+  TextInput,
 } from "react-native";
 
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
 
+import Ionicons from "react-native-vector-icons/Ionicons";
 import { sample_CafeData } from "../../lib/TestSample";
 
 function FindScreen({ navigation }) {
+  const [textInputValue, setTextInputValue] = useState("");
+
   var cafeLoop = [];
 
   const [sampleData, setSampleData] = useState([]);
@@ -44,9 +49,42 @@ function FindScreen({ navigation }) {
     );
   }
 
+  function search() {
+    // search
+  }
+
+  function filter() {
+    // filter
+  }
+
   return (
     <View style={getFindStyle.container}>
-      <View style={{ flex: 0.3, backgroundColor: "#ccc" }}></View>
+      <View style={{ flex: 0.3, backgroundColor: "#ccc" }}>
+        <View style={getFindStyle.searchbarContainer}>
+          <TextInput
+            style={getFindStyle.textinputBox}
+            onChangeText={(text) => setTextInputValue(text)}
+            value={textInputValue}
+            placeholder="검색"
+          />
+          <TouchableOpacity style={getFindStyle.btnSearch} onPress={search}>
+            <Ionicons
+              name="search-outline"
+              style={{ fontSize: 20, color: "#001D44" }}
+            ></Ionicons>
+          </TouchableOpacity>
+        </View>
+        <View style={getFindStyle.filterContainer}>
+          <TouchableOpacity style={getFindStyle.btnFilter} onPress={filter}>
+            <Ionicons
+              name="filter-outline"
+              style={{ fontSize: 20, color: "#001D44" }}
+            >
+              <Text style={{ fontSize: 15, color: "#001D44" }}> 필터</Text>
+            </Ionicons>
+          </TouchableOpacity>
+        </View>
+      </View>
       <View style={getFindStyle.contentContainer}>
         <ScrollView>{cafeLoop}</ScrollView>
       </View>
