@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState,useEffect } from "react";
 import {
   View,
   Text,
@@ -11,6 +12,8 @@ import getHomeStyle from "../../styles/screens/HomeStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 
 function HomeScreen({ navigation }) {
+  
+
   function InfoReservation() {
     //navigation.navigate()
   }
