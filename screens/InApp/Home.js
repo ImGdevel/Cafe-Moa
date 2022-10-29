@@ -1,7 +1,14 @@
-import * as React from 'react';
-import { Button, View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity, Dimensions} from 'react-native';
+import * as React from "react";
+import {
+  View,
+  Text,
+  Image,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+} from "react-native";
 
 import getHomeStyle from "../../styles/screens/HomeStyle";
+import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 
 function HomeScreen({ navigation }) {
   function InfoReservation() {
@@ -24,32 +31,53 @@ function HomeScreen({ navigation }) {
   return (
     <KeyboardAvoidingView style={getHomeStyle.container}>
       <View style={getHomeStyle.homeText}>
-        <Text style={{ fontWeight: "700", fontSize: 65 }}>CAFE MOA</Text>
+        <Text style={{ color: "#001D44", fontWeight: "700", fontSize: 65 }}>
+          M O A
+        </Text>
       </View>
 
       <View style={getHomeStyle.contentContainer}>
         <TouchableOpacity
           style={getHomeStyle.btnInfoReservation}
-          onPress={() => navigation.navigate("Reservation")}
-        >
-          <Text style={{ color: "#ccc", fontSize: 30, margin: 10 }}>
-            Info Your Reservation
-          </Text>
-          <Text style={{ color: "#ccc", fontSize: 20, margin: 10 }}>
-            cafe name :
-          </Text>
-          <Text style={{ color: "#ccc", fontSize: 20, margin: 10 }}>
-            time :
-          </Text>
-          <Text style={{ color: "#ccc", fontSize: 20, margin: 10 }}>
-            seat :
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={getHomeStyle.btnConfirmReservation}
           onPress={() => navigation.navigate("ConfirmReservation")}
         >
-          <Text style={{ color: "black", fontSize: 22, margin : 15, padding: 4}}>▶자세한 예약정보</Text>
+          <View style={getHomeStyle.infoContainer}>
+            <Text
+              style={{ color: "white", fontSize: 30, marginHorizontal: 10 }}
+            >
+              예약내역
+            </Text>
+          </View>
+          <View style={getHomeStyle.infoContentContainer}>
+            <View style={getCafeTableStyle.imageContainer}>
+              <Image
+                source={require("../../img/coffeebayLogo_test.jpg")}
+                style={getHomeStyle.image}
+              />
+            </View>
+            <View>
+              <Text
+                style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}
+              >
+                --카페이름--
+              </Text>
+              <Text
+                style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}
+              >
+                예약시간
+              </Text>
+              <Text
+                style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}
+              >
+                자리
+              </Text>
+              <Text
+                style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}
+              >
+                {"\n\t\t\t\t\t\t"}▶ 내역 확인하기
+              </Text>
+            </View>
+          </View>
         </TouchableOpacity>
         {/*___
         <TouchableOpacity
@@ -65,8 +93,7 @@ function HomeScreen({ navigation }) {
         >
           <Text style={{ color: "black", fontSize: 45 }}>마이 페이지</Text>
         </TouchableOpacity>
-         ___*/
-        }
+         ___*/}
       </View>
     </KeyboardAvoidingView>
   );
