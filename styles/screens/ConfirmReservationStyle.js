@@ -75,6 +75,15 @@ const styles = StyleSheet.create({
     borderColor: "#DDD",
     borderRadius: 10,
   },
+  reserveButton: {
+    backgroundColor: "#001D44",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 5,
+    marginBottom: 5,
+    width: "80%",
+    height: 40,
+  },
   btnContainer: {
     alignItems: "center",
     justifyContent: "center",

@@ -14,13 +14,13 @@ import getFindStyle from "../../styles/components/FindStyle";
 
 const imgArr = [
   {
-   idx: "12",
-   src: require("../../img/coffeebayLogo_test.jpg"),
+    idx: "12",
+    src: require("../../img/anySeatPic_text.png"),
   },
 ];
 
 function ConfirmReservationScreen({ navigation }) {
-  const [direction, setDirection] = useState("예약 내역");
+  const [direction, setDirection] = useState("사진");
 
   return (
     <>
@@ -39,7 +39,7 @@ function ConfirmReservationScreen({ navigation }) {
         <View style={{ flex: 4.5 }}>
           <PreviewLayout
             selectedValue={direction}
-            values={["예약 내역","카페 위치", "좌석 위치 안내도"]}
+            values={["예약 내역", "좌석 위치 안내"]}
             setSelectedValue={setDirection}
             style={getConfirmReservationStyle.contentLayout}
           >
@@ -56,23 +56,36 @@ function ConfirmReservationScreen({ navigation }) {
                       margin: 10,
                     }}
                   >
-                    <Image style={getConfirmReservationStyle.image} source={item.src} />
+                    
                     <Text style={{ color: "#ccc", fontSize: 20, margin: 15 }}>카페 주소 :</Text>
                     <Text style={{ color: "#ccc", fontSize: 20, margin: 15 }}>이용 가능 시간 :</Text>
                     <Text style={{ color: "#ccc", fontSize: 20, margin: 15 }}>예약금 수수료 여부 :</Text>
                     <Text style={{ color: "#ccc", fontSize: 15, margin: 15 }}>*매장 입장시 예약화면을 보여주시면 됩니다.
                     좌석 이동은 카페 직원께 문의 부탁드립니다.
                     이용 완료시 본인의 물건이 없는지 확인해주시고 다음 사람을 위해 좌석을 깨끗이 정리해주시기 바랍니다.</Text>
+                    <Text style={{ color: "#ccc", fontSize: 15, margin: 15 }}>*한시간 이전 예약 취소시 수수료 반환 불가</Text>
                   </View>
                 </TouchableOpacity>
               )}
               numColumns={3}
             />
+
+            {/*___<View style={getInfoStyle.image}>
+              <Image
+                source={require("../../img/coffeebayLogo_test.jpg")}
+                style={getInfoStyle.cafeLogo}
+              />
+  </View>___*/}
           </PreviewLayout>
         </View>
 
         <View style={getConfirmReservationStyle.btnContainer}>
-          
+          <TouchableOpacity
+            style={getConfirmReservationStyle.reserveButton}
+            onPress={() => navigation.navigate("Reservation")}
+          >
+            <Text style={{ color: "white", fontSize: 20 }}>예약 취소</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </>
@@ -93,7 +106,6 @@ function CafeTable(props) {
               source={require("../../img/coffeebayLogo_test.jpg")}
               style={getConfirmReservationStyle.cafeLogo}
             />
-            
           </View>
         </View>
         <View style={getCafeTableStyle.contentContainer}>
@@ -147,7 +159,6 @@ const PreviewLayout = ({
               source={require("../../img/anySeatPic_text.png")}
               style={getConfirmReservationStyle.seatPic}
             />
-            
           </View>
         );
     })()}
