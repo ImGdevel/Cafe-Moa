@@ -34,6 +34,9 @@ const InApp = () => {
             />
           ),
           headerShown: false,
+          tabBarLabel: () => {
+            return null;
+          },
         }}
       >
         {() => (
@@ -53,6 +56,9 @@ const InApp = () => {
             />
           ),
           headerShown: false,
+          tabBarLabel: () => {
+            return null;
+          },
         }}
       >
         {() => (
@@ -77,6 +83,9 @@ const InApp = () => {
             />
           ),
           headerShown: false,
+          tabBarLabel: () => {
+            return null;
+          },
         }}
       >
         {() => (

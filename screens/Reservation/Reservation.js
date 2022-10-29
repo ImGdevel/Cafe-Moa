@@ -8,7 +8,7 @@ import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
 import getModalStyle from "../../styles/components/ModalStyle";
 
-function ReservationScreen({ navigation }) {
+function ReservationScreen({ navigation, route }) {
   const [selectedSeat, setSelectedSeat] = useState("1");
   const [modalVisible, setModalVisible] = useState(true);
   const [modalOutput, setModalOutput] = useState("Open Modal");
@@ -71,10 +71,11 @@ function ReservationScreen({ navigation }) {
       <View style={getFindStyle.container}>
         <View style={getFindStyle.contentContainer}>
           <CafeTable
-            name={"Coffee Bay"}
-            location={"용인시 처인구"}
+            name={route.params.name}
+            location={route.params.location}
             image={""}
-            information={"--카페정보--"}
+            information={route.params.information}
+            navigation={navigation}
           />
         </View>
       </View>

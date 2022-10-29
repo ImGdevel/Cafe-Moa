@@ -10,54 +10,35 @@ import {
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
 
-function FindScreen({ navigation }) {
-  const cafeArr = [
-    {
-      name: "스타벅스",
-      location: "용인시 처인구",
-      image: "",
-      information: "Open : 09:00AM | Close : 21:00PM",
-    },
-    {
-      name: "스타벅스",
-      location: "용인시 처인구",
-      image: "",
-      information: "Open : 09:00AM | Close : 21:00PM",
-    },
-    {
-      name: "스타벅스",
-      location: "용인시 처인구",
-      image: "",
-      information: "Open : 09:00AM | Close : 21:00PM",
-    },
-    {
-      name: "스타벅스",
-      location: "용인시 처인구",
-      image: "",
-      information: "Open : 09:00AM | Close : 21:00PM",
-    },
-    {
-      name: "스타벅스",
-      location: "용인시 처인구",
-      image: "",
-      information: "Open : 09:00AM | Close : 21:00PM",
-    },
-    {
-      name: "스타벅스",
-      location: "용인시 처인구",
-      image: "",
-      information: "Open : 09:00AM | Close : 21:00PM",
-    },
-  ];
+import { sample_CafeData } from "../../lib/TestSample";
 
+function FindScreen({ navigation }) {
   var cafeLoop = [];
-  for (let i = 0; i < cafeArr.length; i++) {
+
+  const [sampleData, setSampleData] = useState([]);
+
+  const getData = async () => {
+    setSampleData(await sample_CafeData());
+  };
+
+  useEffect(() => {
+    getData();
+  }, [setSampleData]);
+
+  for (let i = 0; i < sampleData.length; i++) {
     cafeLoop.push(
       <CafeTable
-        name={cafeArr[i].name}
-        location={cafeArr[i].location}
-        image={cafeArr[i].image}
-        information={cafeArr[i].information}
+        key={i}
+        name={sampleData[i].getName()}
+        location={sampleData[i].getAdress()}
+        image={""}
+        information={
+          "Open : " +
+          sampleData[i].getOpenTime() +
+          ":00 || Close : " +
+          sampleData[i].getCloseTime() +
+          ":00"
+        }
         navigation={navigation}
       />
     );
@@ -77,10 +58,18 @@ function CafeTable(props) {
   const [cafeName, setCafeName] = useState(props.name);
   const [cafeLocation, setCafeLocation] = useState(props.location);
   const [cafeInformation, setCafeInformaion] = useState(props.information);
+
   return (
     <TouchableHighlight
       style={getCafeTableStyle.container}
-      onPress={() => props.navigation.navigate("Information")}
+      onPress={() =>
+        props.navigation.navigate("Information", {
+          name: cafeName,
+          location: cafeLocation,
+          image: "",
+          information: cafeInformation,
+        })
+      }
       activeOpacity={0.5}
       underlayColor="#DDDDDD"
     >

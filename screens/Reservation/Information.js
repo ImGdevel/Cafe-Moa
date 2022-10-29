@@ -63,7 +63,7 @@ const imgArr = [
   },
 ];
 
-function InformationScreen({ navigation }) {
+function InformationScreen({ navigation, route }) {
   const [direction, setDirection] = useState("사진");
 
   return (
@@ -72,10 +72,11 @@ function InformationScreen({ navigation }) {
         <View style={getFindStyle.container}>
           <View style={getFindStyle.contentContainer}>
             <CafeTable
-              name={"Coffee Bay"}
-              location={"용인시 처인구"}
-              imgae={""}
-              information={"Open : AM 09:00 || Close : PM 22:00"}
+              name={route.params.name}
+              location={route.params.location}
+              image={""}
+              information={route.params.information}
+              navigation={navigation}
             />
           </View>
         </View>
@@ -119,7 +120,14 @@ function InformationScreen({ navigation }) {
         <View style={getInfoStyle.btnContainer}>
           <TouchableOpacity
             style={getInfoStyle.reserveButton}
-            onPress={() => navigation.navigate("Reservation")}
+            onPress={() =>
+              navigation.navigate("Reservation", {
+                name: route.params.name,
+                location: route.params.location,
+                image: "",
+                information: route.params.information,
+              })
+            }
           >
             <Text style={{ color: "white", fontSize: 20 }}>예약하기</Text>
           </TouchableOpacity>
