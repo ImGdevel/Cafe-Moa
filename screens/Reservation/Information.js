@@ -128,10 +128,7 @@ function InformationScreen({ navigation, route }) {
             style={getInfoStyle.reserveButton}
             onPress={() =>
               navigation.navigate("Reservation", {
-                name: route.params.name,
-                location: route.params.location,
-                image: "",
-                information: route.params.information,
+                data: route.params.data,
               })
             }
           >
