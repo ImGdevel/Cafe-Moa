@@ -15,6 +15,7 @@ import ReservationScreen from "./screens/Reservation/Reservation";
 import ReserveEndScreen from "./screens/Reservation/ReserveEnd";
 import InPutDataScreen from "./screens/ForBusiness/InPutData";
 import ConfirmScreen from "./screens/InApp/ConfirmReservation";
+import CancelReservationScreen from "./screens/Reservation/CancelReservation";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -58,6 +59,7 @@ const InApp = () => {
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="ConfirmReservation" component={ConfirmScreen} />
+            <Stack.Screen name="CancelReservation" component={CancelReservationScreen} />
           </Stack.Navigator>
         )}
       </Tab.Screen>

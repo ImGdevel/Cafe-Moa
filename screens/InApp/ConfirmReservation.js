@@ -82,7 +82,7 @@ function ConfirmReservationScreen({ navigation }) {
         <View style={getConfirmReservationStyle.btnContainer}>
           <TouchableOpacity
             style={getConfirmReservationStyle.reserveButton}
-            onPress={() => navigation.navigate("Reservation")}
+            onPress={() => navigation.navigate("CancelReservation")}
           >
             <Text style={{ color: "white", fontSize: 20 }}>예약 취소</Text>
           </TouchableOpacity>
