@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
 
   btnInfoReservation: {
     width: Dimensions.get("window").width * 0.95,
-    height: "40%",
+    height: "50%",
     borderWidth: 2,
     borderColor: "#001D44",
     borderRadius: 15,
@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     marginVertical: "10%",
     marginHorizontal: "5%",
+    paddingTop: "6%",
     paddingLeft: "2%",
   },
 

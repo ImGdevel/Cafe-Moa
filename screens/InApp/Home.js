@@ -31,7 +31,9 @@ function HomeScreen({ navigation }) {
   return (
     <KeyboardAvoidingView style={getHomeStyle.container}>
       <View style={getHomeStyle.homeText}>
-        <Text style={{ fontWeight: "700", fontSize: 65 }}>CAFE MOA</Text>
+        <Text style={{ color: "#001D44", fontWeight: "700", fontSize: 65 }}>
+          M O A
+        </Text>
       </View>
 
       <View style={getHomeStyle.contentContainer}>
@@ -69,18 +71,13 @@ function HomeScreen({ navigation }) {
               >
                 자리
               </Text>
+              <Text
+                style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}
+              >
+                {"\n\t\t\t\t\t\t"}▶ 내역 확인하기
+              </Text>
             </View>
           </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={getHomeStyle.btnConfirmReservation}
-          onPress={() => navigation.navigate("ConfirmReservation")}
-        >
-          <Text
-            style={{ color: "#001D44", fontSize: 22, margin: 15, padding: 4 }}
-          >
-            ▶자세한 예약정보
-          </Text>
         </TouchableOpacity>
         {/*___
         <TouchableOpacity
