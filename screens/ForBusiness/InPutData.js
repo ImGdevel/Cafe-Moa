@@ -42,9 +42,6 @@ function InPutDataScreen({navigation}) {
 
   }
   const Button2 = async() =>{
-    console.log(local)
-
-    
     let data = await getCafeDatabase(local);
     console.log(data);
   }
