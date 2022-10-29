@@ -48,11 +48,12 @@ function InPutDataScreen({navigation}) {
   }
   const Button2 = async() =>{
     let data = await getCafeDatabase(local);
-    console.log(data);
-    setCafeDatas(data[0]);
-    console.log(cafeDatas)
-    setName(cafeDatas.getName());
-    setImage(cafeDatas.getLogo());
+    if(cafeDatas != null){
+      console.log("?")
+      setName(cafeDatas.getName());
+      setImage(cafeDatas.getLogo());
+    }
+
         // 아래는 테스트 예시, 성공! 삭제 가능
     // let userdata = await getUserProfile();
     // console.log(userdata);
@@ -65,6 +66,7 @@ function InPutDataScreen({navigation}) {
   const Button3 = async() =>{
     setCafeDatas(await getCafeDatabaseAd(local));
     if(cafeDatas[0]!=null){
+      
       setName(cafeDatas[0].getName());
       setImage(cafeDatas[0].getLogo()); 
     }
