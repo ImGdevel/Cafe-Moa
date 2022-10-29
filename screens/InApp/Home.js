@@ -26,7 +26,7 @@ function HomeScreen({ navigation }) {
       await getUserProfile().then((data)=>{
         setUserData(data); //예약 내역 확인
         if(data.reservation == null){
-
+          
         }
       })
     }
