@@ -14,9 +14,11 @@ import { getUserProfile } from "../../lib/UserDataService";
 
 function MyPageScreen({ navigation }) {
   const [userData, setUserData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const getData = async () => {
-    setUserData(await getUserProfile());
+    let user_data = await getUserProfile();
+    setUserData(user_data);
   };
 
   useEffect(() => {
@@ -53,8 +55,8 @@ function MyPageScreen({ navigation }) {
           <Text style={{ fontWeight: "600", fontSize: 25 }}>
             {userData.Name}
           </Text>
-          <Text style={{ fontWeight: "400", fontSize: 20 }}>
-            {userData.uid}
+          <Text style={{ fontWeight: "400", fontSize: 15 }}>
+            {userData.email}
           </Text>
           <Text></Text>
           <TouchableOpacity

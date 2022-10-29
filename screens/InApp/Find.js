@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
-import { sample_CafeData } from "../../lib/TestSample";
 import { getCafeDatabaseAd } from "../../lib/Database";
 import { getGeoLocation } from "../../lib/LocationService";
 
@@ -18,25 +17,22 @@ function FindScreen({ navigation }) {
   const [cafeDatas, setcafeDatas] = useState([]);
   const [location,setLocation] = useState();
 
-
   useEffect(()=>{
     loadLocalService();
+    getData();
   },[])
 
   const loadLocalService = async() => {
     setLocation(await getGeoLocation());
+    console.log("위치 가져옴",location)
   };
-
-  useEffect(() => {
-    getData();
-    CafeListLoad();
-  }, [setcafeDatas, setLocation]);
-
   
   const getData = async () => {
     if(location != null){
       console.log("!")
       setcafeDatas(await getCafeDatabaseAd(location));
+      console.log("화면 불러오기")
+      CafeListLoad();
     }
   };
 
@@ -56,15 +52,14 @@ function FindScreen({ navigation }) {
             cafeDatas[i].getCloseTime() +
             ":00"
           }
+          cafeData={cafeDatas[i]}
           navigation={navigation}
         />
       );
     }
+    console.log("화면 로드함")
     setCafeLoop(cafeList);
   }
-
-
-
   return (
     <View style={getFindStyle.container}>
       <View style={{ flex: 0.3, backgroundColor: "#ccc" }}></View>
@@ -76,6 +71,7 @@ function FindScreen({ navigation }) {
 }
 
 function CafeTable(props) {
+  console.log(props)
   const [cafeName, setCafeName] = useState(props.name);
   const [cafeLocation, setCafeLocation] = useState(props.location);
   const [cafeInformation, setCafeInformaion] = useState(props.information);
@@ -85,10 +81,12 @@ function CafeTable(props) {
       style={getCafeTableStyle.container}
       onPress={() =>
         props.navigation.navigate("Information", {
+          cafeData: props.cafeData,
+          /*
           name: cafeName,
           location: cafeLocation,
           image: "",
-          information: cafeInformation,
+          information: cafeInformation,*/
         })
       }
       activeOpacity={0.5}
