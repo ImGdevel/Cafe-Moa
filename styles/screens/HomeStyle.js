@@ -14,21 +14,44 @@ const styles = StyleSheet.create({
   },
 
   infoContainer: {
-    borderColor: "#ccc",
-    borderWidth: 1,
+    borderColor: "#001D44",
+    borderWidth: 2,
+    borderRadius: 15,
+    marginTop: "-25%",
+    marginLeft: "5%",
+    backgroundColor: "#001D44",
   },
 
   btnInfoReservation: {
-    width: Dimensions.get("window").width,
-    height: "50%",
-    //borderWidth: 2,
-    borderColor: "#ccc",
+    width: Dimensions.get("window").width * 0.95,
+    height: "40%",
+    borderWidth: 2,
+    borderColor: "#001D44",
+    borderRadius: 15,
     justifyContent: "center",
     alignItems: "flex-start",
     backgroundColor: "white",
-    marginTop: "10%",
-    marginBottom: "5%",
+    marginVertical: "10%",
+    marginHorizontal: "5%",
     paddingLeft: "2%",
+  },
+
+  infoContentContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  image: {
+    width: 120,
+    height: 120,
+    borderRadius: 10,
+    borderColor: "#001D44",
+    justifyContent: "center",
+    alignItems: "center",
+    resizeMode: "contain",
+    borderWidth: 1,
   },
 
   btnConfirmReservation: {
