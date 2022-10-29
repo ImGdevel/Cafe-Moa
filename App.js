@@ -59,7 +59,10 @@ const InApp = () => {
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="ConfirmReservation" component={ConfirmScreen} />
-            <Stack.Screen name="CancelReservation" component={CancelReservationScreen} />
+            <Stack.Screen
+              name="CancelReservation"
+              component={CancelReservationScreen}
+            />
           </Stack.Navigator>
         )}
       </Tab.Screen>

@@ -20,13 +20,13 @@ const imgArr = [
 ];
 
 function ConfirmReservationScreen({ navigation }) {
-  const [direction, setDirection] = useState("사진");
+  const [direction, setDirection] = useState("예약 내역");
 
   return (
     <>
       <View style={getConfirmReservationStyle.container}>
         <View style={getFindStyle.container}>
-          <View style={getFindStyle.contentContainer}>
+          <View style={(getFindStyle.contentContainer, { marginTop: "7%" })}>
             <CafeTable
               name={"Coffee Bay"}
               location={"용인시 처인구"}
@@ -56,14 +56,24 @@ function ConfirmReservationScreen({ navigation }) {
                       margin: 10,
                     }}
                   >
-                    
-                    <Text style={{ color: "#ccc", fontSize: 20, margin: 15 }}>카페 주소 :</Text>
-                    <Text style={{ color: "#ccc", fontSize: 20, margin: 15 }}>이용 가능 시간 :</Text>
-                    <Text style={{ color: "#ccc", fontSize: 20, margin: 15 }}>예약금 수수료 여부 :</Text>
-                    <Text style={{ color: "#ccc", fontSize: 15, margin: 15 }}>*매장 입장시 예약화면을 보여주시면 됩니다.
-                    좌석 이동은 카페 직원께 문의 부탁드립니다.
-                    이용 완료시 본인의 물건이 없는지 확인해주시고 다음 사람을 위해 좌석을 깨끗이 정리해주시기 바랍니다.</Text>
-                    <Text style={{ color: "#ccc", fontSize: 15, margin: 15 }}>*한시간 이전 예약 취소시 수수료 반환 불가</Text>
+                    <Text style={{ color: "black", fontSize: 20, margin: 15 }}>
+                      좌석 번호 :
+                    </Text>
+                    <Text style={{ color: "black", fontSize: 20, margin: 15 }}>
+                      이용 가능 시간 : 기본 1시간
+                    </Text>
+                    <Text style={{ color: "black", fontSize: 20, margin: 15 }}>
+                      예약금 수수료 여부 :
+                    </Text>
+                    <Text style={{ color: "black", fontSize: 15, margin: 15 }}>
+                      *매장 입장시 예약화면을 보여주시면 됩니다. 좌석 이동은
+                      카페 직원께 문의 부탁드립니다. 이용 완료시 본인의 물건이
+                      없는지 확인해주시고 다음 사람을 위해 좌석을 깨끗이
+                      정리해주시기 바랍니다.
+                    </Text>
+                    <Text style={{ color: "black", fontSize: 15, margin: 15 }}>
+                      *한시간 이전 예약 취소시 수수료 반환 불가
+                    </Text>
                   </View>
                 </TouchableOpacity>
               )}
@@ -141,7 +151,8 @@ const PreviewLayout = ({
           <Text
             style={[
               getConfirmReservationStyle.buttonLabel,
-              selectedValue === value && getConfirmReservationStyle.selectedLabel,
+              selectedValue === value &&
+                getConfirmReservationStyle.selectedLabel,
             ]}
           >
             {value}
@@ -151,7 +162,9 @@ const PreviewLayout = ({
     </View>
     {(() => {
       if (selectedValue === "예약 내역")
-        return <View style={getConfirmReservationStyle.container}>{children}</View>;
+        return (
+          <View style={getConfirmReservationStyle.container}>{children}</View>
+        );
       else
         return (
           <View style={{ alignItems: "center", justifyContent: "center" }}>
