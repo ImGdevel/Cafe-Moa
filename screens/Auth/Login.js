@@ -82,7 +82,10 @@ function LogInScreen({ navigation }) {
         </View>
         <Text>{errorText}</Text>
         <View style={getLoginStyle.btnArea}>
-          <TouchableHighlight {...touchProps}>
+          <TouchableHighlight 
+            {...touchProps}
+            onPress={onSubmit}
+          >
             <Text style={{ color: "black", fontSize: 20 }}>로그인</Text>
           </TouchableHighlight>
 

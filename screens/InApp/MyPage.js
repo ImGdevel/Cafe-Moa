@@ -33,7 +33,7 @@ function MyPageScreen({ navigation }) {
 
   function GoToLogoutScreen() {
     signOut();
-    navigation.navigate("Auth");
+    navigation.replace("Auth");
   }
 
   function GoToDeleteAccountScreen() {

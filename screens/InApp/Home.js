@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useTransition } from "react";
 import {
   View,
   Text,
@@ -6,21 +6,35 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
 } from "react-native";
-
 import getHomeStyle from "../../styles/screens/HomeStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import { getUserProfile } from "../../lib/UserDataService";
+import { getCurrentUserId } from "../../lib/AuthService";
 
 function HomeScreen({ navigation }) {
-  const [userData, setUserData] = useState([]);
-
-  const getData = async () => {
-    setUserData(await getUserProfile());
-  };
+  const [userData, setUserData] = useState(null);
+  const [reserveCafeInfo,setReserveCafeInfo] = useState(null);
+  const [reserveLoading,setReserveLoading] = useState(false);
 
   useEffect(() => {
-    getData();
+    LoadHomePage();
   }, [setUserData]);
+
+  const LoadHomePage = async() => {
+    //시작할때 초기작업
+    if(userData == null){
+      await getUserProfile().then((data)=>{
+        setUserData(data); //예약 내역 확인
+        if(data.reservation == null){
+
+        }
+      })
+    }
+  }
+
+
+  
+
 
   return (
     <KeyboardAvoidingView style={getHomeStyle.container}>
@@ -35,9 +49,9 @@ function HomeScreen({ navigation }) {
           style={getHomeStyle.btnInfoReservation}
           onPress={() =>
             navigation.navigate("ConfirmReservation", {
-              cafeId: userData.cafeId,
-              time: userData.time,
-              seatNumber: userData.seatNumber,
+              //cafeId: userData.cafeId,
+              //time: userData.time,
+              //seatNumber: userData.seatNumber,
             })
           }
         >
@@ -59,17 +73,17 @@ function HomeScreen({ navigation }) {
               <Text
                 style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}
               >
-                {userData.cafeId}
+                {(userData == null) ? "" : userData.Name}
               </Text>
               <Text
                 style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}
               >
-                {userData.time}
+                {}
               </Text>
               <Text
                 style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}
               >
-                {userData.seatNumber}
+                {}
               </Text>
               <Text
                 style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}
