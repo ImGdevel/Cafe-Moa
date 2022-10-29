@@ -11,6 +11,7 @@ import {
 import getConfirmReservationStyle from "../../styles/screens/ConfirmReservationStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
+import { deleteReservationToUser } from "../../lib/UserDataService";
 
 const imgArr = [
   {
@@ -19,8 +20,13 @@ const imgArr = [
   },
 ];
 
-function ConfirmReservationScreen({ navigation }) {
+function ConfirmReservationScreen({ navigation, route }) {
   const [direction, setDirection] = useState("예약 내역");
+
+  function CancelReserve() {
+    navigation.navigate("CancelReservation");
+    deleteReservationToUser();
+  }
 
   return (
     <>
@@ -28,7 +34,7 @@ function ConfirmReservationScreen({ navigation }) {
         <View style={getFindStyle.container}>
           <View style={(getFindStyle.contentContainer, { marginTop: "7%" })}>
             <CafeTable
-              name={"Coffee Bay"}
+              name={route.params.cafeId}
               location={"용인시 처인구"}
               imgae={""}
               information={"Open : AM 09:00 || Close : PM 22:00"}
@@ -57,10 +63,10 @@ function ConfirmReservationScreen({ navigation }) {
                     }}
                   >
                     <Text style={{ color: "black", fontSize: 20, margin: 15 }}>
-                      좌석 번호 :
+                      좌석 번호 : {route.params.seatNumber}
                     </Text>
                     <Text style={{ color: "black", fontSize: 20, margin: 15 }}>
-                      이용 가능 시간 : 기본 1시간
+                      이용 가능 시간 : {route.params.time} ~ 1시간
                     </Text>
                     <Text style={{ color: "black", fontSize: 20, margin: 15 }}>
                       예약금 수수료 여부 :
@@ -92,7 +98,7 @@ function ConfirmReservationScreen({ navigation }) {
         <View style={getConfirmReservationStyle.btnContainer}>
           <TouchableOpacity
             style={getConfirmReservationStyle.reserveButton}
-            onPress={() => navigation.navigate("CancelReservation")}
+            onPress={CancelReserve}
           >
             <Text style={{ color: "white", fontSize: 20 }}>예약 취소</Text>
           </TouchableOpacity>

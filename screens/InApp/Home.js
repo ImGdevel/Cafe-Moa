@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,24 +9,18 @@ import {
 
 import getHomeStyle from "../../styles/screens/HomeStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
+import { getUserProfile } from "../../lib/UserDataService";
 
 function HomeScreen({ navigation }) {
-  function InfoReservation() {
-    //navigation.navigate()
-  }
-  function NearbyCafe() {
-    //navigation.navigate()
-  }
+  const [userData, setUserData] = useState([]);
 
-  function NearbyCafe() {}
+  const getData = async () => {
+    setUserData(await getUserProfile());
+  };
 
-  function ConfirmReservation() {
-    //
-  }
-
-  function MyPage() {
-    // this is for test
-  }
+  useEffect(() => {
+    getData();
+  }, [setUserData]);
 
   return (
     <KeyboardAvoidingView style={getHomeStyle.container}>
@@ -39,7 +33,13 @@ function HomeScreen({ navigation }) {
       <View style={getHomeStyle.contentContainer}>
         <TouchableOpacity
           style={getHomeStyle.btnInfoReservation}
-          onPress={() => navigation.navigate("ConfirmReservation")}
+          onPress={() =>
+            navigation.navigate("ConfirmReservation", {
+              cafeId: userData.cafeId,
+              time: userData.time,
+              seatNumber: userData.seatNumber,
+            })
+          }
         >
           <View style={getHomeStyle.infoContainer}>
             <Text
@@ -59,17 +59,17 @@ function HomeScreen({ navigation }) {
               <Text
                 style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}
               >
-                --카페이름--
+                {userData.cafeId}
               </Text>
               <Text
                 style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}
               >
-                예약시간
+                {userData.time}
               </Text>
               <Text
                 style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}
               >
-                자리
+                {userData.seatNumber}
               </Text>
               <Text
                 style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}
