@@ -9,6 +9,8 @@ import getFindStyle from "../../styles/components/FindStyle";
 import getModalStyle from "../../styles/components/ModalStyle";
 
 function ReservationScreen({ navigation, route }) {
+  const {cafeData: cafe} = route.params;
+
   const [selectedSeat, setSelectedSeat] = useState("1");
   const [modalVisible, setModalVisible] = useState(true);
   const [modalOutput, setModalOutput] = useState("Open Modal");

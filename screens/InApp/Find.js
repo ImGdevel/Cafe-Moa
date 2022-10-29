@@ -12,28 +12,34 @@ import { getCafeDatabaseAd } from "../../lib/Database";
 import { getGeoLocation } from "../../lib/LocationService";
 
 
-function FindScreen({ navigation }) {
+function FindScreen({ navigation, route }) {
   const [cafeLoop, setCafeLoop] = useState([]);
   const [cafeDatas, setcafeDatas] = useState([]);
   const [location,setLocation] = useState();
 
   useEffect(()=>{
-    loadLocalService();
-    getData();
-  },[])
+    loadFindPage();
+  },[setCafeLoop])
 
-  const loadLocalService = async() => {
-    setLocation(await getGeoLocation());
-    console.log("위치 가져옴",location)
-  };
-  
-  const getData = async () => {
-    if(location != null){
-      console.log("!")
-      setcafeDatas(await getCafeDatabaseAd(location));
-      console.log("화면 불러오기")
-      CafeListLoad();
+  useEffect(()=>{
+    CafeListLoad();
+  },[cafeDatas])
+
+  const loadFindPage = async() => {
+    console.log("페이지 로드");
+    let point;
+    if(location == null){
+      await getGeoLocation().then(async(loc)=>{
+        point = loc 
+        console.log("위치정보",point); 
+        let cafe_data = await getCafeDatabaseAd(location);
+        console.log("카페 데이터",cafe_data);
+        setcafeDatas(cafe_data);
+        CafeListLoad();
+      })
     }
+
+
   };
 
   const CafeListLoad = () => {
@@ -48,7 +54,7 @@ function FindScreen({ navigation }) {
           information={
             "Open : " +
             cafeDatas[i].getOpenTime() +
-            ":00 || Close : " +
+            ":00 ~ Close : " +
             cafeDatas[i].getCloseTime() +
             ":00"
           }
@@ -57,7 +63,6 @@ function FindScreen({ navigation }) {
         />
       );
     }
-    console.log("화면 로드함")
     setCafeLoop(cafeList);
   }
   return (
@@ -71,7 +76,7 @@ function FindScreen({ navigation }) {
 }
 
 function CafeTable(props) {
-  console.log(props)
+  console.log(props.image)
   const [cafeName, setCafeName] = useState(props.name);
   const [cafeLocation, setCafeLocation] = useState(props.location);
   const [cafeInformation, setCafeInformaion] = useState(props.information);
@@ -81,12 +86,11 @@ function CafeTable(props) {
       style={getCafeTableStyle.container}
       onPress={() =>
         props.navigation.navigate("Information", {
-          cafeData: props.cafeData,
-          /*
           name: cafeName,
           location: cafeLocation,
           image: "",
-          information: cafeInformation,*/
+          information: cafeInformation,
+          cafeData: props.cafeData,
         })
       }
       activeOpacity={0.5}
@@ -95,7 +99,7 @@ function CafeTable(props) {
       <>
         <View style={getCafeTableStyle.imageContainer}>
           <View style={getCafeTableStyle.image}>
-            <Image source={{url:cafeLogoImage}} style={{ width: 100, height: 100 }} />
+            <Image source={{uri:cafeLogoImage}} style={{ width: '100%', height: '100%', borderRadius:20, }} />
           </View>
         </View>
         <View style={getCafeTableStyle.contentContainer}>

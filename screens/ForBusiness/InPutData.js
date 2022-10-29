@@ -64,7 +64,8 @@ function InPutDataScreen({navigation}) {
   }
 
   const Button3 = async() =>{
-    setCafeDatas(await getCafeDatabaseAd(local));
+    let loc = await getCafeDatabaseAd(local);
+    setCafeDatas(loc);
     if(cafeDatas[0]!=null){
       
       setName(cafeDatas[0].getName());
