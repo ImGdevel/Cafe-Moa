@@ -35,9 +35,7 @@ function HomeScreen({ navigation }) {
           style={getHomeStyle.btnInfoReservation}
           onPress={() =>
             navigation.navigate("ConfirmReservation", {
-              cafeId: userData.cafeId,
-              time: userData.time,
-              seatNumber: userData.seatNumber,
+              userdata: userData,
             })
           }
         >

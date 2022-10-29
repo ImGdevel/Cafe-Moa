@@ -34,9 +34,9 @@ function ConfirmReservationScreen({ navigation, route }) {
         <View style={getFindStyle.container}>
           <View style={(getFindStyle.contentContainer, { marginTop: "7%" })}>
             <CafeTable
-              name={route.params.cafeId}
+              name={route.params.userdata.cafeId}
               location={"용인시 처인구"}
-              imgae={""}
+              image={""}
               information={"Open : AM 09:00 || Close : PM 22:00"}
             />
           </View>
@@ -63,10 +63,10 @@ function ConfirmReservationScreen({ navigation, route }) {
                     }}
                   >
                     <Text style={{ color: "black", fontSize: 20, margin: 15 }}>
-                      좌석 번호 : {route.params.seatNumber}
+                      좌석 번호 : {route.params.userdata.seatNumber}
                     </Text>
                     <Text style={{ color: "black", fontSize: 20, margin: 15 }}>
-                      이용 가능 시간 : {route.params.time} ~ 1시간
+                      이용 가능 시간 : {route.params.userdata.time} ~ 1시간
                     </Text>
                     <Text style={{ color: "black", fontSize: 20, margin: 15 }}>
                       예약금 수수료 여부 :
