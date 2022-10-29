@@ -61,7 +61,7 @@ function RegisterScreen({ navigation }) {
 
   const touchProps = {
     activeOpacity: 1,
-    underlayColor: "#A0A0FF", // <-- "backgroundColor" will be always overwritten by "underlayColor"
+    underlayColor: "#2C3972", // <-- "backgroundColor" will be always overwritten by "underlayColor"
     style: isPress ? getRegisterStyle.btnPress : getRegisterStyle.btnNormal, // <-- but you can still apply other style changes
     onHideUnderlay: () => setIsPress(false),
     onShowUnderlay: () => setIsPress(true),
@@ -135,7 +135,7 @@ function RegisterScreen({ navigation }) {
         </View>
         <View style={getRegisterStyle.btnArea}>
           <TouchableHighlight {...touchProps} onPress={onSubmitApplication}>
-            <Text style={{ color: "black", fontSize: 20 }}>회원가입</Text>
+            <Text style={{ color: "white", fontSize: 23 }}>회원가입</Text>
           </TouchableHighlight>
         </View>
       </View>
