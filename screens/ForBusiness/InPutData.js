@@ -1,12 +1,13 @@
 import React, {useState, useEffect, createRef} from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, KeyboardAvoidingView, Image, } from 'react-native';
-import { getRandomCafeData, sample_CafeData } from '../../lib/TestSample';
+import { getRandomCafeData, sample_CafeData, setSampleImage } from '../../lib/TestSample';
 import { getGeoLocation } from '../../lib/LocationService';
 import { 
   addCafeDatabase, 
   getCafeDatabase,
   testings, 
 } from '../../lib/Database';
+import { pickImage } from '../../lib/ImageService';
 
 
 
@@ -49,7 +50,7 @@ function InPutDataScreen({navigation}) {
   }
 
   const Button3 = async() =>{
-    setImage(await getImage());    
+    await setSampleImage();
   }
 
 
