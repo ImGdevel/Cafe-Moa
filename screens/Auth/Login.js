@@ -6,8 +6,8 @@ import {
   TouchableHighlight,
   TextInput,
   KeyboardAvoidingView,
-} from 'react-native';
-import { SignInUserAccount } from '../../lib/AuthService';
+} from "react-native";
+import { SignInUserAccount } from "../../lib/AuthService";
 import styles from "../../styles/screens/LoginStyle";
 
 import getLoginStyle from "../../styles/screens/LoginStyle";
@@ -32,7 +32,9 @@ function LogInScreen({ navigation }) {
       .then(() => {
         GoToHomeScreen();
       })
-      .catch(() => {});
+      .catch(() => {
+        alert("로그인에 실패했습니다.");
+      });
   }
 
   const [isPress, setIsPress] = useState(false);
@@ -68,7 +70,7 @@ function LogInScreen({ navigation }) {
             blurOnSubmit={false}
             returnKeyType="next"
             onSubmitEditing={() =>
-                passwordInputRef.current && passwordInputRef.current.focus()
+              passwordInputRef.current && passwordInputRef.current.focus()
             }
           />
           <TextInput
@@ -92,12 +94,19 @@ function LogInScreen({ navigation }) {
           >
             <Text style={{ color: "#ccc", fontSize: 20 }}>회원가입</Text>
           </TouchableOpacity>
-          
-          <TouchableOpacity style={styles.btnRegister} onPress = {GoToHomeScreen}>
-            <Text style={{ color: 'black', fontSize: 20, }}>관리자 권한 입장</Text>
+
+          <TouchableOpacity style={styles.btnRegister} onPress={GoToHomeScreen}>
+            <Text style={{ color: "black", fontSize: 20 }}>
+              관리자 권한 입장
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.btnRegister} onPress = {()=>{ navigation.navigate('InPutData')}}>
-            <Text style={{ color: 'black', fontSize: 20, }}>데이터 관리</Text>
+          <TouchableOpacity
+            style={styles.btnRegister}
+            onPress={() => {
+              navigation.navigate("InPutData");
+            }}
+          >
+            <Text style={{ color: "black", fontSize: 20 }}>데이터 관리</Text>
           </TouchableOpacity>
         </View>
       </View>

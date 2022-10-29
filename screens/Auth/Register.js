@@ -1,4 +1,4 @@
-import React, { useState,createRef } from "react";
+import React, { useState, createRef } from "react";
 import {
   View,
   Text,
@@ -52,7 +52,7 @@ function RegisterScreen({ navigation }) {
         GoToHomeScreen();
       })
       .catch((err) => {
-        console.log("계정 생성에 실패 했습니다.");
+        alert("계정 생성에 실패 했습니다.");
       });
   }
 
