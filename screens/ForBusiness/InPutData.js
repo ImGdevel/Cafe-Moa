@@ -1,14 +1,13 @@
 import React, {useState, useEffect, createRef} from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, KeyboardAvoidingView, Image, } from 'react-native';
-import { getRandomCafeData, sample_CafeData, setSampleImage } from '../../lib/TestSample';
+import { getRandomCafeData, setSampleImage } from '../../lib/TestSample';
 import { getGeoLocation } from '../../lib/LocationService';
 import { 
   addCafeDatabase, 
   getCafeDatabase,
+  getCafeDatabaseAd,
   testings, 
 } from '../../lib/Database';
-import { pickImage } from '../../lib/ImageService';
-
 
 
 function InPutDataScreen({navigation}) {
@@ -25,6 +24,9 @@ function InPutDataScreen({navigation}) {
 
   const [cafeDatas, setCafeDatas] = useState([]); //가져와질 데이터
   const [cafeClass, setCafeClass] = useState([]);
+
+  const [image,setImage] = useState()
+  const [name,setName] = useState()
   useEffect(()=>{
     setting();    
   },[])
@@ -44,13 +46,19 @@ function InPutDataScreen({navigation}) {
   const Button2 = async() =>{
     let data = await getCafeDatabase(local);
     console.log(data);
+    setCafeDatas(data[0]);
+    console.log(cafeDatas)
+    setName(cafeDatas.getName());
+    setImage(cafeDatas.getLogo());
   }
 
   const Button3 = async() =>{
-    await setSampleImage();
+    setCafeDatas(await getCafeDatabaseAd(local));
+    if(cafeDatas[0]!=null){
+      setName(cafeDatas[0].getName());
+      setImage(cafeDatas[0].getLogo()); 
+    }
   }
-
-
 
   return (
   <KeyboardAvoidingView style={styles.container} >
@@ -100,6 +108,10 @@ function InPutDataScreen({navigation}) {
         <Image source={{ uri: image }} style={{ width: 100, height: 100 }} />
         */
         }
+        <View>
+          <Text>{name}</Text>
+          <Image source={ (image != null) ? { uri: image } : null } style={{ width: 100, height: 100 }} />
+        </View>
       
       </View>
       <View style={styles.btnArea}>
@@ -115,9 +127,6 @@ function InPutDataScreen({navigation}) {
           <Text style={{ color: 'white', fontSize: 20,}}> 콘솔창에 출력하기 </Text>
         </TouchableOpacity>
       </View>
-        <View>
-          <Text>{}</Text>
-        </View>
     </View>
     <View style={{flex: 4}}></View>
   </KeyboardAvoidingView>

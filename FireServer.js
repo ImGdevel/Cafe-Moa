@@ -19,6 +19,8 @@ function MapApiKey(){
   return "AIzaSyAKg9V-QSOU6d51q2eYOJL7fAG1SotIfD8";
 }
 
+
+
 export const MyDatabase = firebase;
 export const dbService = firebase.firestore();
 export const authService = firebase.auth();
