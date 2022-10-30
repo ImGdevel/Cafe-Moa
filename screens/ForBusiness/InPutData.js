@@ -38,6 +38,8 @@ function InPutDataScreen({navigation}) {
     await getRandomCafeData().then((cafe)=>{
       data = cafe;
     });
+    cafe.name = cafeName;
+
     setName(data.getName());
     addCafeDatabase(data);
 
