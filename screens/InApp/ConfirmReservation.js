@@ -23,6 +23,7 @@ const imgArr = [
 
 function ConfirmReservationScreen({ navigation, route }) {
   const { cafeData: cafe_data, userData: user_data } = route.params;
+
   const [cafeData, setCafeData] = useState(cafe_data);
   const [userData, setUserData] = useState(user_data);
   const [direction, setDirection] = useState("예약 내역");
@@ -31,14 +32,19 @@ function ConfirmReservationScreen({ navigation, route }) {
   useEffect(() => {}, []);
 
   async function CancelReserve() {
-    navigation.navigate("CancelReservation");
-    let data = new ReservationService(cafeData.getSeatId());
+    console.log(userData)
+    console.log(cafeData.getSeatId())
+    console.log(userData.reservation.seatId);
+    let timeTable = new ReservationService(userData.reservation.seatId);
     await timeTable.loadSeatDataBase();
-    data.doSeatCancel(
+    console.log("삭제",timeTable);
+    
+    timeTable.doSeatCancel(
       userData.reservation.time,
       userData.reservation.seatNumber
     );
-    deleteReservationToUser();
+    await deleteReservationToUser();
+    navigation.navigate("CancelReservation");
   }
 
   return (
@@ -47,16 +53,7 @@ function ConfirmReservationScreen({ navigation, route }) {
         <View style={getFindStyle.container}>
           <View style={(getFindStyle.contentContainer, { marginTop: "7%" })}>
             <CafeTable
-              name={cafeData.getName()}
-              location={cafeData.getAdress()}
-              image={cafeData.getLogo()}
-              information={
-                "Open : " +
-                cafeData.getOpenTime() +
-                ":00 ~ Close : " +
-                cafeData.getCloseTime() +
-                ":00"
-              }
+              cafeData={cafeData}
             />
           </View>
         </View>
@@ -131,9 +128,17 @@ function ConfirmReservationScreen({ navigation, route }) {
 }
 
 function CafeTable(props) {
-  const [cafeName, setCafeName] = useState(props.name);
-  const [cafeLocation, setCafeLocation] = useState(props.location);
-  const [cafeInformation, setCafeInformaion] = useState(props.information);
+  const cafeData = props.cafeData;
+  const [cafeName, setCafeName] = useState(cafeData.getName());
+  const [cafeLocation, setCafeLocation] = useState(cafeData.getAdress(1, 3));
+  const [cafeInformation, setCafeInformaion] = useState(
+    "Open : " +
+      cafeData.getOpenTime() +
+      ":00 ~ Close : " +
+      cafeData.getCloseTime() +
+      ":00"
+  );
+  const [cafeLogoImage, setCafeLogoImage] = useState(cafeData.getLogo());
 
   return (
     <>
@@ -141,7 +146,7 @@ function CafeTable(props) {
         <View style={getCafeTableStyle.imageContainer}>
           <View style={getCafeTableStyle.image}>
             <Image
-              source={require("../../img/coffeebayLogo_test.jpg")}
+              source={{ uri: cafeLogoImage }}
               style={getConfirmReservationStyle.cafeLogo}
             />
           </View>

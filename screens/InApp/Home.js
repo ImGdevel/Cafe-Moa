@@ -45,7 +45,7 @@ function HomeScreen({ navigation }) {
 
   const ReservationsHistory = () => {
     const onConfirmReservation = () => {
-      if (reserveCafeInfo != null) {
+      if (reserveCafeInfo != null && userData != null) {
         navigation.navigate("ConfirmReservation", {
           cafeData: reserveCafeInfo,
           userData: userData,
@@ -117,10 +117,10 @@ function HomeScreen({ navigation }) {
         <View style={getHomeStyle.btnInfoReservation}>
           <View style={getHomeStyle.infoContainer}>
             <Text
-              style={{ color: "white", fontSize: 30, marginHorizontal: 10 }}
+              style={{ color: "white", fontSize: 25, marginHorizontal: 10 , paddingHorizontal:20}}
             >
-              {" "}
-              예약내역{" "}
+              
+              예약내역
             </Text>
           </View>
           <ReservationsHistory />
