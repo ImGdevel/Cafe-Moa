@@ -79,13 +79,13 @@ function ReservationScreen({ navigation, route }) {
   }
 
   // picker item에 추가하는 loop
+  var seatLoop = [];
   const makePickerItem = (time) => {
     setTime(time);
     let arr = new Array();
     seatData.getSeatDataOnTime(time).forEach((element) => {
       arr.push(element.seat);
     });
-    var seatLoop = [];
     for (var i = 1; i <= cafeData.getSeatCount(); i++) {
       if(arr.find(function(data){ return data==i}) == null  ){
         seatLoop.push(<Picker.Item key={i} label={String(i)} value={i+1} />);
