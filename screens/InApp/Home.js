@@ -14,41 +14,65 @@ import { getGeoLocation } from "../../lib/LocationService";
 import { sample_CafeData, sample_User } from "../../lib/TestSample";
 import { CafeData } from "../../lib/CafeData";
 import { signOut } from "../../lib/AuthService";
+import { useIsFocused } from "@react-navigation/native";
 
 function HomeScreen({ navigation }) {
+  
   const [userData, setUserData] = useState();
   const [reserveInfo, setReserveInfo] = useState();
   const [reserveCafeInfo, setReserveCafeInfo] = useState();
   const [reserveLoading, setReserveLoading] = useState(false); //카페데이터를 불러오는 도중 사용할 로딩
+  
+
+  const unsubscribe = navigation.addListener("focus", () => {
+    LoadHomePage();
+    Test ()
+  });
 
   useEffect(() => {
-    LoadHomePage();
-  }, []);
+    return () => unsubscribe();
+  });
+
+
+  function Test (){
+    console.log("test");
+  }
+
+  useEffect(()=>{
+    updateConfirmReservation();
+  },[setUserData])
 
   const LoadHomePage = async () => {
-    if (userData == null) {
       await getUserProfile().then(async (data) => {
           setUserData(data);
-          console.log("현제 로그인 [ ",  data.Name  ,"]" )
-          if (data != null && data.reservation.cafeId != null) {
-            
-            let reserve_cafe = await getCafeData(data.reservation.cafeId);
-            console.log(reserve_cafe);
-            setReserveCafeInfo(reserve_cafe);
-            setReserveLoading(true);
-          }
+          console.log("현제 로그인 [",  data.Name  ,"]" )
+          updateConfirmReservation();
+          console.log(data)
         })
         .catch((err) => {
           console.log("잘못된 접근입니다.", err);
           signOut();
-          navigation.replace("Auth"); //로그인 가능하면 풀어도 됩니다.
+          navigation.replace("Auth");
         });
-    }
+        
+    
     let location = await getGeoLocation();
-    let cafe = await getCafeDatabaseAd();
-  };
+
+  }
+
+  const updateConfirmReservation = async() =>{
+    if (userData != null && userData.reservation.cafeId != null) {
+      let reserve_cafe = await getCafeData(userData.reservation.cafeId);
+      console.log(reserve_cafe);
+      setReserveCafeInfo(reserve_cafe);
+      setReserveLoading(true);
+    }else{
+      setReserveLoading(false)
+    }
+  }
 
   const ReservationsHistory = () => {
+
     const onConfirmReservation = () => {
       if (reserveCafeInfo != null && userData != null) {
         navigation.navigate("ConfirmReservation", {
@@ -57,6 +81,7 @@ function HomeScreen({ navigation }) {
         });
       }
     };
+
     const confirmReservationUI = (
       <>
         <View style={getHomeStyle.infoContentContainer}>
@@ -93,7 +118,7 @@ function HomeScreen({ navigation }) {
         </View>
       </>
     );
-    if (reserveCafeInfo == null) {
+    if (reserveLoading == false) {
       return (
         <>
           <Text> 예약 내역이 없습니다</Text>
@@ -103,6 +128,8 @@ function HomeScreen({ navigation }) {
       return confirmReservationUI;
     }
   };
+
+
 
   return (
     <KeyboardAvoidingView style={getHomeStyle.container}>
@@ -124,22 +151,6 @@ function HomeScreen({ navigation }) {
           </View>
           <ReservationsHistory />
         </View>
-
-        {/*___
-        <TouchableOpacity
-          style={getHomeStyle.btnNearbyCafe}
-          onPress={() => navigation.navigate("Find")}
-        >
-          <Text style={{ color: "black", fontSize: 45 }}>주변카페</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={getHomeStyle.btnMyPage}
-          onPress={() => navigation.navigate("MyPage")}
-        >
-          <Text style={{ color: "black", fontSize: 45 }}>마이 페이지</Text>
-        </TouchableOpacity>
-         ___*/}
       </View>
     </KeyboardAvoidingView>
   );

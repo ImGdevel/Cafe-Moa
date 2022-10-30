@@ -4,7 +4,7 @@ import getStartPageStyle from "../../styles/screens/StartPageStyle";
 
 function StartPageScreen({ navigation }) {
   useEffect(() => {
-    setTimeout(() => GoToLoginScreen(), 1000);
+    setTimeout(() => GoToLoginScreen(), 1500);
   }, []);
 
   function GoToLoginScreen() {
