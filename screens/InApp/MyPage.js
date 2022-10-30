@@ -14,8 +14,8 @@ import { getUserProfile } from "../../lib/UserDataService";
 
 function MyPageScreen({ navigation }) {
   const [userData, setUserData] = useState([]);
-  const [userName, setUserName] = useState('사용자 이름');
-  const [userEmail, setUserEmail] = useState('사용자 이메일');
+  const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
 
   useEffect(() => {
     getData();
@@ -24,8 +24,8 @@ function MyPageScreen({ navigation }) {
   const getData = async () => {
     let user_data = await getUserProfile();
     setUserData(user_data);
-    setUserName(userData.Name)
-    setUserEmail(userData.email)
+    setUserName(user_data.Name)
+    setUserEmail(user_data.email)
   };
 
   function GoToOptionScreen() {
@@ -66,7 +66,7 @@ function MyPageScreen({ navigation }) {
             style={getMyPageStyle.infoBtn}
             onPress={GoToEditProfileScreen}
           >
-            <Text style={{ color: "white", fontSize: 20 }}> 개인정보변경</Text>
+            <Text style={{ color: "white", fontSize: 20 }}>개인정보변경</Text>
           </TouchableOpacity>
         </View>
       </View>

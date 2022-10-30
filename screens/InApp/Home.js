@@ -62,7 +62,7 @@ function HomeScreen({ navigation }) {
         <View style={getHomeStyle.infoContentContainer}>
           <View style={getCafeTableStyle.imageContainer}>
             <Image
-              source={{uri:reserveCafeInfo.getLogo()}}
+              source={(reserveLoading)?{uri:reserveCafeInfo.getLogo()} : {}}
               style={getHomeStyle.image}
             />
           </View>

@@ -59,6 +59,14 @@ function FindScreen({ navigation, route }) {
     console.log("페이지 출력");
     setCafeLoop(cafeList);
   }
+  
+  const search = () =>{
+
+  }
+  const filter = () =>{
+
+  }
+
   return (
     <View style={getFindStyle.container}>
       <View style={{ flex: 0.3, backgroundColor: "#ccc" }}>
