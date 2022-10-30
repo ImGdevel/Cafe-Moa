@@ -86,22 +86,19 @@ function ReservationScreen({ navigation, route }) {
       arr.push(element.seat);
     });
     let seatArr = [];
-    console.log(arr);
-    console.log(cafeData.getSeatCount())
-    var index;
-    for (var i = 0; i < cafeData.getSeatCount(); i++) {
-      console.log(arr[index])
-      if (arr.length == 0 || (arr[index] != i) ) {
 
-        seatArr.push(i);
-      }else{
-        index++;
+    for (let i = 0; i < cafeData.getSeatCount(); i++) {
+      let temp = 0;
+      for (let j = 0; j < arr.length; j++) {
+        if (i == arr[j]) {
+          temp = 1;
+        }
       }
-    }
-    console.log(seatArr)
-    for (let i = 0; i < seatArr.length; i++) {
-      console.log(String(i))
-      seatLoop.push(<Picker.Item key={String(i)} label={seatArr[String(i)]} value={String(i) + 1} />);
+      if (temp == 0) {
+        seatLoop.push(
+          <Picker.Item key={i} label={String(i + 1)} value={i + 1} />
+        );
+      }
     }
   };
 
