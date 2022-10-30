@@ -21,7 +21,7 @@ function ReservationScreen({ navigation, route }) {
   const [cafeData, setCafeData] = useState(cafe_data);
   const [seatImage, setSeatImage] = useState(cafe_data.getSeatImage());
   const [seatData, setSeatData] = useState();
-  const [selectedSeat, setSelectedSeat] = useState("1");
+  const [selectedSeat, setSelectedSeat] = useState("좌석을 선택하세요");
   const [modalVisible, setModalVisible] = useState(true);
   const [modalOutput, setModalOutput] = useState("Open Modal");
   const [time, setTime] = useState(0);
@@ -86,6 +86,8 @@ function ReservationScreen({ navigation, route }) {
       arr.push(element.seat);
     });
     let seatArr = [];
+    seatArr.push("좌석을 선택하세요");
+    seatLoop.push(<Picker.Item key={0} label={seatArr[0]} value={0} />);
 
     for (let i = 0; i < cafeData.getSeatCount(); i++) {
       let temp = 0;
@@ -95,9 +97,8 @@ function ReservationScreen({ navigation, route }) {
         }
       }
       if (temp == 0) {
-        seatLoop.push(
-          <Picker.Item key={i} label={String(i + 1)} value={i + 1} />
-        );
+        seatArr.push(String(i + 1));
+        seatLoop.push(<Picker.Item key={i} label={seatArr[i]} value={i + 1} />);
       }
     }
   };
