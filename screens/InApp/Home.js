@@ -13,6 +13,7 @@ import { getUserProfile } from "../../lib/UserDataService";
 import { getGeoLocation } from "../../lib/LocationService";
 import { sample_CafeData, sample_User } from "../../lib/TestSample";
 import { CafeData } from "../../lib/CafeData";
+import { signOut } from "../../lib/AuthService";
 
 function HomeScreen({ navigation }) {
   const [userData, setUserData] = useState();
@@ -28,8 +29,9 @@ function HomeScreen({ navigation }) {
     if (userData == null) {
       await getUserProfile().then(async (data) => {
           setUserData(data);
-          console.log("현제 로그인 [ ",  userData.name  ,"]" )
+          console.log("현제 로그인 [ ",  data.Name  ,"]" )
           if (data != null && data.reservation.cafeId != null) {
+            
             let reserve_cafe = await getCafeData(data.reservation.cafeId);
             console.log(reserve_cafe);
             setReserveCafeInfo(reserve_cafe);
@@ -38,7 +40,8 @@ function HomeScreen({ navigation }) {
         })
         .catch((err) => {
           console.log("잘못된 접근입니다.", err);
-          //navigation.replace("Auth"); //로그인 가능하면 풀어도 됩니다.
+          signOut();
+          navigation.replace("Auth"); //로그인 가능하면 풀어도 됩니다.
         });
     }
     let location = await getGeoLocation();

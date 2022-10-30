@@ -22,11 +22,13 @@ function LogInScreen({ navigation }) {
   },[])
 
   async function isLogin(){
+    
     let id = await getCurrentUserId();
     if(id != null){
       console.log("지동 로그인...", id);
       GoToHomeScreen();
     }
+    
   }
 
   function GoToRgisterScreen() {
@@ -42,7 +44,7 @@ function LogInScreen({ navigation }) {
         GoToHomeScreen();
       })
       .catch(() => {
-        alert("로그인에 실패했습니다.");
+
       });
   }
 

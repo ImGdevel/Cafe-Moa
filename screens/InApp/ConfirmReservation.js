@@ -32,19 +32,19 @@ function ConfirmReservationScreen({ navigation, route }) {
   useEffect(() => {}, []);
 
   async function CancelReserve() {
-    console.log(userData)
-    console.log(cafeData.getSeatId())
-    console.log(userData.reservation.seatId);
-    let timeTable = new ReservationService(userData.reservation.seatId);
+    console.log("_______________데이터 삭제를 실시 합니다_____________________")
+    let timeTable = new ReservationService(cafeData.getSeatId());
     await timeTable.loadSeatDataBase();
-    console.log("삭제",timeTable);
+    console.log("삭제",timeTable," /=> ",cafeData.getSeatId());
     
     timeTable.doSeatCancel(
       userData.reservation.time,
       userData.reservation.seatNumber
     );
+
+    
     await deleteReservationToUser();
-    navigation.navigate("CancelReservation");
+    navigation.navigate("CancelReservation")
   }
 
   return (
@@ -104,13 +104,6 @@ function ConfirmReservationScreen({ navigation, route }) {
               )}
               numColumns={3}
             />
-
-            {/*___<View style={getInfoStyle.image}>
-              <Image
-                source={require("../../img/coffeebayLogo_test.jpg")}
-                style={getInfoStyle.cafeLogo}
-              />
-  </View>___*/}
           </PreviewLayout>
         </View>
 

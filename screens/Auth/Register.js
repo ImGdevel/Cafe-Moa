@@ -24,7 +24,7 @@ function RegisterScreen({ navigation }) {
   const passwordChkInputRef = createRef();
 
   function GoToHomeScreen() {
-    navigation.navigate("InApp");
+    navigation.replace("InApp");
   }
 
   async function onSubmitApplication() {
