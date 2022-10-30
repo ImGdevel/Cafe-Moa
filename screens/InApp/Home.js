@@ -27,6 +27,18 @@ function HomeScreen({ navigation }) {
     if (isFocused) LoadHomePage();
   }, [isFocused]);
 
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener("focus", () => {
+  //     LoadHomePage();
+  //   });
+
+  //   return unsubscribe;
+  // }, [navigation, setUserData, setReserveCafeInfo]);
+
+  // useEffect(() => {
+  //   LoadHomePage();
+  // }, [setUserData, setReserveCafeInfo]);
+
   const LoadHomePage = async () => {
     await getUserProfile()
       .then((data) => {
