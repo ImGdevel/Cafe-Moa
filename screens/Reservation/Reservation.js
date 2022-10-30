@@ -102,7 +102,7 @@ function ReservationScreen({ navigation, route }) {
     let reserveSrv = new ReservationService();
     reserveSrv = seatData;
     if (await reserveSrv.doSeatReservation(time, selectedSeat)) {
-      await sendReservetionToUser(cafeData.id, reserveSrv.seatId, time, seatId);
+      await sendReservetionToUser(cafeData.id, reserveSrv.seatId, time, 2);
       navigation.navigate("ReserveEnd");
     }
   };

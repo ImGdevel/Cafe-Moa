@@ -14,8 +14,8 @@ import { getUserProfile } from "../../lib/UserDataService";
 
 function MyPageScreen({ navigation }) {
   const [userData, setUserData] = useState([]);
-  const [userName, setUserName] = useState('');
-  const [userEmail, setUserEmail] = useState('');
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
     getData();
@@ -24,8 +24,8 @@ function MyPageScreen({ navigation }) {
   const getData = async () => {
     let user_data = await getUserProfile();
     setUserData(user_data);
-    setUserName(user_data.Name)
-    setUserEmail(user_data.email)
+    setUserName(user_data.Name);
+    setUserEmail(user_data.email);
   };
 
   function GoToOptionScreen() {
@@ -55,12 +55,8 @@ function MyPageScreen({ navigation }) {
           ></Image>
         </View>
         <View style={getMyPageStyle.idText}>
-          <Text style={{ fontWeight: "600", fontSize: 25 }}>
-            {userName}
-          </Text>
-          <Text style={{ fontWeight: "400", fontSize: 15 }}>
-            {userEmail}
-          </Text>
+          <Text style={{ fontWeight: "600", fontSize: 25 }}>{userName}</Text>
+          <Text style={{ fontWeight: "400", fontSize: 15 }}>{userEmail}</Text>
           <Text></Text>
           <TouchableOpacity
             style={getMyPageStyle.infoBtn}
@@ -91,8 +87,6 @@ function MyPageScreen({ navigation }) {
             회원탈퇴
           </Text>
         </TouchableOpacity>
-
-        
       </View>
     </KeyboardAvoidingView>
   );

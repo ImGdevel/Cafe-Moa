@@ -21,17 +21,11 @@ function HomeScreen({ navigation }) {
   const [reserveCafeInfo, setReserveCafeInfo] = useState();
   const [page, setPage] = useState(NoneReserve);
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", () => {
-      LoadHomePage();
-    });
-
-    return unsubscribe;
-  }, [navigation, setUserData]);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
-    LoadHomePage();
-  }, [setUserData, setReserveCafeInfo]);
+    if (isFocused) LoadHomePage();
+  }, [isFocused]);
 
   const LoadHomePage = async () => {
     await getUserProfile()
