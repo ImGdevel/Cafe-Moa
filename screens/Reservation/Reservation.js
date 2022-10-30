@@ -63,7 +63,7 @@ function ReservationScreen({ navigation, route }) {
         onPress={() => {
           setModalOutput("선택");
           setModalVisible(false);
-          onSelectTime(i  + cafeData.getOpenTime())
+          onSelectTime(i + cafeData.getOpenTime());
         }}
       >
         <Text style={{ alignSelf: "center", fontSize: 20 }}>{timeArr[i]}</Text>
@@ -74,7 +74,7 @@ function ReservationScreen({ navigation, route }) {
   var seatLoop = [];
   var seatArr = [];
 
-  function onSelectTime(time){
+  function onSelectTime(time) {
     setTime(time);
     makePickerItem(time);
   }
@@ -83,11 +83,11 @@ function ReservationScreen({ navigation, route }) {
   const makePickerItem = (time) => {
     setTime(time);
     let arr = new Array();
-    (seatData.getSeatDataOnTime(time)).forEach(element => {
-      arr.push(element.seat)
+    seatData.getSeatDataOnTime(time).forEach((element) => {
+      arr.push(element.seat);
     });
 
-    console.log(arr)
+    console.log(arr);
 
     for (let i = 0; i < cafeData.getSeatCount(); i++) {
       let temp = 0;
@@ -97,10 +97,9 @@ function ReservationScreen({ navigation, route }) {
           break;
         }
       }
-      if (temp == 1) {
-        continue;
+      if (temp == 0) {
+        seatLoop.push(<Picker.Item key={i} label={seatArr[i]} value={i + 1} />);
       }
-      seatLoop.push(<Picker.Item key={i} label={seatArr[i]} value={i + 1} />);
     }
   };
 
