@@ -44,6 +44,11 @@ function ConfirmReservationScreen({ navigation, route }) {
 
     
     await deleteReservationToUser();
+    GotoCancelReservation();
+  }
+
+  function GotoCancelReservation() {
+    console.log("?")
     navigation.navigate("CancelReservation")
   }
 

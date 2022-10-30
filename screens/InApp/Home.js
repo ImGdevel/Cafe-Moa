@@ -75,12 +75,12 @@ function HomeScreen({ navigation }) {
             <Text
               style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}
             >
-              {reserveLoading ? userData.reservation.seatNumber : ""}번 좌석
+              {reserveLoading ? userData.reservation.seatNumber : ""} 번 좌석
             </Text>
             <Text
               style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}
             >
-              {reserveLoading ? userData.reservation.time : ""}시
+              {reserveLoading ? userData.reservation.time : ""}:00
             </Text>
             <TouchableOpacity onPress={onConfirmReservation}>
               <Text
