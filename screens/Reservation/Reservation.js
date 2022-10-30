@@ -72,7 +72,6 @@ function ReservationScreen({ navigation, route }) {
   }
 
   var seatLoop = [];
-  var seatArr = [];
 
   function onSelectTime(time) {
     setTime(time);
@@ -86,21 +85,23 @@ function ReservationScreen({ navigation, route }) {
     seatData.getSeatDataOnTime(time).forEach((element) => {
       arr.push(element.seat);
     });
-
+    let seatArr = [];
     console.log(arr);
+    console.log(cafeData.getSeatCount())
+    var index;
+    for (var i = 0; i < cafeData.getSeatCount(); i++) {
+      console.log(arr[index])
+      if (arr.length == 0 || (arr[index] != i) ) {
 
-    for (let i = 0; i < cafeData.getSeatCount(); i++) {
-      let temp = 0;
-      for (let j = 0; j < arr.length; j++) {
-        if (i == arr[j]) {
-          temp = 1;
-          break;
-        }
+        seatArr.push(i);
+      }else{
+        index++;
       }
-      if (temp == 0) {
-        seatArr.push({ i });
-        seatLoop.push(<Picker.Item key={i} label={seatArr[i]} value={i + 1} />);
-      }
+    }
+    console.log(seatArr)
+    for (let i = 0; i < seatArr.length; i++) {
+      console.log(String(i))
+      seatLoop.push(<Picker.Item key={String(i)} label={seatArr[String(i)]} value={String(i) + 1} />);
     }
   };
 
