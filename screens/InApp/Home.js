@@ -19,50 +19,106 @@ import { useIsFocused } from "@react-navigation/native";
 function HomeScreen({ navigation }) {
   const [userData, setUserData] = useState();
   const [reserveCafeInfo, setReserveCafeInfo] = useState();
-  const [reserveLoading, setReserveLoading] = useState(false); //카페데이터를 불러오는 도중 사용할 로딩
+  const [page, setPage] = useState(NoneReserve);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       LoadHomePage();
-      Test();
     });
 
     return unsubscribe;
   }, [navigation]);
 
-  function Test() {
-    console.log("test");
-  }
-
   useEffect(() => {
-    updateConfirmReservation();
-  }, [setUserData]);
+    reserveRefresh();
+  }, [setReserveCafeInfo,setUserData]);
 
   const LoadHomePage = async () => {
     await getUserProfile()
       .then(async (data) => {
         setUserData(data);
         console.log("현제 로그인 [", data.Name, "]");
+        console.log(userData)
         updateConfirmReservation();
-        console.log(data);
-      })
-      .catch((err) => {
+        
+      }).catch((err) => {
         console.log("잘못된 접근입니다.", err);
         signOut();
         navigation.replace("Auth");
-      });
-
+      })
     let location = await getGeoLocation();
   };
 
   const updateConfirmReservation = async () => {
+    console.log(userData.reservation.cafeId)
     if (userData != null && userData.reservation.cafeId != null) {
       let reserve_cafe = await getCafeData(userData.reservation.cafeId);
-      console.log(reserve_cafe);
+      console.log("카페 데이터 추출")
       setReserveCafeInfo(reserve_cafe);
+      reserveRefresh();
     }else{
+      setReserveCafeInfo(null);
+      reserveRefresh();
     }
   };
+
+  function reserveRefresh(){
+    console.log(reserveCafeInfo,userData)
+    if(reserveCafeInfo != null && userData != null && userData.reservation.cafeId != null){
+      setPage(ReservationsHistory);
+    }else{
+      console.log("초기화!")
+      setPage(NoneReserve);
+    }
+  }
+
+  const NoneReserve = () => {
+    return (<>
+      <Text>
+        예약 내역이 없습니다.
+      </Text>
+    </>)
+  }
+
+
+  const ReservationsHistory = () => {
+      return (
+        <>
+          <View style={getHomeStyle.infoContentContainer}>
+            <View style={getCafeTableStyle.imageContainer}>
+              <Image
+                source={{uri:reserveCafeInfo.getLogo()}}
+                style={getHomeStyle.image}
+              />
+            </View>
+            <View>
+              <Text style={getCafeTableStyle.ConfirmBoxInText}>
+                {reserveCafeInfo.getName()}
+              </Text>
+              <Text style={getCafeTableStyle.ConfirmBoxInText}>
+                {userData.reservation.seatNumber} 번 좌석
+              </Text>
+              <Text style={getCafeTableStyle.ConfirmBoxInText}>
+                {userData.reservation.time}:00
+              </Text>
+              <TouchableOpacity onPress={()=>{
+                    if (reserveCafeInfo != null && userData != null) {
+                      navigation.navigate("ConfirmReservation", {
+                        cafeData: reserveCafeInfo,
+                        userData: userData,
+                      });
+                    }
+              }}>
+                <Text style={getCafeTableStyle.ConfirmBoxInText}>
+                  {"\n\t\t\t\t\t\t"}▶ 내역 확인하기
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </>
+      )
+    }
+  
 
   return (
     <KeyboardAvoidingView style={getHomeStyle.container}>
@@ -87,56 +143,12 @@ function HomeScreen({ navigation }) {
               예약내역
             </Text>
           </View>
-          <ReservationsHistory 
-            cafeData = {reserveCafeInfo}
-            userData = {userData}
-          />
+          {page}
         </View>
       </View>
     </KeyboardAvoidingView>
   );
 }
 
-function ReservationsHistory(props){
-  const {cafeData:cafe_data, userData:user_data} = props;
-  const [cafeData, serCafeData] = useState(cafe_data)
-  const [userData, serUserData] = useState(user_data)
-
-  return (
-    <>
-      <View style={getHomeStyle.infoContentContainer}>
-        <View style={getCafeTableStyle.imageContainer}>
-          <Image
-            source={cafeData.getLogo()}
-            style={getHomeStyle.image}
-          />
-        </View>
-        <View>
-          <Text style={getCafeTableStyle.ConfirmBoxInText}>
-            {cafeData.getName()}
-          </Text>
-          <Text style={getCafeTableStyle.ConfirmBoxInText}>
-            {cafeData.reservation.seatNumber} 번 좌석
-          </Text>
-          <Text style={getCafeTableStyle.ConfirmBoxInText}>
-            {cafeData.reservation.time}:00
-          </Text>
-          <TouchableOpacity onPress={()=>{
-                if (reserveCafeInfo != null && userData != null) {
-                  navigation.navigate("ConfirmReservation", {
-                    cafeData: reserveCafeInfo,
-                    userData: userData,
-                  });
-                }
-          }}>
-            <Text style={getCafeTableStyle.ConfirmBoxInText}>
-              {"\n\t\t\t\t\t\t"}▶ 내역 확인하기
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </>
-  );
-};
 
 export default HomeScreen;

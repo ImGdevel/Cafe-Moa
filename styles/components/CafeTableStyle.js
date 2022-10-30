@@ -47,6 +47,11 @@ const CafeTableStyles = StyleSheet.create({
     fontWeight: "400",
     color: "gray",
   },
+  ConfirmBoxInText: {
+    color: "#001D44", 
+    fontSize: 20, 
+    marginHorizontal: 20
+  }
 });
 
 export default CafeTableStyles;
