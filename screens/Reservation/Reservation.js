@@ -27,7 +27,6 @@ function ReservationScreen({ navigation, route }) {
   const [time, setTime] = useState(0);
 
   //최대 자릿수 - 현제 예약된 자릿수
-
   const notReserveSeat = async () => {};
 
   useEffect(() => {
@@ -38,7 +37,6 @@ function ReservationScreen({ navigation, route }) {
     let timeTable = new ReservationService(cafeData.getSeatId());
     await timeTable.loadSeatDataBase();
     setSeatData(timeTable);
-    console.log(timeTable);
   };
 
   var timeLoop = [];
@@ -65,8 +63,7 @@ function ReservationScreen({ navigation, route }) {
         onPress={() => {
           setModalOutput("선택");
           setModalVisible(false);
-          setTime(i + cafeData.getOpenTime());
-          makePickerItem();
+          onSelectTime(i  + cafeData.getOpenTime())
         }}
       >
         <Text style={{ alignSelf: "center", fontSize: 20 }}>{timeArr[i]}</Text>
@@ -77,9 +74,20 @@ function ReservationScreen({ navigation, route }) {
   var seatLoop = [];
   var seatArr = [];
 
+  function onSelectTime(time){
+    setTime(time);
+    makePickerItem(time);
+  }
+
   // picker item에 추가하는 loop
-  const makePickerItem = () => {
-    const arr = seatData.getSeatDataOnTime(time);
+  const makePickerItem = (time) => {
+    setTime(time);
+    let arr = new Array();
+    (seatData.getSeatDataOnTime(time)).forEach(element => {
+      arr.push(element.seat)
+    });
+
+    console.log(arr)
 
     for (let i = 0; i < cafeData.getSeatCount(); i++) {
       let temp = 0;
