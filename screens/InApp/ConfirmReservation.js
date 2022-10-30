@@ -25,6 +25,7 @@ function ConfirmReservationScreen({ navigation, route }) {
   const [cafeData, setCafeData] = useState(cafe_data);
   const [userData, setUserData] = useState(user_data);
   const [direction, setDirection] = useState("예약 내역");
+  const [seatImage, setSeatImage] = useState(cafe_data.getSeatImage());
 
   useEffect(() => {}, []);
 
@@ -39,14 +40,14 @@ function ConfirmReservationScreen({ navigation, route }) {
         <View style={getFindStyle.container}>
           <View style={(getFindStyle.contentContainer, { marginTop: "7%" })}>
             <CafeTable
-              name={route.params.cafeData.getName()}
-              location={route.params.cafeData.getAdress()}
-              image={""}
+              name={cafeData.getName()}
+              location={cafeData.getAdress()}
+              image={cafeData.getLogo()}
               information={
                 "Open : " +
-                route.params.cafeData.getOpenTime() +
+                cafeData.getOpenTime() +
                 ":00 ~ Close : " +
-                route.params.cafeData.getCloseTime() +
+                cafeData.getCloseTime() +
                 ":00"
               }
             />
@@ -58,6 +59,7 @@ function ConfirmReservationScreen({ navigation, route }) {
             selectedValue={direction}
             values={["예약 내역", "좌석 위치 안내"]}
             setSelectedValue={setDirection}
+            seatImage={seatImage}
             style={getConfirmReservationStyle.contentLayout}
           >
             <FlatList
@@ -154,6 +156,7 @@ const PreviewLayout = ({
   values,
   selectedValue,
   setSelectedValue,
+  seatImage,
 }) => (
   <View style={{ padding: 10, flex: 1 }}>
     <Text style={{ marginBottom: 10, fontSize: 24 }}></Text>
@@ -188,7 +191,7 @@ const PreviewLayout = ({
         return (
           <View style={{ alignItems: "center", justifyContent: "center" }}>
             <Image
-              source={require("../../img/anySeatPic_text.png")}
+              source={{ uri: seatImage }}
               style={getConfirmReservationStyle.seatPic}
             />
           </View>

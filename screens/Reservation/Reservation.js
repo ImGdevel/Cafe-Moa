@@ -86,9 +86,10 @@ function ReservationScreen({ navigation, route }) {
       arr.push(element.seat);
     });
     let seatArr = [];
+    let temp = 0;
 
     for (let i = 0; i < cafeData.getSeatCount(); i++) {
-      let temp = 0;
+      temp = 0;
       for (let j = 0; j < arr.length; j++) {
         if (i == arr[j]) {
           temp = 1;
