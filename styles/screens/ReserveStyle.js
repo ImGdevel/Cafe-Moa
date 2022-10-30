@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   seatPic: {
+    resizeMode: "stretch",
     width: "100%",
     height: "75%",
   },

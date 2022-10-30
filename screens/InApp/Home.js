@@ -65,11 +65,6 @@ function HomeScreen({ navigation }) {
             <Text
               style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}
             >
-              {reserveLoading ? userData.Name : ""}
-            </Text>
-            <Text
-              style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}
-            >
               {reserveLoading ? reserveCafeInfo.getName() : ""}
             </Text>
             <Text
