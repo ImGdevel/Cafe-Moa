@@ -9,13 +9,14 @@ function CancelReservationScreen({ navigation }) {
   }, []);
 
   function GoToHomeScreen() {
-    navigation.navigate("Find");
     navigation.navigate("Home");
   }
 
   return (
     <View style={getCancelReservationStyle.container}>
-      <Text style={getCancelReservationStyle.endHeader}>예약이 취소되었습니다</Text>
+      <Text style={getCancelReservationStyle.endHeader}>
+        예약이 취소되었습니다
+      </Text>
       <Text>1시간 이내 예약 취소시 예약금 반환이 불가합니다.</Text>
     </View>
   );

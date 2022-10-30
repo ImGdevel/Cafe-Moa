@@ -71,10 +71,16 @@ function ReservationScreen({ navigation, route }) {
       <View style={getFindStyle.container}>
         <View style={getFindStyle.contentContainer}>
           <CafeTable
-            name={route.params.name}
-            location={route.params.location}
+            name={route.params.data.getName()}
+            location={route.params.data.getAdress()}
             image={""}
-            information={route.params.information}
+            information={
+              "Open : " +
+              route.params.data.getOpenTime() +
+              ":00 || Close : " +
+              route.params.data.getCloseTime() +
+              ":00"
+            }
             navigation={navigation}
           />
         </View>

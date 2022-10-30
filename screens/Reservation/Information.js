@@ -72,10 +72,16 @@ function InformationScreen({ navigation, route }) {
         <View style={getFindStyle.container}>
           <View style={getFindStyle.contentContainer}>
             <CafeTable
-              name={route.params.name}
-              location={route.params.location}
+              name={route.params.data.getName()}
+              location={route.params.data.getAdress()}
               image={""}
-              information={route.params.information}
+              information={
+                "Open : " +
+                route.params.data.getOpenTime() +
+                ":00 || Close : " +
+                route.params.data.getCloseTime() +
+                ":00"
+              }
               navigation={navigation}
             />
           </View>
@@ -122,10 +128,7 @@ function InformationScreen({ navigation, route }) {
             style={getInfoStyle.reserveButton}
             onPress={() =>
               navigation.navigate("Reservation", {
-                name: route.params.name,
-                location: route.params.location,
-                image: "",
-                information: route.params.information,
+                data: route.params.data,
               })
             }
           >
