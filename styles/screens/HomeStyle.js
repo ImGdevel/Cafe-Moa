@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
 
   homeText: {
-    marginTop: "20%",
+    marginTop: "10%",
     marginBottom: "2%",
   },
 

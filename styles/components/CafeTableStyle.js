@@ -17,9 +17,9 @@ const CafeTableStyles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: "80%",
-    height: "80%",
-    borderRadius: 10,
+    width: "70%",
+    height: "70%",
+    borderRadius: 20,
     borderColor: "#ddd",
     borderWidth: 1,
   },
@@ -30,20 +30,20 @@ const CafeTableStyles = StyleSheet.create({
   textContent: {
     flex: 1,
     justifyContent: "flex-end",
-    paddingLeft: 15,
+    paddingLeft: 5,
   },
 
   textContent: {
     flex: 1,
     justifyContent: "center",
-    paddingLeft: 15,
+    paddingLeft: 5,
   },
   nameText: {
     fontSize: 22,
     fontWeight: "700",
   },
   contentText: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: "400",
     color: "gray",
   },

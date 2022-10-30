@@ -14,14 +14,19 @@ import { getUserProfile } from "../../lib/UserDataService";
 
 function MyPageScreen({ navigation }) {
   const [userData, setUserData] = useState([]);
-
-  const getData = async () => {
-    setUserData(await getUserProfile());
-  };
+  const [userName, setUserName] = useState('사용자 이름');
+  const [userEmail, setUserEmail] = useState('사용자 이메일');
 
   useEffect(() => {
     getData();
-  }, [setUserData]);
+  }, []);
+
+  const getData = async () => {
+    let user_data = await getUserProfile();
+    setUserData(user_data);
+    setUserName(userData.Name)
+    setUserEmail(userData.email)
+  };
 
   function GoToOptionScreen() {
     //navigation.navigate()
@@ -33,7 +38,7 @@ function MyPageScreen({ navigation }) {
 
   function GoToLogoutScreen() {
     signOut();
-    navigation.navigate("Auth");
+    navigation.replace("Auth");
   }
 
   function GoToDeleteAccountScreen() {
@@ -51,10 +56,10 @@ function MyPageScreen({ navigation }) {
         </View>
         <View style={getMyPageStyle.idText}>
           <Text style={{ fontWeight: "600", fontSize: 25 }}>
-            {userData.Name}
+            {userName}
           </Text>
-          <Text style={{ fontWeight: "400", fontSize: 20 }}>
-            {userData.uid}
+          <Text style={{ fontWeight: "400", fontSize: 15 }}>
+            {userEmail}
           </Text>
           <Text></Text>
           <TouchableOpacity
@@ -86,6 +91,8 @@ function MyPageScreen({ navigation }) {
             회원탈퇴
           </Text>
         </TouchableOpacity>
+
+        
       </View>
     </KeyboardAvoidingView>
   );

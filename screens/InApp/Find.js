@@ -8,56 +8,57 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
-
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
+import { getCafeDatabaseAd } from "../../lib/Database";
+import { getGeoLocation } from "../../lib/LocationService";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { sample_CafeData } from "../../lib/TestSample";
 
-function FindScreen({ navigation }) {
+function FindScreen({ navigation, route }) {
   const [textInputValue, setTextInputValue] = useState("");
 
-  var cafeLoop = [];
+  const [cafeLoop, setCafeLoop] = useState([]);
+  const [cafeDatas, setcafeDatas] = useState([]);
+  const [location,setLocation] = useState();
 
-  const [sampleData, setSampleData] = useState([]);
+  useEffect(()=>{
+    loadFindPage();
+    CafeListLoad();
+  },[setCafeLoop])
 
-  const getData = async () => {
-    setSampleData(await sample_CafeData());
+  useEffect(()=>{
+    CafeListLoad();
+  },[cafeDatas])
+
+  const loadFindPage = async() => {
+    console.log("페이지 로드");
+    let point;
+    if(location == null){
+      await getGeoLocation().then(async(loc)=>{
+        point = loc 
+        let cafe_data = await getCafeDatabaseAd(location);
+        setcafeDatas(cafe_data);
+
+        CafeListLoad();
+      })
+    }
   };
 
-  useEffect(() => {
-    getData();
-  }, [setSampleData]);
-
-  for (let i = 0; i < sampleData.length; i++) {
-    cafeLoop.push(
-      <CafeTable
-        key={i}
-        name={sampleData[i].getName()}
-        location={sampleData[i].getAdress()}
-        image={""}
-        information={
-          "Open : " +
-          sampleData[i].getOpenTime() +
-          ":00 || Close : " +
-          sampleData[i].getCloseTime() +
-          ":00"
-        }
-        data={sampleData[i]}
-        navigation={navigation}
-      />
-    );
+  const CafeListLoad = () => {
+    let cafeList = [];
+    for (let i = 0; i < cafeDatas.length; i++) {
+      cafeList.push(
+        <CafeTable
+          key={i}
+          cafeData={cafeDatas[i]}
+          navigation={navigation}
+        />
+      );
+    }
+    console.log("페이지 출력");
+    setCafeLoop(cafeList);
   }
-
-  function search() {
-    // search
-  }
-
-  function filter() {
-    // filter
-  }
-
   return (
     <View style={getFindStyle.container}>
       <View style={{ flex: 0.3, backgroundColor: "#ccc" }}>
@@ -94,17 +95,17 @@ function FindScreen({ navigation }) {
 }
 
 function CafeTable(props) {
-  const [cafeName, setCafeName] = useState(props.name);
-  const [cafeLocation, setCafeLocation] = useState(props.location);
-  const [cafeInformation, setCafeInformaion] = useState(props.information);
-  const [sampleData, setSampleData] = useState(props.data);
-
+  const cafeData = props.cafeData;
+  const [cafeName, setCafeName] = useState(cafeData.getName());
+  const [cafeLocation, setCafeLocation] = useState(cafeData.getAdress(1,3));
+  const [cafeInformation, setCafeInformaion] = useState("Open : "+cafeData.getOpenTime()+":00 ~ Close : " +cafeData.getCloseTime() +":00");
+  const [cafeLogoImage, setCafeLogoImage] = useState(cafeData.getLogo());
   return (
     <TouchableHighlight
       style={getCafeTableStyle.container}
       onPress={() =>
         props.navigation.navigate("Information", {
-          data: sampleData,
+          cafeData: props.cafeData,
         })
       }
       activeOpacity={0.5}
@@ -113,8 +114,7 @@ function CafeTable(props) {
       <>
         <View style={getCafeTableStyle.imageContainer}>
           <View style={getCafeTableStyle.image}>
-            <Image />
-            {/*이지지 삽입*/}
+            <Image source={{uri:cafeLogoImage}} style={{ width: '100%', height: '100%', borderRadius:20,}} />
           </View>
         </View>
         <View style={getCafeTableStyle.contentContainer}>

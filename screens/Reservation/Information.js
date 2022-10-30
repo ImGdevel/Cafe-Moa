@@ -12,59 +12,16 @@ import getInfoStyle from "../../styles/screens/InfoStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
 
-const imgArr = [
-  {
-    idx: "1",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "2",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "3",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "4",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "5",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "6",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "7",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "8",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "9",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "10",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "11",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "12",
-    src: require("../../img/anySeatPic_text.png"),
-  },
-];
-
 function InformationScreen({ navigation, route }) {
+  const {cafeData:cafe_Data} = route.params;
+  const [cafeData, setCafeData] = useState(cafe_Data);
   const [direction, setDirection] = useState("사진");
+
+
+  const SeatTable = async()=>{
+    
+  }
+
 
   return (
     <>
@@ -72,16 +29,11 @@ function InformationScreen({ navigation, route }) {
         <View style={getFindStyle.container}>
           <View style={getFindStyle.contentContainer}>
             <CafeTable
-              name={route.params.data.getName()}
-              location={route.params.data.getAdress()}
-              image={""}
-              information={
-                "Open : " +
-                route.params.data.getOpenTime() +
-                ":00 || Close : " +
-                route.params.data.getCloseTime() +
-                ":00"
-              }
+              name={route.params.name}
+              location={route.params.location}
+              image={route.params.cafeData.getLogo()}
+              information={route.params.information}
+              cafeData={cafeData}
               navigation={navigation}
             />
           </View>
@@ -92,8 +44,7 @@ function InformationScreen({ navigation, route }) {
             selectedValue={direction}
             values={["사진", "좌석"]}
             setSelectedValue={setDirection}
-            style={getInfoStyle.contentLayout}
-          >
+            style={getInfoStyle.contentLayout}>
             <FlatList
               keyExtractor={(item) => item.idx}
               data={imgArr}
@@ -119,7 +70,7 @@ function InformationScreen({ navigation, route }) {
                 source={require("../../img/coffeebayLogo_test.jpg")}
                 style={getInfoStyle.cafeLogo}
               />
-  </View>___*/}
+            </View>___*/}
           </PreviewLayout>
         </View>
 
@@ -128,11 +79,11 @@ function InformationScreen({ navigation, route }) {
             style={getInfoStyle.reserveButton}
             onPress={() =>
               navigation.navigate("Reservation", {
-                data: route.params.data,
+                cafeData: cafeData,
               })
             }
           >
-            <Text style={{ color: "white", fontSize: 20 }}>예약하기</Text>
+            <Text style={{ color: "white", fontSize: 21 }}>예약하기</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -140,10 +91,13 @@ function InformationScreen({ navigation, route }) {
   );
 }
 
+//카페 테이블
 function CafeTable(props) {
-  const [cafeName, setCafeName] = useState(props.name);
-  const [cafeLocation, setCafeLocation] = useState(props.location);
-  const [cafeInformation, setCafeInformaion] = useState(props.information);
+  const cafeData = props.cafeData;
+  const [cafeName, setCafeName] = useState(cafeData.getName());
+  const [cafeLocation, setCafeLocation] = useState(cafeData.getAdress(1,3));
+  const [cafeInformation, setCafeInformaion] = useState("Open : "+cafeData.getOpenTime()+":00 ~ Close : " +cafeData.getCloseTime() +":00");
+  const [cafeLogoImage, setCafeLogoImage] = useState(cafeData.getLogo());
 
   return (
     <>
@@ -151,7 +105,7 @@ function CafeTable(props) {
         <View style={getCafeTableStyle.imageContainer}>
           <View style={getCafeTableStyle.image}>
             <Image
-              source={require("../../img/coffeebayLogo_test.jpg")}
+              source={{uri:cafeLogoImage}}
               style={getInfoStyle.cafeLogo}
             />
           </View>
@@ -212,5 +166,56 @@ const PreviewLayout = ({
     })()}
   </View>
 );
+
+const imgArr = [
+  {
+    idx: "1",
+    src: require("../../img/coffeebayLogo_test.jpg"),
+  },
+  {
+    idx: "2",
+    src: require("../../img/coffeebayLogo_test.jpg"),
+  },
+  {
+    idx: "3",
+    src: require("../../img/coffeebayLogo_test.jpg"),
+  },
+  {
+    idx: "4",
+    src: require("../../img/coffeebayLogo_test.jpg"),
+  },
+  {
+    idx: "5",
+    src: require("../../img/coffeebayLogo_test.jpg"),
+  },
+  {
+    idx: "6",
+    src: require("../../img/coffeebayLogo_test.jpg"),
+  },
+  {
+    idx: "7",
+    src: require("../../img/coffeebayLogo_test.jpg"),
+  },
+  {
+    idx: "8",
+    src: require("../../img/coffeebayLogo_test.jpg"),
+  },
+  {
+    idx: "9",
+    src: require("../../img/coffeebayLogo_test.jpg"),
+  },
+  {
+    idx: "10",
+    src: require("../../img/coffeebayLogo_test.jpg"),
+  },
+  {
+    idx: "11",
+    src: require("../../img/coffeebayLogo_test.jpg"),
+  },
+  {
+    idx: "12",
+    src: require("../../img/anySeatPic_text.png"),
+  },
+];
 
 export default InformationScreen;

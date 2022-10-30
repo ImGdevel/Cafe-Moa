@@ -35,18 +35,20 @@ const styles = StyleSheet.create({
   btnNormal: {
     margin: 5,
     width: "100%",
-    height: 60,
+    height: 63,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#ccc",
+    backgroundColor: "#001D44",
+    borderRadius:10,
   },
   btnPress: {
     margin: 5,
     width: "100%",
-    height: 60,
+    height: 63,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#A0A0FF",
+    borderRadius:10,
   },
   btnRegister: {
     margin: 5,
