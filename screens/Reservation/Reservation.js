@@ -98,7 +98,7 @@ function ReservationScreen({ navigation, route }) {
         }
       }
       if (temp == 0) {
-        seatLoop.push(<Picker.Item key={i} label={seatArr[i]} value={i + 1} />);
+        seatLoop.push(<Picker.Item key={i} label={arr[i]} value={i + 1} />);
       }
     }
   };
