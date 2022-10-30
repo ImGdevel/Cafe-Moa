@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useTransition } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -11,6 +11,8 @@ import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import { getCafeData, getCafeDatabaseAd } from "../../lib/Database";
 import { getUserProfile } from "../../lib/UserDataService";
 import { getGeoLocation } from "../../lib/LocationService";
+import { sample_CafeData, sample_User } from "../../lib/TestSample";
+import { CafeData } from "../../lib/CafeData";
 
 function HomeScreen({ navigation }) {
   const [userData, setUserData] = useState();
@@ -24,6 +26,7 @@ function HomeScreen({ navigation }) {
   }, [setUserData]);
 
   const LoadHomePage = async() => {
+
     if(userData == null){
       await getUserProfile().then(async(data)=>{
         setUserData(data);
@@ -33,18 +36,18 @@ function HomeScreen({ navigation }) {
           setReserveCafeInfo(reserve_cafe);
           setReserveLoading(true);
         }
-      }).catch((err)=>{
-        console.log("잘못된 접근입니다.",err);
+      }).catch(async(err)=>{
+        //console.log("잘못된 접근입니다.",err);
         //navigation.replace("Auth"); //로그인 가능하면 풀어도 됩니다.
+        setUserData(await sample_User())
+        setReserveCafeInfo(new CafeData("샘플","샘플",{latitude:37,longitude:125}, {city1: "경기도" , city2: "용인시", city3:"처인구"}, 30,9,22));
+        setReserveLoading(true)
+        
       })
     }
     let location = await getGeoLocation();
     let cafe = await getCafeDatabaseAd();
   }
-  
-
-
-
 
   const ReservationsHistory = () =>{
  

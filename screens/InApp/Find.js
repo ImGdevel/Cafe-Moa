@@ -14,6 +14,7 @@ import { getCafeDatabaseAd } from "../../lib/Database";
 import { getGeoLocation } from "../../lib/LocationService";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { sample_CafeData } from "../../lib/TestSample";
 
 function FindScreen({ navigation, route }) {
   const [textInputValue, setTextInputValue] = useState("");
@@ -39,9 +40,11 @@ function FindScreen({ navigation, route }) {
         point = loc 
         let cafe_data = await getCafeDatabaseAd(location);
         setcafeDatas(cafe_data);
-
         CafeListLoad();
-      })
+      }).catch(async(err)=>{
+        console.log("에러 발생 샘플로 정보 대체",err)
+        setcafeDatas(await sample_CafeData());
+      })  
     }
   };
 
