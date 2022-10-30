@@ -33,6 +33,18 @@ function HomeScreen({ navigation }) {
     LoadHomePage();
   }, [setUserData, setReserveCafeInfo]);
 
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener("focus", () => {
+  //     LoadHomePage();
+  //   });
+
+  //   return unsubscribe;
+  // }, [navigation, setUserData, setReserveCafeInfo]);
+
+  // useEffect(() => {
+  //   LoadHomePage();
+  // }, [setUserData, setReserveCafeInfo]);
+
   const LoadHomePage = async () => {
     let test = await getUserProfile()
       .then((data) => {
