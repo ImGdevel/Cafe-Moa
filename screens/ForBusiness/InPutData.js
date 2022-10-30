@@ -1,15 +1,12 @@
 import React, {useState, useEffect, createRef} from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, KeyboardAvoidingView, Image, } from 'react-native';
-import { getRandomCafeData, setSampleImage } from '../../lib/TestSample';
+import { getRandomCafeData } from '../../lib/TestSample';
 import { getGeoLocation } from '../../lib/LocationService';
 import { 
   addCafeDatabase, 
   getCafeDatabase,
   getCafeDatabaseAd,
-  testings, 
 } from '../../lib/Database';
-
-import { getUserProfile, sendReservetionToUser, getReservetionToUser, deleteReservationToUser } from '../../lib/UserDataService'; //삭제, 테스트용
 
 function InPutDataScreen({navigation}) {
   const [cafeName,setcCafeName] = useState("");

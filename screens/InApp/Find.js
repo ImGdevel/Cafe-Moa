@@ -19,6 +19,7 @@ function FindScreen({ navigation, route }) {
 
   useEffect(()=>{
     loadFindPage();
+    CafeListLoad();
   },[setCafeLoop])
 
   useEffect(()=>{

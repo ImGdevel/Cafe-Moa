@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -21,7 +21,14 @@ const imgArr = [
 ];
 
 function ConfirmReservationScreen({ navigation, route }) {
+  const {cafeData: cafe_data, userData:user_data } = route.params
+  const [cafeData, setCafeData] = useState(cafe_data);
+  const [userData, setUserData] = useState(user_data);
   const [direction, setDirection] = useState("예약 내역");
+
+  useEffect(()=>{
+    
+  },[])
 
   function CancelReserve() {
     navigation.navigate("CancelReservation");

@@ -39,13 +39,13 @@ function LogInScreen({ navigation }) {
 
   const touchProps = {
     activeOpacity: 1,
-    underlayColor: "#2C3972", // <-- "backgroundColor" will be always overwritten by "underlayColor"
-    style: isPress ? getLoginStyle.btnPress : getLoginStyle.btnNormal, // <-- but you can still apply other style changes
+    underlayColor: "#2C3972",
+    style: isPress ? getLoginStyle.btnPress : getLoginStyle.btnNormal, 
     onHideUnderlay: () => setIsPress(false),
     onShowUnderlay: () => setIsPress(true),
     onPress: () => {
       onSubmit;
-    }, // <-- "onPress" is apparently required
+    },
   };
 
   return (
@@ -98,9 +98,6 @@ function LogInScreen({ navigation }) {
           
           <TouchableOpacity style={styles.btnRegister} onPress = {GoToHomeScreen}>
             <Text style={{ color: 'black', fontSize: 20, }}>관리자 권한 입장</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.btnRegister} onPress = {()=>{ navigation.navigate('InPutData')}}>
-            <Text style={{ color: 'black', fontSize: 20, }}>데이터 관리</Text>
           </TouchableOpacity>
         </View>
       </View>

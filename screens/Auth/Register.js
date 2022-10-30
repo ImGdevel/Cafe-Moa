@@ -60,14 +60,13 @@ function RegisterScreen({ navigation }) {
 
   const touchProps = {
     activeOpacity: 1,
-    underlayColor: "#2C3972", // <-- "backgroundColor" will be always overwritten by "underlayColor"
-    style: isPress ? getRegisterStyle.btnPress : getRegisterStyle.btnNormal, // <-- but you can still apply other style changes
+    underlayColor: "#2C3972",
+    style: isPress ? getRegisterStyle.btnPress : getRegisterStyle.btnNormal,
     onHideUnderlay: () => setIsPress(false),
     onShowUnderlay: () => setIsPress(true),
     onPress: () => {
-      onSubmitApplication;
-      navigation.navigate("InApp");
-    }, // <-- "onPress" is apparently required
+      onSubmitApplication
+    },
   };
 
   return (

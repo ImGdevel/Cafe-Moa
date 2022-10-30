@@ -14,16 +14,19 @@ import { getUserProfile } from "../../lib/UserDataService";
 
 function MyPageScreen({ navigation }) {
   const [userData, setUserData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [userName, setUserName] = useState('사용자 이름');
+  const [userEmail, setUserEmail] = useState('사용자 이메일');
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   const getData = async () => {
     let user_data = await getUserProfile();
     setUserData(user_data);
+    setUserName(userData.Name)
+    setUserEmail(userData.email)
   };
-
-  useEffect(() => {
-    getData();
-  }, [setUserData]);
 
   function GoToOptionScreen() {
     //navigation.navigate()
@@ -53,10 +56,10 @@ function MyPageScreen({ navigation }) {
         </View>
         <View style={getMyPageStyle.idText}>
           <Text style={{ fontWeight: "600", fontSize: 25 }}>
-            {userData.Name}
+            {userName}
           </Text>
           <Text style={{ fontWeight: "400", fontSize: 15 }}>
-            {userData.email}
+            {userEmail}
           </Text>
           <Text></Text>
           <TouchableOpacity
@@ -88,6 +91,8 @@ function MyPageScreen({ navigation }) {
             회원탈퇴
           </Text>
         </TouchableOpacity>
+
+        
       </View>
     </KeyboardAvoidingView>
   );
