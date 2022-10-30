@@ -7,10 +7,11 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   cafeLogo: {
-    width: 100,
-    height: 100,
+    width: '100%',
+    height: '100%',
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: 10,
   },
   cafeTitle: {
     fontSize: 25,

@@ -50,8 +50,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: '100%',
-    height: 250,
+    width: 105,
+    height: 105,
     borderRadius: 10,
     borderColor: "#ddd",
     justifyContent: "center",
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     height: 100,
     justifyContent: "center",
     alignItems: "center",
+    borderRadius:10,
   },
   cafeTitle: {
     fontSize: 25,

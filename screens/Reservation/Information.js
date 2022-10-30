@@ -55,11 +55,11 @@ function InformationScreen({ navigation, route }) {
               renderItem={({ item }) => (
                 <TouchableOpacity>
                   <View style={{flex: 1, flexDirection: "column", margin: 10 }}>
-                    <Image style={getInfoStyle.image} source={item.src} />
+                    <Image style={getInfoStyle.image} source={{}} />
                   </View>
                 </TouchableOpacity>
               )}
-              numColumns={1}
+              numColumns={3}
             />
           </PreviewLayout>
         </View>
