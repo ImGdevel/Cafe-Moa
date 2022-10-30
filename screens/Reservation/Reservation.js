@@ -72,14 +72,13 @@ function ReservationScreen({ navigation, route }) {
     );
   }
 
- 
   function onSelectTime(time) {
     setTime(time);
     makePickerItem(time);
   }
 
   // picker item에 추가하는 loop
-  
+
   const makePickerItem = (time) => {
     setTime(time);
     let arr = new Array();
@@ -88,26 +87,25 @@ function ReservationScreen({ navigation, route }) {
       arr.push(element.seat);
     });
     for (var i = 1; i <= cafeData.getSeatCount(); i++) {
-      if(arr.find(function(data){ return data==i}) == null  ){
-        seatLoop.push(<Picker.Item key={i} label={String(i)} value={i+1} />);
+      if (
+        arr.find(function (data) {
+          return data == i;
+        }) == null
+      ) {
+        seatLoop.push(<Picker.Item key={i} label={String(i)} value={i + 1} />);
       }
     }
-    setSeatList(seatLoop)
+    setSeatList(seatLoop);
   };
 
   const submitReservation = async () => {
     let reserveSrv = new ReservationService();
     reserveSrv = seatData;
     if (await reserveSrv.doSeatReservation(time, selectedSeat)) {
-      await sendReservetionToUser(
-        cafeData.id,
-        reserveSrv.seatId,
-        time,
-        selectedSeat
-      );
+      await sendReservetionToUser(cafeData.id, reserveSrv.seatId, time, 2);
       navigation.navigate("ReserveEnd");
     }
-  }
+  };
 
   return (
     <View style={getReserveStyle.container}>
@@ -142,29 +140,31 @@ function ReservationScreen({ navigation, route }) {
           style={getReserveStyle.seatPic}
         />
       </View>
-      <View style={{flex:1, alignItems:"center"}}>
-        <View style = {getReserveStyle.pickerTopTextArea}>
-          <Text style={getReserveStyle.pickerTopText}>
-            좌석 예약
-          </Text>
+      <View style={{ flex: 1, alignItems: "center" }}>
+        <View style={getReserveStyle.pickerTopTextArea}>
+          <Text style={getReserveStyle.pickerTopText}>좌석 예약</Text>
         </View>
-        <View style={{flex:2, marginBottom:15}}>
-        <View style={getReserveStyle.pickerBox}>
-          <View style={getReserveStyle.pickerLine}>
-            <Picker
-              style={getReserveStyle.picker}
-              selectedValue={selectedSeat}
-              onValueChange={(itemValue, itemIndex) => {setSelectedSeat(itemValue)}}>
-              {seatList}
-            </Picker>
+        <View style={{ flex: 2, marginBottom: 15 }}>
+          <View style={getReserveStyle.pickerBox}>
+            <View style={getReserveStyle.pickerLine}>
+              <Picker
+                style={getReserveStyle.picker}
+                selectedValue={selectedSeat}
+                onValueChange={(itemValue, itemIndex) => {
+                  setSelectedSeat(itemValue);
+                }}
+              >
+                {seatList}
+              </Picker>
+            </View>
+            <TouchableOpacity
+              style={getReserveStyle.reserveBtn}
+              onPress={submitReservation}
+            >
+              <Text style={{ color: "white", fontSize: 15 }}>예약하기</Text>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            style={getReserveStyle.reserveBtn}
-            onPress={submitReservation}>
-            <Text style={{ color: "white", fontSize: 15 }}>예약하기</Text>
-        </TouchableOpacity>
         </View>
-      </View>
       </View>
     </View>
   );
