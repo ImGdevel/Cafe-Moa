@@ -16,6 +16,7 @@ function InformationScreen({ navigation, route }) {
   const { cafeData: cafe_Data } = route.params;
   const [cafeData, setCafeData] = useState(cafe_Data);
   const [direction, setDirection] = useState("사진");
+  const [seatImage, setSeatImage] = useState(cafe_Data.getSeatImage());
 
   const SeatTable = async () => {};
 
@@ -40,6 +41,7 @@ function InformationScreen({ navigation, route }) {
             selectedValue={direction}
             values={["사진", "좌석"]}
             setSelectedValue={setDirection}
+            seatImage={seatImage}
             style={getInfoStyle.contentLayout}
           >
             <FlatList
@@ -130,6 +132,7 @@ const PreviewLayout = ({
   values,
   selectedValue,
   setSelectedValue,
+  seatImage,
 }) => (
   <View style={{ padding: 10, flex: 1 }}>
     <Text style={{ marginBottom: 10, fontSize: 24 }}></Text>
@@ -160,10 +163,7 @@ const PreviewLayout = ({
       else
         return (
           <View style={{ alignItems: "center", justifyContent: "center" }}>
-            <Image
-              source={require("../../img/anySeatPic_text.png")}
-              style={getInfoStyle.seatPic}
-            />
+            <Image source={{ uri: seatImage }} style={getInfoStyle.seatPic} />
           </View>
         );
     })()}

@@ -197,7 +197,7 @@ function CafeTable(props) {
         <View style={getCafeTableStyle.imageContainer}>
           <View style={getCafeTableStyle.image}>
             <Image
-              source={require("../../img/coffeebayLogo_test.jpg")}
+              source={{ uri: cafeLogoImage }}
               style={getReserveStyle.cafeLogo}
             />
           </View>
