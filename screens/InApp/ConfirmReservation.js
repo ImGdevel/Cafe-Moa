@@ -21,14 +21,12 @@ const imgArr = [
 ];
 
 function ConfirmReservationScreen({ navigation, route }) {
-  const {cafeData: cafe_data, userData:user_data } = route.params
+  const { cafeData: cafe_data, userData: user_data } = route.params;
   const [cafeData, setCafeData] = useState(cafe_data);
   const [userData, setUserData] = useState(user_data);
   const [direction, setDirection] = useState("예약 내역");
 
-  useEffect(()=>{
-    
-  },[])
+  useEffect(() => {}, []);
 
   function CancelReserve() {
     navigation.navigate("CancelReservation");
@@ -41,10 +39,16 @@ function ConfirmReservationScreen({ navigation, route }) {
         <View style={getFindStyle.container}>
           <View style={(getFindStyle.contentContainer, { marginTop: "7%" })}>
             <CafeTable
-              name={route.params.userdata.cafeId}
-              location={"용인시 처인구"}
+              name={route.params.cafeData.getName()}
+              location={route.params.cafeData.getAdress()}
               image={""}
-              information={"Open : AM 09:00 || Close : PM 22:00"}
+              information={
+                "Open : " +
+                route.params.cafeData.getOpenTime() +
+                ":00 ~ Close : " +
+                route.params.cafeData.getCloseTime() +
+                ":00"
+              }
             />
           </View>
         </View>
@@ -70,10 +74,12 @@ function ConfirmReservationScreen({ navigation, route }) {
                     }}
                   >
                     <Text style={{ color: "black", fontSize: 20, margin: 15 }}>
-                      좌석 번호 : {route.params.userdata.seatNumber}
+                      좌석 번호 : {route.params.userData.reservation.seatNumber}
+                      {"번"}
                     </Text>
                     <Text style={{ color: "black", fontSize: 20, margin: 15 }}>
-                      이용 가능 시간 : {route.params.userdata.time} ~ 1시간
+                      이용 가능 시간 : {route.params.userData.reservation.time}
+                      {":00"}~ 기본 1시간
                     </Text>
                     <Text style={{ color: "black", fontSize: 20, margin: 15 }}>
                       예약금 수수료 여부 :
