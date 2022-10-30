@@ -12,6 +12,7 @@ import getConfirmReservationStyle from "../../styles/screens/ConfirmReservationS
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
 import { deleteReservationToUser } from "../../lib/UserDataService";
+import { ReservationService } from "../../lib/ReservationService";
 
 const imgArr = [
   {
@@ -21,18 +22,29 @@ const imgArr = [
 ];
 
 function ConfirmReservationScreen({ navigation, route }) {
-  const {cafeData:mcafe_data, userData:user_data } = route.params
+  const { cafeData: cafe_data, userData: user_data } = route.params;
+
   const [cafeData, setCafeData] = useState(cafe_data);
   const [userData, setUserData] = useState(user_data);
   const [direction, setDirection] = useState("예약 내역");
-  
-  useEffect(()=>{
-    
-  },[])
+  const [seatImage, setSeatImage] = useState(cafe_data.getSeatImage());
 
-  function CancelReserve() {
+  useEffect(() => {}, []);
+
+  async function CancelReserve() {
+    console.log(userData)
+    console.log(cafeData.getSeatId())
+    console.log(userData.reservation.seatId);
+    let timeTable = new ReservationService(userData.reservation.seatId);
+    await timeTable.loadSeatDataBase();
+    console.log("삭제",timeTable);
+    
+    timeTable.doSeatCancel(
+      userData.reservation.time,
+      userData.reservation.seatNumber
+    );
+    await deleteReservationToUser();
     navigation.navigate("CancelReservation");
-    deleteReservationToUser();
   }
 
   return (
@@ -41,10 +53,7 @@ function ConfirmReservationScreen({ navigation, route }) {
         <View style={getFindStyle.container}>
           <View style={(getFindStyle.contentContainer, { marginTop: "7%" })}>
             <CafeTable
-              name={route.params.userdata.cafeId}
-              location={"용인시 처인구"}
-              image={""}
-              information={"Open : AM 09:00 || Close : PM 22:00"}
+              cafeData={cafeData}
             />
           </View>
         </View>
@@ -54,6 +63,7 @@ function ConfirmReservationScreen({ navigation, route }) {
             selectedValue={direction}
             values={["예약 내역", "좌석 위치 안내"]}
             setSelectedValue={setDirection}
+            seatImage={seatImage}
             style={getConfirmReservationStyle.contentLayout}
           >
             <FlatList
@@ -70,10 +80,12 @@ function ConfirmReservationScreen({ navigation, route }) {
                     }}
                   >
                     <Text style={{ color: "black", fontSize: 20, margin: 15 }}>
-                      좌석 번호 : {route.params.userdata.seatNumber}
+                      좌석 번호 : {route.params.userData.reservation.seatNumber}
+                      {"번"}
                     </Text>
                     <Text style={{ color: "black", fontSize: 20, margin: 15 }}>
-                      이용 가능 시간 : {route.params.userdata.time} ~ 1시간
+                      이용 가능 시간 : {route.params.userData.reservation.time}
+                      {":00"}~ 기본 1시간
                     </Text>
                     <Text style={{ color: "black", fontSize: 20, margin: 15 }}>
                       예약금 수수료 여부 :
@@ -116,9 +128,17 @@ function ConfirmReservationScreen({ navigation, route }) {
 }
 
 function CafeTable(props) {
-  const [cafeName, setCafeName] = useState(props.name);
-  const [cafeLocation, setCafeLocation] = useState(props.location);
-  const [cafeInformation, setCafeInformaion] = useState(props.information);
+  const cafeData = props.cafeData;
+  const [cafeName, setCafeName] = useState(cafeData.getName());
+  const [cafeLocation, setCafeLocation] = useState(cafeData.getAdress(1, 3));
+  const [cafeInformation, setCafeInformaion] = useState(
+    "Open : " +
+      cafeData.getOpenTime() +
+      ":00 ~ Close : " +
+      cafeData.getCloseTime() +
+      ":00"
+  );
+  const [cafeLogoImage, setCafeLogoImage] = useState(cafeData.getLogo());
 
   return (
     <>
@@ -126,7 +146,7 @@ function CafeTable(props) {
         <View style={getCafeTableStyle.imageContainer}>
           <View style={getCafeTableStyle.image}>
             <Image
-              source={require("../../img/coffeebayLogo_test.jpg")}
+              source={{ uri: cafeLogoImage }}
               style={getConfirmReservationStyle.cafeLogo}
             />
           </View>
@@ -148,6 +168,7 @@ const PreviewLayout = ({
   values,
   selectedValue,
   setSelectedValue,
+  seatImage,
 }) => (
   <View style={{ padding: 10, flex: 1 }}>
     <Text style={{ marginBottom: 10, fontSize: 24 }}></Text>
@@ -182,7 +203,7 @@ const PreviewLayout = ({
         return (
           <View style={{ alignItems: "center", justifyContent: "center" }}>
             <Image
-              source={require("../../img/anySeatPic_text.png")}
+              source={{ uri: seatImage }}
               style={getConfirmReservationStyle.seatPic}
             />
           </View>

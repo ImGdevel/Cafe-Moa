@@ -20,23 +20,23 @@ function FindScreen({ navigation, route }) {
 
   const [cafeLoop, setCafeLoop] = useState([]);
   const [cafeDatas, setcafeDatas] = useState([]);
-  const [location,setLocation] = useState();
+  const [location, setLocation] = useState();
 
-  useEffect(()=>{
+  useEffect(() => {
     loadFindPage();
     CafeListLoad();
-  },[setCafeLoop])
+  }, [setCafeLoop]);
 
-  useEffect(()=>{
+  useEffect(() => {
     CafeListLoad();
-  },[cafeDatas])
+  }, [cafeDatas]);
 
-  const loadFindPage = async() => {
+  const loadFindPage = async () => {
     console.log("페이지 로드");
     let point;
-    if(location == null){
-      await getGeoLocation().then(async(loc)=>{
-        point = loc 
+    if (location == null) {
+      await getGeoLocation().then(async (loc) => {
+        point = loc;
         let cafe_data = await getCafeDatabaseAd(location);
         setcafeDatas(cafe_data);
         CafeListLoad();
@@ -51,23 +51,15 @@ function FindScreen({ navigation, route }) {
     let cafeList = [];
     for (let i = 0; i < cafeDatas.length; i++) {
       cafeList.push(
-        <CafeTable
-          key={i}
-          cafeData={cafeDatas[i]}
-          navigation={navigation}
-        />
+        <CafeTable key={i} cafeData={cafeDatas[i]} navigation={navigation} />
       );
     }
     console.log("페이지 출력");
     setCafeLoop(cafeList);
-  }
-  
-  const search = () =>{
+  };
 
-  }
-  const filter = () =>{
-
-  }
+  const search = () => {};
+  const filter = () => {};
 
   return (
     <View style={getFindStyle.container}>
@@ -107,14 +99,20 @@ function FindScreen({ navigation, route }) {
 function CafeTable(props) {
   const cafeData = props.cafeData;
   const [cafeName, setCafeName] = useState(cafeData.getName());
-  const [cafeLocation, setCafeLocation] = useState(cafeData.getAdress(1,3));
-  const [cafeInformation, setCafeInformaion] = useState("Open : "+cafeData.getOpenTime()+":00 ~ Close : " +cafeData.getCloseTime() +":00");
+  const [cafeLocation, setCafeLocation] = useState(cafeData.getAdress(1, 3));
+  const [cafeInformation, setCafeInformaion] = useState(
+    "Open : " +
+      cafeData.getOpenTime() +
+      ":00 ~ Close : " +
+      cafeData.getCloseTime() +
+      ":00"
+  );
   const [cafeLogoImage, setCafeLogoImage] = useState(cafeData.getLogo());
   return (
     <TouchableHighlight
       style={getCafeTableStyle.container}
       onPress={() =>
-        props.navigation.navigate("Information", {
+        props.navigation.navigate("카페 정보", {
           cafeData: props.cafeData,
         })
       }
@@ -124,7 +122,10 @@ function CafeTable(props) {
       <>
         <View style={getCafeTableStyle.imageContainer}>
           <View style={getCafeTableStyle.image}>
-            <Image source={{uri:cafeLogoImage}} style={{ width: '100%', height: '100%', borderRadius:20,}} />
+            <Image
+              source={{ uri: cafeLogoImage }}
+              style={{ width: "100%", height: "100%", borderRadius: 20 }}
+            />
           </View>
         </View>
         <View style={getCafeTableStyle.contentContainer}>

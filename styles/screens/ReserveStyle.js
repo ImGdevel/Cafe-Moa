@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   seatPic: {
+    resizeMode: "contain",
     width: "100%",
     height: "75%",
   },

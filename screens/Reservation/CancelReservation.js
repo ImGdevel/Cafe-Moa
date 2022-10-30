@@ -9,7 +9,7 @@ function CancelReservationScreen({ navigation }) {
   }, []);
 
   function GoToHomeScreen() {
-    navigation.navigate("Home");
+    navigation.navigate("홈");
   }
 
   return (

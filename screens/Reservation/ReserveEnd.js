@@ -9,8 +9,8 @@ function ReserveEndScreen({ navigation }) {
   }, []);
 
   function GoToHomeScreen() {
-    navigation.replace("Find");
-    navigation.replace("Home");
+    navigation.navigate("Find");
+    navigation.navigate("홈");
   }
 
   return (

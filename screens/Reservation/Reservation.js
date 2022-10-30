@@ -7,56 +7,64 @@ import getReserveStyle from "../../styles/screens/ReserveStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
 import getModalStyle from "../../styles/components/ModalStyle";
-import { ReservationService } from "../../lib/ReservationService";
+
+import {
+  ReservationService,
+  getSeatDataOnTime,
+} from "../../lib/ReservationService";
 import { sendReservetionToUser } from "../../lib/UserDataService";
 import { CafeData } from "../../lib/CafeData";
 
 function ReservationScreen({ navigation, route }) {
-  const {cafeData: cafe_data} = route.params;
+  const { cafeData: cafe_data } = route.params;
 
   const [cafeData, setCafeData] = useState(cafe_data);
-  const [seatImage, setSeatImage] = useState(cafe_data.getSeatImage())
+  const [seatImage, setSeatImage] = useState(cafe_data.getSeatImage());
   const [seatData, setSeatData] = useState();
-  const [selectedSeat, setSelectedSeat] = useState("1");
+  const [selectedSeat, setSelectedSeat] = useState();
   const [modalVisible, setModalVisible] = useState(true);
   const [modalOutput, setModalOutput] = useState("Open Modal");
   const [time, setTime] = useState(0);
 
+  const [seatList, setSeatList] = useState();
   //최대 자릿수 - 현제 예약된 자릿수
+  const notReserveSeat = async () => {};
 
-  useEffect(()=>{
-    
-  })
-
-  const notReserveSeat = async() => {
-    
-  }
-
-  useEffect(()=>{
+  useEffect(() => {
     SeatTimeTable();
-  },[])
+  }, []);
 
-  const SeatTimeTable = async() => {
+  const SeatTimeTable = async () => {
     let timeTable = new ReservationService(cafeData.getSeatId());
     await timeTable.loadSeatDataBase();
     setSeatData(timeTable);
-  }
-
-
-
+  };
 
   var timeLoop = [];
-  const timeArr = [ "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00","16:00","17:00","18:00","19:00","20:00",];
-    
+  const timeArr = [
+    "09:00",
+    "10:00",
+    "11:00",
+    "12:00",
+    "13:00",
+    "14:00",
+    "15:00",
+    "16:00",
+    "17:00",
+    "18:00",
+    "19:00",
+    "20:00",
+  ];
+
   for (let i = 0; i < timeArr.length; i++) {
     timeLoop.push(
       <TouchableOpacity
         key={i}
         style={getModalStyle.modalButton}
         onPress={() => {
-          setModalOutput("선택 1");
+          setModalOutput("선택");
           setModalVisible(false);
-          setTime(i+cafeData.getOpenTime())
+          onSelectTime(i + cafeData.getOpenTime());
         }}
       >
         <Text style={{ alignSelf: "center", fontSize: 20 }}>{timeArr[i]}</Text>
@@ -64,17 +72,38 @@ function ReservationScreen({ navigation, route }) {
     );
   }
 
-  var seatLoop = [];
-  const seatArr = ["1", "2", "3", "4", "5", "6"];
-  for (let i = 0; i < seatArr.length; i++) {
-    seatLoop.push(<Picker.Item key={i} label={seatArr[i]} value={i + 1} />);
+ 
+  function onSelectTime(time) {
+    setTime(time);
+    makePickerItem(time);
   }
 
-  const submitReservation = async() => {
+  // picker item에 추가하는 loop
+  const makePickerItem = (time) => {
+    setTime(time);
+    let arr = new Array();
+    seatData.getSeatDataOnTime(time).forEach((element) => {
+      arr.push(element.seat);
+    });
+    var seatLoop = [];
+    for (var i = 1; i <= cafeData.getSeatCount(); i++) {
+      if(arr.find(function(data){ return data==i}) == null  ){
+        seatLoop.push(<Picker.Item key={i} label={String(i)} value={i+1} />);
+      }
+    }
+    setSeatList(seatLoop)
+  };
+
+  const submitReservation = async () => {
     let reserveSrv = new ReservationService();
     reserveSrv = seatData;
-    if(await reserveSrv.doSeatReservation(time,selectedSeat)){ 
-      await sendReservetionToUser(cafeData.id, reserveSrv.seatId, time,selectedSeat)
+    if (await reserveSrv.doSeatReservation(time, selectedSeat)) {
+      await sendReservetionToUser(
+        cafeData.id,
+        reserveSrv.seatId,
+        time,
+        selectedSeat
+      );
       navigation.navigate("ReserveEnd");
     }
   }
@@ -86,28 +115,28 @@ function ReservationScreen({ navigation, route }) {
         useNativeDriver={true}
         hideModalContentWhileAnimating={true}
         style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-      ><>
-        <View style={getModalStyle.modalView}>
-          <View style={getModalStyle.modalWrapper}>
-            <Text style={getModalStyle.modalGradeText}>시간을 선택하세요</Text>
+      >
+        <>
+          <View style={getModalStyle.modalView}>
+            <View style={getModalStyle.modalWrapper}>
+              <Text style={getModalStyle.modalGradeText}>
+                시간을 선택하세요
+              </Text>
+            </View>
+            <ScrollView style={getModalStyle.ScrollView}>{timeLoop}</ScrollView>
           </View>
-          <ScrollView style={getModalStyle.ScrollView}>{timeLoop}</ScrollView>
-        </View>
-      </>
+        </>
       </Modal>
 
       <View style={getFindStyle.container}>
         <View style={getFindStyle.contentContainer}>
-          <CafeTable
-            cafeData={cafeData}
-            navigation={navigation}
-          />
+          <CafeTable cafeData={cafeData} navigation={navigation} />
         </View>
       </View>
 
       <View style={getReserveStyle.seatContainer}>
         <Image
-          source={{uri:seatImage}}
+          source={{ uri: seatImage }}
           resizeMode="stretch"
           style={getReserveStyle.seatPic}
         />
@@ -143,8 +172,14 @@ function ReservationScreen({ navigation, route }) {
 function CafeTable(props) {
   const cafeData = props.cafeData;
   const [cafeName, setCafeName] = useState(cafeData.getName());
-  const [cafeLocation, setCafeLocation] = useState(cafeData.getAdress(1,3));
-  const [cafeInformation, setCafeInformaion] = useState("Open : "+cafeData.getOpenTime()+":00 ~ Close : " +cafeData.getCloseTime() +":00");
+  const [cafeLocation, setCafeLocation] = useState(cafeData.getAdress(1, 3));
+  const [cafeInformation, setCafeInformaion] = useState(
+    "Open : " +
+      cafeData.getOpenTime() +
+      ":00 ~ Close : " +
+      cafeData.getCloseTime() +
+      ":00"
+  );
   const [cafeLogoImage, setCafeLogoImage] = useState(cafeData.getLogo());
 
   return (
@@ -153,7 +188,7 @@ function CafeTable(props) {
         <View style={getCafeTableStyle.imageContainer}>
           <View style={getCafeTableStyle.image}>
             <Image
-              source={{uri:cafeLogoImage}}
+              source={{ uri: cafeLogoImage }}
               style={getReserveStyle.cafeLogo}
             />
           </View>

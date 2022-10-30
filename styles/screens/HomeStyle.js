@@ -17,8 +17,9 @@ const styles = StyleSheet.create({
     borderColor: "#001D44",
     borderWidth: 2,
     borderRadius: 15,
-    marginTop: "-25%",
-    marginLeft: "5%",
+    top: "-12%",
+    left: "5%",
+    position: "absolute",
     backgroundColor: "#001D44",
   },
 
