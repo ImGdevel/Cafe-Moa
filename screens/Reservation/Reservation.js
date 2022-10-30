@@ -74,8 +74,6 @@ function ReservationScreen({ navigation, route }) {
     let reserveSrv = new ReservationService();
     reserveSrv = seatData;
     if(await reserveSrv.doSeatReservation(time,selectedSeat)){ 
-      console.log(cafeData)
-      console.log(cafeData.id)
       await sendReservetionToUser(cafeData.id, reserveSrv.seatId, time,selectedSeat)
       navigation.navigate("ReserveEnd");
     }
@@ -103,20 +101,7 @@ function ReservationScreen({ navigation, route }) {
       <View style={getFindStyle.container}>
         <View style={getFindStyle.contentContainer}>
           <CafeTable
-<<<<<<< HEAD
-            name={route.params.data.getName()}
-            location={route.params.data.getAdress()}
-            image={""}
-            information={
-              "Open : " +
-              route.params.data.getOpenTime() +
-              ":00 || Close : " +
-              route.params.data.getCloseTime() +
-              ":00"
-            }
-=======
             cafeData={cafeData}
->>>>>>> feature/UserData
             navigation={navigation}
           />
         </View>
