@@ -18,7 +18,6 @@ import { useIsFocused } from "@react-navigation/native";
 
 function HomeScreen({ navigation }) {
   const [userData, setUserData] = useState();
-  const [reserveInfo, setReserveInfo] = useState();
   const [reserveCafeInfo, setReserveCafeInfo] = useState();
   const [reserveLoading, setReserveLoading] = useState(false); //카페데이터를 불러오는 도중 사용할 로딩
 
@@ -61,66 +60,7 @@ function HomeScreen({ navigation }) {
       let reserve_cafe = await getCafeData(userData.reservation.cafeId);
       console.log(reserve_cafe);
       setReserveCafeInfo(reserve_cafe);
-      setReserveLoading(true);
-    } else {
-      setReserveLoading(false);
-    }
-  };
-
-  const ReservationsHistory = () => {
-    const onConfirmReservation = () => {
-      if (reserveCafeInfo != null && userData != null) {
-        navigation.navigate("ConfirmReservation", {
-          cafeData: reserveCafeInfo,
-          userData: userData,
-        });
-      }
-    };
-
-    const confirmReservationUI = (
-      <>
-        <View style={getHomeStyle.infoContentContainer}>
-          <View style={getCafeTableStyle.imageContainer}>
-            <Image
-              source={reserveLoading ? { uri: reserveCafeInfo.getLogo() } : {}}
-              style={getHomeStyle.image}
-            />
-          </View>
-          <View>
-            <Text
-              style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}
-            >
-              {reserveLoading ? reserveCafeInfo.getName() : ""}
-            </Text>
-            <Text
-              style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}
-            >
-              {reserveLoading ? userData.reservation.seatNumber : ""} 번 좌석
-            </Text>
-            <Text
-              style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}
-            >
-              {reserveLoading ? userData.reservation.time : ""}:00
-            </Text>
-            <TouchableOpacity onPress={onConfirmReservation}>
-              <Text
-                style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}
-              >
-                {"\n\t\t\t\t\t\t"}▶ 내역 확인하기
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </>
-    );
-    if (reserveLoading == false) {
-      return (
-        <>
-          <Text> 예약 내역이 없습니다</Text>
-        </>
-      );
-    } else {
-      return confirmReservationUI;
+    }else{
     }
   };
 
@@ -147,11 +87,56 @@ function HomeScreen({ navigation }) {
               예약내역
             </Text>
           </View>
-          <ReservationsHistory />
+          <ReservationsHistory 
+            cafeData = {reserveCafeInfo}
+            userData = {userData}
+          />
         </View>
       </View>
     </KeyboardAvoidingView>
   );
 }
+
+function ReservationsHistory(props){
+  const {cafeData:cafe_data, userData:user_data} = props;
+  const [cafeData, serCafeData] = useState(cafe_data)
+  const [userData, serUserData] = useState(user_data)
+
+  return (
+    <>
+      <View style={getHomeStyle.infoContentContainer}>
+        <View style={getCafeTableStyle.imageContainer}>
+          <Image
+            source={cafeData.getLogo()}
+            style={getHomeStyle.image}
+          />
+        </View>
+        <View>
+          <Text style={getCafeTableStyle.ConfirmBoxInText}>
+            {cafeData.getName()}
+          </Text>
+          <Text style={getCafeTableStyle.ConfirmBoxInText}>
+            {cafeData.reservation.seatNumber} 번 좌석
+          </Text>
+          <Text style={getCafeTableStyle.ConfirmBoxInText}>
+            {cafeData.reservation.time}:00
+          </Text>
+          <TouchableOpacity onPress={()=>{
+                if (reserveCafeInfo != null && userData != null) {
+                  navigation.navigate("ConfirmReservation", {
+                    cafeData: reserveCafeInfo,
+                    userData: userData,
+                  });
+                }
+          }}>
+            <Text style={getCafeTableStyle.ConfirmBoxInText}>
+              {"\n\t\t\t\t\t\t"}▶ 내역 확인하기
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </>
+  );
+};
 
 export default HomeScreen;
