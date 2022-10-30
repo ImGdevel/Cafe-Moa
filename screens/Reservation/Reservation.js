@@ -26,6 +26,7 @@ function ReservationScreen({ navigation, route }) {
   const [modalOutput, setModalOutput] = useState("Open Modal");
   const [time, setTime] = useState(0);
 
+  const [seatList, setSeatList] = useState();
   //최대 자릿수 - 현제 예약된 자릿수
   const notReserveSeat = async () => {};
 
@@ -71,8 +72,7 @@ function ReservationScreen({ navigation, route }) {
     );
   }
 
-  var seatLoop = [];
-
+ 
   function onSelectTime(time) {
     setTime(time);
     makePickerItem(time);
@@ -85,20 +85,13 @@ function ReservationScreen({ navigation, route }) {
     seatData.getSeatDataOnTime(time).forEach((element) => {
       arr.push(element.seat);
     });
-    let seatArr = [];
-
-    for (let i = 0; i < cafeData.getSeatCount(); i++) {
-      let temp = 0;
-      for (let j = 0; j < arr.length; j++) {
-        if (i == arr[j]) {
-          temp = 1;
-        }
-      }
-      if (temp == 0) {
-        seatArr.push(String(i + 1));
-        seatLoop.push(<Picker.Item key={i} label={seatArr[i]} value={i + 1} />);
+    var seatLoop = [];
+    for (var i = 1; i <= cafeData.getSeatCount(); i++) {
+      if(arr.find(function(data){ return data==i}) == null  ){
+        seatLoop.push(<Picker.Item key={i} label={String(i)} value={i+1} />);
       }
     }
+    setSeatList(seatLoop)
   };
 
   const submitReservation = async () => {
@@ -161,7 +154,7 @@ function ReservationScreen({ navigation, route }) {
             setSelectedSeat(itemValue);
           }}
         >
-          {seatLoop}
+          {seatList}
         </Picker>
 
         <TouchableOpacity
