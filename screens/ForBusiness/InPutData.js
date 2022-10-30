@@ -38,6 +38,7 @@ function InPutDataScreen({navigation}) {
     await getRandomCafeData().then((cafe)=>{
       data = cafe;
     });
+    setName(data.getName());
     addCafeDatabase(data);
 
     // 아래는 테스트용, 성공! 삭제 가능
