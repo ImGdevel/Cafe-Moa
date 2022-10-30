@@ -9,7 +9,7 @@ function ReserveEndScreen({ navigation }) {
   }, []);
 
   function GoToHomeScreen() {
-    navigation.replace("Find");
+    navigation.navigate("Find");
     navigation.navigate("홈");
   }
 
