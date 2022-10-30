@@ -22,7 +22,7 @@ const Stack = createNativeStackNavigator();
 
 const InApp = () => {
   return (
-    <Tab.Navigator initialRouteName="홈">
+    <Tab.Navigator initialRouteName="Home">
       <Tab.Screen
         name="카페"
         options={{
@@ -46,7 +46,7 @@ const InApp = () => {
         )}
       </Tab.Screen>
       <Tab.Screen
-        name="홈"
+        name="Home"
         options={{
           tabBarIcon: ({ focused }) => (
             <Ionicons
@@ -63,7 +63,7 @@ const InApp = () => {
       >
         {() => (
           <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="홈" component={HomeScreen} />
             <Stack.Screen name="ConfirmReservation" component={ConfirmScreen} />
             <Stack.Screen
               name="CancelReservation"
@@ -73,7 +73,7 @@ const InApp = () => {
         )}
       </Tab.Screen>
       <Tab.Screen
-        name="마이페이지"
+        name="myPage"
         options={{
           tabBarIcon: ({ focused }) => (
             <Ionicons
@@ -90,7 +90,7 @@ const InApp = () => {
       >
         {() => (
           <Stack.Navigator name="InApp" options={{ headerShown: true }}>
-            <Stack.Screen name="MyPage" component={MyPageScreen} />
+            <Stack.Screen name="마이페이지" component={MyPageScreen} />
           </Stack.Navigator>
         )}
       </Tab.Screen>
@@ -156,8 +156,8 @@ const CafeNavigation = () => {
         component={FindScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Information" component={InformationScreen} />
-      <Stack.Screen name="Reservation" component={ReservationScreen} />
+      <Stack.Screen name="카페 정보" component={InformationScreen} />
+      <Stack.Screen name="예약하기" component={ReservationScreen} />
       <Stack.Screen
         name="ReserveEnd"
         options={{ headerShown: false }}
