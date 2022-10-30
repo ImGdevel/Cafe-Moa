@@ -44,33 +44,23 @@ function InformationScreen({ navigation, route }) {
             selectedValue={direction}
             values={["사진", "좌석"]}
             setSelectedValue={setDirection}
-            style={getInfoStyle.contentLayout}>
+            style={getInfoStyle.contentLayout}
+            cafeData={cafeData}
+          >
             <FlatList
               keyExtractor={(item) => item.idx}
               data={imgArr}
               style={getInfoStyle.picArea}
+
               renderItem={({ item }) => (
                 <TouchableOpacity>
-                  <View
-                    style={{
-                      flex: 1,
-                      flexDirection: "column",
-                      margin: 10,
-                    }}
-                  >
+                  <View style={{flex: 1, flexDirection: "column", margin: 10 }}>
                     <Image style={getInfoStyle.image} source={item.src} />
                   </View>
                 </TouchableOpacity>
               )}
-              numColumns={3}
+              numColumns={1}
             />
-
-            {/*___<View style={getInfoStyle.image}>
-              <Image
-                source={require("../../img/coffeebayLogo_test.jpg")}
-                style={getInfoStyle.cafeLogo}
-              />
-            </View>___*/}
           </PreviewLayout>
         </View>
 
@@ -127,6 +117,7 @@ const PreviewLayout = ({
   values,
   selectedValue,
   setSelectedValue,
+  cafeData,
 }) => (
   <View style={{ padding: 10, flex: 1 }}>
     <Text style={{ marginBottom: 10, fontSize: 24 }}></Text>
@@ -138,8 +129,7 @@ const PreviewLayout = ({
           style={[
             getInfoStyle.button,
             selectedValue === value && getInfoStyle.selected,
-          ]}
-        >
+          ]}>
           <Text
             style={[
               getInfoStyle.buttonLabel,
@@ -158,7 +148,7 @@ const PreviewLayout = ({
         return (
           <View style={{ alignItems: "center", justifyContent: "center" }}>
             <Image
-              source={require("../../img/anySeatPic_text.png")}
+              source={(cafeData)?{uri:cafeData.getSeatImage()}: {}}
               style={getInfoStyle.seatPic}
             />
           </View>

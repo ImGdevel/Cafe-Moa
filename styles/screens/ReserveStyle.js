@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#001D44",
     alignItems: "center",
     justifyContent: "center",
-    height: 30,
-    width: "18%",
+    height: 50,
+    width: "25%",
     borderRadius: 5,
   },
   pickerBox: {
@@ -38,10 +38,32 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row",
   },
+  pickerLine: {
+    borderWidth:1.5,
+    borderRadius:10,
+    borderColor:"#ddd",
+    width: "63%",
+    height:55,
+    marginRight:10
+  },
   picker: {
     alignItems: "center",
     justifyContent: "center",
-    width: "80%",
+    width: "100%",
+    paddingLeft:10,
+  },
+  pickerTopText:{
+    fontSize:25,
+    color:"#000",
+  },
+  pickerTopTextArea:{
+    flex:1,
+    width:"91%",
+    borderBottomColor:"#001D44",
+    borderBottomWidth:3,
+    borderBottomEndRadius:10,
+    padding:10,
+    paddingLeft:20,
   },
 });
 

@@ -55,7 +55,7 @@ function LogInScreen({ navigation }) {
       <View style={{ flex: 3 }}></View>
       <View style={getLoginStyle.contentArea}>
         <View style={getLoginStyle.titleText}>
-          <Text style={{ fontWeight: "900", fontSize: 50 }}> M O A </Text>
+          <Text style={{ fontWeight: "900", fontSize: 55 }}> M O A </Text>
         </View>
         <View style={getLoginStyle.subTitleText}>
           <Text style={{ fontWeight: "600", fontSize: 30 }}> Login </Text>
@@ -95,7 +95,7 @@ function LogInScreen({ navigation }) {
             style={getLoginStyle.btnRegister}
             onPress={GoToRgisterScreen}
           >
-            <Text style={{ color: "#ccc", fontSize: 20 }}>회원가입</Text>
+            <Text style={{ color: "#bbb", fontSize: 20 }}>회원가입</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.btnRegister} onPress={GoToHomeScreen}>

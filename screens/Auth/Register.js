@@ -27,7 +27,7 @@ function RegisterScreen({ navigation }) {
     navigation.navigate("InApp");
   }
 
-  function onSubmitApplication() {
+  async function onSubmitApplication() {
     setErrorText("");
     if (!userName) {
       setErrorText("이름을 입력해주세요");
@@ -46,13 +46,13 @@ function RegisterScreen({ navigation }) {
       return;
     }
 
-    CreateUserAccount(userEmail, userPassword)
-      .then((id) => {
+    await CreateUserAccount(userEmail, userPassword).then((id) => {
         createUserProfile(userName, id, userEmail, userPassword);
         GoToHomeScreen();
       })
       .catch((err) => {
         alert("계정 생성에 실패 했습니다.");
+        
       });
   }
 
@@ -74,10 +74,10 @@ function RegisterScreen({ navigation }) {
       <View style={{ flex: 3 }}></View>
       <View style={getRegisterStyle.contentArea}>
         <View style={getRegisterStyle.titleText}>
-          <Text style={{ fontWeight: "900", fontSize: 50 }}> M O A </Text>
+          <Text style={{ fontWeight: "900", fontSize: 55 }}> M O A </Text>
         </View>
         <View style={getRegisterStyle.subTitleText}>
-          <Text style={{ fontWeight: "600", fontSize: 30 }}> Sing Up </Text>
+          <Text style={{ fontWeight: "600", fontSize: 30 }}> Sgin Up </Text>
         </View>
         <View style={getRegisterStyle.formArea}>
           <TextInput

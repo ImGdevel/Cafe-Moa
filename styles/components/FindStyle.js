@@ -7,7 +7,7 @@ const FindStyles = StyleSheet.create({
   },
   topContainer: {
     flex: 1,
-    backgroundColor: "#ccc",
+    backgroundColor: "#bbb",
   },
   contentContainer: {
     flex: 1,
@@ -16,43 +16,50 @@ const FindStyles = StyleSheet.create({
   searchbarContainer: {
     width: "100%",
     height: "50%",
-    marginTop: "8%",
-    backgroundColor: "white",
+    
+    marginTop: "10%",
+    backgroundColor: "#fff",
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
+
+
   },
   textinputBox: {
     height: 40,
+    paddingLeft: 20,
     width: "70%",
-    textAlign: "center",
-    borderColor: "#ccc",
+    borderColor: "#bbb",
     borderWidth: 1,
     borderRadius: 15,
     marginRight: 8,
-    placeholderTextColor: "#ccc",
+    placeholderTextColor: "#bbb",
+    
   },
   btnSearch: {
     width: 40,
     height: 40,
     borderWidth: 1,
     borderRadius: 15,
-    borderColor: "#ccc",
+    borderColor: "#bbb",
     justifyContent: "center",
     alignItems: "center",
+
   },
   filterContainer: {
     width: "100%",
     height: "50%",
-    backgroundColor: "white",
+    backgroundColor: "#fff",
     alignItems: "flex-end",
+
   },
   btnFilter: {
     height: 50,
     width: 100,
-    borderColor: "#ccc",
+    borderColor: "#bbb",
     justifyContent: "center",
     alignItems: "center",
+
   },
 });
 

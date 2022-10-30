@@ -23,9 +23,10 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     backgroundColor: "#ccc",
     alignItems: "center",
-    marginHorizontal: "1%",
+    marginHorizontal: "2%",
     marginBottom: 5,
-    minWidth: "48%",
+    height:40,
+    minWidth: "46%",
     textAlign: "center",
   },
   selected: {
@@ -33,8 +34,10 @@ const styles = StyleSheet.create({
     borderWidth: 0,
   },
   buttonLabel: {
-    fontSize: 12,
+    fontSize: 18,
     fontWeight: "500",
+    textAlign:"center",
+    lineHeight:25,
     color: "black",
   },
   selectedLabel: {
@@ -47,8 +50,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: 100,
-    height: 100,
+    width: '100%',
+    height: 250,
     borderRadius: 10,
     borderColor: "#ddd",
     justifyContent: "center",

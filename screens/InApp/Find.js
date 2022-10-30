@@ -12,7 +12,6 @@ import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
 import { getCafeDatabaseAd } from "../../lib/Database";
 import { getGeoLocation } from "../../lib/LocationService";
-
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { sample_CafeData } from "../../lib/TestSample";
 
@@ -72,7 +71,7 @@ function FindScreen({ navigation, route }) {
 
   return (
     <View style={getFindStyle.container}>
-      <View style={{ flex: 0.3, backgroundColor: "#ccc" }}>
+      <View style={{ flex: 0.3, backgroundColor: "#fff"}}>
         <View style={getFindStyle.searchbarContainer}>
           <TextInput
             style={getFindStyle.textinputBox}
