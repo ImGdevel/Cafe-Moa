@@ -25,6 +25,7 @@ function HomeScreen({ navigation }) {
     if(userData == null){
       await getUserProfile().then(async(data)=>{
         setUserData(data); //예약 내역 확인
+        console.log(data.reservation)
         if(data.reservation.cafeId != null){
           let reserve_cafe = await getCafeData(reservation.cafeId);
           console.log(reserve_cafe);
@@ -34,7 +35,7 @@ function HomeScreen({ navigation }) {
       })
     }
   }
-
+  
   /*
           onPress={() =>{
             if(reserve_cafe != null){
@@ -45,6 +46,34 @@ function HomeScreen({ navigation }) {
               })
             }
           }}*/
+  const ReservationsHistory = () =>{
+    
+    return(
+      <>
+                <View style={getHomeStyle.infoContentContainer}>
+            <View style={getCafeTableStyle.imageContainer}>
+              <Image
+                source={require("../../img/coffeebayLogo_test.jpg")}
+                style={getHomeStyle.image}
+              />
+            </View>
+          <View>
+        <Text style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}>
+          {(reserveLoading) ? userData.Name : "" }
+        </Text>
+        <Text style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}>
+          {(reserveLoading) ? reserveCafeInfo.Name : "" }
+        </Text>
+        <Text style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}>
+          {(reserveLoading) ? "" : ""}
+        </Text>
+        <Text style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}>
+        {"\n\t\t\t\t\t\t"}▶ 내역 확인하기
+        </Text>
+        </View>
+      </View>
+      </>)
+  }
 
   return (
     <KeyboardAvoidingView style={getHomeStyle.container}>
@@ -60,41 +89,9 @@ function HomeScreen({ navigation }) {
         </View>
         <View style={getHomeStyle.btnInfoReservation}>
           <View style={getHomeStyle.infoContainer}>
-            <Text
-              style={{ color: "white", fontSize: 30, marginHorizontal: 10 }}
-            >
-              예약내역
-            </Text>
+            <Text style={{ color: "white", fontSize: 30, marginHorizontal: 10 }}> 예약내역 </Text>
           </View>
-          {
-            ()=>{
-              if(reserveLoading){
-                return (
-                <>
-                  <View style={getHomeStyle.infoContentContainer}>
-                    <View style={getCafeTableStyle.imageContainer}>
-                      <Image
-                        source={require("../../img/coffeebayLogo_test.jpg")}
-                        style={getHomeStyle.image}
-                      />
-                    </View>
-                  <View>
-                <Text style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}>
-                  {(reserveLoading) ? userData.Name : "" }
-                </Text>
-                <Text style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}>
-                  {(reserveLoading) ? reserveCafeInfo.Name : "" }
-                </Text>
-                <Text style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}>
-                  {(reserveLoading) ? "" : ""}
-                </Text>
-                <Text style={{ color: "#001D44", fontSize: 20, marginHorizontal: 20 }}>
-                {"\n\t\t\t\t\t\t"}▶ 내역 확인하기
-                </Text>
-                </View>
-              </View>
-              </>)
-          }}}
+            <ReservationsHistory/>
           </View>
         
         {/*___

@@ -9,6 +9,7 @@ import getFindStyle from "../../styles/components/FindStyle";
 import getModalStyle from "../../styles/components/ModalStyle";
 import { ReservationService } from "../../lib/ReservationService";
 import { sendReservetionToUser } from "../../lib/UserDataService";
+import { CafeData } from "../../lib/CafeData";
 
 function ReservationScreen({ navigation, route }) {
   const {cafeData: cafe_data} = route.params;
@@ -62,26 +63,23 @@ function ReservationScreen({ navigation, route }) {
       </TouchableOpacity>
     );
   } 
-  const TimeList = () =>{
-   
-  }
+
   var seatLoop = [];
   const seatArr = ["1", "2", "3", "4", "5", "6"];
   for (let i = 0; i < seatArr.length; i++) {
     seatLoop.push(<Picker.Item key={i} label={seatArr[i]} value={i + 1} />);
   }  
-  const SeatList = () => {
-
-  }
-
 
   const submitReservation = async() => {
     let reserveSrv = new ReservationService();
     reserveSrv = seatData;
-    reserveSrv.doSeatReservation(time,selectedSeat);
-    console.log(time, selectedSeat);
-    navigation.navigate("ReserveEnd");
-    sendReservetionToUser(cafeData.id, reserveSrv.seatId, time,selectedSeat)
+    if(await reserveSrv.doSeatReservation(time,selectedSeat)){ 
+      console.log(cafeData)
+      console.log(cafeData.id)
+      await sendReservetionToUser(cafeData.id, reserveSrv.seatId, time,selectedSeat)
+      navigation.navigate("ReserveEnd");
+    }
+    
   }
 
 

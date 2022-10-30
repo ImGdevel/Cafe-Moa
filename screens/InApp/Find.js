@@ -31,11 +31,9 @@ function FindScreen({ navigation, route }) {
     if(location == null){
       await getGeoLocation().then(async(loc)=>{
         point = loc 
-        console.log("위치정보",point); 
         let cafe_data = await getCafeDatabaseAd(location);
         setcafeDatas(cafe_data);
-        console.log("카페 데이터",cafe_data);
-        
+
         CafeListLoad();
       })
     }
