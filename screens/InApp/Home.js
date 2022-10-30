@@ -21,14 +21,20 @@ function HomeScreen({ navigation }) {
   const [reserveCafeInfo, setReserveCafeInfo] = useState();
   const [page, setPage] = useState(NoneReserve);
 
-  const isFocused = useIsFocused();
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      LoadHomePage();
+    });
+
+    return unsubscribe;
+  }, [navigation, setUserData]);
 
   useEffect(() => {
-    if (isFocused) LoadHomePage();
-  }, [isFocused]);
+    LoadHomePage();
+  }, [setUserData, setReserveCafeInfo]);
 
   const LoadHomePage = async () => {
-    await getUserProfile()
+    let test = await getUserProfile()
       .then((data) => {
         setUserData(data);
         console.log("현재 로그인 [", data.Name, "]");
@@ -41,6 +47,8 @@ function HomeScreen({ navigation }) {
         signOut();
         navigation.replace("Auth");
       });
+
+
     let location = await getGeoLocation();
   };
 
@@ -74,7 +82,7 @@ function HomeScreen({ navigation }) {
   const NoneReserve = () => {
     return (
       <>
-        <Text style={{ position: "absolute", alignSelf: "center" }}>
+        <Text style={{ position: "absolute", alignSelf: "center", fontSize: 25 }}>
           예약 내역이 없습니다.
         </Text>
       </>
