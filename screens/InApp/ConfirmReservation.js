@@ -12,6 +12,7 @@ import getConfirmReservationStyle from "../../styles/screens/ConfirmReservationS
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
 import { deleteReservationToUser } from "../../lib/UserDataService";
+import { ReservationService } from "../../lib/ReservationService";
 
 const imgArr = [
   {
@@ -29,8 +30,14 @@ function ConfirmReservationScreen({ navigation, route }) {
 
   useEffect(() => {}, []);
 
-  function CancelReserve() {
+  async function CancelReserve() {
     navigation.navigate("CancelReservation");
+    let data = new ReservationService(cafeData.getSeatId());
+    await timeTable.loadSeatDataBase();
+    data.doSeatCancel(
+      userData.reservation.time,
+      userData.reservation.seatNumber
+    );
     deleteReservationToUser();
   }
 
