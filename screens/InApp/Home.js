@@ -22,13 +22,13 @@ function HomeScreen({ navigation }) {
 
   useEffect(() => {
     LoadHomePage();
-  }, [setUserData]);
+  }, []);
 
   const LoadHomePage = async () => {
     if (userData == null) {
-      await getUserProfile()
-        .then(async (data) => {
+      await getUserProfile().then(async (data) => {
           setUserData(data);
+          console.log("현제 로그인 [ ",  userData.name  ,"]" )
           if (data != null && data.reservation.cafeId != null) {
             let reserve_cafe = await getCafeData(data.reservation.cafeId);
             console.log(reserve_cafe);
@@ -116,7 +116,6 @@ function HomeScreen({ navigation }) {
             <Text
               style={{ color: "white", fontSize: 25, marginHorizontal: 10 , paddingHorizontal:20}}
             >
-              
               예약내역
             </Text>
           </View>

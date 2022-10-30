@@ -79,10 +79,11 @@ function ReservationScreen({ navigation, route }) {
   }
 
   // picker item에 추가하는 loop
-  var seatLoop = [];
+  
   const makePickerItem = (time) => {
     setTime(time);
     let arr = new Array();
+    var seatLoop = [];
     seatData.getSeatDataOnTime(time).forEach((element) => {
       arr.push(element.seat);
     });
@@ -154,7 +155,7 @@ function ReservationScreen({ navigation, route }) {
               style={getReserveStyle.picker}
               selectedValue={selectedSeat}
               onValueChange={(itemValue, itemIndex) => {setSelectedSeat(itemValue)}}>
-              {seatLoop}
+              {seatList}
             </Picker>
           </View>
           <TouchableOpacity

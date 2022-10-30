@@ -1,4 +1,4 @@
-import React, { useState, createRef } from "react";
+import React, { useState, createRef, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,18 +7,27 @@ import {
   TextInput,
   KeyboardAvoidingView,
 } from "react-native";
-import { SignInUserAccount } from "../../lib/AuthService";
-import styles from "../../styles/screens/LoginStyle";
-
+import { getCurrentUserId, SignInUserAccount } from "../../lib/AuthService";
 import getLoginStyle from "../../styles/screens/LoginStyle";
 
 function LogInScreen({ navigation }) {
   const [UserId, setUserId] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [errorText, setErrorText] = useState("");
-
   const idInputRef = createRef();
   const passwordInputRef = createRef();
+
+  useEffect(()=>{
+    isLogin()
+  },[])
+
+  async function isLogin(){
+    let id = await getCurrentUserId();
+    if(id != null){
+      console.log("지동 로그인...", id);
+      GoToHomeScreen();
+    }
+  }
 
   function GoToRgisterScreen() {
     navigation.navigate("Register");
@@ -37,8 +46,9 @@ function LogInScreen({ navigation }) {
       });
   }
 
-  const [isPress, setIsPress] = useState(false);
+  
 
+  const [isPress, setIsPress] = useState(false);
   const touchProps = {
     activeOpacity: 1,
     underlayColor: "#2C3972",
