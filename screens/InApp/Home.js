@@ -21,18 +21,6 @@ function HomeScreen({ navigation }) {
   const [reserveCafeInfo, setReserveCafeInfo] = useState();
   const [page, setPage] = useState(NoneReserve);
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", () => {
-      LoadHomePage();
-    });
-
-    return unsubscribe;
-  }, [navigation, setUserData]);
-
-  useEffect(() => {
-    LoadHomePage();
-  }, [setUserData, setReserveCafeInfo]);
-
   // useEffect(() => {
   //   const unsubscribe = navigation.addListener("focus", () => {
   //     LoadHomePage();
@@ -45,48 +33,53 @@ function HomeScreen({ navigation }) {
   //   LoadHomePage();
   // }, [setUserData, setReserveCafeInfo]);
 
+  //천천히 정리해보자...........
+  //
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", async() => {
+      LoadHomePage();
+    });
+    return unsubscribe;
+  }, [navigation, setUserData]);
+  useEffect(()=>{
+  })
+
+  useEffect(() => {
+    updateConfirmReservation();
+  }, [userData]);
+
+  useEffect(()=>{ 
+    reserveRefresh()
+  },[reserveCafeInfo])
+
   const LoadHomePage = async () => {
-    let test = await getUserProfile()
+      await getUserProfile()
       .then((data) => {
-        setUserData(data);
         console.log("현재 로그인 [", data.Name, "]");
-        console.log(data);
-        console.log(userData);
-        updateConfirmReservation();
+        setUserData(data);
       })
       .catch((err) => {
         console.log("잘못된 접근입니다.", err);
         signOut();
         navigation.replace("Auth");
       });
-
-
-    let location = await getGeoLocation();
-  };
-
-  const updateConfirmReservation = async () => {
-    // console.log(userData.reservation.cafeId);
-    if (userData != null && userData.reservation.cafeId != null) {
-      let reserve_cafe = await getCafeData(userData.reservation.cafeId);
-      console.log("카페 데이터 추출");
-      setReserveCafeInfo(reserve_cafe);
-      reserveRefresh();
-    } else {
-      setReserveCafeInfo(null);
-      reserveRefresh();
-    }
-  };
+  }
+   
+    const updateConfirmReservation = async () => {
+      if (userData != null && userData.reservation.cafeId != null) {
+        console.log("카페 데이터 추출");
+        setReserveCafeInfo(await getCafeData(userData.reservation.cafeId));
+      } else {
+        setReserveCafeInfo(null);
+      }
+    };
 
   function reserveRefresh() {
-    console.log(reserveCafeInfo, userData);
-    if (
-      reserveCafeInfo != null &&
-      userData != null &&
-      userData.reservation.cafeId != null
-    ) {
+    console.log("출력");
+    if (userData != null && reserveCafeInfo != null) {
       setPage(ReservationsHistory);
     } else {
-      console.log("초기화!");
       setPage(NoneReserve);
     }
   }
@@ -102,24 +95,25 @@ function HomeScreen({ navigation }) {
   };
 
   const ReservationsHistory = () => {
+    
     return (
       <>
         <View style={getHomeStyle.infoContentContainer}>
           <View style={getCafeTableStyle.imageContainer}>
             <Image
-              source={{ uri: reserveCafeInfo.getLogo() }}
+              source={(reserveCafeInfo!=null)?{uri: reserveCafeInfo.getLogo()}:{}}
               style={getHomeStyle.image}
             />
           </View>
           <View>
             <Text style={getCafeTableStyle.ConfirmBoxInText}>
-              {reserveCafeInfo.getName()}
+              {(reserveCafeInfo!=null)?reserveCafeInfo.getName():""}
             </Text>
             <Text style={getCafeTableStyle.ConfirmBoxInText}>
-              {userData.reservation.seatNumber} 번 좌석
+              {(reserveCafeInfo!=null)?userData.reservation.seatNumber:""} 번 좌석
             </Text>
             <Text style={getCafeTableStyle.ConfirmBoxInText}>
-              {userData.reservation.time}:00
+              {(reserveCafeInfo!=null)?userData.reservation.time:""}:00
             </Text>
             <TouchableOpacity
               onPress={() => {

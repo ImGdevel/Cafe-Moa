@@ -106,7 +106,7 @@ function ReservationScreen({ navigation, route }) {
         cafeData.id,
         reserveSrv.seatId,
         time,
-        reserveSrv.seatNumber
+        selectedSeat
       );
       navigation.navigate("ReserveEnd");
     }
