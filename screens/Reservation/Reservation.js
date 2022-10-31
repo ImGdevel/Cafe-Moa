@@ -92,7 +92,7 @@ function ReservationScreen({ navigation, route }) {
           return data == i;
         }) == null
       ) {
-        seatLoop.push(<Picker.Item key={i} label={String(i)} value={i + 1} />);
+        seatLoop.push(<Picker.Item key={i} label={String(i)} value={i} />);
       }
     }
     setSeatList(seatLoop);
