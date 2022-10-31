@@ -42,8 +42,6 @@ function HomeScreen({ navigation }) {
     });
     return unsubscribe;
   }, [navigation, setUserData]);
-  useEffect(()=>{
-  })
 
   useEffect(() => {
     updateConfirmReservation();
@@ -68,7 +66,6 @@ function HomeScreen({ navigation }) {
    
     const updateConfirmReservation = async () => {
       if (userData != null && userData.reservation.cafeId != null) {
-        console.log("카페 데이터 추출");
         setReserveCafeInfo(await getCafeData(userData.reservation.cafeId));
       } else {
         setReserveCafeInfo(null);
