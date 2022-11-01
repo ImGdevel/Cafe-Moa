@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     marginTop: "7%",
     marginLeft: "7%",
     width: "30%",
-    height: "63%",
+    height: "67%",
   },
 
   idText: {
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     borderColor: "001D44",
     borderRadius: 8,
     height: "34%",
-    width: "94%",
+    width: "95%",
   },
   bottomContainer: {
     flex: 1,

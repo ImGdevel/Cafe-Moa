@@ -1,37 +1,37 @@
-import React, { useState, useEffect, createRef } from "react";
+import React, { useState, createRef } from "react";
 import {
   View,
   Text,
   Image,
-  TouchableOpacity,
   TouchableHighlight,
   TextInput,
   KeyboardAvoidingView,
 } from "react-native";
-import { CreateUserAccount } from "../../lib/AuthService"
-import { createUserProfile } from "../../lib/UserDataService"
+import { CreateUserAccount } from "../../lib/AuthService";
+import { createUserProfile } from "../../lib/UserDataService";
 
-function RegisterScreen({navigation}) {
-  const [userId,setUserId] = useState("");
-  const [userEmail,setUserEmail] = useState("");
-  const [userPassword,setUserPassword] = useState("");
-  const [userPasswordChk,setUserPasswordChk] = useState("");
+import getRegisterStyle from "../../styles/screens/RegisterStyle";
+
+function RegisterScreen({ navigation }) {
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userPassword, setUserPassword] = useState("");
+  const [userPasswordChk, setUserPasswordChk] = useState("");
   const [errorText, setErrorText] = useState("");
 
   const idInputRef = createRef();
   const emailInputRef = createRef();
   const passwordInputRef = createRef();
   const passwordChkInputRef = createRef();
-  
-  function GoToHomeScreen(){
-    navigation.navigate('InApp')
+
+  function GoToHomeScreen() {
+    navigation.replace("InApp");
   }
-  
-  function onSubmitApplication(){
-    
-    setErrorText('');
+
+  async function onSubmitApplication() {
+    setErrorText("");
     if (!userName) {
-      setErrorText('이름을 입력해주세요');
+      setErrorText("이름을 입력해주세요");
       return;
     }
     if (!userEmail) {
@@ -46,28 +46,28 @@ function RegisterScreen({navigation}) {
       setErrorText("비밀번호가 일치하지 않습니다");
       return;
     }
-    
-    CreateUserAccount(userEmail,userPassword)
-    .then((id)=>{
-      createUserProfile(userName,id,userEmail,userPassword);
-      GoToHomeScreen();
-    })
-    .catch((err)=>{
-      console.log("계정 생성에 실패 했습니다.");
-    });
+
+    await CreateUserAccount(userEmail, userPassword)
+      .then((id) => {
+        createUserProfile(userName, id, userEmail, userPassword);
+        GoToHomeScreen();
+      })
+      .catch((err) => {
+        alert("계정 생성에 실패 했습니다.");
+      });
   }
 
   const [isPress, setIsPress] = useState(false);
 
   const touchProps = {
     activeOpacity: 1,
-    underlayColor: "#A0A0FF", // <-- "backgroundColor" will be always overwritten by "underlayColor"
-    style: isPress ? getRegisterStyle.btnPress : getRegisterStyle.btnNormal, // <-- but you can still apply other style changes
+    underlayColor: "#2C3972",
+    style: isPress ? getRegisterStyle.btnPress : getRegisterStyle.btnNormal,
     onHideUnderlay: () => setIsPress(false),
     onShowUnderlay: () => setIsPress(true),
     onPress: () => {
       onSubmitApplication;
-    }, // <-- "onPress" is apparently required
+    },
   };
 
   return (
@@ -75,10 +75,10 @@ function RegisterScreen({navigation}) {
       <View style={{ flex: 3 }}></View>
       <View style={getRegisterStyle.contentArea}>
         <View style={getRegisterStyle.titleText}>
-          <Text style={{ fontWeight: "900", fontSize: 50 }}> M O A </Text>
+          <Text style={{ fontWeight: "900", fontSize: 55 }}> M O A </Text>
         </View>
         <View style={getRegisterStyle.subTitleText}>
-          <Text style={{ fontWeight: "600", fontSize: 30 }}> Sing Up </Text>
+          <Text style={{ fontWeight: "600", fontSize: 30 }}> Sign Up </Text>
         </View>
         <View style={getRegisterStyle.formArea}>
           <TextInput
@@ -133,8 +133,8 @@ function RegisterScreen({navigation}) {
           <Text style={getRegisterStyle.errorText}>{errorText}</Text>
         </View>
         <View style={getRegisterStyle.btnArea}>
-          <TouchableHighlight {...touchProps}>
-            <Text style={{ color: "black", fontSize: 20 }}>회원가입</Text>
+          <TouchableHighlight {...touchProps} onPress={onSubmitApplication}>
+            <Text style={{ color: "white", fontSize: 23 }}>회원가입</Text>
           </TouchableHighlight>
         </View>
       </View>

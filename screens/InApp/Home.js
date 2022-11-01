@@ -1,65 +1,162 @@
-import * as React from 'react';
-import { Button, View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity, Dimensions} from 'react-native';
-
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  Image,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+} from "react-native";
 import getHomeStyle from "../../styles/screens/HomeStyle";
+import getCafeTableStyle from "../../styles/components/CafeTableStyle";
+import { getCafeData, getCafeDatabaseAd } from "../../lib/Database";
+import { getUserProfile } from "../../lib/UserDataService";
+import { getGeoLocation } from "../../lib/LocationService";
+import { sample_CafeData, sample_User } from "../../lib/TestSample";
+import { CafeData } from "../../lib/CafeData";
+import { signOut } from "../../lib/AuthService";
+import { useIsFocused } from "@react-navigation/native";
 
 function HomeScreen({ navigation }) {
-  function InfoReservation() {
-    //navigation.navigate()
+  const [userData, setUserData] = useState();
+  const [reserveCafeInfo, setReserveCafeInfo] = useState();
+  const [page, setPage] = useState(NoneReserve);
+
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener("focus", () => {
+  //     LoadHomePage();
+  //   });
+
+  //   return unsubscribe;
+  // }, [navigation, setUserData, setReserveCafeInfo]);
+
+  // useEffect(() => {
+  //   LoadHomePage();
+  // }, [setUserData, setReserveCafeInfo]);
+
+  //천천히 정리해보자...........
+  //
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", async() => {
+      LoadHomePage();
+    });
+    return unsubscribe;
+  }, [navigation, setUserData]);
+
+  useEffect(() => {
+    updateConfirmReservation();
+  }, [userData]);
+
+  useEffect(()=>{ 
+    reserveRefresh()
+  },[reserveCafeInfo])
+
+  const LoadHomePage = async () => {
+      await getUserProfile()
+      .then((data) => {
+        console.log("현재 로그인 [", data.Name, "]");
+        setUserData(data);
+      })
+      .catch((err) => {
+        console.log("잘못된 접근입니다.", err);
+        signOut();
+        navigation.replace("Auth");
+      });
   }
-  function NearbyCafe() {
-    //navigation.navigate()
+   
+    const updateConfirmReservation = async () => {
+      if (userData != null && userData.reservation.cafeId != null) {
+        setReserveCafeInfo(await getCafeData(userData.reservation.cafeId));
+      } else {
+        setReserveCafeInfo(null);
+      }
+    };
+
+  function reserveRefresh() {
+    console.log("출력");
+    if (userData != null && reserveCafeInfo != null) {
+      setPage(ReservationsHistory);
+    } else {
+      setPage(NoneReserve);
+    }
   }
 
-  function NearbyCafe() {}
+  const NoneReserve = () => {
+    return (
+      <>
+        <Text style={{ position: "absolute", alignSelf: "center", fontSize: 25 }}>
+          예약 내역이 없습니다.
+        </Text>
+      </>
+    );
+  };
 
-  function ConfirmReservation() {
-    //
-  }
-
-  function MyPage() {
-    // this is for test
-  }
+  const ReservationsHistory = () => {
+    
+    return (
+      <>
+        <View style={getHomeStyle.infoContentContainer}>
+          <View style={getCafeTableStyle.imageContainer}>
+            <Image
+              source={(reserveCafeInfo!=null)?{uri: reserveCafeInfo.getLogo()}:{}}
+              style={getHomeStyle.image}
+            />
+          </View>
+          <View>
+            <Text style={getCafeTableStyle.ConfirmBoxInText}>
+              {(reserveCafeInfo!=null)?reserveCafeInfo.getName():""}
+            </Text>
+            <Text style={getCafeTableStyle.ConfirmBoxInText}>
+              {(reserveCafeInfo!=null)?userData.reservation.seatNumber:""} 번 좌석
+            </Text>
+            <Text style={getCafeTableStyle.ConfirmBoxInText}>
+              {(reserveCafeInfo!=null)?userData.reservation.time:""}:00
+            </Text>
+            <TouchableOpacity
+              onPress={() => {
+                if (reserveCafeInfo != null && userData != null) {
+                  navigation.navigate("ConfirmReservation", {
+                    cafeData: reserveCafeInfo,
+                    userData: userData,
+                  });
+                }
+              }}
+            >
+              <Text style={getCafeTableStyle.ConfirmBoxInText}>
+                {"\n\t\t\t\t\t\t"}▶ 내역 확인하기
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </>
+    );
+  };
 
   return (
     <KeyboardAvoidingView style={getHomeStyle.container}>
       <View style={getHomeStyle.homeText}>
-        <Text style={{ fontWeight: "700", fontSize: 65 }}>CAFE MOA</Text>
+        <Text style={{ color: "#001D44", fontWeight: "700", fontSize: 65 }}>
+          M O A
+        </Text>
       </View>
 
       <View style={getHomeStyle.contentContainer}>
-        <TouchableOpacity
-          style={getHomeStyle.btnInfoReservation}
-          onPress={() => navigation.navigate("Reservation")}
-        >
-          <Text style={{ color: "#ccc", fontSize: 30, margin: 10 }}>
-            예약정보
-          </Text>
-          <Text style={{ color: "#ccc", fontSize: 20, margin: 10 }}>
-            예약된 카페 :
-          </Text>
-          <Text style={{ color: "#ccc", fontSize: 20, margin: 10 }}>
-            예약된 시간 :
-          </Text>
-          <Text style={{ color: "#ccc", fontSize: 20, margin: 10 }}>
-            예약된 좌석 :
-          </Text>
-        </TouchableOpacity>
-        {/*___
-        <TouchableOpacity
-          style={getHomeStyle.btnNearbyCafe}
-          onPress={() => navigation.navigate("Find")}
-        >
-          <Text style={{ color: "black", fontSize: 45 }}>주변카페</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={getHomeStyle.btnMyPage}
-          onPress={() => navigation.navigate("MyPage")}
-        >
-          <Text style={{ color: "black", fontSize: 45 }}>마이 페이지</Text>
-        </TouchableOpacity>
-         ___*/}
+        <View>{/**다른 홈내용 */}</View>
+        <View style={getHomeStyle.btnInfoReservation}>
+          <View style={getHomeStyle.infoContainer}>
+            <Text
+              style={{
+                color: "white",
+                fontSize: 25,
+                marginHorizontal: 10,
+                paddingHorizontal: 20,
+              }}
+            >
+              예약내역
+            </Text>
+          </View>
+          {page}
+        </View>
       </View>
     </KeyboardAvoidingView>
   );

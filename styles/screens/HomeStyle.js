@@ -9,54 +9,66 @@ const styles = StyleSheet.create({
   },
 
   homeText: {
-    marginTop: "20%",
+    marginTop: "10%",
     marginBottom: "2%",
   },
 
+  infoContainer: {
+    borderColor: "#001D44",
+    borderWidth: 2,
+    borderRadius: 15,
+    top: "-12%",
+    left: "5%",
+    position: "absolute",
+    backgroundColor: "#001D44",
+  },
+
   btnInfoReservation: {
-    width: Dimensions.get("window").width,
+    width: Dimensions.get("window").width * 0.95,
     height: "50%",
     borderWidth: 2,
-    borderColor: "#ccc",
+    borderColor: "#001D44",
+    borderRadius: 15,
     justifyContent: "center",
     alignItems: "flex-start",
     backgroundColor: "white",
-    marginTop: "10%",
-    marginBottom: "5%",
+    marginVertical: "10%",
+    marginHorizontal: "5%",
+    paddingTop: "6%",
     paddingLeft: "2%",
   },
 
-  btnNearbyCafe: {
-    width: Dimensions.get("window").width,
-    height: "15%",
-    borderTopWidth: 2,
-    borderBottomWidth: 1,
-    borderColor: "#ccc",
+  infoContentContainer: {
+    display: "flex",
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "white",
+  },
+
+  image: {
+    width: 120,
+    height: 120,
+    borderRadius: 10,
+    borderColor: "#001D44",
+    justifyContent: "center",
+    alignItems: "center",
+    resizeMode: "contain",
+    borderWidth: 1,
   },
 
   btnConfirmReservation: {
     width: Dimensions.get("window").width,
     height: "15%",
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
+    //borderTopWidth: 2,
+    //borderBottomWidth: 2,
     borderColor: "#ccc",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
-  },
-
-  btnMyPage: {
-    width: Dimensions.get("window").width,
-    height: "15%",
-    borderTopWidth: 1,
-    borderBottomWidth: 2,
-    borderColor: "#ccc",
-    justifyContent: "center",
-    alignItems: "center",
+    borderRadius: 8,
     backgroundColor: "white",
+    width: "94%",
+    marginLeft: "43%",
   },
 });
 

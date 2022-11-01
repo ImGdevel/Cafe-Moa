@@ -4,21 +4,25 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import StartPageScreen from "./screens/Auth/StartPage"
-import LoginScreen from "./screens/Auth/Login"
-import RegisterScreen from "./screens/Auth/Register"
-import HomeScreen from "./screens/InApp/Home"
-import MyPageScreen from "./screens/InApp/MyPage"
-import FindScreen from  "./screens/InApp/Find"
-import ImfomationScreen from  "./screens/Reservation/Imfomation"
-import ReservationScreen from  "./screens/Reservation/Reservation"
+import StartPageScreen from "./screens/Auth/StartPage";
+import LoginScreen from "./screens/Auth/Login";
+import RegisterScreen from "./screens/Auth/Register";
+import HomeScreen from "./screens/InApp/Home";
+import MyPageScreen from "./screens/InApp/MyPage";
+import FindScreen from "./screens/InApp/Find";
+import InformationScreen from "./screens/Reservation/Information";
+import ReservationScreen from "./screens/Reservation/Reservation";
+import ReserveEndScreen from "./screens/Reservation/ReserveEnd";
+import InPutDataScreen from "./screens/ForBusiness/InPutData";
+import ConfirmScreen from "./screens/InApp/ConfirmReservation";
+import CancelReservationScreen from "./screens/Reservation/CancelReservation";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const InApp = () => {
   return (
-    <Tab.Navigator initialRouteName="홈">
+    <Tab.Navigator initialRouteName="Home">
       <Tab.Screen
         name="카페"
         options={{
@@ -30,6 +34,9 @@ const InApp = () => {
             />
           ),
           headerShown: false,
+          tabBarLabel: () => {
+            return null;
+          },
         }}
       >
         {() => (
@@ -39,7 +46,7 @@ const InApp = () => {
         )}
       </Tab.Screen>
       <Tab.Screen
-        name="홈"
+        name="Home"
         options={{
           tabBarIcon: ({ focused }) => (
             <Ionicons
@@ -49,16 +56,24 @@ const InApp = () => {
             />
           ),
           headerShown: false,
+          tabBarLabel: () => {
+            return null;
+          },
         }}
       >
         {() => (
           <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="홈" component={HomeScreen} />
+            <Stack.Screen name="ConfirmReservation" component={ConfirmScreen} />
+            <Stack.Screen
+              name="CancelReservation"
+              component={CancelReservationScreen}
+            />
           </Stack.Navigator>
         )}
       </Tab.Screen>
       <Tab.Screen
-        name="마이페이지"
+        name="myPage"
         options={{
           tabBarIcon: ({ focused }) => (
             <Ionicons
@@ -68,11 +83,14 @@ const InApp = () => {
             />
           ),
           headerShown: false,
+          tabBarLabel: () => {
+            return null;
+          },
         }}
       >
         {() => (
           <Stack.Navigator name="InApp" options={{ headerShown: true }}>
-            <Stack.Screen name="MyPage" component={MyPageScreen} />
+            <Stack.Screen name="마이페이지" component={MyPageScreen} />
           </Stack.Navigator>
         )}
       </Tab.Screen>
@@ -138,13 +156,12 @@ const CafeNavigation = () => {
         component={FindScreen} 
         options={{headerShown: false}}
       />
-      <Stack.Screen 
-        name="Imfomation" 
-        component={ImfomationScreen} 
-      />
-      <Stack.Screen 
-        name="Reservaion" 
-        component={ReservationScreen}
+      <Stack.Screen name="카페 정보" component={InformationScreen} />
+      <Stack.Screen name="예약하기" component={ReservationScreen} />
+      <Stack.Screen
+        name="ReserveEnd"
+        options={{ headerShown: false }}
+        component={ReserveEndScreen}
       />
     </Stack.Navigator>
   )

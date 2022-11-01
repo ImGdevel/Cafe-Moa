@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Image } from 'react-native';
-
+import React, { useEffect } from "react";
+import { View, Image } from "react-native";
 import getStartPageStyle from "../../styles/screens/StartPageStyle";
 
 function StartPageScreen({ navigation }) {
   useEffect(() => {
-    setTimeout(() => GoToLoginScreen(), 1000);
+    setTimeout(() => GoToLoginScreen(), 1500);
   }, []);
 
   function GoToLoginScreen() {

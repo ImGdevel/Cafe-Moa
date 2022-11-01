@@ -10,7 +10,7 @@ function ReserveEndScreen({ navigation }) {
 
   function GoToHomeScreen() {
     navigation.navigate("Find");
-    navigation.navigate("Home");
+    navigation.navigate("홈");
   }
 
   return (

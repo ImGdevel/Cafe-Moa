@@ -1,6 +1,8 @@
 node_modules/
-.expo/
 *.json
+.expo/
+.env/
+.idea/
 dist/
 npm-debug.*
 *.jks

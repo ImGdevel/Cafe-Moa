@@ -23,10 +23,9 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     backgroundColor: "#ccc",
     alignItems: "center",
-    marginHorizontal: "2%",
+    marginHorizontal: "1%",
     marginBottom: 5,
-    height:40,
-    minWidth: "46%",
+    minWidth: "48%",
     textAlign: "center",
   },
   selected: {
@@ -34,10 +33,8 @@ const styles = StyleSheet.create({
     borderWidth: 0,
   },
   buttonLabel: {
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: "500",
-    textAlign:"center",
-    lineHeight:25,
     color: "black",
   },
   selectedLabel: {
@@ -50,8 +47,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: 105,
-    height: 105,
+    width: 100,
+    height: 100,
     borderRadius: 10,
     borderColor: "#ddd",
     justifyContent: "center",
@@ -64,7 +61,6 @@ const styles = StyleSheet.create({
     height: 100,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius:10,
   },
   cafeTitle: {
     fontSize: 25,
@@ -87,7 +83,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginBottom: 5,
     width: "80%",
-    height: 55,
+    height: 40,
   },
   btnContainer: {
     alignItems: "center",

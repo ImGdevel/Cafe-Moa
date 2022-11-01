@@ -9,9 +9,24 @@ import {
 } from "react-native";
 
 import getMyPageStyle from "../../styles/screens/MyPageStyle";
+import { signOut } from "../../lib/AuthService";
+import { getUserProfile } from "../../lib/UserDataService";
 
 function MyPageScreen({ navigation }) {
-  //const [userId, setUserId] = useState(props.userId);
+  const [userData, setUserData] = useState([]);
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    let user_data = await getUserProfile();
+    setUserData(user_data);
+    setUserName(user_data.Name);
+    setUserEmail(user_data.email);
+  };
 
   function GoToOptionScreen() {
     //navigation.navigate()
@@ -22,7 +37,8 @@ function MyPageScreen({ navigation }) {
   }
 
   function GoToLogoutScreen() {
-    //
+    signOut();
+    navigation.replace("Auth");
   }
 
   function GoToDeleteAccountScreen() {
@@ -34,19 +50,19 @@ function MyPageScreen({ navigation }) {
       <View style={getMyPageStyle.upContentContainer}>
         <View style={getMyPageStyle.profilePicture}>
           <Image
-            style={{ width: "100%", height: "100%", BorderRadius: 50 }}
+            style={{ width: "100%", height: "94%", BorderRadius: 50 }}
             source={require("../../img/initialProfile.jpg")}
           ></Image>
         </View>
         <View style={getMyPageStyle.idText}>
-          <Text style={{ fontWeight: "600", fontSize: 25 }}>성 이름</Text>
-          <Text style={{ fontWeight: "400", fontSize: 20 }}>userID</Text>
+          <Text style={{ fontWeight: "600", fontSize: 25 }}>{userName}</Text>
+          <Text style={{ fontWeight: "400", fontSize: 15 }}>{userEmail}</Text>
           <Text></Text>
           <TouchableOpacity
             style={getMyPageStyle.infoBtn}
             onPress={GoToEditProfileScreen}
           >
-            <Text style={{ color: "white", fontSize: 20 }}> 개인정보변경</Text>
+            <Text style={{ color: "white", fontSize: 20 }}>개인정보변경</Text>
           </TouchableOpacity>
         </View>
       </View>

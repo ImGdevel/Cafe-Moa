@@ -1,4 +1,4 @@
-import React, { useState, createRef } from "react";
+import React, { useState, createRef, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,18 +7,30 @@ import {
   TouchableHighlight,
   TextInput,
   KeyboardAvoidingView,
-} from 'react-native';
-import { SignInUserAccount } from '../../lib/Auth';
-
+} from "react-native";
+import { getCurrentUserId, SignInUserAccount } from "../../lib/AuthService";
 import getLoginStyle from "../../styles/screens/LoginStyle";
 
 function LogInScreen({ navigation }) {
   const [UserId, setUserId] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [errorText, setErrorText] = useState("");
-
   const idInputRef = createRef();
   const passwordInputRef = createRef();
+
+  useEffect(()=>{
+    isLogin()
+  },[])
+
+  async function isLogin(){
+    
+    let id = await getCurrentUserId();
+    if(id != null){
+      console.log("지동 로그인...", id);
+      GoToHomeScreen();
+    }
+    
+  }
 
   function GoToRgisterScreen() {
     navigation.navigate("Register");
@@ -32,20 +44,23 @@ function LogInScreen({ navigation }) {
       .then(() => {
         GoToHomeScreen();
       })
-      .catch(() => {});
+      .catch(() => {
+
+      });
   }
 
-  const [isPress, setIsPress] = useState(false);
+  
 
+  const [isPress, setIsPress] = useState(false);
   const touchProps = {
     activeOpacity: 1,
-    underlayColor: "#A0A0FF", // <-- "backgroundColor" will be always overwritten by "underlayColor"
-    style: isPress ? getLoginStyle.btnPress : getLoginStyle.btnNormal, // <-- but you can still apply other style changes
+    underlayColor: "#2C3972",
+    style: isPress ? getLoginStyle.btnPress : getLoginStyle.btnNormal, 
     onHideUnderlay: () => setIsPress(false),
     onShowUnderlay: () => setIsPress(true),
     onPress: () => {
       onSubmit;
-    }, // <-- "onPress" is apparently required
+    },
   };
 
   return (
@@ -53,7 +68,7 @@ function LogInScreen({ navigation }) {
       <View style={{ flex: 3 }}></View>
       <View style={getLoginStyle.contentArea}>
         <View style={getLoginStyle.titleText}>
-          <Text style={{ fontWeight: "900", fontSize: 50 }}> M O A </Text>
+          <Text style={{ fontWeight: "900", fontSize: 55 }}> M O A </Text>
         </View>
         <View style={getLoginStyle.subTitleText}>
           <Text style={{ fontWeight: "600", fontSize: 30 }}> Login </Text>
@@ -68,7 +83,7 @@ function LogInScreen({ navigation }) {
             blurOnSubmit={false}
             returnKeyType="next"
             onSubmitEditing={() =>
-               passwordInputRef.current && passwordInputRef.current.focus()
+              passwordInputRef.current && passwordInputRef.current.focus()
             }
           />
           <TextInput
@@ -82,24 +97,18 @@ function LogInScreen({ navigation }) {
         </View>
         <Text>{errorText}</Text>
         <View style={getLoginStyle.btnArea}>
-          <TouchableHighlight {...touchProps}>
-            <Text style={{ color: "black", fontSize: 20 }}>로그인</Text>
+          <TouchableHighlight 
+            {...touchProps}
+            onPress={onSubmit}
+          >
+            <Text style={{ color: "white", fontSize: 23 }}>로그인</Text>
           </TouchableHighlight>
 
           <TouchableOpacity
             style={getLoginStyle.btnRegister}
             onPress={GoToRgisterScreen}
           >
-            <Text style={{ color: "#ccc", fontSize: 20 }}>회원가입</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.btnRegister} onPress = {GoToRgisterScreen}>
-            <Text style={{ color: 'black', fontSize: 20, }}>회원가입</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.btnRegister} onPress = {GoToHomeScreen}>
-            <Text style={{ color: 'black', fontSize: 20, }}>관리자 권한 입장</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.btnRegister} onPress = {()=>{ navigation.navigate('InPutData')}}>
-            <Text style={{ color: 'black', fontSize: 20, }}>데이터 관리</Text>
+            <Text style={{ color: "#bbb", fontSize: 20 }}>회원가입</Text>
           </TouchableOpacity>
         </View>
       </View>

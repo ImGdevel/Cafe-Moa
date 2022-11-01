@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     marginTop: 0,
+    marginBottom: 10
   },
   subTitleText: {
     paddingRight: 200,
@@ -35,18 +36,20 @@ const styles = StyleSheet.create({
   btnNormal: {
     margin: 5,
     width: "100%",
-    height: 60,
+    height: 63,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#ccc",
+    backgroundColor: "#001D44",
+    borderRadius:5,
   },
   btnPress: {
     margin: 5,
     width: "100%",
-    height: 60,
+    height: 63,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#A0A0FF",
+    backgroundColor: "#001D44",
+    borderRadius:5,
   },
   btnText: {
     color: "white",
