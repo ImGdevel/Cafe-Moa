@@ -6,7 +6,7 @@ import {
   addCafeDatabase, 
   getCafeDatabase,
   getCafeDatabaseAd,
-} from '../../lib/Database';
+} from '../../lib/CafeService';
 
 function InPutDataScreen({navigation}) {
   const [cafeName,setcCafeName] = useState("");

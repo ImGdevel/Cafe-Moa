@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
-import { getCafeDatabaseAd } from "../../lib/Database";
+import { getCafeDatabaseAd } from "../../lib/CafeService";
 import { getGeoLocation } from "../../lib/LocationService";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { sample_CafeData } from "../../lib/TestSample";

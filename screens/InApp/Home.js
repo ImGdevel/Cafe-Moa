@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import getHomeStyle from "../../styles/screens/HomeStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
-import { getCafeData, getCafeDatabaseAd } from "../../lib/Database";
+import { getCafeData, getCafeDatabaseAd } from "../../lib/CafeService";
 import { getUserProfile } from "../../lib/UserDataService";
 import { getGeoLocation } from "../../lib/LocationService";
 import { sample_CafeData, sample_User } from "../../lib/TestSample";
