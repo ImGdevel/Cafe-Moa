@@ -8,33 +8,13 @@ import {
 } from "react-native";
 import getHomeStyle from "../../styles/screens/HomeStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
-import { getCafeData, getCafeDatabaseAd } from "../../lib/CafeService";
-import { getUserProfile } from "../../lib/UserDataService";
-import { getGeoLocation } from "../../lib/LocationService";
-import { sample_CafeData, sample_User } from "../../lib/TestSample";
-import { CafeData } from "../../lib/CafeData";
-import { signOut } from "../../lib/AuthService";
-import { useIsFocused } from "@react-navigation/native";
+import { getCafeData } from "../../lib/CafeService";
+import { UserDataService } from "../../lib/UserDataService";
 
 function HomeScreen({ navigation }) {
   const [userData, setUserData] = useState();
   const [reserveCafeInfo, setReserveCafeInfo] = useState();
   const [page, setPage] = useState(NoneReserve);
-
-  // useEffect(() => {
-  //   const unsubscribe = navigation.addListener("focus", () => {
-  //     LoadHomePage();
-  //   });
-
-  //   return unsubscribe;
-  // }, [navigation, setUserData, setReserveCafeInfo]);
-
-  // useEffect(() => {
-  //   LoadHomePage();
-  // }, [setUserData, setReserveCafeInfo]);
-
-  //천천히 정리해보자...........
-  //
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", async() => {
@@ -43,37 +23,34 @@ function HomeScreen({ navigation }) {
     return unsubscribe;
   }, [navigation, setUserData]);
 
+  
+  /** 유저 데이터 가져오기 */
+  const LoadHomePage = async () => {
+    let user = new UserDataService();
+    await user.loadUserId();
+    await user.getUserProfile();
+    setUserData(user);
+  }
+     
+  /** 예약 내역 로드 */
   useEffect(() => {
     updateConfirmReservation();
   }, [userData]);
 
+  const updateConfirmReservation = async () => {
+    if (userData != null && userData.reservation.cafeId != null) {
+      setReserveCafeInfo(await getCafeData(userData.reservation.cafeId));
+    } else {
+      setReserveCafeInfo(null);
+    }
+  };
+
+  /** 예약 화면 */
   useEffect(()=>{ 
     reserveRefresh()
   },[reserveCafeInfo])
 
-  const LoadHomePage = async () => {
-      await getUserProfile()
-      .then((data) => {
-        console.log("현재 로그인 [", data.Name, "]");
-        setUserData(data);
-      })
-      .catch((err) => {
-        console.log("잘못된 접근입니다.", err);
-        signOut();
-        navigation.replace("Auth");
-      });
-  }
-   
-    const updateConfirmReservation = async () => {
-      if (userData != null && userData.reservation.cafeId != null) {
-        setReserveCafeInfo(await getCafeData(userData.reservation.cafeId));
-      } else {
-        setReserveCafeInfo(null);
-      }
-    };
-
   function reserveRefresh() {
-    console.log("출력");
     if (userData != null && reserveCafeInfo != null) {
       setPage(ReservationsHistory);
     } else {

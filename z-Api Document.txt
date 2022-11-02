@@ -1,0 +1,8 @@
+< UserDataService : 유저데이터 서비스 >
+
+*유저데이터 서비스는 현제 로그인한 유저의 데이터 정보를 가지고 있는 객체로 다음 정보를 가지고 있습니다.
+
+name : 유저 이름
+email : 유저 이메일
+password : 유저 비번
+resevation : 예약 정보 { cafeId , seatNumber, time }
