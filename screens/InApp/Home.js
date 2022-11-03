@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import getHomeStyle from "../../styles/screens/HomeStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
-import { getCafeData } from "../../lib/CafeService";
+import { getCafeData, getCafeDatabase3 } from "../../lib/CafeService";
 import { UserDataService } from "../../lib/UserDataService";
 
 function HomeScreen({ navigation }) {
@@ -30,6 +30,8 @@ function HomeScreen({ navigation }) {
     await user.loadUserId();
     await user.getUserProfile();
     setUserData(user);
+    console.log("?")
+    getCafeDatabase3();
   }
      
   /** 예약 내역 로드 */
