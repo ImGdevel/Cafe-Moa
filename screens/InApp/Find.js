@@ -112,6 +112,8 @@ function CafeTable(props) {
   );
   const [cafeLogoImage, setCafeLogoImage] = useState(cafe_data.getLogo());
 
+  
+
   return (
     <TouchableHighlight
       style={getCafeTableStyle.container}
