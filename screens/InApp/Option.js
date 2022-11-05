@@ -4,7 +4,7 @@ import { Image, TouchableOpacity, View, Text, ScrollView } from "react-native";
 import getOptionStyle from "../../styles/screens/OptionStyle";
 import IonIcons from "react-native-vector-icons/Ionicons";
 
-function MyPageScreen({ navigation }) {
+function MyPageScreen({ navigation, route }) {
   return (
     <ScrollView style={getOptionStyle.container}>
       <View style={getOptionStyle.subtitleHeader}>

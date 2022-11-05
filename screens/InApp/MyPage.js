@@ -29,7 +29,9 @@ function MyPageScreen({ navigation }) {
   };
 
   function GoToOptionScreen() {
-    navigation.navigate("옵션");
+    navigation.navigate("옵션", {
+      userData: userData,
+    });
   }
 
   function GoToEditProfileScreen() {
