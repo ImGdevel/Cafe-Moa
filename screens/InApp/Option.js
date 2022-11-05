@@ -28,7 +28,7 @@ function MyPageScreen({ navigation, route }) {
           <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>
             <IonIcons
               name="notifications-circle-outline"
-              style={{ fontSize: 20, color: "#001D44" }}
+              style={{ fontSize: 24, color: "#001D44" }}
             ></IonIcons>
             {"\t"}푸시 알림
           </Text>
