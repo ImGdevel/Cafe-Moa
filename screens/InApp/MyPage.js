@@ -29,7 +29,7 @@ function MyPageScreen({ navigation }) {
   };
 
   function GoToOptionScreen() {
-    //navigation.navigate()
+    navigation.navigate("옵션");
   }
 
   function GoToEditProfileScreen() {
