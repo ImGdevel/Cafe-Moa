@@ -30,8 +30,8 @@ function HomeScreen({ navigation }) {
     await user.loadUserId();
     await user.getUserProfile();
     setUserData(user);
-    console.log("?")
-    getCafeDatabase3();
+    //console.log("?")
+    //getCafeDatabase3();
   }
      
   /** 예약 내역 로드 */

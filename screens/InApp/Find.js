@@ -37,7 +37,6 @@ function FindScreen({ navigation, route }) {
     await user.getUserProfile();
     setUserData(user);
 
-
     if (location == null) {
       await getGeoLocation().then(async (loc) => {
         let cafe_data = await getCafeDatabaseAd(location); //확인
