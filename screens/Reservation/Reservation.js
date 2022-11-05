@@ -2,17 +2,12 @@ import React, { useEffect, useState } from "react";
 import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import Modal from "react-native-modal";
 import { Picker } from "@react-native-picker/picker";
-
 import getReserveStyle from "../../styles/screens/ReserveStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
-
-import {
-  ReservationService,
-  getSeatDataOnTime,
-} from "../../lib/ReservationService";
+import getModalStyle from "../../styles/components/ModalStyle";
+import { ReservationService } from "../../lib/ReservationService";
 import { sendReservetionToUser } from "../../lib/UserDataService";
-import { CafeData } from "../../lib/CafeData";
 
 function ReservationScreen({ navigation, route }) {
   const { cafeData: cafe_data } = route.params;
@@ -24,10 +19,7 @@ function ReservationScreen({ navigation, route }) {
   const [modalVisible, setModalVisible] = useState(true);
   const [modalOutput, setModalOutput] = useState("Open Modal");
   const [time, setTime] = useState(0);
-
   const [seatList, setSeatList] = useState();
-  //최대 자릿수 - 현제 예약된 자릿수
-  const notReserveSeat = async () => {};
 
   useEffect(() => {
     SeatTimeTable();
@@ -55,6 +47,7 @@ function ReservationScreen({ navigation, route }) {
     "20:00",
   ];
 
+
   for (let i = 0; i < timeArr.length; i++) {
     timeLoop.push(
       <TouchableOpacity
@@ -77,7 +70,6 @@ function ReservationScreen({ navigation, route }) {
   }
 
   // picker item에 추가하는 loop
-
   const makePickerItem = (time) => {
     setTime(time);
     let arr = new Array();
@@ -98,15 +90,8 @@ function ReservationScreen({ navigation, route }) {
   };
 
   const submitReservation = async () => {
-    let reserveSrv = new ReservationService();
-    reserveSrv = seatData;
-    if (await reserveSrv.doSeatReservation(time, selectedSeat)) {
-      await sendReservetionToUser(
-        cafeData.id,
-        reserveSrv.seatId,
-        time,
-        selectedSeat
-      );
+    if (await seatData.doSeatReservation(time, selectedSeat)) {
+      await sendReservetionToUser(cafeData.getId(), cafeData.getSeatId(), time, selectedSeat); //수정
       navigation.navigate("ReserveEnd");
     }
   };
@@ -124,7 +109,7 @@ function ReservationScreen({ navigation, route }) {
           <View style={getModalStyle.modalView}>
             <View style={getModalStyle.modalWrapper}>
               <Text style={getModalStyle.modalGradeText}>
-                시간을 선택하세요
+                시간을 선택해 주세요
               </Text>
             </View>
             <ScrollView style={getModalStyle.ScrollView}>{timeLoop}</ScrollView>

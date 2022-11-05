@@ -10,7 +10,7 @@ import {
 
 import getMyPageStyle from "../../styles/screens/MyPageStyle";
 import { signOut } from "../../lib/AuthService";
-import { getUserProfile } from "../../lib/UserDataService";
+import { getUserProfile, UserDataService } from "../../lib/UserDataService";
 
 function MyPageScreen({ navigation }) {
   const [userData, setUserData] = useState([]);
@@ -22,7 +22,9 @@ function MyPageScreen({ navigation }) {
   }, []);
 
   const getData = async () => {
-    let user_data = await getUserProfile();
+    let UserId = new UserDataService();
+    await UserId.loadUserId();
+    let user_data = await UserId.getUserProfile();
     setUserData(user_data);
     setUserName(user_data.Name);
     setUserEmail(user_data.email);
