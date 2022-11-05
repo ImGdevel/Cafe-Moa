@@ -32,23 +32,18 @@ function ConfirmReservationScreen({ navigation, route }) {
   useEffect(() => {}, []);
 
   async function CancelReserve() {
-    console.log("_______________데이터 삭제를 실시 합니다_____________________")
     let timeTable = new ReservationService(cafeData.getSeatId());
     await timeTable.loadSeatDataBase();
-    console.log("삭제",timeTable," /=> ",cafeData.getSeatId());
-    
     timeTable.doSeatCancel(
       userData.reservation.time,
       userData.reservation.seatNumber
     );
 
-    
-    await deleteReservationToUser();
+    await userData.deleteReservationToUser();
     GotoCancelReservation();
   }
 
   function GotoCancelReservation() {
-    console.log("?")
     navigation.navigate("CancelReservation")
   }
 

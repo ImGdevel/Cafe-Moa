@@ -48,8 +48,6 @@ function LogInScreen({ navigation }) {
       });
   }
 
-  
-
   const [isPress, setIsPress] = useState(false);
   const touchProps = {
     activeOpacity: 1,

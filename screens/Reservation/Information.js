@@ -13,8 +13,9 @@ import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
 
 function InformationScreen({ navigation, route }) {
-  const { cafeData: cafe_Data } = route.params;
+  const { cafeData: cafe_Data , userData: user_data } = route.params;
   const [cafeData, setCafeData] = useState(cafe_Data);
+  const [userData, setUserData] = useState(user_data);
   const [direction, setDirection] = useState("사진");
   const [seatImage, setSeatImage] = useState(cafe_Data.getSeatImage());
 
@@ -67,6 +68,7 @@ function InformationScreen({ navigation, route }) {
             onPress={() =>
               navigation.navigate("예약하기", {
                 cafeData: cafeData,
+                userData: userData,
               })
             }
           >
