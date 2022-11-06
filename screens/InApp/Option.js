@@ -11,7 +11,7 @@ import {
 import getOptionStyle from "../../styles/screens/OptionStyle";
 import IonIcons from "react-native-vector-icons/Ionicons";
 
-function MyPageScreen({ navigation, route }) {
+function OptionScreen({ navigation, route }) {
   const [isPushEnabled, setIsPushEnabled] = useState(false);
   const [isDarkEnabled, setIsDarkEnabled] = useState(false);
   const PushNotiSwitch = () =>
@@ -65,4 +65,4 @@ function MyPageScreen({ navigation, route }) {
   );
 }
 
-export default MyPageScreen;
+export default OptionScreen;
