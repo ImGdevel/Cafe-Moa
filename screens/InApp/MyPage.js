@@ -33,7 +33,9 @@ function MyPageScreen({ navigation }) {
   }
 
   function GoToEditProfileScreen() {
-    //
+    navigation.replace("개인정보수정", {
+      userData: userData,
+    });
   }
 
   function GoToLogoutScreen() {
