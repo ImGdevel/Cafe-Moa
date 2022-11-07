@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: "100%",
     borderColor: "#ddd",
-    alignItems: "center",
+    alignSelf: "center",
     justifyContent: "center",
   },
   InputField: {
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     width: "80%",
     height: 50,
     borderRadius: 15,
-    alignItems: "center",
+    alignSelf: "center",
     justifyContent: "center",
     backgroundColor: "#001D44",
     marginBottom: 15,
@@ -55,6 +55,13 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     borderColor: "#ccc",
     paddingHorizontal: 10,
+  },
+  confirmContainer: {
+    width: "100%",
+    height: "45%",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
   },
 });
 
