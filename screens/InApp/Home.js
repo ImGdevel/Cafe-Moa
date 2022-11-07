@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import {
-  View,
-  Text,
-  Image,
+  View, Text, Image,
   KeyboardAvoidingView,
   TouchableOpacity,
 } from "react-native";
+
 import getHomeStyle from "../../styles/screens/HomeStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
-import { getCafeData, getCafeDatabase3 } from "../../lib/CafeService";
+import { getCafeData } from "../../lib/CafeService";
 import { UserDataService } from "../../lib/UserDataService";
 
 function HomeScreen({ navigation }) {
@@ -27,7 +26,6 @@ function HomeScreen({ navigation }) {
   /** 유저 데이터 가져오기 */
   const LoadHomePage = async () => {
     let user = new UserDataService();
-    await user.loadUserId();
     await user.getUserProfile();
     setUserData(user);
     //console.log("?")
