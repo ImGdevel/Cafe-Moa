@@ -48,10 +48,18 @@ const CafeTableStyles = StyleSheet.create({
     color: "gray",
   },
   ConfirmBoxInText: {
-    color: "#001D44", 
-    fontSize: 20, 
-    marginHorizontal: 20
-  }
+    color: "#001D44",
+    fontSize: 20,
+    marginHorizontal: 20,
+  },
+  icon: {
+    fontSize: 15,
+    fontWeight: "400",
+    color: "gold",
+  },
+  iconContainer: {
+    flexDirection: "row",
+  },
 });
 
 export default CafeTableStyles;

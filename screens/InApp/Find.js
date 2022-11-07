@@ -40,9 +40,9 @@ function FindScreen({ navigation, route }) {
     if (location == null) {
       await getGeoLocation().then(async (loc) => {
         let cafe_data = await getCafeDatabaseAd(location); //확인
-        console.log("카페 리스트 불러오는 중...")
+        console.log("카페 리스트 불러오는 중...");
         setcafeDatas(cafe_data);
-      })
+      });
     }
   };
 
@@ -52,7 +52,12 @@ function FindScreen({ navigation, route }) {
     let cafeList = [];
     for (let i = 0; i < cafeDatas.length; i++) {
       cafeList.push(
-        <CafeTable key={i} cafeData={cafeDatas[i]} userData={userData} navigation={navigation} />
+        <CafeTable
+          key={i}
+          cafeData={cafeDatas[i]}
+          userData={userData}
+          navigation={navigation}
+        />
       );
     }
     setCafeLoop(cafeList);
@@ -63,7 +68,7 @@ function FindScreen({ navigation, route }) {
 
   return (
     <View style={getFindStyle.container}>
-      <View style={{ flex: 0.3, backgroundColor: "#fff"}}>
+      <View style={{ flex: 0.3, backgroundColor: "#fff" }}>
         <View style={getFindStyle.searchbarContainer}>
           <TextInput
             style={getFindStyle.textinputBox}
@@ -97,7 +102,7 @@ function FindScreen({ navigation, route }) {
 }
 
 function CafeTable(props) {
-  const {cafeData: cafe_data, userData:user_data} = props;
+  const { cafeData: cafe_data, userData: user_data } = props;
   const [userData, setUserData] = useState(user_data);
   const [cafeData, setCafeData] = useState(cafe_data);
   const [cafeName, setCafeName] = useState(cafe_data.getName());
@@ -110,8 +115,6 @@ function CafeTable(props) {
       ":00"
   );
   const [cafeLogoImage, setCafeLogoImage] = useState(cafe_data.getLogo());
-
-  
 
   return (
     <TouchableHighlight
@@ -139,6 +142,10 @@ function CafeTable(props) {
             <Text style={getCafeTableStyle.nameText}>{cafeName}</Text>
             <Text style={getCafeTableStyle.contentText}>{cafeLocation}</Text>
             <Text style={getCafeTableStyle.contentText}>{cafeInformation}</Text>
+            <View styles={getCafeTableStyle.iconContainer}>
+              <Ionicons name="star" style={getCafeTableStyle.icon}></Ionicons>
+              <Text>(4.7)</Text>
+            </View>
           </View>
         </View>
       </>
