@@ -55,7 +55,7 @@ const CafeTableStyles = StyleSheet.create({
   icon: {
     fontSize: 15,
     fontWeight: "400",
-    color: "gold",
+    color: "gray",
   },
   iconContainer: {
     flexDirection: "row",

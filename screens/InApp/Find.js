@@ -143,8 +143,10 @@ function CafeTable(props) {
             <Text style={getCafeTableStyle.contentText}>{cafeLocation}</Text>
             <Text style={getCafeTableStyle.contentText}>{cafeInformation}</Text>
             <View styles={getCafeTableStyle.iconContainer}>
-              <Ionicons name="star" style={getCafeTableStyle.icon}></Ionicons>
-              <Text>(4.7)</Text>
+              <Text style={getCafeTableStyle.icon}>
+                <Ionicons name="star" style={{ color: "gold" }}></Ionicons>{" "}
+                (4.7)
+              </Text>
             </View>
           </View>
         </View>
