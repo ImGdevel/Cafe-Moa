@@ -11,9 +11,10 @@ import {
 import getInfoStyle from "../../styles/screens/InfoStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
+import getReviewStyle from "../../styles/components/ReviewStyle";
 
 function InformationScreen({ navigation, route }) {
-  const { cafeData: cafe_Data , userData: user_data } = route.params;
+  const { cafeData: cafe_Data, userData: user_data } = route.params;
   const [cafeData, setCafeData] = useState(cafe_Data);
   const [userData, setUserData] = useState(user_data);
   const [direction, setDirection] = useState("사진");
@@ -40,7 +41,7 @@ function InformationScreen({ navigation, route }) {
         <View style={{ flex: 4.5 }}>
           <PreviewLayout
             selectedValue={direction}
-            values={["사진", "좌석"]}
+            values={["사진", "좌석", "리뷰"]}
             setSelectedValue={setDirection}
             style={getInfoStyle.contentLayout}
             cafeData={cafeData}
@@ -49,10 +50,11 @@ function InformationScreen({ navigation, route }) {
               keyExtractor={(item) => item.idx}
               data={imgArr}
               style={getInfoStyle.picArea}
-
               renderItem={({ item }) => (
                 <TouchableOpacity>
-                  <View style={{flex: 1, flexDirection: "column", margin: 10 }}>
+                  <View
+                    style={{ flex: 1, flexDirection: "column", margin: 10 }}
+                  >
                     <Image style={getInfoStyle.image} source={{}} />
                   </View>
                 </TouchableOpacity>
@@ -134,7 +136,8 @@ const PreviewLayout = ({
           style={[
             getInfoStyle.button,
             selectedValue === value && getInfoStyle.selected,
-          ]}>
+          ]}
+        >
           <Text
             style={[
               getInfoStyle.buttonLabel,
@@ -149,14 +152,20 @@ const PreviewLayout = ({
     {(() => {
       if (selectedValue === "사진")
         return <View style={getInfoStyle.container}>{children}</View>;
-      else
+      else if (selectedValue === "좌석")
         return (
           <View style={{ alignItems: "center", justifyContent: "center" }}>
             <Image
-              source={(cafeData)?{uri:cafeData.getSeatImage()}: {}}
+              source={cafeData ? { uri: cafeData.getSeatImage() } : {}}
               style={getInfoStyle.seatPic}
             />
           </View>
+        );
+      else
+        return (
+          <ScrollView style={getReviewStyle.container}>
+            <View style={getReviewStyle.ratingHeader}></View>
+          </ScrollView>
         );
     })()}
   </View>

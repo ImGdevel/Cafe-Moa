@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     flexWrap: "wrap",
+    justifyContent: "center",
   },
   button: {
     paddingHorizontal: 8,
@@ -25,8 +26,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginHorizontal: "2%",
     marginBottom: 5,
-    height:40,
-    minWidth: "46%",
+    height: 40,
+    minWidth: "29%",
     textAlign: "center",
   },
   selected: {
@@ -36,8 +37,8 @@ const styles = StyleSheet.create({
   buttonLabel: {
     fontSize: 18,
     fontWeight: "500",
-    textAlign:"center",
-    lineHeight:25,
+    textAlign: "center",
+    lineHeight: 25,
     color: "black",
   },
   selectedLabel: {
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
     height: 100,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius:10,
+    borderRadius: 10,
   },
   cafeTitle: {
     fontSize: 25,
