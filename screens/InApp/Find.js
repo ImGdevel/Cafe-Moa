@@ -144,8 +144,7 @@ function CafeTable(props) {
             <Text style={getCafeTableStyle.contentText}>{cafeInformation}</Text>
             <View styles={getCafeTableStyle.iconContainer}>
               <Text style={getCafeTableStyle.icon}>
-                <Ionicons name="star" style={{ color: "gold" }}></Ionicons>{" "}
-                (4.7)
+                <Ionicons name="star" style={{ color: "gold" }}></Ionicons> 4.7
               </Text>
             </View>
           </View>

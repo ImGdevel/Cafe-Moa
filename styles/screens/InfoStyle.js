@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
   },
   selected: {
     backgroundColor: "#001D44",
-    borderWidth: 0,
   },
   buttonLabel: {
     fontSize: 18,

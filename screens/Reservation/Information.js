@@ -12,6 +12,13 @@ import getInfoStyle from "../../styles/screens/InfoStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
 import getReviewStyle from "../../styles/components/ReviewStyle";
+import Ionicons from "react-native-vector-icons/Ionicons";
+
+// Array that bring cafe's image
+const imgArr = [];
+
+// Array that bring cafe's review
+const reviewArr = [];
 
 function InformationScreen({ navigation, route }) {
   const { cafeData: cafe_Data, userData: user_data } = route.params;
@@ -164,62 +171,31 @@ const PreviewLayout = ({
       else
         return (
           <ScrollView style={getReviewStyle.container}>
-            <View style={getReviewStyle.ratingHeader}></View>
+            <View style={getReviewStyle.noticeHeader}>
+              <Text style={getReviewStyle.noticeText}>
+                <Ionicons
+                  name="alert-circle-outline"
+                  style={{ fontSize: 20 }}
+                ></Ionicons>{" "}
+                사장님 공지
+              </Text>
+              <Text style={getReviewStyle.notice}>
+                공지사항 내용(사업자가 작성한 공지사항)
+              </Text>
+            </View>
+            <View style={getReviewStyle.ratingHeader}>
+              <View style={getReviewStyle.ratingContainer}>
+                <Ionicons name="star" style={getReviewStyle.ratings}></Ionicons>
+                <Text style={getReviewStyle.ratingsText}>(4.7)</Text>
+              </View>
+              <TouchableOpacity style={getReviewStyle.reviewBtn} onPress={{}}>
+                <Text style={getReviewStyle.reviewBtnText}>리뷰 작성하기</Text>
+              </TouchableOpacity>
+            </View>
           </ScrollView>
         );
     })()}
   </View>
 );
-
-const imgArr = [
-  {
-    idx: "1",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "2",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "3",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "4",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "5",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "6",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "7",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "8",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "9",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "10",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "11",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "12",
-    src: require("../../img/anySeatPic_text.png"),
-  },
-];
 
 export default InformationScreen;
