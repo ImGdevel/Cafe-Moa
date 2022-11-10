@@ -19,7 +19,7 @@ function EditProfileScreen({ navigation, route }) {
   const pwInputRef = createRef();
 
   function ConfirmEditProfile() {
-    //navigation.navigate()
+    navigation.navigate("마이페이지");
   }
 
   return (
