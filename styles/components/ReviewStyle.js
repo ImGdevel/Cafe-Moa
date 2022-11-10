@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     height: 100,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "red",
+    marginLeft: 10,
   },
   ratings: {
     width: 50,
@@ -50,18 +50,41 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   reviewBtn: {
-    width: "80%",
-    height: "80%",
+    width: "50%",
+    height: 50,
+    marginHorizontal: 45,
     justifyContent: "center",
     alignSelf: "center",
     alignItems: "center",
-    backgroundColor: "blue",
+    backgroundColor: "#001D44",
+    borderRadius: 4,
   },
   reviewBtnText: {
-    paddingTop: 5,
     fontSize: 20,
     color: "white",
     fontWeight: "500",
+  },
+  reviewContentContainer: {
+    flex: 1,
+    height: 200,
+    width: "100%",
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+    padding: 10,
+  },
+  reviewContentHeader: {
+    width: "100%",
+    height: 50,
+    flexDirection: "row",
+  },
+  reviewHead: {
+    paddingLeft: 10,
+    height: "100%",
+    justifyContent: "space-evenly",
+  },
+  reviewContent: {
+    padding: 10,
+    fontSize: 15,
   },
 });
 
