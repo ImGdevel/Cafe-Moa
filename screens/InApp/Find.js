@@ -42,7 +42,7 @@ function FindScreen({ navigation, route }) {
     /** defalut */
     let cafeservice = new CafeService();
     await cafeservice.getCafeDatabaseAd();
-    setcafeDatas(cafeservice.getCafeDataList());
+    setcafeDatas(cafeservice.getCafeDataListArray());
   };
 
   /** 카페리스트 출력 */
