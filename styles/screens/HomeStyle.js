@@ -2,10 +2,39 @@ import { StyleSheet, Dimensions } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
-    flex: 3,
+    flex: 1,
     backgroundColor: "#fff",
+    //alignItems: "center",
+    //justifyContent: "center",
+  },
+
+  TopView:{
+    flex:1,
+    backgroundColor: "#ddffff",
+    borderBottomColor: "#dddddd",
+    borderBottomWidth: 3,
+  },
+
+  TopViewTop:{
+    flex:2,
+    backgroundColor:'#dd11dd'
+  },
+  TopTitle:{
+    flex:4,
+    backgroundColor:'#11dddd',
     alignItems: "center",
     justifyContent: "center",
+  },
+  TopViewBottom:{
+    flex:2,
+    backgroundColor:'#dddd11'
+  },
+  
+
+  MainView:{
+    flex:4,
+    backgroundColor: '#ffffff',
+
   },
 
   homeText: {

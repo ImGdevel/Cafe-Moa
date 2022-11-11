@@ -5,10 +5,12 @@ import {
   Image,
   KeyboardAvoidingView,
   TouchableOpacity,
+  ScrollView,
+  StatusBar,
 } from "react-native";
 import getHomeStyle from "../../styles/screens/HomeStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
-import { getCafeData, getCafeDatabase3 } from "../../lib/CafeService";
+import { getCafeData } from "../../lib/CafeService";
 import { UserDataService } from "../../lib/UserDataService";
 
 function HomeScreen({ navigation }) {
@@ -30,8 +32,6 @@ function HomeScreen({ navigation }) {
     await user.loadUserId();
     await user.getUserProfile();
     setUserData(user);
-    //console.log("?")
-    //getCafeDatabase3();
   }
      
   /** 예약 내역 로드 */
@@ -111,8 +111,32 @@ function HomeScreen({ navigation }) {
     );
   };
 
+
+
   return (
     <KeyboardAvoidingView style={getHomeStyle.container}>
+      <View style = {getHomeStyle.TopView}>
+        <View style = {getHomeStyle.TopViewTop}>
+
+        </View>
+        <View style = {getHomeStyle.TopTitle}>
+          <Image
+            style={{ height: "50%", width: "50%"}}
+            source={require("../../img/IconMoa.png")}
+          />
+        </View>
+        <View style = {getHomeStyle.TopViewBottom}>
+
+        </View>
+      </View>
+      <View style = {getHomeStyle.MainView}>
+        <ScrollView>
+          
+          
+        </ScrollView>
+      </View>
+    {/*
+
       <View style={getHomeStyle.homeText}>
         <Text style={{ color: "#001D44", fontWeight: "700", fontSize: 65 }}>
           M O A
@@ -120,7 +144,7 @@ function HomeScreen({ navigation }) {
       </View>
 
       <View style={getHomeStyle.contentContainer}>
-        <View>{/**다른 홈내용 */}</View>
+        
         <View style={getHomeStyle.btnInfoReservation}>
           <View style={getHomeStyle.infoContainer}>
             <Text
@@ -136,9 +160,10 @@ function HomeScreen({ navigation }) {
           </View>
           {page}
         </View>
-      </View>
+      </View>*/}
     </KeyboardAvoidingView>
   );
 }
+
 
 export default HomeScreen;
