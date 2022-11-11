@@ -1,5 +1,5 @@
 import firebase from "firebase";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+//import AsyncStorage from '@react-native-async-storage/async-storage';
 import "firebase/firestore";
 import "firebase/auth";
 import "firebase/storage";
@@ -26,5 +26,5 @@ export const dbService = firebase.firestore();
 export const authService = firebase.auth();
 export const storageService = firebase.storage();
 export const GoogleMapApiKey = MapApiKey();
-export const asyncStorage = AsyncStorage;
+//export const asyncStorage = AsyncStorage;
 
