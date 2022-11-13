@@ -38,9 +38,11 @@ function MyPageScreen({ navigation }) {
 
   //테스트 중
   function GoToEditProfileScreen() {
-    // 개인정보 변경은 이렇게 사용하시면 됩니당
+    // 개인정보 변경 firebase와 연결은 아래 예시처럼 하면 되고
+    // 임시로 개인정보변경 누르면 바뀌도록 해놨으니 확인하시고 이해하시면 싹 지워버리시면 됩니당
+    // 마이페이지에서는 리로드를 또 해야 변경된 게 보이네요...^^
     let UserId = new UserDataService();
-    await UserId.loadUserId();
+    // await UserId.loadUserId(); //함수 새로 생성하면 필요할 듯?
     UserId.setUserProfile("test33", "test33@naver.com", "123456");
   }
 
