@@ -11,39 +11,40 @@ import {
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { getCafeDatabaseAd } from "../../lib/CafeService";
+import { CafeService, getCafeDatabaseAd } from "../../lib/CafeService";
 import { getGeoLocation } from "../../lib/LocationService";
 import { UserDataService } from "../../lib/UserDataService";
 
 function FindScreen({ navigation, route }) {
   const [userData, setUserData] = useState();
   const [textInputValue, setTextInputValue] = useState("");
-  const [cafeLoop, setCafeLoop] = useState([]);
+  const [cafeTableList, setcafeTableList] = useState([]);
+  const [cafeservice,setCafeService] = useState(new CafeService());
   const [cafeDatas, setcafeDatas] = useState([]);
   const [location, setLocation] = useState();
 
   useEffect(() => {
-    Start();
+    FindStart();
     CafeListLoad();
-  }, [setCafeLoop]);
+  }, [setcafeTableList]);
 
+  /** 카페 리스트 출력 */
   useEffect(() => {
     CafeListLoad();
   }, [cafeDatas]);
 
   /** 시작 */
-  const Start = async () => {
+  async function FindStart() {
+    /** 유저 정보 세팅 */
     let user = new UserDataService();
     await user.getUserProfile();
     setUserData(user);
 
-    if (location == null) {
-      await getGeoLocation().then(async (loc) => {
-        let cafe_data = await getCafeDatabaseAd(location); //확인
-        console.log("카페 리스트 불러오는 중...")
-        setcafeDatas(cafe_data);
-      })
-    }
+    /** defalut */
+    let cafeservice = new CafeService();
+    await cafeservice.getCafeDatabaseAd();
+    setCafeService(cafeservice);
+    setcafeDatas(cafeservice.getCafeDataListArray());
   };
 
   /** 카페리스트 출력 */
@@ -52,18 +53,29 @@ function FindScreen({ navigation, route }) {
     let cafeList = [];
     for (let i = 0; i < cafeDatas.length; i++) {
       cafeList.push(
-        <CafeTable key={i} cafeData={cafeDatas[i]} userData={userData} navigation={navigation} />
+        <CafeTable
+          key={i}
+          cafeData={cafeDatas[i]}
+          userData={userData}
+          navigation={navigation}
+        />
       );
     }
-    setCafeLoop(cafeList);
+    setcafeTableList(cafeList);
   };
+
+
 
   const search = () => {};
   const filter = () => {};
+  const sortDistance = () => {
+    console.log("필터 누름");
+    cafeservice.sortCafeData();
+  };
 
   return (
     <View style={getFindStyle.container}>
-      <View style={{ flex: 0.3, backgroundColor: "#fff"}}>
+      <View style={{ flex: 0.3, backgroundColor: "#fff" }}>
         <View style={getFindStyle.searchbarContainer}>
           <TextInput
             style={getFindStyle.textinputBox}
@@ -90,14 +102,14 @@ function FindScreen({ navigation, route }) {
         </View>
       </View>
       <View style={getFindStyle.contentContainer}>
-        <ScrollView>{cafeLoop}</ScrollView>
+        <ScrollView>{cafeTableList}</ScrollView>
       </View>
     </View>
   );
 }
 
 function CafeTable(props) {
-  const {cafeData: cafe_data, userData:user_data} = props;
+  const { cafeData: cafe_data, userData: user_data } = props;
   const [userData, setUserData] = useState(user_data);
   const [cafeData, setCafeData] = useState(cafe_data);
   const [cafeName, setCafeName] = useState(cafe_data.getName());
@@ -110,8 +122,7 @@ function CafeTable(props) {
       ":00"
   );
   const [cafeLogoImage, setCafeLogoImage] = useState(cafe_data.getLogo());
-
-  
+  const [rating, setRating] = useState(4.7);
 
   return (
     <TouchableHighlight
@@ -139,12 +150,17 @@ function CafeTable(props) {
             <Text style={getCafeTableStyle.nameText}>{cafeName}</Text>
             <Text style={getCafeTableStyle.contentText}>{cafeLocation}</Text>
             <Text style={getCafeTableStyle.contentText}>{cafeInformation}</Text>
+            <View styles={getCafeTableStyle.iconContainer}>
+              <Text style={getCafeTableStyle.icon}>
+                <Ionicons name="star" style={{ color: "gold" }}></Ionicons>{" "}
+                {rating}
+              </Text>
+            </View>
           </View>
         </View>
       </>
     </TouchableHighlight>
   );
-  
 }
 
 export default FindScreen;

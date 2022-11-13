@@ -108,6 +108,13 @@ function LogInScreen({ navigation }) {
           >
             <Text style={{ color: "#bbb", fontSize: 20 }}>회원가입</Text>
           </TouchableOpacity>
+
+          <TouchableOpacity
+            style={getLoginStyle.btnRegister}
+            onPress={()=>{navigation.navigate("InPutData");}}
+          >
+            <Text style={{ color: "#bbb", fontSize: 20 }}>관리자</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={{ flex: 4 }}></View>

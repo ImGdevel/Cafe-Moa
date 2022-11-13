@@ -7,6 +7,7 @@ import {
   getCafeDatabase,
   getCafeDatabaseAd,
 } from '../../lib/CafeService';
+import { ReviewService } from '../../lib/ReviewService';
 
 function InPutDataScreen({navigation}) {
   const [cafeName,setcCafeName] = useState("");
@@ -54,7 +55,7 @@ function InPutDataScreen({navigation}) {
       setImage(cafeDatas.getLogo());
     }
 
-        // 아래는 테스트 예시, 성공! 삭제 가능
+    // 아래는 테스트 예시, 성공! 삭제 가능
     // let userdata = await getUserProfile();
     // console.log(userdata);
     // let userre = await getReservetionToUser();
@@ -64,13 +65,7 @@ function InPutDataScreen({navigation}) {
   }
 
   const Button3 = async() =>{
-    let loc = await getCafeDatabaseAd(local);
-    setCafeDatas(loc);
-    if(cafeDatas[0]!=null){
-      
-      setName(cafeDatas[0].getName());
-      setImage(cafeDatas[0].getLogo()); 
-    }
+    
   }
 
   return (
@@ -111,16 +106,6 @@ function InPutDataScreen({navigation}) {
           onChangeText={(cafeImfo) => setcafeImfo(cafeImfo)}
           autoCapitalize="none"
         />
-        {/* <TextInput
-          ref={cafeImfoInputRef}
-          style={styles.textInput}
-          placeholder={'시간과 좌석번호'}
-          onChangeText={(cafeTime) => setcafeTime(cafeTime)}
-          autoCapitalize="none"
-        /> 
-        <Image source={{ uri: image }} style={{ width: 100, height: 100 }} />
-        */
-        }
         <View>
           <Text>{name}</Text>
           <Image source={ (image != null) ? { uri: image } : null } style={{ width: 100, height: 100 }} />
