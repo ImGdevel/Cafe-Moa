@@ -4,6 +4,7 @@ import { getRandomCafeData } from '../../lib/TestSample';
 import { getGeoLocation } from '../../lib/LocationService';
 import { 
   addCafeDatabase, 
+  CafeService, 
   getCafeDatabase,
   getCafeDatabaseAd,
 } from '../../lib/CafeService';
@@ -12,22 +13,20 @@ import { ReviewService } from '../../lib/ReviewService';
 function InPutDataScreen({navigation}) {
   const [cafeName,setcCafeName] = useState("");
   const [cafeLocation,setCafeLocation] = useState({latitude:37, longitude:127});
-  const [cafeAdress,setCafeAdress] = useState();
   const [cafeImfo,setcafeImfo] = useState("");
   const cafeNameInputRef = createRef();
   const cafeLocationInputRef = createRef();
   const cafeImfoInputRef = createRef();
-  const [cafeTime, setCafeTime] = useState("");
   const cafeTimeRef = createRef();
   const [local,setLocal] = useState("");
 
   const [cafeDatas, setCafeDatas] = useState([]); //가져와질 데이터
   const [cafeClass, setCafeClass] = useState([]);
 
-  const [image,setImage] = useState()
-  const [name,setName] = useState()
+  const [image,setImage] = useState();
+  const [name,setName] = useState();
   useEffect(()=>{
-    setting();    
+    setting();
   },[])
 
   const setting = async() => {
@@ -39,21 +38,14 @@ function InPutDataScreen({navigation}) {
     await getRandomCafeData().then((cafe)=>{
       data = cafe;
     });
-    cafe.name = cafeName;
-
-    setName(data.getName());
-    addCafeDatabase(data);
-
-    // 아래는 테스트용, 성공! 삭제 가능
-    //sendReservetionToUser("cafeid", 9, 1);
+    
+    let cafeservice = new CafeService();
+    cafeservice.addCafeDatabase(data);
   }
   const Button2 = async() =>{
-    let data = await getCafeDatabase(local);
-    if(cafeDatas != null){
-      console.log("?")
-      setName(cafeDatas.getName());
-      setImage(cafeDatas.getLogo());
-    }
+  }
+
+  const Button3 = async() =>{
 
     // 아래는 테스트 예시, 성공! 삭제 가능
     // let userdata = await getUserProfile();
@@ -62,9 +54,6 @@ function InPutDataScreen({navigation}) {
     // console.log(userre);
     // let userdel = await deleteReservationToUser();
     // console.log(userdel);
-  }
-
-  const Button3 = async() =>{
     
   }
 
