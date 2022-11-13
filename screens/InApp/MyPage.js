@@ -92,6 +92,6 @@ function MyPageScreen({ navigation }) {
       </View>
     </KeyboardAvoidingView>
   );
-}
+} 
 
 export default MyPageScreen;

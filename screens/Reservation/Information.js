@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -11,6 +11,8 @@ import {
 import getInfoStyle from "../../styles/screens/InfoStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
+import { ReviewService } from "../../lib/ReviewService";
+import { CafeData } from "../../lib/CafeData";
 
 function InformationScreen({ navigation, route }) {
   const { cafeData: cafe_Data , userData: user_data } = route.params;
@@ -19,7 +21,21 @@ function InformationScreen({ navigation, route }) {
   const [direction, setDirection] = useState("사진");
   const [seatImage, setSeatImage] = useState(cafe_Data.getSeatImage());
 
-  const SeatTable = async () => {};
+  useEffect(()=>{
+    //리뷰 및 사진 불러오기
+    //
+
+
+  },[])
+  
+
+
+  const loadreview = () => {
+    let Review = ReviewService(cafeData.id);
+    
+  }
+
+
 
   return (
     <>

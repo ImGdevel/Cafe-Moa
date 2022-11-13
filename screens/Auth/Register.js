@@ -2,6 +2,7 @@ import React, { useState, createRef } from "react";
 import {
   View,
   Text,
+  Image,
   TouchableHighlight,
   TextInput,
   KeyboardAvoidingView,

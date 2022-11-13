@@ -100,7 +100,7 @@ const InApp = () => {
 
 // 프로젝트 시작
 export default function App() {
-  return (
+  return ( 
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="로그인">
@@ -149,12 +149,12 @@ const Auth = () => {
 };
 
 const CafeNavigation = () => {
-  return (
+  return(
     <Stack.Navigator>
-      <Stack.Screen
-        name="Find"
-        component={FindScreen}
-        options={{ headerShown: false }}
+      <Stack.Screen 
+        name="Find" 
+        component={FindScreen} 
+        options={{headerShown: false}}
       />
       <Stack.Screen name="카페 정보" component={InformationScreen} />
       <Stack.Screen name="예약하기" component={ReservationScreen} />
@@ -164,5 +164,5 @@ const CafeNavigation = () => {
         component={ReserveEndScreen}
       />
     </Stack.Navigator>
-  );
-};
+  )
+}

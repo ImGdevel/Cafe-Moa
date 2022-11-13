@@ -2,6 +2,7 @@ import React, { useState, createRef, useEffect } from "react";
 import {
   View,
   Text,
+  Image,
   TouchableOpacity,
   TouchableHighlight,
   TextInput,
@@ -106,6 +107,13 @@ function LogInScreen({ navigation }) {
             onPress={GoToRgisterScreen}
           >
             <Text style={{ color: "#bbb", fontSize: 20 }}>회원가입</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={getLoginStyle.btnRegister}
+            onPress={()=>{navigation.navigate("InPutData");}}
+          >
+            <Text style={{ color: "#bbb", fontSize: 20 }}>관리자</Text>
           </TouchableOpacity>
         </View>
       </View>

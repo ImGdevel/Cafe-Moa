@@ -16,11 +16,6 @@ const styles = StyleSheet.create({
   cafeTitle: {
     fontSize: 25,
   },
-  seatContainer: {
-    flex: 3,
-    justifyContent: "center",
-    alignItems: "center",
-  },
   seatPic: {
     resizeMode: "contain",
     width: "100%",

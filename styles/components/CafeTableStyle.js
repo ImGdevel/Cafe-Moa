@@ -9,6 +9,7 @@ const CafeTableStyles = StyleSheet.create({
     justifyContent: "center",
     borderColor: "#DDD",
     borderWidth: 1,
+    borderRadius: 10,
   },
   imageContainer: {
     width: 140,

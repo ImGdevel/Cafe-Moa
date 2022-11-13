@@ -95,6 +95,7 @@ function ReservationScreen({ navigation, route }) {
       navigation.navigate("ReserveEnd");
     }
   };
+  
 
   return (
     <View style={getReserveStyle.container}>
@@ -122,7 +123,7 @@ function ReservationScreen({ navigation, route }) {
         </View>
       </View>
 
-      <View style={getReserveStyle.seatContainer}>
+      <View style={getFindStyle.topContainer}>
         <Image
           source={{ uri: seatImage }}
           resizeMode="stretch"
