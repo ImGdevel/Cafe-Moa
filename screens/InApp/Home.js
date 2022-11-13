@@ -38,7 +38,6 @@ function HomeScreen({ navigation }) {
   useEffect(() => {
     updateConfirmReservation();
   }, [userData]);
-
   const updateConfirmReservation = async () => {
     if (userData != null && userData.reservation.cafeId != null) {
       setReserveCafeInfo(await getCafeData(userData.reservation.cafeId));
@@ -71,7 +70,6 @@ function HomeScreen({ navigation }) {
   };
 
   const ReservationsHistory = () => {
-    
     return (
       <>
         <View style={getHomeStyle.infoContentContainer}>
@@ -110,8 +108,6 @@ function HomeScreen({ navigation }) {
       </>
     );
   };
-
-
 
   return (
     <KeyboardAvoidingView style={getHomeStyle.container}>
