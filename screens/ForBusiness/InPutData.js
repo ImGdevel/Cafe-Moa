@@ -40,9 +40,7 @@ function InPutDataScreen({navigation}) {
     });
     
     let cafeservice = new CafeService();
-    console.log("삽입 시작",data)
     cafeservice.addCafeDatabase(data);
-    //addCafeDatabase(data);
   }
   const Button2 = async() =>{
   }
