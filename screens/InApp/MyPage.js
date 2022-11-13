@@ -39,9 +39,9 @@ function MyPageScreen({ navigation }) {
   //테스트 중
   function GoToEditProfileScreen() {
     // 개인정보 변경은 이렇게 사용하시면 됩니당
-    // let UserId = new UserDataService();
-    // await UserId.loadUserId();
-    //UserId.setUserProfile("test33", "test33@naver.com", "123456");
+    let UserId = new UserDataService();
+    await UserId.loadUserId();
+    UserId.setUserProfile("test33", "test33@naver.com", "123456");
   }
 
   function GoToLogoutScreen() {
