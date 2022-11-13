@@ -91,7 +91,7 @@ function FindScreen({ navigation, route }) {
           </TouchableOpacity>
         </View>
         <View style={getFindStyle.filterContainer}>
-          <TouchableOpacity style={getFindStyle.btnFilter} onPress={sortDistance}>
+          <TouchableOpacity style={getFindStyle.btnFilter} onPress={filter}>
             <Ionicons
               name="filter-outline"
               style={{ fontSize: 20, color: "#001D44" }}
