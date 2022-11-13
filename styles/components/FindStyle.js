@@ -7,10 +7,10 @@ const FindStyles = StyleSheet.create({
   },
   topContainer: {
     flex: 1,
-    backgroundColor: "#ccc",
+    backgroundColor: "#bbb",
   },
   contentContainer: {
-    flex: 4,
+    flex: 1,
     backgroundColor: "#fff",
   },
   searchbarContainer: {
@@ -60,7 +60,6 @@ const FindStyles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
 
-    
   },
 });
 

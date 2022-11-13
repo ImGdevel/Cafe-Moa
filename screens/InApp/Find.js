@@ -19,6 +19,7 @@ function FindScreen({ navigation, route }) {
   const [userData, setUserData] = useState();
   const [textInputValue, setTextInputValue] = useState("");
   const [cafeTableList, setcafeTableList] = useState([]);
+  const [cafeservice,setCafeService] = useState(new CafeService());
   const [cafeDatas, setcafeDatas] = useState([]);
   const [location, setLocation] = useState();
 
@@ -42,6 +43,7 @@ function FindScreen({ navigation, route }) {
     /** defalut */
     let cafeservice = new CafeService();
     await cafeservice.getCafeDatabaseAd();
+    setCafeService(cafeservice);
     setcafeDatas(cafeservice.getCafeDataListArray());
   };
 
@@ -51,19 +53,29 @@ function FindScreen({ navigation, route }) {
     let cafeList = [];
     for (let i = 0; i < cafeDatas.length; i++) {
       cafeList.push(
-        <CafeTable key={i} cafeData={cafeDatas[i]} userData={userData} navigation={navigation} />
+        <CafeTable
+          key={i}
+          cafeData={cafeDatas[i]}
+          userData={userData}
+          navigation={navigation}
+        />
       );
     }
     setcafeTableList(cafeList);
   };
 
-  const sortCafeTable = () => {};
+
+
   const search = () => {};
   const filter = () => {};
+  const sortDistance = () => {
+    console.log("필터 누름");
+    cafeservice.sortCafeData();
+  };
 
   return (
     <View style={getFindStyle.container}>
-      <View style={{ flex: 0.3, backgroundColor: "#fff"}}>
+      <View style={{ flex: 0.3, backgroundColor: "#fff" }}>
         <View style={getFindStyle.searchbarContainer}>
           <TextInput
             style={getFindStyle.textinputBox}
@@ -79,7 +91,7 @@ function FindScreen({ navigation, route }) {
           </TouchableOpacity>
         </View>
         <View style={getFindStyle.filterContainer}>
-          <TouchableOpacity style={getFindStyle.btnFilter} onPress={filter}>
+          <TouchableOpacity style={getFindStyle.btnFilter} onPress={sortDistance}>
             <Ionicons
               name="filter-outline"
               style={{ fontSize: 20, color: "#001D44" }}
@@ -97,7 +109,7 @@ function FindScreen({ navigation, route }) {
 }
 
 function CafeTable(props) {
-  const {cafeData: cafe_data, userData:user_data} = props;
+  const { cafeData: cafe_data, userData: user_data } = props;
   const [userData, setUserData] = useState(user_data);
   const [cafeData, setCafeData] = useState(cafe_data);
   const [cafeName, setCafeName] = useState(cafe_data.getName());
@@ -110,6 +122,8 @@ function CafeTable(props) {
       ":00"
   );
   const [cafeLogoImage, setCafeLogoImage] = useState(cafe_data.getLogo());
+  const [rating, setRating] = useState(4.7);
+
 
   return (
     <TouchableHighlight
@@ -137,12 +151,17 @@ function CafeTable(props) {
             <Text style={getCafeTableStyle.nameText}>{cafeName}</Text>
             <Text style={getCafeTableStyle.contentText}>{cafeLocation}</Text>
             <Text style={getCafeTableStyle.contentText}>{cafeInformation}</Text>
+            <View styles={getCafeTableStyle.iconContainer}>
+              <Text style={getCafeTableStyle.icon}>
+                <Ionicons name="star" style={{ color: "gold" }}></Ionicons>{" "}
+                {rating}
+              </Text>
+            </View>
           </View>
         </View>
       </>
     </TouchableHighlight>
   );
-  
 }
 
 export default FindScreen;
