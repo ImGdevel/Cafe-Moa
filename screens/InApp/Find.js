@@ -67,7 +67,10 @@ function FindScreen({ navigation, route }) {
 
 
   const search = () => {};
-  const filter = () => {};
+  const filter = () => {
+    sortDistance();
+  };
+
   const sortDistance = () => {
     console.log("필터 누름");
     cafeservice.sortCafeData();
@@ -122,7 +125,7 @@ function CafeTable(props) {
       ":00"
   );
   const [cafeLogoImage, setCafeLogoImage] = useState(cafe_data.getLogo());
-  const [rating, setRating] = useState(4.7);
+  const [rating, setRating] = useState(cafe_data.getRating());
 
   return (
     <TouchableHighlight
