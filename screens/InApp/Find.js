@@ -67,7 +67,10 @@ function FindScreen({ navigation, route }) {
 
 
   const search = () => {};
-  const filter = () => {};
+  const filter = () => {
+    sortDistance();
+  };
+
   const sortDistance = () => {
     console.log("필터 누름");
     cafeservice.sortCafeData();
