@@ -11,11 +11,20 @@ import {
 import getInfoStyle from "../../styles/screens/InfoStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
+import getReviewStyle from "../../styles/components/ReviewStyle";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import { ReviewService } from "../../lib/ReviewService";
 import { CafeData } from "../../lib/CafeData";
 
+// Array that bring cafe's image
+const imgArr = [];
+
+// Array that bring cafe's review
+const reviewArr = [];
+
+
 function InformationScreen({ navigation, route }) {
-  const { cafeData: cafe_Data , userData: user_data } = route.params;
+  const { cafeData: cafe_Data, userData: user_data } = route.params;
   const [cafeData, setCafeData] = useState(cafe_Data);
   const [userData, setUserData] = useState(user_data);
   const [direction, setDirection] = useState("사진");
@@ -56,7 +65,7 @@ function InformationScreen({ navigation, route }) {
         <View style={{ flex: 4.5 }}>
           <PreviewLayout
             selectedValue={direction}
-            values={["사진", "좌석"]}
+            values={["사진", "좌석", "리뷰"]}
             setSelectedValue={setDirection}
             style={getInfoStyle.contentLayout}
             cafeData={cafeData}
@@ -65,10 +74,11 @@ function InformationScreen({ navigation, route }) {
               keyExtractor={(item) => item.idx}
               data={imgArr}
               style={getInfoStyle.picArea}
-
               renderItem={({ item }) => (
                 <TouchableOpacity>
-                  <View style={{flex: 1, flexDirection: "column", margin: 10 }}>
+                  <View
+                    style={{ flex: 1, flexDirection: "column", margin: 10 }}
+                  >
                     <Image style={getInfoStyle.image} source={{}} />
                   </View>
                 </TouchableOpacity>
@@ -150,7 +160,8 @@ const PreviewLayout = ({
           style={[
             getInfoStyle.button,
             selectedValue === value && getInfoStyle.selected,
-          ]}>
+          ]}
+        >
           <Text
             style={[
               getInfoStyle.buttonLabel,
@@ -165,68 +176,84 @@ const PreviewLayout = ({
     {(() => {
       if (selectedValue === "사진")
         return <View style={getInfoStyle.container}>{children}</View>;
-      else
+      else if (selectedValue === "좌석")
         return (
           <View style={{ alignItems: "center", justifyContent: "center" }}>
             <Image
-              source={(cafeData)?{uri:cafeData.getSeatImage()}: {}}
+              source={cafeData ? { uri: cafeData.getSeatImage() } : {}}
               style={getInfoStyle.seatPic}
             />
           </View>
         );
+      else
+        return (
+          <ScrollView style={getReviewStyle.container}>
+            <View style={getReviewStyle.noticeHeader}>
+              <Text style={getReviewStyle.noticeText}>
+                <Ionicons
+                  name="alert-circle-outline"
+                  style={{ fontSize: 20 }}
+                ></Ionicons>{" "}
+                사장님 공지
+              </Text>
+              <Text style={getReviewStyle.notice}>
+                공지사항 내용(사업자가 작성한 공지사항)
+              </Text>
+            </View>
+            <View style={getReviewStyle.ratingHeader}>
+              <View style={getReviewStyle.ratingContainer}>
+                <Ionicons name="star" style={getReviewStyle.ratings}></Ionicons>
+                <Text style={getReviewStyle.ratingsText}>4.7</Text>
+              </View>
+              <TouchableOpacity style={getReviewStyle.reviewBtn} onPress={{}}>
+                <Text style={getReviewStyle.reviewBtnText}>리뷰 작성하기</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={getReviewStyle.reviewContentContainer}>
+              <View style={getReviewStyle.reviewContentHeader}>
+                <Image
+                  style={{ width: 50, height: 50, borderRadius: 50 }}
+                  source={require("../../img/initialProfile.jpg")}
+                ></Image>
+                <View style={getReviewStyle.reviewHead}>
+                  <Text style={{ fontSize: 15 }}>--UserID--</Text>
+                  <Text style={{ color: "gray" }}>--Date--</Text>
+                </View>
+              </View>
+              <Text style={getReviewStyle.reviewContent}>
+                사용자가 작성한 리뷰의 내용이 들어가는 부분 사용자가 작성한
+                리뷰의 내용이 들어가는 부분 사용자가 작성한 리뷰의 내용이
+                들어가는 부분 사용자가 작성한 리뷰의 내용이 들어가는 부분
+                사용자가 작성한 리뷰의 내용이 들어가는 부분 사용자가 작성한
+                리뷰의 내용이 들어가는 부분
+              </Text>
+              <View style={{ flexDirection: "row" }}>
+                <Ionicons
+                  name="star"
+                  style={{ fontSize: 15, color: "gold", paddingRight: 2 }}
+                ></Ionicons>
+                <Ionicons
+                  name="star"
+                  style={{ fontSize: 15, color: "gold", paddingRight: 2 }}
+                ></Ionicons>
+                <Ionicons
+                  name="star"
+                  style={{ fontSize: 15, color: "gold", paddingRight: 2 }}
+                ></Ionicons>
+                <Ionicons
+                  name="star"
+                  style={{ fontSize: 15, color: "gold", paddingRight: 2 }}
+                ></Ionicons>
+                <Ionicons
+                  name="star"
+                  style={{ fontSize: 15, color: "gold", paddingRight: 2 }}
+                ></Ionicons>
+              </View>
+            </View>
+          </ScrollView>
+        );
     })()}
   </View>
 );
-
-const imgArr = [
-  {
-    idx: "1",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "2",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "3",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "4",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "5",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "6",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "7",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "8",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "9",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "10",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "11",
-    src: require("../../img/coffeebayLogo_test.jpg"),
-  },
-  {
-    idx: "12",
-    src: require("../../img/anySeatPic_text.png"),
-  },
-];
 
 export default InformationScreen;
