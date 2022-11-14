@@ -2,10 +2,86 @@ import { StyleSheet, Dimensions } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
-    flex: 3,
+    flex: 1,
     backgroundColor: "#fff",
+  },
+
+  TopView:{
+    flex:1,
+    backgroundColor: "#fdfdfd",
+    borderBottomColor: "#dddddd",
+    borderBottomWidth: 3,
+  },
+
+  TopViewTop:{
+    flex:2,
+    backgroundColor:'#fdfdfd'
+  },
+  TopTitle:{
+    flex:4,
+    backgroundColor:'#fdfdfd',
     alignItems: "center",
     justifyContent: "center",
+  },
+  TopViewBottom:{
+    flex:2,
+    backgroundColor:'#fdfdfd'
+  },
+
+  MainView:{
+    flex:3,
+    backgroundColor: '#ffffff',
+  },
+
+  reserveArea:{
+    marginTop:10,
+    height:140,
+    width:'100%',
+    backgroundColor: "#dddddd",
+  },
+
+  BookMarkArea:{
+    marginTop:10,
+    height:200,
+    width:'100%',
+    backgroundColor: "#ffffff",
+  },
+
+  BookMarkPanel:{
+    height: 200, 
+    width: 160, 
+    marginLeft:5,
+    borderColor: "#dddddd",
+    borderWidth: 2,
+    borderRadius: 10,
+  },
+
+  BookMarkPanelImageBox:{
+    flex:2,
+    backgroundColor:"#dddddd",
+  },
+  BookMarkPanelTextBox:{
+    flex:1,
+    backgroundColor: "#aaaaaa",
+  },
+
+
+
+
+  AdArea:{
+    marginTop:10,
+    height:200,
+    width:'100%',
+    backgroundColor: "#ffffff",
+  },
+
+  AdPanel:{
+    height: 200, 
+    width: 300 , 
+    marginHorizontal: 10 ,
+    borderColor: "#dddddd",
+    borderWidth: 2,
+    borderRadius: 10,
   },
 
   homeText: {

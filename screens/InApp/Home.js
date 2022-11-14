@@ -5,10 +5,12 @@ import {
   Image,
   KeyboardAvoidingView,
   TouchableOpacity,
+  ScrollView,
+  StatusBar,
 } from "react-native";
 import getHomeStyle from "../../styles/screens/HomeStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
-import { getCafeData, getCafeDatabase3 } from "../../lib/CafeService";
+import { getCafeData } from "../../lib/CafeService";
 import { UserDataService } from "../../lib/UserDataService";
 
 function HomeScreen({ navigation }) {
@@ -30,15 +32,12 @@ function HomeScreen({ navigation }) {
     await user.loadUserId();
     await user.getUserProfile();
     setUserData(user);
-    //console.log("?")
-    //getCafeDatabase3();
   }
      
   /** 예약 내역 로드 */
   useEffect(() => {
     updateConfirmReservation();
   }, [userData]);
-
   const updateConfirmReservation = async () => {
     if (userData != null && userData.reservation.cafeId != null) {
       setReserveCafeInfo(await getCafeData(userData.reservation.cafeId));
@@ -71,7 +70,6 @@ function HomeScreen({ navigation }) {
   };
 
   const ReservationsHistory = () => {
-    
     return (
       <>
         <View style={getHomeStyle.infoContentContainer}>
@@ -113,6 +111,57 @@ function HomeScreen({ navigation }) {
 
   return (
     <KeyboardAvoidingView style={getHomeStyle.container}>
+      <View style = {getHomeStyle.TopView}>
+        <View style = {getHomeStyle.TopViewTop}>
+
+        </View>
+        <View style = {getHomeStyle.TopTitle}>
+          <Text style={{ color: "#001D44", fontWeight: "900", fontSize: 60 }}>
+            M O A
+          </Text>
+        </View>
+        <View style = {getHomeStyle.TopViewBottom}>
+        </View>
+      </View>
+      <View style = {getHomeStyle.MainView}>
+        <ScrollView>
+          {/**현제 예약 중인 카페*/}
+          <View  style = {getHomeStyle.reserveArea}>
+            
+          </View>
+
+          {/**자주가는 카페*/}
+          <View style = {getHomeStyle.BookMarkArea}>
+            <ScrollView 
+              horizontal={true}
+              showsHorizontalScrollIndicator = {false}>
+              <BookMarkPanel/> 
+              <BookMarkPanel/> 
+              <BookMarkPanel/> 
+              <BookMarkPanel/>
+            </ScrollView>
+          </View>
+
+
+          {/** 광고 */}
+          <View style = {getHomeStyle.AdArea}>
+            <ScrollView 
+              horizontal={true}
+              showsHorizontalScrollIndicator = {false}>
+              <AdPanel/> 
+              <AdPanel/> 
+              <AdPanel/> 
+              <AdPanel/>
+            </ScrollView>
+          </View>
+          
+        </ScrollView>
+      </View>
+    {/*<Image
+            style={{ height: "50%", width: "50%"}}
+            source={require("../../img/IconMoa.png")}
+          />
+
       <View style={getHomeStyle.homeText}>
         <Text style={{ color: "#001D44", fontWeight: "700", fontSize: 65 }}>
           M O A
@@ -120,7 +169,7 @@ function HomeScreen({ navigation }) {
       </View>
 
       <View style={getHomeStyle.contentContainer}>
-        <View>{/**다른 홈내용 */}</View>
+        
         <View style={getHomeStyle.btnInfoReservation}>
           <View style={getHomeStyle.infoContainer}>
             <Text
@@ -136,9 +185,31 @@ function HomeScreen({ navigation }) {
           </View>
           {page}
         </View>
-      </View>
+      </View>*/}
     </KeyboardAvoidingView>
   );
 }
+
+function AdPanel(){
+  return(
+    <View style={getHomeStyle.AdPanel}>
+      <Image/>
+    </View>
+  );
+}
+
+function BookMarkPanel(){
+  return(
+    <View style={getHomeStyle.BookMarkPanel}>
+      <View style={getHomeStyle.BookMarkPanelImageBox}>
+        <Image/>
+      </View>
+      <View style={getHomeStyle.BookMarkPanelTextBox}>
+        
+      </View>
+    </View>
+  )
+}
+
 
 export default HomeScreen;
