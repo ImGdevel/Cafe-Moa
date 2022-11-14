@@ -21,7 +21,8 @@ function FindScreen({ navigation, route }) {
   const [cafeTableList, setcafeTableList] = useState([]);
   const [cafeservice,setCafeService] = useState(new CafeService());
   const [cafeDatas, setcafeDatas] = useState([]);
-  const [location, setLocation] = useState();
+  
+
 
   useEffect(() => {
     FindStart();
@@ -70,6 +71,8 @@ function FindScreen({ navigation, route }) {
   const filter = () => {
     sortDistance();
   };
+
+  
 
   const sortDistance = () => {
     console.log("필터 누름");
