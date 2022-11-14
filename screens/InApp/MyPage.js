@@ -54,7 +54,7 @@ function MyPageScreen({ navigation }) {
       <View style={getMyPageStyle.upContentContainer}>
         <View style={getMyPageStyle.profilePicture}>
           <Image
-            style={{ width: "100%", height: "94%", BorderRadius: 50 }}
+            style={{ width: "100%", height: "94%", borderRadius: 50 }}
             source={require("../../img/initialProfile.jpg")}
           ></Image>
         </View>
