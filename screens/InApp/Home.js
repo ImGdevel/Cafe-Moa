@@ -116,22 +116,51 @@ function HomeScreen({ navigation }) {
 
         </View>
         <View style = {getHomeStyle.TopTitle}>
-          <Image
-            style={{ height: "50%", width: "50%"}}
-            source={require("../../img/IconMoa.png")}
-          />
+          <Text style={{ color: "#001D44", fontWeight: "900", fontSize: 60 }}>
+            M O A
+          </Text>
         </View>
         <View style = {getHomeStyle.TopViewBottom}>
-
         </View>
       </View>
       <View style = {getHomeStyle.MainView}>
         <ScrollView>
-          
+          {/**현제 예약 중인 카페*/}
+          <View  style = {getHomeStyle.reserveArea}>
+            
+          </View>
+
+          {/**자주가는 카페*/}
+          <View style = {getHomeStyle.BookMarkArea}>
+            <ScrollView 
+              horizontal={true}
+              showsHorizontalScrollIndicator = {false}>
+              <BookMarkPanel/> 
+              <BookMarkPanel/> 
+              <BookMarkPanel/> 
+              <BookMarkPanel/>
+            </ScrollView>
+          </View>
+
+
+          {/** 광고 */}
+          <View style = {getHomeStyle.AdArea}>
+            <ScrollView 
+              horizontal={true}
+              showsHorizontalScrollIndicator = {false}>
+              <AdPanel/> 
+              <AdPanel/> 
+              <AdPanel/> 
+              <AdPanel/>
+            </ScrollView>
+          </View>
           
         </ScrollView>
       </View>
-    {/*
+    {/*<Image
+            style={{ height: "50%", width: "50%"}}
+            source={require("../../img/IconMoa.png")}
+          />
 
       <View style={getHomeStyle.homeText}>
         <Text style={{ color: "#001D44", fontWeight: "700", fontSize: 65 }}>
@@ -159,6 +188,27 @@ function HomeScreen({ navigation }) {
       </View>*/}
     </KeyboardAvoidingView>
   );
+}
+
+function AdPanel(){
+  return(
+    <View style={getHomeStyle.AdPanel}>
+      <Image/>
+    </View>
+  );
+}
+
+function BookMarkPanel(){
+  return(
+    <View style={getHomeStyle.BookMarkPanel}>
+      <View style={getHomeStyle.BookMarkPanelImageBox}>
+        <Image/>
+      </View>
+      <View style={getHomeStyle.BookMarkPanelTextBox}>
+        
+      </View>
+    </View>
+  )
 }
 
 
