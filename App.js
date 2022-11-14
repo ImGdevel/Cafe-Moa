@@ -16,6 +16,7 @@ import ReserveEndScreen from "./screens/Reservation/ReserveEnd";
 import InPutDataScreen from "./screens/ForBusiness/InPutData";
 import ConfirmScreen from "./screens/InApp/ConfirmReservation";
 import CancelReservationScreen from "./screens/Reservation/CancelReservation";
+import OptionScreen from "./screens/InApp/Option";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -91,6 +92,7 @@ const InApp = () => {
         {() => (
           <Stack.Navigator name="InApp" options={{ headerShown: true }}>
             <Stack.Screen name="마이페이지" component={MyPageScreen} />
+            <Stack.Screen name="옵션" component={OptionScreen} />
           </Stack.Navigator>
         )}
       </Tab.Screen>

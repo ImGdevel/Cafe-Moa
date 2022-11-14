@@ -31,7 +31,9 @@ function MyPageScreen({ navigation }) {
   };
 
   function GoToOptionScreen() {
-    //navigation.navigate()
+    navigation.navigate("옵션", {
+      userData: userData,
+    });
   }
 
   function GoToEditProfileScreen() {
