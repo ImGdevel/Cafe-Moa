@@ -7,20 +7,26 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   TextInput,
+  Button,
 } from "react-native";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { CafeService, getCafeDatabaseAd } from "../../lib/CafeService";
-import { getGeoLocation } from "../../lib/LocationService";
+import { CafeService } from "../../lib/CafeService";
 import { UserDataService } from "../../lib/UserDataService";
+
+const EADASF = "Dadsdaa";
+
 
 function FindScreen({ navigation, route }) {
   const [userData, setUserData] = useState();
   const [textInputValue, setTextInputValue] = useState("");
   const [cafeTableList, setcafeTableList] = useState([]);
-  const [cafeservice,setCafeService] = useState(new CafeService());
+  const [cafeService,setCafeService] = useState(new CafeService());
   const [cafeDatas, setcafeDatas] = useState([]);
+  const [sortBy, setSortBy] = useState(SORT_DISTANCE);
+  const [loading, setLoading] = useState(false);
+  const [SORT_DISTANCE, SORT_RATING,SORT_VISITIOR] = [1,2,3];
   
 
 
@@ -46,6 +52,7 @@ function FindScreen({ navigation, route }) {
     await cafeservice.getCafeDatabaseAd();
     setCafeService(cafeservice);
     setcafeDatas(cafeservice.getCafeDataListArray());
+    
   };
 
   /** 카페리스트 출력 */
@@ -65,23 +72,25 @@ function FindScreen({ navigation, route }) {
     setcafeTableList(cafeList);
   };
 
-
-
   const search = () => {};
-  const filter = () => {
-    sortDistance();
-  };
-
-  
+  const filter = () => {};
 
   const sortDistance = () => {
-    console.log("필터 누름");
-    cafeservice.sortCafeData();
+    let sortedData = cafeService.sortCafeData(SORT_DISTANCE);
+    setcafeDatas(sortedData);
+  };
+  const sortRating = () => {
+    let sortedData = cafeService.sortCafeData(SORT_RATING);
+    setcafeDatas(sortedData);
+  };
+  const sortVisitor = () => {
+    CafeListLoad();
   };
 
   return (
     <View style={getFindStyle.container}>
-      <View style={{ flex: 0.3, backgroundColor: "#fff" }}>
+      <View style={getFindStyle.topContainer}>
+
         <View style={getFindStyle.searchbarContainer}>
           <TextInput
             style={getFindStyle.textinputBox}
@@ -96,17 +105,32 @@ function FindScreen({ navigation, route }) {
             ></Ionicons>
           </TouchableOpacity>
         </View>
+
+        <View style={getFindStyle.SortContainer}>
+          <TouchableOpacity style={getFindStyle.btnSort} onPress={sortDistance}>
+            <Text  style={getFindStyle.btnSortText}> 거리순 </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={getFindStyle.btnSort} onPress={sortRating}>
+            <Text style={getFindStyle.btnSortText}> 별점순 </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={getFindStyle.btnSort} onPress={sortVisitor}>
+            <Text style={getFindStyle.btnSortText}> 방문자순 </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={getFindStyle.btnSort} onPress={sortDistance}>
+            <Text style={getFindStyle.btnSortText}> 예약자순 </Text>
+          </TouchableOpacity>
+        </View>
+
         <View style={getFindStyle.filterContainer}>
           <TouchableOpacity style={getFindStyle.btnFilter} onPress={filter}>
-            <Ionicons
-              name="filter-outline"
-              style={{ fontSize: 20, color: "#001D44" }}
-            >
+            <Ionicons name="filter-outline" style={{ fontSize: 20, color: "#001D44" }}>
               <Text style={{ fontSize: 15, color: "#001D44" }}> 필터</Text>
             </Ionicons>
           </TouchableOpacity>
         </View>
+
       </View>
+
       <View style={getFindStyle.contentContainer}>
         <ScrollView>{cafeTableList}</ScrollView>
       </View>
@@ -129,6 +153,16 @@ function CafeTable(props) {
   );
   const [cafeLogoImage, setCafeLogoImage] = useState(cafe_data.getLogo());
   const [rating, setRating] = useState(4.7);
+
+  useEffect(()=>{
+    setUserData(user_data);
+    setCafeData(cafe_data);
+    setCafeName(cafe_data.getName());
+    setCafeLocation(cafe_data.getAdress(1, 3));
+    setCafeInformaion( "Open : " + cafe_data.getOpenTime() +":00 ~ Close : " +cafe_data.getCloseTime() +":00");
+    setCafeLogoImage(cafe_data.getLogo());
+    setRating(cafe_data.getRating());
+  },[,cafe_data])
 
   return (
     <TouchableHighlight

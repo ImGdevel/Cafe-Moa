@@ -7,59 +7,71 @@ const FindStyles = StyleSheet.create({
   },
   topContainer: {
     flex: 1,
-    backgroundColor: "#bbb",
+    backgroundColor: "#fafafa",
   },
   contentContainer: {
-    flex: 1,
-    backgroundColor: "#fff",
+    flex: 3,
+    backgroundColor: "#fafafa",
   },
+
   searchbarContainer: {
-    width: "100%",
-    height: "50%",
-    
+    flex:2,
     marginTop: "10%",
-    backgroundColor: "#fff",
+    backgroundColor: "#fafafa",
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-
-
   },
   textinputBox: {
     height: 40,
     paddingLeft: 20,
     width: "70%",
-    borderColor: "#bbb",
-    borderWidth: 1,
-    borderRadius: 15,
+    borderColor: "#aaa",
+    borderWidth: 1.5,
+    borderRadius: 10,
     marginRight: 8,
-    placeholderTextColor: "#bbb",
-    
+    placeholderTextColor: "#aaa",
   },
   btnSearch: {
     width: 40,
     height: 40,
-    borderWidth: 1,
-    borderRadius: 15,
-    borderColor: "#bbb",
+    borderWidth: 1.5,
+    borderRadius: 10,
+    borderColor: "#aaa",
     justifyContent: "center",
     alignItems: "center",
-
   },
-  filterContainer: {
-    width: "100%",
-    height: "50%",
-    backgroundColor: "#fff",
-    alignItems: "flex-end",
 
+  SortContainer: {
+    flex:1,
+    flexDirection:"row",
+    paddingHorizontal:10,
+  },
+  btnSort:{
+    width:90,
+    height:"100%",
+    marginHorizontal:4,
+    borderRadius:10,
+    borderWidth:1,
+    borderColor: "#aaa",
+    justifyContent:"center",
+    alignItems:"center",
+  },
+  btnSortText:{
+    color:"#555",
+    fontSize:13,
+  },
+
+  filterContainer: {
+    flex:1,
+    alignItems: "flex-end",
+    backgroundColor:"#f8f8f8",
   },
   btnFilter: {
-    height: 50,
+    height: "100%",
     width: 100,
-    borderColor: "#bbb",
     justifyContent: "center",
     alignItems: "center",
-
   },
 });
 
