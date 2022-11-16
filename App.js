@@ -18,6 +18,7 @@ import ConfirmScreen from "./screens/InApp/ConfirmReservation";
 import CancelReservationScreen from "./screens/Reservation/CancelReservation";
 import EditProfileScreen from "./screens/InApp/EditProfile";
 import OptionScreen from "./screens/InApp/Option";
+import BusinessHomeScreen from "./screens/ForBusiness/BusinessHome";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -102,6 +103,14 @@ const InApp = () => {
   );
 };
 
+const InBusiness = () => {
+  return (
+    <Stack.Navigator name="forBusiness" options={{ headerShown: false }}>
+      <Stack.Screen name="사업자홈" component={BusinessHomeScreen} options={{ headerShown: false }}/>
+    </Stack.Navigator>
+  );
+};
+
 // 프로젝트 시작
 export default function App() {
   return ( 
@@ -122,6 +131,7 @@ export default function App() {
                 options={{ headerShown: false }}
               />
               <Stack.Screen name="InApp" component={InApp} />
+              <Stack.Screen name="Business" component={InBusiness} />
             </Stack.Navigator>
           )}
         </Stack.Screen>
