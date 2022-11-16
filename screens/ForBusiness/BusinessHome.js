@@ -23,22 +23,23 @@ function BusinessHomeScreen({ navigation }) {
           <Text style={{ color: "#001D44", fontWeight: "900", fontSize: 60 }}>
             M O A
           </Text>
+          <Text style={{ color: "#001D44" }}>{"\t\t\t"}for Business</Text>
         </View>
       </View>
       <View style={getBusinessHomeStyle.contentContainer}>
         <View style={getBusinessHomeStyle.btnContainer}>
             <TouchableOpacity style={getBusinessHomeStyle.button}>
-                <Text style={{ color: "#001D44", fontWeight: "500", fontSize: 20 }}>카페 관리</Text>
+                <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>카페 관리</Text>
             </TouchableOpacity>
             <TouchableOpacity style={getBusinessHomeStyle.button}>
-                <Text style={{ color: "#001D44", fontWeight: "500", fontSize: 20 }}>카페 정보</Text>
+                <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>카페 정보</Text>
             </TouchableOpacity>
         </View>
-        <View style={getBusinessHomeStyle.manageReservationWindow}>
+        <ScrollView style={getBusinessHomeStyle.manageReservationWindow}>
             <View style={getBusinessHomeStyle.manageHeader}>
-                <Text style={{ color: "#001D44", fontWeight: "500", fontSize: 30 }}>카페 예약 현황</Text>
+                <Text style={{ color: "black", fontWeight: "500", fontSize: 30 }}>카페 예약 현황</Text>
             </View>
-        </View>
+        </ScrollView>
       </View>
     </KeyboardAvoidingView>
   );
