@@ -39,7 +39,32 @@ function BusinessHomeScreen({ navigation }) {
             <View style={getBusinessHomeStyle.manageHeader}>
                 <Text style={{ color: "black", fontWeight: "500", fontSize: 30 }}>카페 예약 현황</Text>
             </View>
+            <View style={getBusinessHomeStyle.seatPicArea}>
+              <Image
+                style={{ width: "100%", height: "100%", resizeMode: "contain" }}
+                source={require("../../img/anySeatPic_text.png")}
+              />
+            </View>
+            <View style={getBusinessHomeStyle.reservationListContainer}>
+              <View style={getBusinessHomeStyle.reservationList}>
+                <View style={getBusinessHomeStyle.reserveTimeBox}>
+                  <Text style={{ color: "white", fontWeight: "500", fontSize: 15}}>11:00</Text>
+                </View>
+                <View style={getBusinessHomeStyle.reserveSeatnumber}>
+                  <Text style={{ fontWeight: "500", fontSize: 15}}>5, 8 번 자리</Text>
+                </View>
+              </View>
+              <View style={getBusinessHomeStyle.reservationList}>
+                <View style={getBusinessHomeStyle.reserveTimeBox}>
+                  <Text style={{ color: "white", fontWeight: "500", fontSize: 15}}>12:00</Text>
+                </View>
+                <View style={getBusinessHomeStyle.reserveSeatnumber}>
+                  <Text style={{ fontWeight: "500", fontSize: 15}}>7, 10 번 자리</Text>
+                </View>
+              </View>
+            </View>
         </ScrollView>
+        <View style={{height: "5%"}}></View>
       </View>
     </KeyboardAvoidingView>
   );
