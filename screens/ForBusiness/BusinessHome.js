@@ -31,7 +31,7 @@ function BusinessHomeScreen({ navigation }) {
             <TouchableOpacity style={getBusinessHomeStyle.button}>
                 <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>카페 관리</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={getBusinessHomeStyle.button}>
+            <TouchableOpacity style={getBusinessHomeStyle.button} onPress={navigation.navigate("카페정보-사업자용")}>
                 <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>카페 정보</Text>
             </TouchableOpacity>
         </View>

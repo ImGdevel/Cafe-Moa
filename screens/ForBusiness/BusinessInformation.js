@@ -14,7 +14,6 @@ import getFindStyle from "../../styles/components/FindStyle";
 import getReviewStyle from "../../styles/components/ReviewStyle";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { ReviewService } from "../../lib/ReviewService";
-import { CafeData } from "../../lib/CafeData";
 
 // Array that bring cafe's image
 const imgArr = [];
@@ -23,28 +22,26 @@ const imgArr = [];
 const reviewArr = [];
 
 
-function InformationScreen({ navigation, route }) {
-  const { cafeData: cafe_Data, userData: user_data } = route.params;
-  const [cafeData, setCafeData] = useState(cafe_Data);
-  const [userData, setUserData] = useState(user_data);
+function BusinessInformationScreen({ navigation, route }) {
+  // const { cafeData: cafe_Data, userData: user_data } = route.params;
+  // const [cafeData, setCafeData] = useState(cafe_Data);
+  // const [userData, setUserData] = useState(user_data);
   const [direction, setDirection] = useState("사진");
-  const [seatImage, setSeatImage] = useState(cafe_Data.getSeatImage());
+  // const [seatImage, setSeatImage] = useState(cafe_Data.getSeatImage());
 
-  useEffect(()=>{
-    //리뷰 및 사진 불러오기
-    //
+  // useEffect(()=>{
+  //   //리뷰 및 사진 불러오기
+  //   //
 
 
-  },[])
+  // },[])
   
 
 
-  const loadreview = () => {
-    let Review = ReviewService(cafeData.id);
+  // const loadreview = () => {
+  //   let Review = ReviewService(cafeData.id);
     
-  }
-
-
+  // }
 
   return (
     <>
@@ -52,11 +49,11 @@ function InformationScreen({ navigation, route }) {
         <View style={getFindStyle.container}>
           <View style={getFindStyle.contentContainer}>
             <CafeTable
-              name={route.params.name}
-              location={route.params.location}
-              image={route.params.cafeData.getLogo()}
-              information={route.params.information}
-              cafeData={cafeData}
+              name={"--카페 이름--"}
+              location={"--카페 위치--"}
+              image={require("../../img/coffeebayLogo_test.jpg")}
+              information={"--카페 정보--"}
+              // cafeData={cafeData}
               navigation={navigation}
             />
           </View>
@@ -68,7 +65,7 @@ function InformationScreen({ navigation, route }) {
             values={["사진", "좌석", "리뷰"]}
             setSelectedValue={setDirection}
             style={getInfoStyle.contentLayout}
-            cafeData={cafeData}
+            // cafeData={cafeData}
           >
             <FlatList
               keyExtractor={(item) => item.idx}
@@ -93,8 +90,8 @@ function InformationScreen({ navigation, route }) {
             style={getInfoStyle.reserveButton}
             onPress={() =>
               navigation.navigate("예약하기", {
-                cafeData: cafeData,
-                userData: userData,
+                // cafeData: cafeData,
+                // userData: userData,
               })
             }
           >
@@ -108,17 +105,11 @@ function InformationScreen({ navigation, route }) {
 
 //카페 테이블
 function CafeTable(props) {
-  const cafeData = props.cafeData;
-  const [cafeName, setCafeName] = useState(cafeData.getName());
-  const [cafeLocation, setCafeLocation] = useState(cafeData.getAdress(1, 3));
-  const [cafeInformation, setCafeInformaion] = useState(
-    "Open : " +
-      cafeData.getOpenTime() +
-      ":00 ~ Close : " +
-      cafeData.getCloseTime() +
-      ":00"
-  );
-  const [cafeLogoImage, setCafeLogoImage] = useState(cafeData.getLogo());
+  // const cafeData = props.cafeData;
+  const [cafeName, setCafeName] = useState(props.name);
+  const [cafeLocation, setCafeLocation] = useState(props.location);
+  const [cafeInformation, setCafeInformaion] = useState(props.information);
+  const [cafeLogoImage, setCafeLogoImage] = useState(props.image);
 
   return (
     <>
@@ -126,7 +117,7 @@ function CafeTable(props) {
         <View style={getCafeTableStyle.imageContainer}>
           <View style={getCafeTableStyle.image}>
             <Image
-              source={require("../../img/coffeebayLogo_test.jpg")}
+              source={cafeLogoImage}
               style={getInfoStyle.cafeLogo}
             />
           </View>
@@ -148,7 +139,7 @@ const PreviewLayout = ({
   values,
   selectedValue,
   setSelectedValue,
-  cafeData,
+  // cafeData,
 }) => (
   <View style={{ padding: 10, flex: 1 }}>
     <Text style={{ marginBottom: 10, fontSize: 24 }}></Text>
@@ -256,4 +247,4 @@ const PreviewLayout = ({
   </View>
 );
 
-export default InformationScreen;
+export default BusinessInformationScreen;
