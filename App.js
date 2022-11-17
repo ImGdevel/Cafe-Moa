@@ -108,7 +108,7 @@ const InBusiness = () => {
   return (
     <Stack.Navigator name="forBusiness" options={{ headerShown: false }}>
       <Stack.Screen name="사업자홈" component={BusinessHomeScreen} options={{ headerShown: false }}/>
-      <Stack.Screen name="카페정보-사업자용" component={BusinessInformationScreen}/>
+      <Stack.Screen name="카페 정보-사업자용" component={BusinessInformationScreen}/>
     </Stack.Navigator>
   );
 };
