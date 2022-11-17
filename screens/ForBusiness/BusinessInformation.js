@@ -95,7 +95,7 @@ function BusinessInformationScreen({ navigation, route }) {
               })
             }
           >
-            <Text style={{ color: "white", fontSize: 21 }}>예약하기</Text>
+            <Text style={{ color: "red", fontSize: 21 }}>카페 삭제하기</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -197,7 +197,7 @@ const PreviewLayout = ({
                 <Text style={getReviewStyle.ratingsText}>4.7</Text>
               </View>
               <TouchableOpacity style={getReviewStyle.reviewBtn} onPress={{}}>
-                <Text style={getReviewStyle.reviewBtnText}>리뷰 작성하기</Text>
+                <Text style={getReviewStyle.reviewBtnText}>공지 작성하기</Text>
               </TouchableOpacity>
             </View>
             <View style={getReviewStyle.reviewContentContainer}>
