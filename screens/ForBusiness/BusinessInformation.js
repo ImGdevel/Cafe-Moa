@@ -12,6 +12,8 @@ import getInfoStyle from "../../styles/screens/InfoStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
 import getReviewStyle from "../../styles/components/ReviewStyle";
+import getBusinessInfoStyle from "../../styles/screens/BusinessInfoStyle";
+
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { ReviewService } from "../../lib/ReviewService";
 
@@ -87,7 +89,18 @@ function BusinessInformationScreen({ navigation, route }) {
 
         <View style={getInfoStyle.btnContainer}>
           <TouchableOpacity
-            style={getInfoStyle.reserveButton}
+            style={getBusinessInfoStyle.reserveButton}
+            onPress={() =>
+              navigation.navigate("예약하기", {
+                // cafeData: cafeData,
+                // userData: userData,
+              })
+            }
+          >
+            <Text style={{ color: "white", fontSize: 21 }}>사진 관리하기</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={getBusinessInfoStyle.reserveButton}
             onPress={() =>
               navigation.navigate("예약하기", {
                 // cafeData: cafeData,
