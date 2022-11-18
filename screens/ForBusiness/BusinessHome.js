@@ -10,8 +10,14 @@ import {
 } from "react-native";
 import getHomeStyle from "../../styles/screens/HomeStyle";
 import getBusinessHomeStyle from "../../styles/screens/BusinessHomeStyle";
+import getInfoStyle from "../../styles/screens/InfoStyle";
 
 function BusinessHomeScreen({ navigation }) {
+
+  function GoToLogoutScreen() {
+    // signOut();
+    navigation.replace("Auth");
+  }
 
   return (
     <KeyboardAvoidingView style={getHomeStyle.container}>
@@ -64,6 +70,14 @@ function BusinessHomeScreen({ navigation }) {
               </View>
             </View>
         </ScrollView>
+        <View style={getBusinessHomeStyle.logoutContainer}>
+          <TouchableOpacity
+            style={getBusinessHomeStyle.logoutBtn}
+            onPress={GoToLogoutScreen}
+          >
+            <Text style={{ color: "black", fontSize: 21 }}>로그아웃</Text>
+          </TouchableOpacity>
+        </View>
         <View style={{height: "5%"}}></View>
       </View>
     </KeyboardAvoidingView>

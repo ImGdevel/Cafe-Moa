@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     width: "47%",
     height: 60,
     backgroundColor: "#ccc",
-    borderRadius: 15,
+    borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",
     margin: 5
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
     borderBottomWidth: 1,
     borderColor: "#ccc",
-    borderRadius: 10,
+    borderRadius: 5,
     backgroundColor: "#001D44",
     justifyContent: "center",
     alignItems: "center",
@@ -65,6 +65,20 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     marginBottom: 5,
     justifyContent: "center",
+  },
+  logoutContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%"
+  },
+  logoutBtn: {
+    backgroundColor: "#ccc",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 5,
+    marginVertical: 5,
+    width: "80%",
+    height: 55,
   }
 });
 
