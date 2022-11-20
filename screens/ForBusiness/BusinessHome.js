@@ -38,7 +38,7 @@ function BusinessHomeScreen({ navigation }) {
             }}
           >
             <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>
-              카페 관리
+              예약 관리
             </Text>
           </TouchableOpacity>
           <TouchableOpacity style={getBusinessHomeStyle.button}>
