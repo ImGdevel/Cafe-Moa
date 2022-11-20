@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -13,12 +13,15 @@ import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
 import getReviewStyle from "../../styles/components/ReviewStyle";
 import Ionicons from "react-native-vector-icons/Ionicons";
+//import { ReviewService } from "../../lib/ReviewService";
+import { CafeData } from "../../lib/CafeData";
 
 // Array that bring cafe's image
 const imgArr = [];
 
 // Array that bring cafe's review
 const reviewArr = [];
+
 
 function InformationScreen({ navigation, route }) {
   const { cafeData: cafe_Data, userData: user_data } = route.params;
@@ -27,7 +30,21 @@ function InformationScreen({ navigation, route }) {
   const [direction, setDirection] = useState("사진");
   const [seatImage, setSeatImage] = useState(cafe_Data.getSeatImage());
 
-  const SeatTable = async () => {};
+  useEffect(()=>{
+    //리뷰 및 사진 불러오기
+    //
+
+
+  },[])
+  
+
+
+  const loadreview = () => {
+    let Review = ReviewService(cafeData.id);
+    
+  }
+
+
 
   return (
     <>
@@ -87,6 +104,10 @@ function InformationScreen({ navigation, route }) {
       </View>
     </>
   );
+}
+
+function GoToInformationReviewScreen(){
+  //navigation.navigate()
 }
 
 //카페 테이블
@@ -188,7 +209,7 @@ const PreviewLayout = ({
                 <Ionicons name="star" style={getReviewStyle.ratings}></Ionicons>
                 <Text style={getReviewStyle.ratingsText}>4.7</Text>
               </View>
-              <TouchableOpacity style={getReviewStyle.reviewBtn} onPress={{}}>
+              <TouchableOpacity style={getReviewStyle.reviewBtn} onPress={{GoToInformationReviewScreen}}>
                 <Text style={getReviewStyle.reviewBtnText}>리뷰 작성하기</Text>
               </TouchableOpacity>
             </View>
