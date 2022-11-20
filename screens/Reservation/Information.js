@@ -209,9 +209,10 @@ const PreviewLayout = ({
                 <Ionicons name="star" style={getReviewStyle.ratings}></Ionicons>
                 <Text style={getReviewStyle.ratingsText}>4.7</Text>
               </View>
-              <TouchableOpacity style={getReviewStyle.reviewBtn} onPress={{GoToInformationReviewScreen}}>
+              <TouchableOpacity style={getReviewStyle.reviewBtn} onPress={GoToInformationReviewScreen}>
                 <Text style={getReviewStyle.reviewBtnText}>리뷰 작성하기</Text>
               </TouchableOpacity>
+              
             </View>
             <View style={getReviewStyle.reviewContentContainer}>
               <View style={getReviewStyle.reviewContentHeader}>
