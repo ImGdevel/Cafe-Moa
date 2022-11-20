@@ -19,6 +19,7 @@ import CancelReservationScreen from "./screens/Reservation/CancelReservation";
 import EditProfileScreen from "./screens/InApp/EditProfile";
 import OptionScreen from "./screens/InApp/Option";
 import BusinessHomeScreen from "./screens/ForBusiness/BusinessHome";
+import ReserveManageScreen from "./screens/ForBusiness/ReserveManage";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -106,14 +107,23 @@ const InApp = () => {
 const InBusiness = () => {
   return (
     <Stack.Navigator name="forBusiness" options={{ headerShown: false }}>
-      <Stack.Screen name="사업자홈" component={BusinessHomeScreen} options={{ headerShown: false }}/>
+      <Stack.Screen
+        name="사업자홈"
+        component={BusinessHomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="예약 관리"
+        component={ReserveManageScreen}
+        options={{ headerShown: true }}
+      />
     </Stack.Navigator>
   );
 };
 
 // 프로젝트 시작
 export default function App() {
-  return ( 
+  return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="로그인">
@@ -163,12 +173,12 @@ const Auth = () => {
 };
 
 const CafeNavigation = () => {
-  return(
+  return (
     <Stack.Navigator>
-      <Stack.Screen 
-        name="Find" 
-        component={FindScreen} 
-        options={{headerShown: false}}
+      <Stack.Screen
+        name="Find"
+        component={FindScreen}
+        options={{ headerShown: false }}
       />
       <Stack.Screen name="카페 정보" component={InformationScreen} />
       <Stack.Screen name="예약하기" component={ReservationScreen} />
@@ -178,5 +188,5 @@ const CafeNavigation = () => {
         component={ReserveEndScreen}
       />
     </Stack.Navigator>
-  )
-}
+  );
+};
