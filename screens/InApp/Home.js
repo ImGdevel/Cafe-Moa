@@ -16,6 +16,7 @@ import { UserDataService } from "../../lib/UserDataService";
 function HomeScreen({ navigation }) {
   const [userData, setUserData] = useState();
   const [reserveCafeInfo, setReserveCafeInfo] = useState();
+  const [bookMarkList, setBookMarkList] = useState();
   const [page, setPage] = useState(NoneReserve);
 
   useEffect(() => {
@@ -48,16 +49,22 @@ function HomeScreen({ navigation }) {
 
   /** 예약 화면 */
   useEffect(()=>{ 
-    reserveRefresh()
+    refreshReserve()
   },[reserveCafeInfo])
 
-  function reserveRefresh() {
+  function refreshReserve() {
     if (userData != null && reserveCafeInfo != null) {
       setPage(ReservationsHistory);
     } else {
       setPage(NoneReserve);
     }
   }
+
+  /** Bookmark 리스트 */
+  function refre(){
+
+  }
+
 
   const NoneReserve = () => {
     return (
@@ -198,18 +205,24 @@ function AdPanel(){
   );
 }
 
-function BookMarkPanel(){
+function BookMarkPanel(props){
+  
   return(
     <View style={getHomeStyle.BookMarkPanel}>
       <View style={getHomeStyle.BookMarkPanelImageBox}>
-        <Image/>
+          <Image style={{flex:1}} />
       </View>
       <View style={getHomeStyle.BookMarkPanelTextBox}>
-        
+        <View style={{flex:1, backgroundColor:"red"}}> 
+          <Text/>          
+          <Text/>
+        </View>
+        <View style={{flex:1, backgroundColor:"yellow"}}>
+          <Text>{}</Text>
+        </View>
       </View>
     </View>
   )
 }
-
 
 export default HomeScreen;

@@ -58,11 +58,17 @@ const styles = StyleSheet.create({
 
   BookMarkPanelImageBox:{
     flex:2,
-    backgroundColor:"#dddddd",
+    margin:"2%",
+    borderRadius:5,
+    backgroundColor:"#fff",
+
   },
+
+
   BookMarkPanelTextBox:{
     flex:1,
-    backgroundColor: "#aaaaaa",
+    backgroundColor: "#ddd",
+    margin: "2%",
   },
 
 
