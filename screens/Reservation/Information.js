@@ -16,6 +16,8 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { ReviewService } from "../../lib/ReviewService";
 import { CafeData } from "../../lib/CafeData";
 
+import IonIcons from "react-native-vector-icons/Ionicons";
+
 // Array that bring cafe's image
 const imgArr = [];
 
@@ -120,6 +122,10 @@ function CafeTable(props) {
   );
   const [cafeLogoImage, setCafeLogoImage] = useState(cafeData.getLogo());
 
+  //북마크 관련
+  const [bookmark, setBookmark] = useState(false);
+
+
   return (
     <>
       <View style={getCafeTableStyle.container}>
@@ -133,7 +139,14 @@ function CafeTable(props) {
         </View>
         <View style={getCafeTableStyle.contentContainer}>
           <View style={getCafeTableStyle.textContent}>
-            <Text style={getCafeTableStyle.nameText}>{cafeName}</Text>
+            <View style={getCafeTableStyle.divideContent}>
+              <Text style={getCafeTableStyle.nameText}>{cafeName}</Text>
+              <IonIcons
+                name="heart-outline"
+                style={{ fontSize: 30}}
+              ></IonIcons>
+              {/* 북마크 되면 name="heart" 사용, bookmark-outline 안 예쁨*/}
+            </View>
             <Text style={getCafeTableStyle.contentText}>{cafeLocation}</Text>
             <Text style={getCafeTableStyle.contentText}>{cafeInformation}</Text>
           </View>

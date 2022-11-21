@@ -10,6 +10,7 @@ import RegisterScreen from "./screens/Auth/Register";
 import HomeScreen from "./screens/InApp/Home";
 import MyPageScreen from "./screens/InApp/MyPage";
 import FindScreen from "./screens/InApp/Find";
+import MyMOAScreen from "./screens/InApp/MyMOA";
 import InformationScreen from "./screens/Reservation/Information";
 import ReservationScreen from "./screens/Reservation/Reservation";
 import ReserveEndScreen from "./screens/Reservation/ReserveEnd";
@@ -95,6 +96,7 @@ const InApp = () => {
             <Stack.Screen name="마이페이지" component={MyPageScreen} />
             <Stack.Screen name="개인정보수정" component={EditProfileScreen} />
             <Stack.Screen name="옵션" component={OptionScreen} />
+            <Stack.Screen name="MyMOA" component={MyMOAScreen} />
           </Stack.Navigator>
         )}
       </Tab.Screen>
