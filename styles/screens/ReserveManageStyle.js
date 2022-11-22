@@ -9,9 +9,26 @@ const styles = StyleSheet.create({
   },
   manualContianer: {
     width: "100%",
-    height: 120,
+    height: 60,
+    flexDirection: "row",
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",
+  },
+  descriptionContainer: {
+    width: "60%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  pickerContainer: {
+    width: "20%",
+    height: "100%",
+    backgroundColor: "red",
+  },
+  addButton: {
+    width: "20%",
+    height: "100%",
+    backgroundColor: "blue",
   },
   timeArea: {
     width: 70,
