@@ -35,16 +35,51 @@ const styles = StyleSheet.create({
 
   reserveArea:{
     marginTop:10,
-    height:140,
+    height:260,
     width:'100%',
-    backgroundColor: "#dddddd",
+    backgroundColor: "#fff",
+    borderRadius: 30,
+  },
+
+  reserveAreaTop:{
+    height: 50,
+  },
+  reserveAreaContent:{
+    flex: 1,
+    backgroundColor: "#fff",
+    borderColor: "#ddd",
+    borderWidth: 1,
+  },
+  reserveCafeContainer: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  reserveBtnContainer: {
+    height: 48,
+    flexDirection: "row",
+    alignItems:"center",
+    justifyContent:"space-evenly",
+    backgroundColor: "#fff",
+  },
+  reserveBtn:{
+    width: "45%",
+    height: "95%",
+    marginBottom: "3%",
+    backgroundColor:"#001D44",
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  reserveBtnText:{
+    color:"#fff",
+    fontSize: 18,
   },
 
   BookMarkArea:{
     marginTop:10,
-    height:200,
+    height:250,
     width:'100%',
-    backgroundColor: "#ffffff",
+    backgroundColor: "#fff",
   },
 
   BookMarkPanel:{
@@ -64,21 +99,23 @@ const styles = StyleSheet.create({
 
   },
 
-
   BookMarkPanelTextBox:{
     flex:1,
     backgroundColor: "#ddd",
     margin: "2%",
   },
 
-
+  AreaTitle:{
+    fontSize: 23,
+    fontWeight:"600",
+    paddingLeft:15,
+  },
 
 
   AdArea:{
     marginTop:10,
     height:200,
     width:'100%',
-    backgroundColor: "#ffffff",
   },
 
   AdPanel:{
