@@ -23,12 +23,26 @@ const styles = StyleSheet.create({
   pickerContainer: {
     width: "20%",
     height: "100%",
-    backgroundColor: "red",
   },
-  addButton: {
+  picker: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    height: "50%",
+    paddingLeft: 10,
+  },
+  addButtonContainer: {
     width: "20%",
     height: "100%",
-    backgroundColor: "blue",
+    padding: 5,
+  },
+  addButton: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#001D44",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 15,
   },
   timeArea: {
     width: 70,
@@ -42,6 +56,7 @@ const styles = StyleSheet.create({
   },
   timeText: {
     fontSize: "18",
+    fontWeight: "400",
     color: "white",
   },
   numContainer: {
