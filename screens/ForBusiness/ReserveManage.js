@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 import getManageStyle from "../../styles/screens/ReserveManageStyle";
 
@@ -67,25 +68,39 @@ function ReserveManageScreen({ navigation }) {
           <Text style={getManageStyle.timeText}>11시</Text>
         </View>
         <ScrollView horizontal={true} style={getManageStyle.numContainer}>
-          <View style={getManageStyle.setNumBox}>
+          <TouchableOpacity style={getManageStyle.setNumBox}>
             <Text style={{ color: "#001D44" }}>7번 좌석</Text>
+          </TouchableOpacity>
+          <View style={getManageStyle.manageMenuContiner}>
+            <TouchableOpacity style={getManageStyle.manageMenu}>
+              <Text>
+                <Ionicons
+                  name="checkmark-sharp"
+                  style={{ fontSize: "30", color: "lightgreen" }}
+                ></Ionicons>
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={getManageStyle.manageMenu}>
+              <Text>
+                <Ionicons
+                  name="close-sharp"
+                  style={{ fontSize: "30", color: "red" }}
+                ></Ionicons>
+              </Text>
+            </TouchableOpacity>
           </View>
-          <View style={getManageStyle.setNumBox}>
+          <TouchableOpacity style={getManageStyle.setNumBox}>
             <Text style={{ color: "#001D44" }}>8번 좌석</Text>
-          </View>
-          <View style={getManageStyle.setNumBox}>
-            <Text style={{ color: "#001D44" }}>9번 좌석</Text>
-          </View>
+          </TouchableOpacity>
         </ScrollView>
         <View style={getManageStyle.timeArea}>
           <Text style={getManageStyle.timeText}>12시</Text>
         </View>
         <ScrollView horizontal={true} style={getManageStyle.numContainer}>
-          <View style={getManageStyle.setNumBox}>
-            <Text style={{ color: "#001D44" }}>1번 좌석</Text>
-          </View>
-          <View style={getManageStyle.setNumBox}>
-            <Text style={{ color: "#001D44" }}>6번 좌석</Text>
+          <View>
+            <TouchableOpacity style={getManageStyle.setNumBox}>
+              <Text style={{ color: "#001D44" }}>7번 좌석</Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </View>
