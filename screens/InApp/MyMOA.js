@@ -20,8 +20,6 @@ import { getGeoLocation } from "../../lib/LocationService";
 function MyMOAScreen({ navigation, route }) {
     const [userData, setUserData] = useState();
     const [BookmarkTableList, setBookmarkTableList] = useState([]);
-    const [textInputValue, setTextInputValue] = useState("");
-    const [cafeTableList, setcafeTableList] = useState([]);
     const [cafeservice,setCafeService] = useState(new CafeService());
     const [cafeDatas, setcafeDatas] = useState([]);
     const [location, setLocation] = useState();
@@ -34,6 +32,7 @@ function MyMOAScreen({ navigation, route }) {
     useEffect(() => {
         BookmarkListLoad();
     }, [cafeDatas]);
+    //bookmarkDatas 로 변경 예정
     
     async function FindStart() {
         let user = new UserDataService();
@@ -47,9 +46,10 @@ function MyMOAScreen({ navigation, route }) {
     
     const BookmarkListLoad = () => {
         console.log("북마크 리스트 출력");
-        let cafeList = [];
+        let bookmarkList = [];
+        //bookmarkDatas로 변경 예정
         for (let i = 0; i < cafeDatas.length; i++) {
-            cafeList.push(
+            bookmarkList.push(
                 <BookmarkTable
                     key={i}
                     cafeData={cafeDatas[i]}
@@ -58,7 +58,7 @@ function MyMOAScreen({ navigation, route }) {
                 />
             );
         }
-        setBookmarkTableList(cafeList);
+        setBookmarkTableList(bookmarkList);
     };
     
     return (
@@ -93,11 +93,10 @@ function BookmarkTable(props) {
         <TouchableHighlight
             style={getBookmarkTableStyles.container}
             onPress={() =>
-                // "카페 정보" 왜 안 되는지 모르겠음
-            props.navigation.navigate("카페 정보", {
-                cafeData: cafeData,
-                userData: userData,
-            })
+                props.navigation.navigate("카페 정보", {
+                    cafeData: cafeData,
+                    userData: userData,
+                })
             }
             activeOpacity={0.5}
             underlayColor="#DDDDDD"
@@ -130,7 +129,7 @@ function BookmarkTable(props) {
                         <Text style={getBookmarkTableStyles.icon}>
                         <Ionicons name="star" style={{ color: "gold" }}></Ionicons>{" "}
                         {rating}
-                        <Text style={getBookmarkTableStyles.contentText}>{" / " + visitors + " 명이 방문"}</Text>
+                        <Text style={getBookmarkTableStyles.contentText}>{" (총 " + visitors + " 명이 방문)"}</Text>
                         </Text>
                     </View>
                     <Text style={getBookmarkTableStyles.contentText}>{cafeLocation}</Text>

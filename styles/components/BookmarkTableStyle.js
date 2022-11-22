@@ -37,7 +37,6 @@ const BookmarkTableStyles = StyleSheet.create({
     textContent: {
         flex: 1,
         justifyContent: "center",
-        paddingLeft: 5,
         marginBottom: 5,
     },
     nameText: {
