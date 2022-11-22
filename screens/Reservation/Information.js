@@ -22,7 +22,6 @@ const imgArr = [];
 // Array that bring cafe's review
 const reviewArr = [];
 
-
 function InformationScreen({ navigation, route }) {
   const { cafeData: cafe_Data, userData: user_data } = route.params;
   const [cafeData, setCafeData] = useState(cafe_Data);
@@ -30,21 +29,14 @@ function InformationScreen({ navigation, route }) {
   const [direction, setDirection] = useState("사진");
   const [seatImage, setSeatImage] = useState(cafe_Data.getSeatImage());
 
-  useEffect(()=>{
+  useEffect(() => {
     //리뷰 및 사진 불러오기
     //
-
-
-  },[])
-  
-
+  }, []);
 
   const loadreview = () => {
     let Review = ReviewService(cafeData.id);
-    
-  }
-
-
+  };
 
   return (
     <>
@@ -69,6 +61,7 @@ function InformationScreen({ navigation, route }) {
             setSelectedValue={setDirection}
             style={getInfoStyle.contentLayout}
             cafeData={cafeData}
+            navigation={navigation}
           >
             <FlatList
               keyExtractor={(item) => item.idx}
@@ -104,10 +97,6 @@ function InformationScreen({ navigation, route }) {
       </View>
     </>
   );
-}
-
-function GoToInformationReviewScreen(){
-  //navigation.navigate()
 }
 
 //카페 테이블
@@ -153,6 +142,7 @@ const PreviewLayout = ({
   selectedValue,
   setSelectedValue,
   cafeData,
+  navigation,
 }) => (
   <View style={{ padding: 10, flex: 1 }}>
     <Text style={{ marginBottom: 10, fontSize: 24 }}></Text>
@@ -209,10 +199,14 @@ const PreviewLayout = ({
                 <Ionicons name="star" style={getReviewStyle.ratings}></Ionicons>
                 <Text style={getReviewStyle.ratingsText}>4.7</Text>
               </View>
-              <TouchableOpacity style={getReviewStyle.reviewBtn} onPress={GoToInformationReviewScreen}>
+              <TouchableOpacity
+                style={getReviewStyle.reviewBtn}
+                onPress={() => {
+                  navigation.navigate("리뷰 작성");
+                }}
+              >
                 <Text style={getReviewStyle.reviewBtnText}>리뷰 작성하기</Text>
               </TouchableOpacity>
-              
             </View>
             <View style={getReviewStyle.reviewContentContainer}>
               <View style={getReviewStyle.reviewContentHeader}>
