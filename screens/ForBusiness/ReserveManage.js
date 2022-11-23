@@ -15,6 +15,7 @@ import getManageStyle from "../../styles/screens/ReserveManageStyle";
 function ReserveManageScreen({ navigation }) {
   const [selectedSeat, setSelectedSeat] = useState();
   const [seatList, setSeatList] = useState([]);
+  const [manageVisible, setManageVisible] = useState(false);
 
   useEffect(() => {
     makePickerItem();
@@ -68,27 +69,34 @@ function ReserveManageScreen({ navigation }) {
           <Text style={getManageStyle.timeText}>11시</Text>
         </View>
         <ScrollView horizontal={true} style={getManageStyle.numContainer}>
-          <TouchableOpacity style={getManageStyle.setNumBox}>
+          <TouchableOpacity
+            style={getManageStyle.setNumBox}
+            onPress={() => {
+              setManageVisible(!manageVisible);
+            }}
+          >
             <Text style={{ color: "#001D44" }}>7번 좌석</Text>
           </TouchableOpacity>
-          <View style={getManageStyle.manageMenuContiner}>
-            <TouchableOpacity style={getManageStyle.manageMenu}>
-              <Text>
-                <Ionicons
-                  name="checkmark-sharp"
-                  style={{ fontSize: "30", color: "lightgreen" }}
-                ></Ionicons>
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={getManageStyle.manageMenu}>
-              <Text>
-                <Ionicons
-                  name="close-sharp"
-                  style={{ fontSize: "30", color: "red" }}
-                ></Ionicons>
-              </Text>
-            </TouchableOpacity>
-          </View>
+          {manageVisible && (
+            <View style={getManageStyle.manageMenuContiner}>
+              <TouchableOpacity style={getManageStyle.manageMenu}>
+                <Text>
+                  <Ionicons
+                    name="checkmark-sharp"
+                    style={{ fontSize: "30", color: "lightgreen" }}
+                  ></Ionicons>
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={getManageStyle.manageMenu}>
+                <Text>
+                  <Ionicons
+                    name="close-sharp"
+                    style={{ fontSize: "30", color: "red" }}
+                  ></Ionicons>
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )}
           <TouchableOpacity style={getManageStyle.setNumBox}>
             <Text style={{ color: "#001D44" }}>8번 좌석</Text>
           </TouchableOpacity>

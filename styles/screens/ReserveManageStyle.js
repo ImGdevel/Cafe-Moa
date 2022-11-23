@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   },
   manageMenu: {
     width: "100%",
-    height: "50%",
+    height: "45%",
     borderWidth: 1,
     borderColor: "gray",
     justifyContent: "center",
