@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   ScrollView,
   FlatList,
+  TouchableHighlight,
+  Alert,
 } from "react-native";
 
 import getInfoStyle from "../../styles/screens/InfoStyle";
@@ -27,9 +29,6 @@ const imgArr = [
   require("../../img/coffeebayLogo_test.jpg"),
 ];
 
-// Array that bring cafe's review
-const reviewArr = [];
-
 function CafePicManageScreen({ navigation, route }) {
   // const { cafeData: cafe_Data, userData: user_data } = route.params;
   // const [cafeData, setCafeData] = useState(cafe_Data);
@@ -47,6 +46,16 @@ function CafePicManageScreen({ navigation, route }) {
   //   let Review = ReviewService(cafeData.id);
 
   // }
+
+  const longPressButton = () =>
+    Alert.alert("경고", "사진이 삭제됩니다.", [
+      {
+        text: "취소",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      { text: "확인", onPress: () => console.log("OK Pressed") },
+    ]);
 
   return (
     <>
@@ -77,7 +86,14 @@ function CafePicManageScreen({ navigation, route }) {
               data={imgArr}
               style={getInfoStyle.picArea}
               renderItem={({ item }) => (
-                <TouchableOpacity>
+                <TouchableHighlight
+                  onPress={() =>
+                    navigation.navigate("사진 확대", {
+                      // source: "../../img/coffeebayLogo_test.jpg",
+                    })
+                  }
+                  onLongPress={longPressButton}
+                >
                   <View
                     style={{
                       flex: 1,
@@ -86,7 +102,7 @@ function CafePicManageScreen({ navigation, route }) {
                   >
                     <Image style={getInfoStyle.image} source={{}} />
                   </View>
-                </TouchableOpacity>
+                </TouchableHighlight>
               )}
               numColumns={3}
             />

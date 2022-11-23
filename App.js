@@ -22,6 +22,7 @@ import BusinessHomeScreen from "./screens/ForBusiness/BusinessHome";
 import BusinessInformationScreen from "./screens/ForBusiness/BusinessInformation";
 import ReserveManageScreen from "./screens/ForBusiness/ReserveManage";
 import CafePicManageScreen from "./screens/ForBusiness/CafePicManager";
+import ZoomImageScreen from "./screens/ForBusiness/ZoomImage";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -120,6 +121,11 @@ const InBusiness = () => {
         component={BusinessInformationScreen}
       />
       <Stack.Screen name="카페 사진 관리" component={CafePicManageScreen} />
+      <Stack.Screen
+        name="사진 확대"
+        component={ZoomImageScreen}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };
