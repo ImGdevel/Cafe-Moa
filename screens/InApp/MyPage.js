@@ -18,6 +18,20 @@ function MyPageScreen({ navigation }) {
   const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", async() => {
+      LoadHomePage();
+    });
+    return unsubscribe;
+  }, [navigation, setUserData]);
+
+  /** 유저 데이터 가져오기 */
+  const LoadHomePage = async () => {
+    let user = new UserDataService();
+    await user.getUserProfile();
+    setUserData(user);
+  }
+
+  useEffect(() => {
     getData();
   }, []);
 
