@@ -26,7 +26,7 @@ function FindScreen({ navigation, route }) {
   const [cafeDatas, setcafeDatas] = useState([]);
   const [sortBy, setSortBy] = useState(SORT_DISTANCE);
   const [loading, setLoading] = useState(false);
-  const [SORT_DISTANCE, SORT_RATING,SORT_VISITIOR] = [1,2,3];
+  const [SORT_DISTANCE, SORT_RATING,SORT_VISITIORS,SORT_NOW_VISITIORS] = [1,2,3,4];
   
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", async() => {
@@ -98,8 +98,14 @@ function FindScreen({ navigation, route }) {
     setcafeDatas(sortedData);
   };
   const sortVisitor = () => {
-    CafeListLoad();
+    let sortedData = cafeService.sortCafeData(SORT_VISITIORS);
+    setcafeDatas(sortedData);
   };
+  const sortNowVisitor = () => {
+    let sortedData = cafeService.sortCafeData(SORT_NOW_VISITIORS);
+    setcafeDatas(sortedData);
+  };
+
 
   return (
     <View style={getFindStyle.container}>
