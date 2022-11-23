@@ -7,8 +7,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   cafeLogo: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,
@@ -36,31 +36,31 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   pickerLine: {
-    borderWidth:1.5,
-    borderRadius:10,
-    borderColor:"#ddd",
+    borderWidth: 1.5,
+    borderRadius: 10,
+    borderColor: "#ddd",
     width: "63%",
-    height:55,
-    marginRight:10
+    height: 55,
+    marginRight: 10,
   },
   picker: {
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    paddingLeft:10,
+    paddingLeft: 10,
   },
-  pickerTopText:{
-    fontSize:25,
-    color:"#000",
+  pickerTopText: {
+    fontSize: 25,
+    color: "#000",
   },
-  pickerTopTextArea:{
-    flex:1,
-    width:"91%",
-    borderBottomColor:"#001D44",
-    borderBottomWidth:3,
-    borderBottomEndRadius:10,
-    padding:10,
-    paddingLeft:20,
+  pickerTopTextArea: {
+    flex: 1,
+    width: "91%",
+    borderBottomColor: "#001D44",
+    borderBottomWidth: 3,
+    borderBottomEndRadius: 10,
+    padding: 10,
+    paddingLeft: 20,
   },
 });
 
