@@ -84,8 +84,7 @@ function HomeScreen({ navigation }) {
       */
       console.log("북마크")
     }else if(true){
-      
-      setBookMarkList(none);
+      setBookMarkList();
     }
   }
 
