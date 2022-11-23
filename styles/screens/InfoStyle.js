@@ -56,8 +56,10 @@ const styles = StyleSheet.create({
     borderColor: "#ddd",
     justifyContent: "center",
     alignItems: "center",
+    alignSelf: "center",
     resizeMode: "contain",
     borderWidth: 1,
+    margin: 5,
   },
   cafeLogo: {
     width: 100,
@@ -79,20 +81,21 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#DDD",
     borderRadius: 10,
+    padding: 10,
   },
   reserveButton: {
     backgroundColor: "#001D44",
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 5,
-    marginBottom: 5,
+    marginVertical: 5,
     width: "80%",
     height: 55,
   },
   btnContainer: {
     alignItems: "center",
     justifyContent: "center",
-    flexDirection: "row"
+    flexDirection: "row",
   },
   listContainer: {
     marginHorizontal: "8%",

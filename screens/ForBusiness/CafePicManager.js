@@ -18,7 +18,14 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { ReviewService } from "../../lib/ReviewService";
 
 // Array that bring cafe's image
-const imgArr = [];
+const imgArr = [
+  require("../../img/coffeebayLogo_test.jpg"),
+  require("../../img/coffeebayLogo_test.jpg"),
+  require("../../img/coffeebayLogo_test.jpg"),
+  require("../../img/coffeebayLogo_test.jpg"),
+  require("../../img/coffeebayLogo_test.jpg"),
+  require("../../img/coffeebayLogo_test.jpg"),
+];
 
 // Array that bring cafe's review
 const reviewArr = [];
@@ -72,7 +79,10 @@ function CafePicManageScreen({ navigation, route }) {
               renderItem={({ item }) => (
                 <TouchableOpacity>
                   <View
-                    style={{ flex: 1, flexDirection: "column", margin: 10 }}
+                    style={{
+                      flex: 1,
+                      flexDirection: "column",
+                    }}
                   >
                     <Image style={getInfoStyle.image} source={{}} />
                   </View>
@@ -143,7 +153,7 @@ const PreviewLayout = ({
   setSelectedValue,
   // cafeData,
 }) => (
-  <View style={{ padding: 10, flex: 1 }}>
+  <View style={{ paddingHorizontal: 10, flex: 1 }}>
     <Text style={{ marginBottom: 10, fontSize: 24 }}></Text>
     <View style={getInfoStyle.row}>
       {values.map((value) => (
