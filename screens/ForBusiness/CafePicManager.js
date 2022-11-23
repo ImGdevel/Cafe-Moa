@@ -11,8 +11,8 @@ import {
 import getInfoStyle from "../../styles/screens/InfoStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
-import getReviewStyle from "../../styles/components/ReviewStyle";
 import getBusinessInfoStyle from "../../styles/screens/BusinessInfoStyle";
+import getPicManageStyle from "../../styles/screens/PicManageStyle";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { ReviewService } from "../../lib/ReviewService";
@@ -85,18 +85,7 @@ function CafePicManageScreen({ navigation, route }) {
 
         <View style={getInfoStyle.btnContainer}>
           <TouchableOpacity
-            style={getBusinessInfoStyle.reserveButton}
-            onPress={() =>
-              navigation.navigate("예약하기", {
-                // cafeData: cafeData,
-                // userData: userData,
-              })
-            }
-          >
-            <Text style={{ color: "white", fontSize: 21 }}>사진 관리하기</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={getBusinessInfoStyle.reserveButton}
+            style={getInfoStyle.reserveButton}
             onPress={() =>
               navigation.navigate("Auth", {
                 // cafeData: cafeData,
@@ -104,7 +93,7 @@ function CafePicManageScreen({ navigation, route }) {
               })
             }
           >
-            <Text style={{ color: "red", fontSize: 21 }}>카페 삭제하기</Text>
+            <Text style={{ color: "white", fontSize: 21 }}>사진 추가하기</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -134,6 +123,13 @@ function CafeTable(props) {
             <Text style={getCafeTableStyle.contentText}>{cafeLocation}</Text>
             <Text style={getCafeTableStyle.contentText}>{cafeInformation}</Text>
           </View>
+          <View style={getCafeTableStyle.logoPickerContainer}>
+            <TouchableOpacity style={getCafeTableStyle.LogoImagePicker}>
+              <Text style={{ color: "white", fontSize: 18 }}>
+                로고 변경하기
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </>
@@ -155,7 +151,7 @@ const PreviewLayout = ({
           key={value}
           onPress={() => setSelectedValue(value)}
           style={[
-            getInfoStyle.button,
+            getPicManageStyle.button,
             selectedValue === value && getInfoStyle.selected,
           ]}
         >
