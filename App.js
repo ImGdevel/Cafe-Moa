@@ -19,6 +19,7 @@ import CancelReservationScreen from "./screens/Reservation/CancelReservation";
 import EditProfileScreen from "./screens/InApp/EditProfile";
 import OptionScreen from "./screens/InApp/Option";
 import BusinessHomeScreen from "./screens/ForBusiness/BusinessHome";
+import BusinessInformationScreen from "./screens/ForBusiness/BusinessInformation";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -107,6 +108,7 @@ const InBusiness = () => {
   return (
     <Stack.Navigator name="forBusiness" options={{ headerShown: false }}>
       <Stack.Screen name="사업자홈" component={BusinessHomeScreen} options={{ headerShown: false }}/>
+      <Stack.Screen name="카페 정보-사업자용" component={BusinessInformationScreen}/>
     </Stack.Navigator>
   );
 };

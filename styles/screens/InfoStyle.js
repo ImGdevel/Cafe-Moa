@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
   btnContainer: {
     alignItems: "center",
     justifyContent: "center",
+    flexDirection: "row"
   },
   listContainer: {
     marginHorizontal: "8%",
