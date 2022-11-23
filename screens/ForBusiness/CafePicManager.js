@@ -23,7 +23,7 @@ const imgArr = [];
 // Array that bring cafe's review
 const reviewArr = [];
 
-function BusinessInformationScreen({ navigation, route }) {
+function CafePicManageScreen({ navigation, route }) {
   // const { cafeData: cafe_Data, userData: user_data } = route.params;
   // const [cafeData, setCafeData] = useState(cafe_Data);
   // const [userData, setUserData] = useState(user_data);
@@ -60,7 +60,7 @@ function BusinessInformationScreen({ navigation, route }) {
         <View style={{ flex: 4.5 }}>
           <PreviewLayout
             selectedValue={direction}
-            values={["사진", "좌석", "리뷰"]}
+            values={["사진", "좌석"]}
             setSelectedValue={setDirection}
             style={getInfoStyle.contentLayout}
             // cafeData={cafeData}
@@ -87,7 +87,7 @@ function BusinessInformationScreen({ navigation, route }) {
           <TouchableOpacity
             style={getBusinessInfoStyle.reserveButton}
             onPress={() =>
-              navigation.navigate("카페 사진 관리", {
+              navigation.navigate("예약하기", {
                 // cafeData: cafeData,
                 // userData: userData,
               })
@@ -173,7 +173,7 @@ const PreviewLayout = ({
     {(() => {
       if (selectedValue === "사진")
         return <View style={getInfoStyle.container}>{children}</View>;
-      else if (selectedValue === "좌석")
+      else
         return (
           <View style={{ alignItems: "center", justifyContent: "center" }}>
             <Image
@@ -182,75 +182,8 @@ const PreviewLayout = ({
             />
           </View>
         );
-      else
-        return (
-          <ScrollView style={getReviewStyle.container}>
-            <View style={getReviewStyle.noticeHeader}>
-              <Text style={getReviewStyle.noticeText}>
-                <Ionicons
-                  name="alert-circle-outline"
-                  style={{ fontSize: 20 }}
-                ></Ionicons>{" "}
-                사장님 공지
-              </Text>
-              <Text style={getReviewStyle.notice}>
-                공지사항 내용(사업자가 작성한 공지사항)
-              </Text>
-            </View>
-            <View style={getReviewStyle.ratingHeader}>
-              <View style={getReviewStyle.ratingContainer}>
-                <Ionicons name="star" style={getReviewStyle.ratings}></Ionicons>
-                <Text style={getReviewStyle.ratingsText}>4.7</Text>
-              </View>
-              <TouchableOpacity style={getReviewStyle.reviewBtn} onPress={{}}>
-                <Text style={getReviewStyle.reviewBtnText}>공지 작성하기</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={getReviewStyle.reviewContentContainer}>
-              <View style={getReviewStyle.reviewContentHeader}>
-                <Image
-                  style={{ width: 50, height: 50, borderRadius: 50 }}
-                  source={require("../../img/initialProfile.jpg")}
-                ></Image>
-                <View style={getReviewStyle.reviewHead}>
-                  <Text style={{ fontSize: 15 }}>--UserID--</Text>
-                  <Text style={{ color: "gray" }}>--Date--</Text>
-                </View>
-              </View>
-              <Text style={getReviewStyle.reviewContent}>
-                사용자가 작성한 리뷰의 내용이 들어가는 부분 사용자가 작성한
-                리뷰의 내용이 들어가는 부분 사용자가 작성한 리뷰의 내용이
-                들어가는 부분 사용자가 작성한 리뷰의 내용이 들어가는 부분
-                사용자가 작성한 리뷰의 내용이 들어가는 부분 사용자가 작성한
-                리뷰의 내용이 들어가는 부분
-              </Text>
-              <View style={{ flexDirection: "row" }}>
-                <Ionicons
-                  name="star"
-                  style={{ fontSize: 15, color: "gold", paddingRight: 2 }}
-                ></Ionicons>
-                <Ionicons
-                  name="star"
-                  style={{ fontSize: 15, color: "gold", paddingRight: 2 }}
-                ></Ionicons>
-                <Ionicons
-                  name="star"
-                  style={{ fontSize: 15, color: "gold", paddingRight: 2 }}
-                ></Ionicons>
-                <Ionicons
-                  name="star"
-                  style={{ fontSize: 15, color: "gold", paddingRight: 2 }}
-                ></Ionicons>
-                <Ionicons
-                  name="star"
-                  style={{ fontSize: 15, color: "gold", paddingRight: 2 }}
-                ></Ionicons>
-              </View>
-            </View>
-          </ScrollView>
-        );
     })()}
   </View>
 );
 
-export default BusinessInformationScreen;
+export default CafePicManageScreen;
