@@ -39,7 +39,7 @@ function BusinessHomeScreen({ navigation }) {
           <TouchableOpacity
             style={getBusinessHomeStyle.button}
             onPress={() => {
-              navigation.navigate("카페 정보-사업자용");
+              navigation.navigate("카페정보-사업자용");
             }}
           >
             <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>
@@ -49,7 +49,7 @@ function BusinessHomeScreen({ navigation }) {
           <TouchableOpacity
             style={getBusinessHomeStyle.button}
             onPress={() => {
-              navigation.navigate("예약 관리");
+              navigation.navigate("좌석 및 예약 관리");
             }}
           >
             <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>

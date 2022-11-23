@@ -113,6 +113,11 @@ const InBusiness = () => {
         component={BusinessHomeScreen}
         options={{ headerShown: false }}
       />
+      <Stack.Screen name="좌석 및 예약 관리" component={ReserveManageScreen} />
+      <Stack.Screen
+        name="카페정보-사업자용"
+        component={BusinessInformationScreen}
+      />
     </Stack.Navigator>
   );
 };
