@@ -28,6 +28,8 @@ function MyPageScreen({ navigation }) {
     setUserData(user_data);
     setUserName(user_data.Name);
     setUserEmail(user_data.email);
+    //
+
   };
 
   function GoToOptionScreen() {
@@ -42,6 +44,7 @@ function MyPageScreen({ navigation }) {
     });
   }
 
+  //테스트 중
   function GoToEditProfileScreen() {
     navigation.navigate("개인정보수정", {
       userData: userData,
