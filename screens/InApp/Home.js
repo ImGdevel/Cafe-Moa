@@ -28,7 +28,6 @@ function HomeScreen({ navigation }) {
     return unsubscribe;
   }, [navigation, setUserData]);
 
-  
   /** 유저 데이터 가져오기 */
   const LoadHomePage = async () => {
     let user = new UserDataService();
@@ -45,23 +44,26 @@ function HomeScreen({ navigation }) {
   const updateConfirmReservation = async () => {
     if (userData != null && userData.reservation.cafeId != null) {
       setReserveCafeInfo(await getCafeData(userData.reservation.cafeId));
-      refreshReserve();
+      //refreshReserve();
     } else {
       setReserveCafeInfo(null);
     }
   };
-
-  /** 예약 화면 */
+  
+  /*
   useEffect(()=>{ 
     refreshReserve()
   },[reserveCafeInfo])
 
+
   function refreshReserve() {
     if (userData != null && reserveCafeInfo != null) {
       setReserveHistory(ReservationsHistory);
+    }else{
+      
     }
   }
-
+*/
 
   /** Bookmark 리스트 */
   function refresBookMark(){
@@ -87,10 +89,13 @@ function HomeScreen({ navigation }) {
       setBookMarkList();
     }
   }
-
-
-  /** 예약 내역 */
-  function ReservationsHistory() {
+  
+  function ReservationView(props){
+    const {cafeData: cafeData, userData: userData} = props;
+    console.log(cafeData);
+    if(cafeData == null){
+      return <></>
+    }
     return(
       <View  style = {getHomeStyle.reserveArea}>
         <View style = {getHomeStyle.reserveAreaTop}>
@@ -99,7 +104,7 @@ function HomeScreen({ navigation }) {
         <View style = {getHomeStyle.reserveAreaContent}>
           <View style = {getHomeStyle.reserveCafeContainer}>
           <CafeTable
-            cafeData={reserveCafeInfo}
+            cafeData={cafeData}
             userData={userData}
             navigation={navigation}
           />
@@ -117,25 +122,52 @@ function HomeScreen({ navigation }) {
     )
   }
 
+  /*
+  function ReservationsHistory() {
+    return(
+      <View  style = {getHomeStyle.reserveArea}>
+        <View style = {getHomeStyle.reserveAreaTop}>
+          <Text style={getHomeStyle.AreaTitle}> 현제 예약 내역 </Text>
+        </View>
+        <View style = {getHomeStyle.reserveAreaContent}>
+          <View style = {getHomeStyle.reserveCafeContainer}>
+          
+          <CafeTable
+            cafeData={reserveCafeInfo}
+            userData={userData}
+            navigation={navigation}
+          />
+          </View>
+          <View style = {getHomeStyle.reserveBtnContainer}>
+            <TouchableOpacity style = {getHomeStyle.reserveBtn}>
+              <Text style={getHomeStyle.reserveBtnText}> 예약 내역 확인 </Text>
+            </TouchableOpacity>
+            <TouchableOpacity style = {getHomeStyle.reserveBtn}>
+              <Text style={getHomeStyle.reserveBtnText}> 배정 확정 </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+       </View>
+    )
+  }*/
+
   return (
     <KeyboardAvoidingView style={getHomeStyle.container}>
       <View style = {getHomeStyle.TopView}>
-        <View style = {getHomeStyle.TopViewTop}>
-
-        </View>
+        <View style = {getHomeStyle.TopViewTop}></View>
         <View style = {getHomeStyle.TopTitle}>
-          <Text style={{ color: "#001D44", fontWeight: "900", fontSize: 60 }}>
-            M O A
-          </Text>
+          <Text style={{ color: "#001D44", fontWeight: "900", fontSize: 60 }}> M O A </Text>
         </View>
-        <View style = {getHomeStyle.TopViewBottom}>
-        </View>
+        <View style = {getHomeStyle.TopViewBottom}></View>
       </View>
+
       <View style = {getHomeStyle.MainView}>
-        <ScrollView 
-          showsVerticalScrollIndicator = {false}
-        >
+        <ScrollView showsVerticalScrollIndicator = {false}>
           {/**현제 예약 중인 카페*/}
+          <ReservationView
+            cafeData={reserveCafeInfo}
+            userData={userData}
+          />
           {reserveHistory}
 
           {/**자주가는 카페*/}
@@ -148,10 +180,9 @@ function HomeScreen({ navigation }) {
               showsHorizontalScrollIndicator = {false}
               style = {{flex: 1}}
             >
-            {bookMarkList}
+              {bookMarkList}
             </ScrollView>
           </View>
-
 
           {/** 광고  */}
           <View style = {getHomeStyle.AdArea}>
@@ -164,8 +195,7 @@ function HomeScreen({ navigation }) {
               <AdPanel/>
             </ScrollView>
           </View>
-          
-          
+        
         </ScrollView>
       </View>
     </KeyboardAvoidingView>
@@ -181,7 +211,6 @@ function AdPanel(){
 }
 
 function BookMarkPanel(props){
-  
   const { cafeData: cafe_data} = props;
   const [cafeData, setCafeData] = useState(cafe_data);
   const [cafeName, setCafeName] = useState();
@@ -197,7 +226,7 @@ function BookMarkPanel(props){
   return(
     <View style={getHomeStyle.BookMarkPanel}>
       <View style={getHomeStyle.BookMarkPanelImageBox}>
-          <Image style={{flex:1}} />
+          <Image style={{flex:1}}/>
       </View>
       <View style={getHomeStyle.BookMarkPanelTextBox}>
         <View style={{flex:1, backgroundColor:"#ddd"}}> 
