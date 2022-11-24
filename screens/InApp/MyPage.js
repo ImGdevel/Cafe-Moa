@@ -5,7 +5,6 @@ import {
   View,
   Text,
   KeyboardAvoidingView,
-  TouchableWithoutFeedback,
 } from "react-native";
 
 import getMyPageStyle from "../../styles/screens/MyPageStyle";
@@ -23,7 +22,6 @@ function MyPageScreen({ navigation }) {
 
   const getData = async () => {
     let UserId = new UserDataService();
-    await UserId.loadUserId();
     let user_data = await UserId.getUserProfile();
     setUserData(user_data);
     setUserName(user_data.Name);
