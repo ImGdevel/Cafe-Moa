@@ -8,7 +8,6 @@ import {
   ScrollView,
 } from "react-native";
 import getHomeStyle from "../../styles/screens/HomeStyle";
-import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import { getCafeData } from "../../lib/CafeService";
 import { UserDataService } from "../../lib/UserDataService";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -18,8 +17,6 @@ function HomeScreen({ navigation }) {
   const [userData, setUserData] = useState();
   const [reserveCafeInfo, setReserveCafeInfo] = useState();
   const [bookMarkList, setBookMarkList] = useState();
-  const [reserveHistory, setReserveHistory] = useState();
-
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", async() => {
@@ -52,59 +49,27 @@ function HomeScreen({ navigation }) {
 
   /** Bookmark 리스트 */
   function refresBookMark(){
+    /*
     if(userData == null) return;
+
+
     if(userData.bookmark != null){
-      /*
-      let Book = reserveCafeInfo.bookmark;
+      
+      let Mark = userData.getBookmark();
+      console.log(Mark)
       let cafeList = [];
       for (let i = 0; i < Book.length; i++) {
         cafeList.push(
-          <CafeTable
-            key={i}
-            cafeData={cafeDatas[i]}
-            userData={userData}
-            navigation={navigation}
-          />
+
         );
       }
       setcafeTableList(cafeList);
-      */
+      
       console.log("북마크")
     }else if(true){
       setBookMarkList();
     }
-  }
-  
-  function ReservationView(props){
-    const {cafeData: cafeData, userData: userData} = props;
-    console.log(cafeData);
-    if(cafeData == null){
-      return <></>
-    }
-    return(
-      <View  style = {getHomeStyle.reserveArea}>
-        <View style = {getHomeStyle.reserveAreaTop}>
-          <Text style={getHomeStyle.AreaTitle}> 현제 예약 내역 </Text>
-        </View>
-        <View style = {getHomeStyle.reserveAreaContent}>
-          <View style = {getHomeStyle.reserveCafeContainer}>
-          <CafeTable
-            cafeData={cafeData}
-            userData={userData}
-            navigation={navigation}
-          />
-          </View>
-          <View style = {getHomeStyle.reserveBtnContainer}>
-            <TouchableOpacity style = {getHomeStyle.reserveBtn}>
-              <Text style={getHomeStyle.reserveBtnText}> 예약 내역 확인 </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style = {getHomeStyle.reserveBtn}>
-              <Text style={getHomeStyle.reserveBtnText}> 배정 확정 </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-       </View>
-    )
+    */
   }
 
   return (
@@ -123,8 +88,8 @@ function HomeScreen({ navigation }) {
           <ReservationView
             cafeData={reserveCafeInfo}
             userData={userData}
+            navigation={navigation}
           />
-          {reserveHistory}
 
           {/**자주가는 카페*/}
           <View style = {getHomeStyle.BookMarkArea}>
@@ -158,14 +123,7 @@ function HomeScreen({ navigation }) {
   );
 }
 
-function AdPanel(){
-  return(
-    <View style={getHomeStyle.AdPanel}>
-      <Image/>
-    </View>
-  );
-}
-
+/** 북마크 패널  */
 function BookMarkPanel(props){
   const { cafeData: cafe_data} = props;
   const [cafeData, setCafeData] = useState(cafe_data);
@@ -196,5 +154,54 @@ function BookMarkPanel(props){
     </View>
   )
 }
+
+/** 예약 내역 */
+function ReservationView(props){
+  const {cafeData: cafeData, userData: userData, navigation: navigation} = props;
+  if(cafeData == null){
+    return <></>
+  }
+  return(
+    <View  style = {getHomeStyle.reserveArea}>
+      <View style = {getHomeStyle.reserveAreaTop}>
+        <Text style={getHomeStyle.AreaTitle}> 현제 예약 내역 </Text>
+      </View>
+      <View style = {getHomeStyle.reserveAreaContent}>
+        <View style = {getHomeStyle.reserveCafeContainer}>
+        <CafeTable
+          cafeData={cafeData}
+          userData={userData}
+          navigation={navigation}
+        />
+        </View>
+        <View style = {getHomeStyle.reserveBtnContainer}>
+          <TouchableOpacity 
+            style = {getHomeStyle.reserveBtn}
+            onPress={() =>
+              props.navigation.navigate("ConfirmReservation", {
+                cafeData: cafeData,
+                userData: userData,
+            })}
+          >
+            <Text style={getHomeStyle.reserveBtnText}> 예약 내역 확인 </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style = {getHomeStyle.reserveBtn}>
+            <Text style={getHomeStyle.reserveBtnText}> 배정 확정 </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+     </View>
+  )
+}
+
+/** 광고 패널 */
+function AdPanel(){
+  return(
+    <View style={getHomeStyle.AdPanel}>
+      <Image/>
+    </View>
+  );
+}
+
 
 export default HomeScreen;
