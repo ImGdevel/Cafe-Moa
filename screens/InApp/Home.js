@@ -6,13 +6,13 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
   ScrollView,
-  TouchableHighlight,
 } from "react-native";
 import getHomeStyle from "../../styles/screens/HomeStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import { getCafeData } from "../../lib/CafeService";
 import { UserDataService } from "../../lib/UserDataService";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { CafeTable } from "../../lib/Components/CafeTable";
 
 function HomeScreen({ navigation }) {
   const [userData, setUserData] = useState();
@@ -89,7 +89,8 @@ function HomeScreen({ navigation }) {
   }
 
 
-  function ReservationsHistory () {
+  /** 예약 내역 */
+  function ReservationsHistory() {
     return(
       <View  style = {getHomeStyle.reserveArea}>
         <View style = {getHomeStyle.reserveAreaTop}>
@@ -211,6 +212,7 @@ function BookMarkPanel(props){
   )
 }
 
+/*
 function CafeTable(props) {
   const { cafeData: cafe_data, userData: user_data } = props;
   const [userData, setUserData] = useState(user_data);
@@ -255,5 +257,6 @@ function CafeTable(props) {
     </View>
   );
 }
+*/
 
 export default HomeScreen;
