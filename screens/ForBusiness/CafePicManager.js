@@ -48,13 +48,13 @@ function CafePicManageScreen({ navigation, route }) {
   // }
 
   const longPressButton = () =>
-    Alert.alert("경고", "사진이 삭제됩니다.", [
+    Alert.alert("확인", "사진을 삭제하시겠습니까?", [
       {
         text: "취소",
         onPress: () => console.log("Cancel Pressed"),
         style: "cancel",
       },
-      { text: "확인", onPress: () => console.log("OK Pressed") },
+      { text: "삭제", onPress: () => console.log("OK Pressed") },
     ]);
 
   return (

@@ -26,7 +26,16 @@ function BusinessHomeScreen({ navigation }) {
           <Text style={{ color: "#001D44", fontWeight: "900", fontSize: 60 }}>
             M O A
           </Text>
-          <Text style={{ color: "#001D44" }}>{"\t\t\t"}for Business</Text>
+          <Text
+            style={{
+              color: "#001D44",
+              alignSelf: "flex-end",
+              paddingRight: "28%",
+              top: -10,
+            }}
+          >
+            for Business
+          </Text>
         </View>
       </View>
       <View style={getBusinessHomeStyle.contentContainer}>
