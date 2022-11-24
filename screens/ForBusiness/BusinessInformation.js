@@ -148,7 +148,7 @@ const PreviewLayout = ({
   // cafeData,
 }) => (
   <View style={{ padding: 10, flex: 1 }}>
-    <Text style={{ marginBottom: 10, fontSize: 24 }}></Text>
+    <Text style={{ fontSize: 15 }}></Text>
     <View style={getInfoStyle.row}>
       {values.map((value) => (
         <TouchableOpacity
@@ -224,7 +224,7 @@ const PreviewLayout = ({
                 사용자가 작성한 리뷰의 내용이 들어가는 부분 사용자가 작성한
                 리뷰의 내용이 들어가는 부분
               </Text>
-              <View style={{ flexDirection: "row" }}>
+              <View style={{ flexDirection: "row", paddingLeft: 10 }}>
                 <Ionicons
                   name="star"
                   style={{ fontSize: 15, color: "gold", paddingRight: 2 }}

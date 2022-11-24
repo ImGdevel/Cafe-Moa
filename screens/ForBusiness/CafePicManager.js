@@ -10,6 +10,8 @@ import {
   Alert,
 } from "react-native";
 
+import * as ImagePicker from "expo-image-picker";
+
 import getInfoStyle from "../../styles/screens/InfoStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
@@ -29,6 +31,18 @@ const imgArr = [
   require("../../img/coffeebayLogo_test.jpg"),
 ];
 
+const _pickImage = async () => {
+  const { status_roll } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+  let result = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.All,
+    allowsEditing: true,
+    aspect: [4, 3],
+  });
+  if (!result.cancelled) {
+    this.setState({ image: result.uri });
+  }
+};
+
 function CafePicManageScreen({ navigation, route }) {
   // const { cafeData: cafe_Data, userData: user_data } = route.params;
   // const [cafeData, setCafeData] = useState(cafe_Data);
@@ -46,16 +60,6 @@ function CafePicManageScreen({ navigation, route }) {
   //   let Review = ReviewService(cafeData.id);
 
   // }
-
-  const longPressButton = () =>
-    Alert.alert("확인", "사진을 삭제하시겠습니까?", [
-      {
-        text: "취소",
-        onPress: () => console.log("Cancel Pressed"),
-        style: "cancel",
-      },
-      { text: "삭제", onPress: () => console.log("OK Pressed") },
-    ]);
 
   return (
     <>
@@ -79,6 +83,7 @@ function CafePicManageScreen({ navigation, route }) {
             values={["사진", "좌석"]}
             setSelectedValue={setDirection}
             style={getInfoStyle.contentLayout}
+            navigation={navigation}
             // cafeData={cafeData}
           >
             <FlatList
@@ -127,6 +132,16 @@ function CafePicManageScreen({ navigation, route }) {
   );
 }
 
+const longPressButton = () =>
+  Alert.alert("", "사진을 삭제하시겠습니까?", [
+    {
+      text: "취소",
+      onPress: () => console.log("Cancel Pressed"),
+      style: "cancel",
+    },
+    { text: "삭제", onPress: () => console.log("OK Pressed") },
+  ]);
+
 //카페 테이블
 function CafeTable(props) {
   // const cafeData = props.cafeData;
@@ -162,15 +177,26 @@ function CafeTable(props) {
   );
 }
 
+const seatLongPressButton = () =>
+  Alert.alert("", "사진을 변경하시겠습까?", [
+    {
+      text: "취소",
+      onPress: () => console.log("Cancel Pressed"),
+      style: "cancel",
+    },
+    { text: "확인", onPress: () => console.log("OK Pressed") },
+  ]);
+
 const PreviewLayout = ({
   children,
   values,
   selectedValue,
   setSelectedValue,
   // cafeData,
+  navigation,
 }) => (
   <View style={{ paddingHorizontal: 10, flex: 1 }}>
-    <Text style={{ marginBottom: 10, fontSize: 24 }}></Text>
+    <Text style={{ fontSize: 22 }}></Text>
     <View style={getInfoStyle.row}>
       {values.map((value) => (
         <TouchableOpacity
@@ -197,12 +223,15 @@ const PreviewLayout = ({
         return <View style={getInfoStyle.container}>{children}</View>;
       else
         return (
-          <View style={{ alignItems: "center", justifyContent: "center" }}>
+          <TouchableHighlight
+            style={{ alignItems: "center", justifyContent: "center" }}
+            onLongPress={seatLongPressButton}
+          >
             <Image
               source={require("../../img/anySeatPic_text.png")}
               style={getInfoStyle.seatPic}
             />
-          </View>
+          </TouchableHighlight>
         );
     })()}
   </View>
