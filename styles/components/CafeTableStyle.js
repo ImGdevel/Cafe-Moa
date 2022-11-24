@@ -61,6 +61,11 @@ const CafeTableStyles = StyleSheet.create({
   iconContainer: {
     flexDirection: "row",
   },
+  divideContent: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingRight: 20,
+  },
 });
 
 export default CafeTableStyles;

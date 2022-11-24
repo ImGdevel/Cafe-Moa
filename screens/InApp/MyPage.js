@@ -50,6 +50,12 @@ function MyPageScreen({ navigation }) {
     });
   }
 
+  function GoToMyMOAScreen() {
+    navigation.navigate("MyMOA", {
+      userData: userData,
+    });
+  }
+
   function GoToEditProfileScreen() {
     navigation.navigate("개인정보수정", {
       userData: userData,
@@ -91,6 +97,12 @@ function MyPageScreen({ navigation }) {
         <TouchableOpacity style={getMyPageStyle.btn} onPress={GoToOptionScreen}>
           <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>
             옵션
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={getMyPageStyle.btn} onPress={GoToMyMOAScreen}>
+          <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>
+            MyMOA
           </Text>
         </TouchableOpacity>
 
