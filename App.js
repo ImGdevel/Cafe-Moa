@@ -21,6 +21,7 @@ import OptionScreen from "./screens/InApp/Option";
 import BusinessHomeScreen from "./screens/ForBusiness/BusinessHome";
 import BusinessInformationScreen from "./screens/ForBusiness/BusinessInformation";
 import ReserveManageScreen from "./screens/ForBusiness/ReserveManage";
+import WriteNoticeScreen from "./screens/ForBusiness/WriteNotice";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -118,6 +119,7 @@ const InBusiness = () => {
         name="카페정보-사업자용"
         component={BusinessInformationScreen}
       />
+      <Stack.Screen name="공지 작성" component={WriteNoticeScreen} />
     </Stack.Navigator>
   );
 };
