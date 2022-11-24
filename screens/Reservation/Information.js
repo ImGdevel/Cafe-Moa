@@ -52,10 +52,6 @@ function InformationScreen({ navigation, route }) {
         <View style={getFindStyle.container}>
           <View style={getFindStyle.contentContainer}>
             <CafeTable
-              name={route.params.name}
-              location={route.params.location}
-              image={route.params.cafeData.getLogo()}
-              information={route.params.information}
               cafeData={cafeData}
               userData={userData}
               navigation={navigation}
@@ -109,7 +105,7 @@ function InformationScreen({ navigation, route }) {
 
 //카페 테이블
 function CafeTable(props) {
-  const {cafeData: cafeData, userData: userData} = props;
+  const {cafeData: cafeData, userData: userData, navigation: navigation } = props;
   const [cafeName, setCafeName] = useState(cafeData.getName());
   const [cafeLocation, setCafeLocation] = useState(cafeData.getAdress(1, 3));
   const [cafeInformation, setCafeInformaion] = useState(

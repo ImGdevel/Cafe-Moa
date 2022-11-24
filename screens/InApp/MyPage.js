@@ -26,8 +26,6 @@ function MyPageScreen({ navigation }) {
     setUserData(user_data);
     setUserName(user_data.Name);
     setUserEmail(user_data.email);
-    //
-
   };
 
   function GoToOptionScreen() {

@@ -7,10 +7,9 @@ import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
 import getModalStyle from "../../styles/components/ModalStyle";
 import { ReservationService } from "../../lib/ReservationService";
-import { sendReservetionToUser } from "../../lib/UserDataService";
 
 function ReservationScreen({ navigation, route }) {
-  const { cafeData: cafe_data } = route.params;
+  const { cafeData: cafe_data, userData: userData } = route.params;
 
   const [cafeData, setCafeData] = useState(cafe_data);
   const [seatImage, setSeatImage] = useState(cafe_data.getSeatImage());
@@ -91,7 +90,7 @@ function ReservationScreen({ navigation, route }) {
 
   const submitReservation = async () => {
     if (await seatData.doSeatReservation(time, selectedSeat)) {
-      await sendReservetionToUser(cafeData.getId(), cafeData.getSeatId(), time, selectedSeat); //수정
+      await userData.sendReservetionToUser(cafeData.getId(), cafeData.getSeatId(), time, selectedSeat); //수정
       navigation.navigate("ReserveEnd");
     }
   };
