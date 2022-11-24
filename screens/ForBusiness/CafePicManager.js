@@ -52,6 +52,7 @@ function CafePicManageScreen({ navigation, route }) {
   const [direction, setDirection] = useState("사진");
   // const [seatImage, setSeatImage] = useState(cafe_Data.getSeatImage());
   const [logoImage, setLogoImage] = useState();
+  const [seatImage, setSeatImage] = useState();
 
   useEffect(async () => {
     if (Platform.OS !== "web") {
