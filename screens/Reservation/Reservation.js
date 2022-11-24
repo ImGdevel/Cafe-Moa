@@ -8,11 +8,14 @@ import getFindStyle from "../../styles/components/FindStyle";
 import getModalStyle from "../../styles/components/ModalStyle";
 import { ReservationService } from "../../lib/ReservationService";
 import { sendReservetionToUser } from "../../lib/UserDataService";
+import { CafeData } from "../../lib/CafeData";
+import { CafeService } from "../../lib/CafeService";
 
 function ReservationScreen({ navigation, route }) {
-  const { cafeData: cafe_data } = route.params;
+  const { cafeData: cafe_data, userData: user_data } = route.params;
 
   const [cafeData, setCafeData] = useState(cafe_data);
+  const [userData, setUserData] = useState(user_data);
   const [seatImage, setSeatImage] = useState(cafe_data.getSeatImage());
   const [seatData, setSeatData] = useState();
   const [selectedSeat, setSelectedSeat] = useState();
@@ -90,9 +93,19 @@ function ReservationScreen({ navigation, route }) {
   };
 
   const submitReservation = async () => {
-    if (await seatData.doSeatReservation(time, selectedSeat)) {
-      await sendReservetionToUser(cafeData.getId(), cafeData.getSeatId(), time, selectedSeat); //수정
-      navigation.navigate("ReserveEnd");
+    await seatData.loadSeatDataBase();
+    if(!userData.isReserve()){
+      if (await seatData.doSeatReservation(time, selectedSeat)) {
+        await sendReservetionToUser(cafeData.getId(), cafeData.getSeatId(), time, selectedSeat); //수정
+        cafeData.addNowVisitor();
+        let service = new CafeService();
+        service.updateCafeData(cafeData);
+        navigation.navigate("ReserveEnd");
+      }else{
+        alert("이미 예약된 좌석입니다.");
+      }
+    }else{
+      alert("이미 예약 내역이 있습니다.");
     }
   };
   
