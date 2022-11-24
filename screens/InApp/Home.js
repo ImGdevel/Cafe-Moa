@@ -49,21 +49,6 @@ function HomeScreen({ navigation }) {
       setReserveCafeInfo(null);
     }
   };
-  
-  /*
-  useEffect(()=>{ 
-    refreshReserve()
-  },[reserveCafeInfo])
-
-
-  function refreshReserve() {
-    if (userData != null && reserveCafeInfo != null) {
-      setReserveHistory(ReservationsHistory);
-    }else{
-      
-    }
-  }
-*/
 
   /** Bookmark 리스트 */
   function refresBookMark(){
@@ -121,35 +106,6 @@ function HomeScreen({ navigation }) {
        </View>
     )
   }
-
-  /*
-  function ReservationsHistory() {
-    return(
-      <View  style = {getHomeStyle.reserveArea}>
-        <View style = {getHomeStyle.reserveAreaTop}>
-          <Text style={getHomeStyle.AreaTitle}> 현제 예약 내역 </Text>
-        </View>
-        <View style = {getHomeStyle.reserveAreaContent}>
-          <View style = {getHomeStyle.reserveCafeContainer}>
-          
-          <CafeTable
-            cafeData={reserveCafeInfo}
-            userData={userData}
-            navigation={navigation}
-          />
-          </View>
-          <View style = {getHomeStyle.reserveBtnContainer}>
-            <TouchableOpacity style = {getHomeStyle.reserveBtn}>
-              <Text style={getHomeStyle.reserveBtnText}> 예약 내역 확인 </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style = {getHomeStyle.reserveBtn}>
-              <Text style={getHomeStyle.reserveBtnText}> 배정 확정 </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-       </View>
-    )
-  }*/
 
   return (
     <KeyboardAvoidingView style={getHomeStyle.container}>
@@ -240,52 +196,5 @@ function BookMarkPanel(props){
     </View>
   )
 }
-
-/*
-function CafeTable(props) {
-  const { cafeData: cafe_data, userData: user_data } = props;
-  const [userData, setUserData] = useState(user_data);
-  const [cafeData, setCafeData] = useState(cafe_data);
-  const [cafeName, setCafeName] = useState(cafe_data.getName());
-  const [cafeLocation, setCafeLocation] = useState(cafe_data.getAdress(1, 3));
-  const [cafeInformation, setCafeInformaion] = useState(
-    "Open : " +
-      cafe_data.getOpenTime() +
-      ":00 ~ Close : " +
-      cafe_data.getCloseTime() +
-      ":00"
-  );
-  const [cafeLogoImage, setCafeLogoImage] = useState(cafe_data.getLogo());
-  const [rating, setRating] = useState(4.7);
-
-  return (
-    <View style={getCafeTableStyle.container_NoneStyle}>
-      <>
-        <View style={getCafeTableStyle.imageContainer}>
-          <View style={getCafeTableStyle.image}>
-            <Image
-              source={{ uri: cafeLogoImage }}
-              style={{ width: "100%", height: "100%", borderRadius: 20 }}
-            />
-          </View>
-        </View>
-        <View style={getCafeTableStyle.contentContainer}>
-          <View style={getCafeTableStyle.textContent}>
-            <Text style={getCafeTableStyle.nameText}>{cafeName}</Text>
-            <Text style={getCafeTableStyle.contentText}>{cafeLocation}</Text>
-            <Text style={getCafeTableStyle.contentText}>{cafeInformation}</Text>
-            <View styles={getCafeTableStyle.iconContainer}>
-              <Text style={getCafeTableStyle.icon}>
-                <Ionicons name="star" style={{ color: "gold" }}></Ionicons>{" "}
-                {rating}
-              </Text>
-            </View>
-          </View>
-        </View>
-      </>
-    </View>
-  );
-}
-*/
 
 export default HomeScreen;
