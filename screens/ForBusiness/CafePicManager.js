@@ -125,7 +125,7 @@ function CafePicManageScreen({ navigation, route }) {
           <TouchableOpacity
             style={getInfoStyle.reserveButton}
             onPress={() =>
-              navigation.navigate("Auth", {
+              navigation.navigate("카페 사진 추가", {
                 // cafeData: cafeData,
                 // userData: userData,
               })

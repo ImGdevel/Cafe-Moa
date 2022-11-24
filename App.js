@@ -23,6 +23,7 @@ import BusinessInformationScreen from "./screens/ForBusiness/BusinessInformation
 import ReserveManageScreen from "./screens/ForBusiness/ReserveManage";
 import CafePicManageScreen from "./screens/ForBusiness/CafePicManager";
 import ZoomImageScreen from "./screens/ForBusiness/ZoomImage";
+import AddPicScreen from "./screens/ForBusiness/AddPicScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -126,6 +127,7 @@ const InBusiness = () => {
         component={ZoomImageScreen}
         options={{ headerShown: false }}
       />
+      <Stack.Screen name="카페 사진 추가" component={AddPicScreen} />
     </Stack.Navigator>
   );
 };
