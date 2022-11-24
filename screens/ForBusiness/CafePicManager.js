@@ -8,6 +8,7 @@ import {
   FlatList,
   TouchableHighlight,
   Alert,
+  Platform,
 } from "react-native";
 
 import * as ImagePicker from "expo-image-picker";
@@ -31,15 +32,16 @@ const imgArr = [
   require("../../img/coffeebayLogo_test.jpg"),
 ];
 
-const _pickImage = async () => {
-  const { status_roll } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+const PickImage = async () => {
   let result = await ImagePicker.launchImageLibraryAsync({
     mediaTypes: ImagePicker.MediaTypeOptions.All,
     allowsEditing: true,
     aspect: [4, 3],
+    quality: 1,
   });
-  if (!result.cancelled) {
-    this.setState({ image: result.uri });
+  console.log(result);
+  if (!result.canceled) {
+    CafePicManageScreen.setLogoImage(result.assets);
   }
 };
 
@@ -49,12 +51,17 @@ function CafePicManageScreen({ navigation, route }) {
   // const [userData, setUserData] = useState(user_data);
   const [direction, setDirection] = useState("사진");
   // const [seatImage, setSeatImage] = useState(cafe_Data.getSeatImage());
+  const [logoImage, setLogoImage] = useState();
 
-  // useEffect(()=>{
-  //   //리뷰 및 사진 불러오기
-  //   //
-
-  // },[])
+  useEffect(async () => {
+    if (Platform.OS !== "web") {
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== "granted") {
+        alert("Permission Denied.");
+      }
+    }
+  }, []);
 
   // const loadreview = () => {
   //   let Review = ReviewService(cafeData.id);
@@ -165,7 +172,10 @@ function CafeTable(props) {
             <Text style={getCafeTableStyle.contentText}>{cafeInformation}</Text>
           </View>
           <View style={getCafeTableStyle.logoPickerContainer}>
-            <TouchableOpacity style={getCafeTableStyle.LogoImagePicker}>
+            <TouchableOpacity
+              style={getCafeTableStyle.LogoImagePicker}
+              onPress={PickImage}
+            >
               <Text style={{ color: "white", fontSize: 18 }}>
                 로고 변경하기
               </Text>
