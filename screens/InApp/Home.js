@@ -48,28 +48,27 @@ function HomeScreen({ navigation }) {
   };
 
   /** Bookmark 리스트 */
-  function refresBookMark(){
-    /*
+  async function refresBookMark(){
     if(userData == null) return;
-
-
-    if(userData.bookmark != null){
-      
+    if(userData.bookmark != null){      
       let Mark = userData.getBookmark();
-      console.log(Mark)
+      console.log(Mark);
       let cafeList = [];
-      for (let i = 0; i < Book.length; i++) {
+      for (let i = 0; i < Mark.length; i++) {
+        let cafeData = await getCafeData(Mark[i]);
         cafeList.push(
-
-        );
+          <BookMarkPanel
+            key={i}
+            cafeData={cafeData}
+            userData={userData}
+            navigation={navigation}
+          />
+        )
       }
-      setcafeTableList(cafeList);
-      
-      console.log("북마크")
+      setBookMarkList(cafeList);
     }else if(true){
       setBookMarkList();
     }
-    */
   }
 
   return (
@@ -125,22 +124,24 @@ function HomeScreen({ navigation }) {
 
 /** 북마크 패널  */
 function BookMarkPanel(props){
-  const { cafeData: cafe_data} = props;
-  const [cafeData, setCafeData] = useState(cafe_data);
+  const { cafeData: cafeData} = props;
   const [cafeName, setCafeName] = useState();
   const [cafeLocation, setCafeLocation] = useState();
   const [rating, setRating] = useState();
   useEffect(()=>{
-    if(cafe_data != null){
-      setCafeName(cafe_data.getName());
-      setCafeLocation(cafe_data.getAdress(1, 3));
+    if(cafeData != null){
+      setCafeName(cafeData.getName());
+      setCafeLocation(cafeData.getAdress(1, 3));
     }
   },[cafeData])
 
   return(
-    <View style={getHomeStyle.BookMarkPanel}>
+    <TouchableOpacity style={getHomeStyle.BookMarkPanel}>
       <View style={getHomeStyle.BookMarkPanelImageBox}>
-          <Image style={{flex:1}}/>
+          <Image 
+            source={{ uri: cafeData.getLogo() }} 
+            style={{ flex: 1 }} 
+          />
       </View>
       <View style={getHomeStyle.BookMarkPanelTextBox}>
         <View style={{flex:1, backgroundColor:"#ddd"}}> 
@@ -151,7 +152,7 @@ function BookMarkPanel(props){
           <Text>{cafeLocation}</Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 
