@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 import getHomeStyle from "../../styles/screens/HomeStyle";
-import { getCafeData } from "../../lib/CafeService";
+import { getCafeData, getCafeDatas } from "../../lib/CafeService";
 import { UserDataService } from "../../lib/UserDataService";
 import { CafeTable } from "../../Components/CafeTable";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -50,16 +50,14 @@ function HomeScreen({ navigation }) {
   /** Bookmark 리스트 */
   async function refresBookMark(){
     if(userData == null) return;
-    if(userData.bookmark != null){      
-      let Mark = userData.getBookmark();
-      console.log(Mark);
-      let cafeList = [];
+    if(userData.bookmark != null){
+      let cafeList = new Array();  
+      let Mark = await getCafeDatas(userData.bookmark);
       for (let i = 0; i < Mark.length; i++) {
-        let cafeData = await getCafeData(Mark[i]);
         cafeList.push(
           <BookMarkPanel
             key={i}
-            cafeData={cafeData}
+            cafeData={Mark[i]}
             userData={userData}
             navigation={navigation}
           />

@@ -12,7 +12,7 @@ import { signOut } from "../../lib/AuthService";
 import { getUserProfile, UserDataService } from "../../lib/UserDataService";
 
 function MyPageScreen({ navigation }) {
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState();
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
 
