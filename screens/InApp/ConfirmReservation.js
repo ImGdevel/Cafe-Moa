@@ -57,7 +57,6 @@ function ConfirmReservationScreen({ navigation, route }) {
             />
           </View>
         </View>
-
         <View style={{ flex: 4.5 }}>
           <PreviewLayout
             selectedValue={direction}
