@@ -28,14 +28,17 @@ function MyPageScreen({ navigation }) {
     setUserEmail(user_data.email);
   };
 
+  //
   function GoToOptionScreen() {
     navigation.navigate("옵션", {
       userData: userData,
     });
   }
 
+  //
   function GoToMyMOAScreen() {
-    navigation.navigate("MyMOA", {
+    console.log("데이터",userData);
+    navigation.navigate("북마크", {
       userData: userData,
     });
   }
@@ -47,6 +50,7 @@ function MyPageScreen({ navigation }) {
     });
   }
 
+  //
   function GoToLogoutScreen() {
     signOut();
     navigation.replace("Auth");
@@ -69,25 +73,22 @@ function MyPageScreen({ navigation }) {
           <Text style={{ fontWeight: "600", fontSize: 25 }}>{userName}</Text>
           <Text style={{ fontWeight: "400", fontSize: 15 }}>{userEmail}</Text>
           <Text></Text>
-          <TouchableOpacity
-            style={getMyPageStyle.infoBtn}
-            onPress={GoToEditProfileScreen}
-          >
+          <TouchableOpacity style={getMyPageStyle.infoBtn} onPress={GoToEditProfileScreen}>
             <Text style={{ color: "white", fontSize: 20 }}>개인정보변경</Text>
           </TouchableOpacity>
         </View>
       </View>
 
       <View style={getMyPageStyle.contentContainer}>
-        <TouchableOpacity style={getMyPageStyle.btn} onPress={GoToOptionScreen}>
+        <TouchableOpacity style={getMyPageStyle.btn} onPress={GoToMyMOAScreen}>
           <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>
-            옵션
+            My 모아
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={getMyPageStyle.btn} onPress={GoToMyMOAScreen}>
+        <TouchableOpacity style={getMyPageStyle.btn} onPress={GoToOptionScreen}>
           <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>
-            MyMOA
+            옵션
           </Text>
         </TouchableOpacity>
 
@@ -96,10 +97,8 @@ function MyPageScreen({ navigation }) {
             로그아웃
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={getMyPageStyle.btn}
-          onPress={GoToDeleteAccountScreen}
-        >
+
+        <TouchableOpacity style={getMyPageStyle.btn} onPress={GoToDeleteAccountScreen}>
           <Text style={{ color: "red", fontWeight: "500", fontSize: 20 }}>
             회원탈퇴
           </Text>

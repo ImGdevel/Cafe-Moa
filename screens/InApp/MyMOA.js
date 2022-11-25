@@ -14,18 +14,18 @@ import getMyMOAStyle from "../../styles/screens/MyMOAStyle";
 import { UserDataService } from "../../lib/UserDataService";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import getBookmarkTableStyles from "../../styles/components/BookmarkTableStyle";
-import { CafeService, getCafeDatabaseAd } from "../../lib/CafeService";
+import { CafeService } from "../../lib/CafeService";
 import { getGeoLocation } from "../../lib/LocationService";
 
 function MyMOAScreen({ navigation, route }) {
-    const [userData, setUserData] = useState();
+    const {userData: userData} = route.params;
     const [BookmarkTableList, setBookmarkTableList] = useState([]);
     const [cafeservice,setCafeService] = useState(new CafeService());
     const [cafeDatas, setcafeDatas] = useState([]);
     const [location, setLocation] = useState();
 
     useEffect(() => {
-        FindStart();
+        BookMarkPageStart();
         BookmarkListLoad();
     }, [setBookmarkTableList]);
     
@@ -34,10 +34,11 @@ function MyMOAScreen({ navigation, route }) {
     }, [cafeDatas]);
     //bookmarkDatas 로 변경 예정
     
-    async function FindStart() {
-        let user = new UserDataService();
-        await user.getUserProfile();
-        setUserData(user);
+    async function BookMarkPageStart() {
+        console.log(userData);
+
+
+        //userData.getBookmark();
         let cafeservice = new CafeService();
         await cafeservice.getCafeDatabaseAd();
         setCafeService(cafeservice);
@@ -48,6 +49,7 @@ function MyMOAScreen({ navigation, route }) {
         console.log("북마크 리스트 출력");
         let bookmarkList = [];
         //bookmarkDatas로 변경 예정
+
         for (let i = 0; i < cafeDatas.length; i++) {
             bookmarkList.push(
                 <BookmarkTable
@@ -64,7 +66,7 @@ function MyMOAScreen({ navigation, route }) {
     return (
         <View style={getMyMOAStyle.container}>
             <View style={getMyMOAStyle.contentContainer}>
-            <ScrollView>{BookmarkTableList}</ScrollView>
+                <ScrollView>{BookmarkTableList}</ScrollView>
             </View>
         </View>
     );

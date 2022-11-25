@@ -96,7 +96,7 @@ const InApp = () => {
             <Stack.Screen name="마이페이지" component={MyPageScreen} />
             <Stack.Screen name="개인정보수정" component={EditProfileScreen} />
             <Stack.Screen name="옵션" component={OptionScreen} />
-            <Stack.Screen name="MyMOA" component={MyMOAScreen} />
+            <Stack.Screen name="북마크" component={MyMOAScreen} />
           </Stack.Navigator>
         )}
       </Tab.Screen>

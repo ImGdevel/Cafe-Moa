@@ -1,6 +1,6 @@
 import React, {useState,useEffect} from "react";
 import { View, Text, Image } from "react-native";
-import getCafeTableStyle from "../../styles/components/CafeTableStyle";
+import getCafeTableStyle from "../styles/components/CafeTableStyle";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 
