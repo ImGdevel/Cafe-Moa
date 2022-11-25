@@ -10,8 +10,8 @@ import {
 import getHomeStyle from "../../styles/screens/HomeStyle";
 import { getCafeData } from "../../lib/CafeService";
 import { UserDataService } from "../../lib/UserDataService";
+import { CafeTable } from "../../Components/CafeTable";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { CafeTable } from "../../lib/Components/CafeTable";
 
 function HomeScreen({ navigation }) {
   const [userData, setUserData] = useState();
