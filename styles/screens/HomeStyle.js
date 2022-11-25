@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
 
   reserveArea:{
-    marginTop:10,
+    marginTop:25,
     height:260,
     width:'100%',
     backgroundColor: "#fff",

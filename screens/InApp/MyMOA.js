@@ -23,6 +23,7 @@ function MyMOAScreen({ navigation, route }) {
     async function BookmarkListLoad(){
         let bookmarkList = [];
         let Mark = await getCafeDatas(userData.bookmark);
+        Mark.sort((a,b)=>{ return (a.rating < b.rating) });
         for (let i = 0; i < Mark.length; i++) {
           bookmarkList.push(
             <BookmarkTable

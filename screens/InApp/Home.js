@@ -53,6 +53,7 @@ function HomeScreen({ navigation }) {
     if(userData.bookmark != null){
       let cafeList = new Array();  
       let Mark = await getCafeDatas(userData.bookmark);
+      Mark.sort((a,b)=>{ return (a.rating < b.rating) });
       for (let i = 0; i < Mark.length; i++) {
         cafeList.push(
           <BookMarkPanel
@@ -157,6 +158,9 @@ function BookMarkPanel(props){
 /** 예약 내역 */
 function ReservationView(props){
   const {cafeData: cafeData, userData: userData, navigation: navigation} = props;
+  
+  
+
   if(cafeData == null){
     return <></>
   }

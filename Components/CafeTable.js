@@ -10,7 +10,15 @@ export function CafeTable(props) {
     const [cafeLocation, setCafeLocation] = useState(cafeData.getAdress(1, 3));
     const [cafeInformation, setCafeInformaion] = useState("Open : " + cafeData.getOpenTime() + ":00 ~ Close : " + cafeData.getCloseTime() + ":00");
     const [cafeLogoImage, setCafeLogoImage] = useState(cafeData.getLogo());
-    const [rating, setRating] = useState(4.7);
+    const [rating, setRating] = useState(cafeData.getRating());
+
+    useEffect(()=>{
+      setCafeName(cafeData.getName());
+      setCafeLocation(cafeData.getAdress(1, 3));
+      setCafeInformaion("Open : " + cafeData.getOpenTime() + ":00 ~ Close : " + cafeData.getCloseTime() + ":00");
+      setCafeLogoImage(cafeData.getLogo());
+      setRating(cafeData.getRating());
+    },[,cafeData])
   
     return (
         <View style={getCafeTableStyle.container_NoneStyle}>
