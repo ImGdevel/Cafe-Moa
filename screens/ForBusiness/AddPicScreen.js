@@ -38,7 +38,7 @@ function AddPicScreen({ navigation, route }) {
     });
     console.log(result);
     if (!result.canceled) {
-      CafePicManageScreen.Image(result.assets);
+      image(result.assets);
     }
   };
 
