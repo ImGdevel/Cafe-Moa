@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   button: {
     width: "47%",
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",
-    margin: 5
+    margin: 5,
   },
   manageReservationWindow: {
     width: "97%",
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderWidth: 1,
     borderColor: "#ccc",
-    borderRadius: 15
+    borderRadius: 15,
   },
   manageHeader: {
     justifyContent: "center",
@@ -46,10 +46,10 @@ const styles = StyleSheet.create({
   },
   reservationList: {
     width: "100%",
-    flexDirection: "row"
+    flexDirection: "row",
   },
   reserveTimeBox: {
-    width: 80,
+    width: 70,
     height: 35,
     borderRightWidth: 1,
     borderBottomWidth: 1,
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   logoutContainer: {
     alignItems: "center",
     justifyContent: "center",
-    width: "100%"
+    width: "100%",
   },
   logoutBtn: {
     backgroundColor: "#ccc",
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     width: "80%",
     height: 55,
-  }
+  },
 });
 
 export default styles;

@@ -26,7 +26,16 @@ function BusinessHomeScreen({ navigation }) {
           <Text style={{ color: "#001D44", fontWeight: "900", fontSize: 60 }}>
             M O A
           </Text>
-          <Text style={{ color: "#001D44" }}>{"\t\t\t"}for Business</Text>
+          <Text
+            style={{
+              color: "#001D44",
+              alignSelf: "flex-end",
+              paddingRight: "28%",
+              top: -10,
+            }}
+          >
+            for Business
+          </Text>
         </View>
       </View>
       <View style={getBusinessHomeStyle.contentContainer}>
@@ -65,7 +74,7 @@ function BusinessHomeScreen({ navigation }) {
         <ScrollView style={getBusinessHomeStyle.manageReservationWindow}>
           <View style={getBusinessHomeStyle.manageHeader}>
             <Text style={{ color: "black", fontWeight: "500", fontSize: 30 }}>
-              카페 예약 현황
+              현재 좌석 현황
             </Text>
           </View>
           <View style={getBusinessHomeStyle.seatPicArea}>
@@ -80,26 +89,14 @@ function BusinessHomeScreen({ navigation }) {
                 <Text
                   style={{ color: "white", fontWeight: "500", fontSize: 15 }}
                 >
-                  11:00
+                  7
                 </Text>
               </View>
-              <View style={getBusinessHomeStyle.reserveSeatnumber}>
-                <Text style={{ fontWeight: "500", fontSize: 15 }}>
-                  5, 8 번 자리
-                </Text>
-              </View>
-            </View>
-            <View style={getBusinessHomeStyle.reservationList}>
               <View style={getBusinessHomeStyle.reserveTimeBox}>
                 <Text
                   style={{ color: "white", fontWeight: "500", fontSize: 15 }}
                 >
-                  12:00
-                </Text>
-              </View>
-              <View style={getBusinessHomeStyle.reserveSeatnumber}>
-                <Text style={{ fontWeight: "500", fontSize: 15 }}>
-                  7, 10 번 자리
+                  8
                 </Text>
               </View>
             </View>

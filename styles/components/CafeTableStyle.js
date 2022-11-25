@@ -27,6 +27,7 @@ const CafeTableStyles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     flexDirection: "column",
+    justifyContent: "center",
   },
   textContent: {
     flex: 1,
@@ -60,6 +61,19 @@ const CafeTableStyles = StyleSheet.create({
   },
   iconContainer: {
     flexDirection: "row",
+  },
+  logoPickerContainer: {
+    width: "100%",
+    height: 32,
+    marginBottom: 10,
+  },
+  LogoImagePicker: {
+    width: "80%",
+    height: "100%",
+    backgroundColor: "#001D44",
+    borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

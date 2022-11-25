@@ -22,6 +22,9 @@ import BusinessHomeScreen from "./screens/ForBusiness/BusinessHome";
 import BusinessInformationScreen from "./screens/ForBusiness/BusinessInformation";
 import ReserveManageScreen from "./screens/ForBusiness/ReserveManage";
 import WriteNoticeScreen from "./screens/ForBusiness/WriteNotice";
+import CafePicManageScreen from "./screens/ForBusiness/CafePicManager";
+import ZoomImageScreen from "./screens/ForBusiness/ZoomImage";
+import AddPicScreen from "./screens/ForBusiness/AddPicScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -120,6 +123,13 @@ const InBusiness = () => {
         component={BusinessInformationScreen}
       />
       <Stack.Screen name="공지 작성" component={WriteNoticeScreen} />
+      <Stack.Screen name="카페 사진 관리" component={CafePicManageScreen} />
+      <Stack.Screen
+        name="사진 확대"
+        component={ZoomImageScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name="카페 사진 추가" component={AddPicScreen} />
     </Stack.Navigator>
   );
 };

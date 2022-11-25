@@ -88,7 +88,7 @@ function BusinessInformationScreen({ navigation, route }) {
           <TouchableOpacity
             style={getBusinessInfoStyle.reserveButton}
             onPress={() =>
-              navigation.navigate("예약하기", {
+              navigation.navigate("카페 사진 관리", {
                 // cafeData: cafeData,
                 // userData: userData,
               })
@@ -99,7 +99,7 @@ function BusinessInformationScreen({ navigation, route }) {
           <TouchableOpacity
             style={getBusinessInfoStyle.reserveButton}
             onPress={() =>
-              navigation.navigate("예약하기", {
+              navigation.navigate("Auth", {
                 // cafeData: cafeData,
                 // userData: userData,
               })
@@ -150,7 +150,7 @@ const PreviewLayout = ({
   // cafeData,
 }) => (
   <View style={{ padding: 10, flex: 1 }}>
-    <Text style={{ marginBottom: 10, fontSize: 24 }}></Text>
+    <Text style={{ fontSize: 15 }}></Text>
     <View style={getInfoStyle.row}>
       {values.map((value) => (
         <TouchableOpacity
