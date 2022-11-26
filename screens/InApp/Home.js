@@ -109,9 +109,9 @@ function HomeScreen({ navigation }) {
             <ScrollView 
               horizontal={true}
               showsHorizontalScrollIndicator = {false}>
-              <AdPanel/> 
-              <AdPanel/> 
-              <AdPanel/> 
+              <AdPanel/>
+              <AdPanel/>
+              <AdPanel/>
               <AdPanel/>
             </ScrollView>
           </View>

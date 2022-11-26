@@ -47,6 +47,8 @@ function BookMarkScreen({ navigation, route }) {
 }
 
 
+
+
 function BookmarkTable(props) {
     const { cafeData: cafeData, userData: userData } = props;
     const [cafeName, setCafeName] = useState(cafeData.getName());
@@ -101,9 +103,9 @@ function BookmarkTable(props) {
                     <Text style={getBookmarkTableStyles.nameText}>{cafeName}</Text>
                     <View styles={getBookmarkTableStyles.iconContainer}>
                         <Text style={getBookmarkTableStyles.icon}>
-                        <Ionicons name="star" style={{ color: "gold" }}></Ionicons>{" "}
-                        {rating}
-                        <Text style={getBookmarkTableStyles.contentText}>{" (총 " + visitors + " 명 방문)"}</Text>
+                            <Ionicons name="star" style={{ color: "gold" }}></Ionicons>{" "}
+                            {rating}
+                            <Text style={getBookmarkTableStyles.contentText}>{" (총 " + visitors + " 명 방문)"}</Text>
                         </Text>
                     </View>
                     <Text style={getBookmarkTableStyles.contentText}>{cafeLocation}</Text>
