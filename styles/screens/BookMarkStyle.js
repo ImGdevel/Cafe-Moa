@@ -1,6 +1,6 @@
 import { StyleSheet, Dimensions } from "react-native";
 
-const MyMOAstyles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "white",
@@ -15,4 +15,4 @@ const MyMOAstyles = StyleSheet.create({
       },
 });
 
-export default MyMOAstyles;
+export default styles;

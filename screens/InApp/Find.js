@@ -135,7 +135,7 @@ function CafeTable(props) {
       ":00"
   );
   const [cafeLogoImage, setCafeLogoImage] = useState(cafe_data.getLogo());
-  const [rating, setRating] = useState(4.7);
+  const [rating, setRating] = useState(cafe_data.getRating());
 
   return (
     <TouchableHighlight

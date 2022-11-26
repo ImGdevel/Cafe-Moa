@@ -7,12 +7,12 @@ import {
     ScrollView,
 } from "react-native";
 
-import getMyMOAStyle from "../../styles/screens/MyMOAStyle";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import getMyMOAStyle from "../../styles/screens/BookMarkStyle";
 import getBookmarkTableStyles from "../../styles/components/BookmarkTableStyle";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import { getCafeDatas } from "../../lib/CafeService";
 
-function MyMOAScreen({ navigation, route }) {
+function BookMarkScreen({ navigation, route }) {
     const {userData: userData} = route.params;
     const [BookmarkTableList, setBookmarkTableList] = useState();
 
@@ -115,4 +115,4 @@ function BookmarkTable(props) {
     );
 }
 
-export default MyMOAScreen;
+export default BookMarkScreen;

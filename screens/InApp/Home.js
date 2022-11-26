@@ -123,7 +123,7 @@ function HomeScreen({ navigation }) {
 
 /** 북마크 패널  */
 function BookMarkPanel(props){
-  const { cafeData: cafeData} = props;
+  const { cafeData: cafeData, userData: userData } = props;
   const [cafeName, setCafeName] = useState();
   const [cafeLocation, setCafeLocation] = useState();
   const [rating, setRating] = useState();
@@ -131,24 +131,40 @@ function BookMarkPanel(props){
     if(cafeData != null){
       setCafeName(cafeData.getName());
       setCafeLocation(cafeData.getAdress(1, 3));
+      setRating(cafeData.getRating());
     }
   },[cafeData])
 
   return(
-    <TouchableOpacity style={getHomeStyle.BookMarkPanel}>
-      <View style={getHomeStyle.BookMarkPanelImageBox}>
-          <Image 
+    <TouchableOpacity 
+      style={getHomeStyle.BookMarkContainer}
+      onPress={() =>
+        props.navigation.navigate("카페 정보", {
+          cafeData: cafeData,
+          userData: userData,
+      })}
+      >
+      <View style={getHomeStyle.BookMarkPanelImageArea}>
+        <Image
+            resizeMode = "contain" 
             source={{ uri: cafeData.getLogo() }} 
-            style={{ flex: 1 }} 
-          />
+            style={{ width:"100%", height:"100%" }} 
+        />
       </View>
-      <View style={getHomeStyle.BookMarkPanelTextBox}>
-        <View style={{flex:1, backgroundColor:"#ddd"}}> 
-          <Text>{cafeName}</Text>
-          <Text>{rating}</Text>
+      <View style={getHomeStyle.BookMarkPanelTextArea}>
+        <View style={{flex:1, backgroundColor:"#fff",}}> 
+          <Text  style={{paddingLeft: "4%", color:"#111", fontSize: 17, fontWeight: "700"}}>
+            {cafeName}
+          </Text>
+          <Text>
+            <Ionicons name="star" style={{ color: "gold" }}></Ionicons>{" "}
+            {rating}
+          </Text>
         </View>
-        <View style={{flex:1, backgroundColor:"aaa"}}>
-          <Text>{cafeLocation}</Text>
+        <View style={{flex:1, backgroundColor:"#fff"}}>
+          <Text style={{color:"#aaa", fontSize: 12}}>
+            {cafeLocation}
+           </Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -159,8 +175,6 @@ function BookMarkPanel(props){
 function ReservationView(props){
   const {cafeData: cafeData, userData: userData, navigation: navigation} = props;
   
-  
-
   if(cafeData == null){
     return <></>
   }
