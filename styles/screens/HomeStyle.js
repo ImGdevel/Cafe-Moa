@@ -83,35 +83,46 @@ const styles = StyleSheet.create({
   },
 
   BookMarkContainer:{
-    height: 220, 
+    height: 210, 
     width: 160, 
-    marginLeft:5,
+    marginHorizontal:4,
     
-    //borderColor: "#aaa",
-    //borderWidth: 1,
-    //borderRadius: 5,
+    borderColor: "#aaa",
+    borderWidth: 1,
+    borderRadius: 5,
   },
 
   BookMarkPanelImageArea:{
-    flex:2,
+    flex:7,
     margin:"5%",
     borderRadius:10,
   },
 
   BookMarkPanelTextArea:{
-    flex:1,
-    //borderColor:"#aaa",
-    //borderWidth:1,
+    flex:3,
+    borderColor:"#ddd",
+    paddingHorizontal: "5%",
+    // //borderWidth:1,
+    // borderColor: "#aaa",
+    // borderWidth: 1,
+    // borderRadius: 5,
   },
 
   BookMarkPanelTextAreaTop:{
     flex:1,
-    
+    flexDirection:"row",
   },
 
   AreaTitle:{
     fontSize: 23,
     fontWeight:"600",
+    paddingLeft:15,
+  },
+  AreaTitleLink:{
+    fontSize: 17,
+    paddingTop: 9,
+    fontWeight:"600",
+    color: "#777",
     paddingLeft:15,
   },
 

@@ -91,13 +91,14 @@ function HomeScreen({ navigation }) {
 
           {/**자주가는 카페*/}
           <View style = {getHomeStyle.BookMarkArea}>
-            <View style ={{height: 50}}>
+            <View style ={{height: 50, flexDirection: "row"}}>
               <Text style={getHomeStyle.AreaTitle}> My 모아 </Text>
+              {/*<Text style={getHomeStyle.AreaTitleLink}> 전체보기 {">"} </Text>*/}
             </View>
             <ScrollView 
               horizontal={true}
               showsHorizontalScrollIndicator = {false}
-              style = {{flex: 1}}
+              style = {{flex: 1, paddingHorizontal: 4}}
             >
               {bookMarkList}
             </ScrollView>
@@ -152,17 +153,17 @@ function BookMarkPanel(props){
         />
       </View>
       <View style={getHomeStyle.BookMarkPanelTextArea}>
-        <View style={{flex:1, backgroundColor:"#fff",}}> 
-          <Text  style={{paddingLeft: "4%", color:"#111", fontSize: 17, fontWeight: "700"}}>
+        <View style={getHomeStyle.BookMarkPanelTextAreaTop}>
+          <Text  style={{ flex:2, paddingLeft: "4%", fontSize: 17, fontWeight: "700"}}>
             {cafeName}
           </Text>
-          <Text>
+          <Text style={{ flex:1 }}>
             <Ionicons name="star" style={{ color: "gold" }}></Ionicons>{" "}
             {rating}
           </Text>
         </View>
         <View style={{flex:1, backgroundColor:"#fff"}}>
-          <Text style={{color:"#aaa", fontSize: 12}}>
+          <Text style={{ paddingLeft:"3%", color:"#aaa", fontSize: 12}}>
             {cafeLocation}
            </Text>
         </View>
