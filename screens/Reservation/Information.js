@@ -143,7 +143,7 @@ function CafeTable(props) {
       }
     }
     return(
-      <IonIcons
+      <Ionicons
         name={icon}
         style={iconStyle}
         onPress={bookMarked}
