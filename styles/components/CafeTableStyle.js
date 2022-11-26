@@ -11,6 +11,13 @@ const CafeTableStyles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
   },
+  container_NoneStyle:{
+    width: "100%",
+    height: 140,
+    backgroundColor: "white",
+    flexDirection: "row",
+    justifyContent: "center",
+  },
   imageContainer: {
     width: 140,
     height: 140,

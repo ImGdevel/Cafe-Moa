@@ -54,13 +54,6 @@ function FindScreen({ navigation, route }) {
 
   /** 시작 */
   async function FindStart() {
-    /** 유저 정보 세팅 */
-    if(userData == null){
-      let user = new UserDataService();
-      await user.getUserProfile();
-      setUserData(user);
-    }
-
     /** defalut */
     let cafeservice = new CafeService();
     await cafeservice.getCafeDatabaseAd();
@@ -172,7 +165,18 @@ function CafeTable(props) {
       ":00"
   );
   const [cafeLogoImage, setCafeLogoImage] = useState(cafe_data.getLogo());
-  const [rating, setRating] = useState(4.7);
+  const [rating, setRating] = useState(cafe_data.getRating());
+  
+
+  useEffect(()=>{
+    setUserData(user_data);
+    setCafeData(cafe_data);
+    setCafeName(cafe_data.getName());
+    setCafeLocation(cafe_data.getAdress(1, 3));
+    setCafeInformaion( "Open : " + cafe_data.getOpenTime() +":00 ~ Close : " +cafe_data.getCloseTime() +":00");
+    setCafeLogoImage(cafe_data.getLogo());
+    setRating(cafe_data.getRating());
+  },[,cafe_data])
 
   useEffect(()=>{
     setUserData(user_data);

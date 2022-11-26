@@ -8,8 +8,6 @@ import getFindStyle from "../../styles/components/FindStyle";
 import getModalStyle from "../../styles/components/ModalStyle";
 import { ReservationService } from "../../lib/ReservationService";
 import { sendReservetionToUser } from "../../lib/UserDataService";
-import { CafeData } from "../../lib/CafeData";
-import { CafeService } from "../../lib/CafeService";
 
 function ReservationScreen({ navigation, route }) {
   const { cafeData: cafe_data, userData: user_data } = route.params;

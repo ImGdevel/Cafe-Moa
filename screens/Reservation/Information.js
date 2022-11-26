@@ -24,11 +24,9 @@ const reviewArr = [];
 
 
 function InformationScreen({ navigation, route }) {
-  const { cafeData: cafe_Data, userData: user_data } = route.params;
-  const [cafeData, setCafeData] = useState(cafe_Data);
-  const [userData, setUserData] = useState(user_data);
+  const { cafeData: cafeData, userData: userData } = route.params;
   const [direction, setDirection] = useState("사진");
-  const [seatImage, setSeatImage] = useState(cafe_Data.getSeatImage());
+  const [seatImage, setSeatImage] = useState(cafeData.getSeatImage());
 
   useEffect(()=>{
     //리뷰 및 사진 불러오기
@@ -52,11 +50,8 @@ function InformationScreen({ navigation, route }) {
         <View style={getFindStyle.container}>
           <View style={getFindStyle.contentContainer}>
             <CafeTable
-              name={route.params.name}
-              location={route.params.location}
-              image={route.params.cafeData.getLogo()}
-              information={route.params.information}
               cafeData={cafeData}
+              userData={userData}
               navigation={navigation}
             />
           </View>
@@ -108,7 +103,7 @@ function InformationScreen({ navigation, route }) {
 
 //카페 테이블
 function CafeTable(props) {
-  const cafeData = props.cafeData;
+  const {cafeData: cafeData, userData: userData, navigation: navigation } = props;
   const [cafeName, setCafeName] = useState(cafeData.getName());
   const [cafeLocation, setCafeLocation] = useState(cafeData.getAdress(1, 3));
   const [cafeInformation, setCafeInformaion] = useState(
@@ -119,6 +114,42 @@ function CafeTable(props) {
       ":00"
   );
   const [cafeLogoImage, setCafeLogoImage] = useState(cafeData.getLogo());
+
+  function Bookmark(props){
+    const cafeId = cafeData.getId();
+    const [icon, seticon] = useState("heart-outline");
+    const [iconStyle, setIconStyle] = useState({fontSize: 30, color: "black"});
+    const [checked, setChecked] = useState(false);
+
+    useEffect(()=>{
+      if(userData.isBookmarked(cafeId)){
+        seticon("heart");
+        setIconStyle({fontSize: 30, color: "#e00"});
+        setChecked(true);
+      }
+    },[])
+    
+    async function bookMarked(){
+      if(checked){
+        await userData.deletBookMark(cafeId);
+        seticon("heart-outline");
+        setIconStyle({fontSize: 30, color: "black"});
+        setChecked(false);
+      }else{
+        await userData.addBookMark(cafeId);
+        seticon("heart");
+        setIconStyle({fontSize: 30, color: "#e00"});
+        setChecked(true);
+      }
+    }
+    return(
+      <IonIcons
+        name={icon}
+        style={iconStyle}
+        onPress={bookMarked}
+      />
+    )
+  }
 
   return (
     <>
@@ -133,7 +164,10 @@ function CafeTable(props) {
         </View>
         <View style={getCafeTableStyle.contentContainer}>
           <View style={getCafeTableStyle.textContent}>
-            <Text style={getCafeTableStyle.nameText}>{cafeName}</Text>
+            <View style={getCafeTableStyle.divideContent}>
+              <Text style={getCafeTableStyle.nameText}>{cafeName}</Text>
+              <Bookmark/>
+            </View>
             <Text style={getCafeTableStyle.contentText}>{cafeLocation}</Text>
             <Text style={getCafeTableStyle.contentText}>{cafeInformation}</Text>
           </View>

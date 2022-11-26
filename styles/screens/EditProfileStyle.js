@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     height: 180,
     marginVertical: "10%",
     borderWidth: 1,
-    borderRadius: 100,
+    borderRadius: 90,
     borderColor: "#ddd",
     alignSelf: "center",
     justifyContent: "center",
