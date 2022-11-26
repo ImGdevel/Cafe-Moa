@@ -23,13 +23,12 @@ export default class ChangeText extends Component {
           onChangeText={(text) => this.setState({ text })}
           value={this.state.text}
           placeholder="리뷰를 입력하세요"
-          clearButtonMode="always"
         />
         <Button
+          style={styles.button}
           onPress={this.submitAndClear}
           title="리뷰 저장하기"
           color="#001D44"
-          accessibilityLabel="Learn more about this purple button"
         />
       </View>
     );
@@ -37,8 +36,19 @@ export default class ChangeText extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "column",
+    backgroundColor: "white",
+  },
+
   viewContainer: {
-    width: "90%",
+    width: "100%",
+    flex: 3,
+    height: 55,
+    flexDirection: "column",
+    backgroundColor: "white",
+
   },
   textInput: {
     height: 40,
@@ -48,6 +58,20 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 20,
   },
+
+  button: {
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    borderRadius: 4,
+    backgroundColor: "#ccc",
+    alignItems: "center",
+    marginHorizontal: "2%",
+    marginBottom: 5,
+    height: 40,
+    minWidth: "29%",
+    textAlign: "center",
+  },
+
 });
 
 AppRegistry.registerComponent("clear-text", () => ChangeText);
