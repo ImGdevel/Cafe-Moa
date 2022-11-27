@@ -34,14 +34,14 @@ const imgArr = [
 
 const PickImage = async () => {
   let result = await ImagePicker.launchImageLibraryAsync({
-    mediaTypes: ImagePicker.MediaTypeOptions.All,
     allowsEditing: true,
-    aspect: [4, 3],
     quality: 1,
   });
-  console.log(result);
+
   if (!result.canceled) {
-    CafePicManageScreen.setLogoImage(result.assets);
+    console.log(result);
+  } else {
+    console.log("You did not select any image.");
   }
 };
 
