@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { AppRegistry, TextInput, View, StyleSheet, Button } from "react-native";
+import Stars from "react-native-stars";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 export default class ChangeText extends Component {
   constructor(props) {
@@ -18,11 +20,40 @@ export default class ChangeText extends Component {
   render() {
     return (
       <View style={styles.viewContainer}>
+        <View style={styles.ratingContainer}>
+          <Stars
+            half={true}
+            default={0}
+            update={(val) => {
+              this.setState({ stars: val });
+            }}
+            spacing={4}
+            starSize={40}
+            count={5}
+            fullStar={
+              <Ionicons name="star" style={[styles.myStarStyle]}></Ionicons>
+            }
+            emptyStar={
+              <Ionicons
+                name="star-outline"
+                style={[styles.myStarStyle, styles.myEmptyStarStyle]}
+              ></Ionicons>
+            }
+            halfStar={
+              <Ionicons
+                name="star-half"
+                style={[styles.myStarStyle]}
+              ></Ionicons>
+            }
+          />
+        </View>
         <TextInput
           style={styles.textInput}
           onChangeText={(text) => this.setState({ text })}
           value={this.state.text}
           placeholder="리뷰를 입력하세요"
+          numberOfLines={5}
+          multiline={true}
         />
         <Button
           style={styles.button}
@@ -48,15 +79,30 @@ const styles = StyleSheet.create({
     height: 55,
     flexDirection: "column",
     backgroundColor: "white",
-
+  },
+  ratingContainer: {
+    width: "100%",
+    height: 60,
+    alignItems: "center",
+    justifyContent: "flex-end",
+  },
+  myStarStyle: {
+    fontSize: 35,
+    color: "gold",
+  },
+  myEmptyStarStyle: {
+    color: "#ccc",
   },
   textInput: {
-    height: 40,
+    flexShrink: 1,
+    height: 250,
+    margin: 12,
+    marginTop: 40,
+    textAlignVertical: "top",
     borderWidth: 1,
-    borderColor: "gray",
-    paddingLeft: 20,
-    margin: 10,
-    borderRadius: 20,
+    borderColor: "#bbb",
+    borderRadius: 15,
+    padding: 10,
   },
 
   button: {
@@ -68,10 +114,10 @@ const styles = StyleSheet.create({
     marginHorizontal: "2%",
     marginBottom: 5,
     height: 40,
+    width: "80%",
     minWidth: "29%",
     textAlign: "center",
   },
-
 });
 
 AppRegistry.registerComponent("clear-text", () => ChangeText);
