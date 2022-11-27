@@ -44,8 +44,7 @@ function FindScreen({ navigation, route }) {
 
   useEffect(() => {
     FindStart();
-    CafeListLoad();
-  }, [setcafeTableList]);
+  }, []);
 
   /** 카페 리스트 출력 */
   useEffect(() => {
@@ -54,12 +53,10 @@ function FindScreen({ navigation, route }) {
 
   /** 시작 */
   async function FindStart() {
-    /** defalut */
     let cafeservice = new CafeService();
-    await cafeservice.getCafeDatabaseAd();
+    await cafeservice.getCafeDatabasea();
     setCafeService(cafeservice);
     setcafeDatas(cafeservice.getCafeDataListArray());
-    
   };
 
   /** 카페리스트 출력 */
@@ -79,25 +76,13 @@ function FindScreen({ navigation, route }) {
     setcafeTableList(cafeList);
   };
 
+  function sortCafeDataList(type){
+    let sortedData = cafeService.sortCafeData(type);
+    setcafeDatas(sortedData);
+  }
+
   const search = () => {};
   const filter = () => {};
-
-  const sortDistance = () => {
-    let sortedData = cafeService.sortCafeData(SORT_DISTANCE);
-    setcafeDatas(sortedData);
-  };
-  const sortRating = () => {
-    let sortedData = cafeService.sortCafeData(SORT_RATING);
-    setcafeDatas(sortedData);
-  };
-  const sortVisitor = () => {
-    let sortedData = cafeService.sortCafeData(SORT_VISITIORS);
-    setcafeDatas(sortedData);
-  };
-  const sortNowVisitor = () => {
-    let sortedData = cafeService.sortCafeData(SORT_NOW_VISITIORS);
-    setcafeDatas(sortedData);
-  };
 
 
   return (
@@ -120,16 +105,16 @@ function FindScreen({ navigation, route }) {
         </View>
 
         <View style={getFindStyle.SortContainer}>
-          <TouchableOpacity style={getFindStyle.btnSort} onPress={sortDistance}>
+          <TouchableOpacity style={getFindStyle.btnSort} onPress={() => sortCafeDataList(SORT_DISTANCE)}>
             <Text  style={getFindStyle.btnSortText}> 거리순 </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={getFindStyle.btnSort} onPress={sortRating}>
+          <TouchableOpacity style={getFindStyle.btnSort} onPress={() => sortCafeDataList(SORT_RATING)}>
             <Text style={getFindStyle.btnSortText}> 별점순 </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={getFindStyle.btnSort} onPress={sortVisitor}>
+          <TouchableOpacity style={getFindStyle.btnSort} onPress={() => sortCafeDataList(SORT_VISITIORS)}>
             <Text style={getFindStyle.btnSortText}> 방문자순 </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={getFindStyle.btnSort} onPress={sortDistance}>
+          <TouchableOpacity style={getFindStyle.btnSort} onPress={() => sortCafeDataList(SORT_NOW_VISITIORS)}>
             <Text style={getFindStyle.btnSortText}> 예약자순 </Text>
           </TouchableOpacity>
         </View>
@@ -167,17 +152,6 @@ function CafeTable(props) {
   const [cafeLogoImage, setCafeLogoImage] = useState(cafe_data.getLogo());
   const [rating, setRating] = useState(cafe_data.getRating());
   
-
-  useEffect(()=>{
-    setUserData(user_data);
-    setCafeData(cafe_data);
-    setCafeName(cafe_data.getName());
-    setCafeLocation(cafe_data.getAdress(1, 3));
-    setCafeInformaion( "Open : " + cafe_data.getOpenTime() +":00 ~ Close : " +cafe_data.getCloseTime() +":00");
-    setCafeLogoImage(cafe_data.getLogo());
-    setRating(cafe_data.getRating());
-  },[,cafe_data])
-
   useEffect(()=>{
     setUserData(user_data);
     setCafeData(cafe_data);
