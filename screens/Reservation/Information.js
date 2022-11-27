@@ -13,6 +13,7 @@ import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
 import getReviewStyle from "../../styles/components/ReviewStyle";
 import Ionicons from "react-native-vector-icons/Ionicons";
+
 import { ReviewService } from "../../lib/ReviewService";
 import { CafeData } from "../../lib/CafeData";
 
@@ -64,6 +65,7 @@ function InformationScreen({ navigation, route }) {
             setSelectedValue={setDirection}
             style={getInfoStyle.contentLayout}
             cafeData={cafeData}
+            navigation={navigation}
           >
             <FlatList
               keyExtractor={(item) => item.idx}
@@ -183,6 +185,7 @@ const PreviewLayout = ({
   selectedValue,
   setSelectedValue,
   cafeData,
+  navigation,
 }) => (
   <View style={{ padding: 10, flex: 1 }}>
     <Text style={{ marginBottom: 10, fontSize: 24 }}></Text>
@@ -239,7 +242,12 @@ const PreviewLayout = ({
                 <Ionicons name="star" style={getReviewStyle.ratings}></Ionicons>
                 <Text style={getReviewStyle.ratingsText}>4.7</Text>
               </View>
-              <TouchableOpacity style={getReviewStyle.reviewBtn} onPress={{}}>
+              <TouchableOpacity
+                style={getReviewStyle.reviewBtn}
+                onPress={() => {
+                  navigation.navigate("리뷰 작성");
+                }}
+              >
                 <Text style={getReviewStyle.reviewBtnText}>리뷰 작성하기</Text>
               </TouchableOpacity>
             </View>
