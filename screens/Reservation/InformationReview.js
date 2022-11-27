@@ -1,68 +1,65 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { AppRegistry, TextInput, View, StyleSheet, Button } from "react-native";
 import Stars from "react-native-stars";
 import Ionicons from "react-native-vector-icons/Ionicons";
-export default class ChangeText extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { text: "" };
-  }
 
-  submitAndClear = () => {
-    this.props.writeText(this.state.text);
 
-    this.setState({
-      text: "",
-    });
+function ReviewScreen({ navigation }) {
+  const [text, setText] = useState("");
+  const [star, setStar] = useState();
+  const [starText, setStarText] = useState();
+
+  const submitAndClear = () => {
+    setText(text);
+    setText("");
   };
 
-  render() {
-    return (
-      <View style={styles.viewContainer}>
-        <View style={styles.ratingContainer}>
-          <Stars
-            half={true}
-            default={0}
-            update={(val) => {
-              this.setState({ stars: val });
-            }}
-            spacing={4}
-            starSize={40}
-            count={5}
-            fullStar={
-              <Ionicons name="star" style={[styles.myStarStyle]}></Ionicons>
-            }
-            emptyStar={
-              <Ionicons
-                name="star-outline"
-                style={[styles.myStarStyle, styles.myEmptyStarStyle]}
-              ></Ionicons>
-            }
-            halfStar={
-              <Ionicons
-                name="star-half"
-                style={[styles.myStarStyle]}
-              ></Ionicons>
-            }
-          />
-        </View>
-        <TextInput
-          style={styles.textInput}
-          onChangeText={(text) => this.setState({ text })}
-          value={this.state.text}
-          placeholder="리뷰를 입력하세요"
-          numberOfLines={5}
-          multiline={true}
-        />
-        <Button
-          style={styles.button}
-          onPress={this.submitAndClear}
-          title="리뷰 저장하기"
-          color="#001D44"
+  return (
+    <View style={styles.viewContainer}>
+      <View style={styles.ratingContainer}>
+        <Stars
+          half={true}
+          default={0}
+          update={(val) => {
+            console.log(val)
+            setStar(val);
+          }}
+          spacing={4}
+          starSize={40}
+          count={5}
+          fullStar={
+            <Ionicons name="star" style={[styles.myStarStyle]}></Ionicons>
+          }
+          emptyStar={
+            <Ionicons
+              name="star-outline"
+              style={[styles.myStarStyle, styles.myEmptyStarStyle]}
+            ></Ionicons>
+          }
+          halfStar={
+            <Ionicons
+              name="star-half"
+              style={[styles.myStarStyle]}
+            ></Ionicons>
+          }
         />
       </View>
-    );
-  }
+      <TextInput
+        style={styles.textInput}
+        onChangeText={(text) => setText( text )}
+        value={text}
+        placeholder="리뷰를 입력하세요"
+        numberOfLines={5}
+        multiline={true}
+      />
+      <Button
+        style={styles.button}
+        onPress={submitAndClear}
+        title="리뷰 저장하기"
+        color="#001D44"
+      />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -93,15 +90,17 @@ const styles = StyleSheet.create({
     color: "#ccc",
   },
   textInput: {
+    fontSize: 18,
     flexShrink: 1,
-    height: 250,
-    margin: 12,
+    height: 200,
+    margin: 10,
+    marginHorizontal: "5%",
     marginTop: 40,
     textAlignVertical: "top",
     borderWidth: 1,
     borderColor: "#bbb",
     borderRadius: 15,
-    padding: 10,
+    padding: 15,
   },
 
   button: {
@@ -119,4 +118,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent("clear-text", () => ChangeText);
+export default ReviewScreen;

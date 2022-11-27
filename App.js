@@ -17,7 +17,7 @@ import ReserveEndScreen from "./screens/Reservation/ReserveEnd";
 import InPutDataScreen from "./screens/ForBusiness/InPutData";
 import ConfirmScreen from "./screens/InApp/ConfirmReservation";
 import CancelReservationScreen from "./screens/Reservation/CancelReservation";
-import InformationReviewScreen from "./screens/Reservation/InformationReview";
+import ReviewScreen from "./screens/Reservation/InformationReview";
 import EditProfileScreen from "./screens/InApp/EditProfile";
 import OptionScreen from "./screens/InApp/Option";
 
@@ -165,7 +165,7 @@ const CafeNavigation = () => {
       />
       <Stack.Screen name="카페 정보" component={InformationScreen} />
       <Stack.Screen name="예약하기" component={ReservationScreen} />
-      <Stack.Screen name="리뷰 작성" component={InformationReviewScreen} />
+      <Stack.Screen name="리뷰 작성" component={ReviewScreen} />
       <Stack.Screen
         name="ReserveEnd"
         options={{ headerShown: false }}
