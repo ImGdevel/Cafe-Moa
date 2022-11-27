@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { AppRegistry, TextInput, View, StyleSheet, Button } from "react-native";
 import Stars from "react-native-stars";
 import Ionicons from "react-native-vector-icons/Ionicons";
-
 export default class ChangeText extends Component {
   constructor(props) {
     super(props);
