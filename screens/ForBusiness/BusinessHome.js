@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   StatusBar,
+  Alert,
 } from "react-native";
 import getHomeStyle from "../../styles/screens/HomeStyle";
 import getBusinessHomeStyle from "../../styles/screens/BusinessHomeStyle";
@@ -85,20 +86,28 @@ function BusinessHomeScreen({ navigation }) {
           </View>
           <View style={getBusinessHomeStyle.reservationListContainer}>
             <View style={getBusinessHomeStyle.reservationList}>
-              <View style={getBusinessHomeStyle.reserveTimeBox}>
+              <TouchableOpacity
+                style={getBusinessHomeStyle.reserveTimeBox}
+                onPress={() => {
+                  Alert.alert("", "좌석을 사용완료합니다.", [
+                    {
+                      text: "취소",
+                      onPress: () => console.log("Cancel Pressed"),
+                      style: "cancel",
+                    },
+                    {
+                      text: "완료",
+                      onPress: () => console.log("OK Pressed"),
+                    },
+                  ]);
+                }}
+              >
                 <Text
                   style={{ color: "white", fontWeight: "500", fontSize: 15 }}
                 >
                   7
                 </Text>
-              </View>
-              <View style={getBusinessHomeStyle.reserveTimeBox}>
-                <Text
-                  style={{ color: "white", fontWeight: "500", fontSize: 15 }}
-                >
-                  8
-                </Text>
-              </View>
+              </TouchableOpacity>
             </View>
           </View>
         </ScrollView>
