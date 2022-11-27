@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { AppRegistry, TextInput, View, StyleSheet, Button } from "react-native";
+import { AppRegistry, TextInput, View, StyleSheet, Button, TouchableOpacity, Text } from "react-native";
 
 export default class ChangeText extends Component {
   constructor(props) {
