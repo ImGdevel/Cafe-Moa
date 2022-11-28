@@ -10,13 +10,43 @@ import {
   Keyboard,
   ScrollView,
 } from "react-native";
+import * as ImagePicker from "expo-image-picker";
 
 import getEditProfileStyle from "../../styles/screens/EditProfileStyle";
 
 function EditProfileScreen({ navigation, route }) {
+  const [image, setImage] = useState();
+
   const nameInputRef = createRef();
   const emailInputRef = createRef();
   const pwInputRef = createRef();
+
+  useEffect(() => {
+    PermissionLib();
+  }, []);
+
+  const PermissionLib = async () => {
+    if (Platform.OS !== "web") {
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== "granted") {
+        alert("Permission Denied.");
+      }
+    }
+  };
+
+  const PickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 1,
+    });
+    console.log(result);
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
 
   function ConfirmEditProfile() {
     navigation.navigate("마이페이지");
@@ -24,14 +54,11 @@ function EditProfileScreen({ navigation, route }) {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView
-        style={getEditProfileStyle.container}
-        behavior="padding"
-      >
+      <KeyboardAvoidingView style={getEditProfileStyle.container}>
         <ScrollView style={{ width: "100%", height: "100%" }}>
           <TouchableOpacity
             style={getEditProfileStyle.ProfilePicBtn}
-            onPress={{}}
+            onPress={PickImage}
           >
             <Image
               style={{ width: 180, height: 180 }}
