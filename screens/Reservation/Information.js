@@ -65,6 +65,7 @@ function InformationScreen({ navigation, route }) {
             setSelectedValue={setDirection}
             style={getInfoStyle.contentLayout}
             cafeData={cafeData}
+            userData={userData}
             navigation={navigation}
           >
             <FlatList
@@ -185,6 +186,7 @@ const PreviewLayout = ({
   selectedValue,
   setSelectedValue,
   cafeData,
+  userData,
   navigation,
 }) => (
   <View style={{ padding: 10, flex: 1 }}>
@@ -245,7 +247,10 @@ const PreviewLayout = ({
               <TouchableOpacity
                 style={getReviewStyle.reviewBtn}
                 onPress={() => {
-                  navigation.navigate("리뷰 작성");
+                  navigation.navigate("리뷰 작성",{
+                    cafeData: cafeData,
+                    userData: userData,
+                  });
                 }}
               >
                 <Text style={getReviewStyle.reviewBtnText}>리뷰 작성하기</Text>
