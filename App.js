@@ -20,6 +20,7 @@ import CancelReservationScreen from "./screens/Reservation/CancelReservation";
 import InformationReviewScreen from "./screens/Reservation/InformationReview";
 import EditProfileScreen from "./screens/InApp/EditProfile";
 import OptionScreen from "./screens/InApp/Option";
+import * as Notifications from 'expo-notifications';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -174,3 +175,11 @@ const CafeNavigation = () => {
     </Stack.Navigator>
   )
 }
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});

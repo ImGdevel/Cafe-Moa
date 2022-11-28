@@ -98,6 +98,18 @@ function ReservationScreen({ navigation, route }) {
         cafeData.addNowVisitor();
         let service = new CafeService();
         service.updateCafeData(cafeData);
+
+        // 푸시 알림
+        Notifications.scheduleNotificationAsync({
+          content: {
+            title: "CafeMoa "+cafeData.getName()+" 예약알림",
+            body: "약 10분 후 좌석 배정 확정 마감 ("+cafeData.getSeatId()+"번 좌석)",
+          },
+          trigger: {
+            seconds: 2, // 초 뒤에 알람, 10분이니까 600 이지만 시연시 2초로 사용 바람
+          },
+        });
+
         navigation.navigate("ReserveEnd");
       }else{
         alert("이미 예약된 좌석입니다.");
