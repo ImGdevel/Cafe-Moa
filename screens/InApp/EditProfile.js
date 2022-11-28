@@ -13,6 +13,7 @@ import {
 import * as ImagePicker from "expo-image-picker";
 
 import getEditProfileStyle from "../../styles/screens/EditProfileStyle";
+import { pickImage } from "../../lib/ImageService";
 
 function EditProfileScreen({ navigation, route }) {
   const { cafeData: cafeData, userData: userData } = route.params;
@@ -27,10 +28,13 @@ function EditProfileScreen({ navigation, route }) {
     PermissionLib();
   }, []);
 
-  function start() {
-    const getimage = userData.getProfileImage();
-    if (getimage == null) setImage(require("../../img/initialProfile.jpg"));
-    else setImage(getimage);
+  async function start() {
+    const getimage = await userData.getProfileImage();
+    if (getimage == null){
+      setImage(require("../../img/initialProfile.jpg"));
+    } else {
+      setImage(getimage);
+    }
   }
 
   const PermissionLib = async () => {
@@ -44,6 +48,11 @@ function EditProfileScreen({ navigation, route }) {
   };
 
   const PickImage = async () => {
+    const imageuri = await pickImage();
+    console.log(imageuri);
+    setImage({uri:imageuri});
+
+    /*
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -53,7 +62,7 @@ function EditProfileScreen({ navigation, route }) {
     console.log(result);
     if (!result.canceled) {
       setImage(result.assets[0].uri);
-    }
+    }*/
   };
 
   function ConfirmEditProfile() {
