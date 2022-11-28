@@ -244,7 +244,28 @@ function PreviewLayout (props){
 
 function ReviewPage(props){
   const {navigation: navigation, cafeData:cafeData ,userData:userData} = props;
+  const [reviewList, setReviewList] = useState();
 
+  async function loadReview(){
+    
+  } 
+
+  function ReviewPanel(props){
+    return(
+      <View style={getReviewStyle.reviewContentHeader}>
+      <Image
+        style={{ width: 50, height: 50, borderRadius: 50 }}
+        source={require("../../img/initialProfile.jpg")}
+      ></Image>
+      <View style={getReviewStyle.reviewHead}>
+        <Text style={{ fontSize: 15 }}>--UserID--</Text>
+        <Text style={{ color: "gray" }}>--Date--</Text>
+      </View>
+      <Text style={getReviewStyle.reviewContent}>
+      </Text>
+    </View>  
+    )
+  }
 
   return(
     <ScrollView style={getReviewStyle.container}>
@@ -278,51 +299,10 @@ function ReviewPage(props){
         </TouchableOpacity>
       </View>
       <View style={getReviewStyle.reviewContentContainer}>
-        <View style={getReviewStyle.reviewContentHeader}>
-          <Image
-            style={{ width: 50, height: 50, borderRadius: 50 }}
-            source={require("../../img/initialProfile.jpg")}
-          ></Image>
-          <View style={getReviewStyle.reviewHead}>
-            <Text style={{ fontSize: 15 }}>--UserID--</Text>
-            <Text style={{ color: "gray" }}>--Date--</Text>
-          </View>
-        </View>
-        <Text style={getReviewStyle.reviewContent}>
-          사용자가 작성한 리뷰의 내용이 들어가는 부분 사용자가 작성한
-          리뷰의 내용이 들어가는 부분 사용자가 작성한 리뷰의 내용이
-          들어가는 부분 사용자가 작성한 리뷰의 내용이 들어가는 부분
-          사용자가 작성한 리뷰의 내용이 들어가는 부분 사용자가 작성한
-          리뷰의 내용이 들어가는 부분
-        </Text>
-        <View style={{ flexDirection: "row" }}>
-          <Ionicons
-            name="star"
-            style={{ fontSize: 15, color: "gold", paddingRight: 2 }}
-          ></Ionicons>
-          <Ionicons
-            name="star"
-            style={{ fontSize: 15, color: "gold", paddingRight: 2 }}
-          ></Ionicons>
-          <Ionicons
-            name="star"
-            style={{ fontSize: 15, color: "gold", paddingRight: 2 }}
-          ></Ionicons>
-          <Ionicons
-            name="star"
-            style={{ fontSize: 15, color: "gold", paddingRight: 2 }}
-          ></Ionicons>
-          <Ionicons
-            name="star"
-            style={{ fontSize: 15, color: "gold", paddingRight: 2 }}
-          ></Ionicons>
-        </View>
+        <ReviewPanel/>
       </View>
     </ScrollView>
   )
 }
-
-
-
 
 export default InformationScreen;
