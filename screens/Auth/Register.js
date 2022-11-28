@@ -53,6 +53,9 @@ function RegisterScreen({ navigation }) {
       .then((id) => {
         createUserProfile(userName, id, userEmail, userPassword);
         GoToHomeScreen();
+        if (isSelected) {
+          navigation.replace("InPutData");
+        }
       })
       .catch((err) => {
         alert("계정 생성에 실패 했습니다.");
