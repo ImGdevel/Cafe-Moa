@@ -4,6 +4,7 @@ import Stars from "react-native-stars";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { CafeTable } from "../../Components/CafeTable";
 import { pickImage } from "../../lib/ImageService";
+import { ReviewService } from "../../lib/ReviewService";
 
 
 function ReviewScreen({ navigation , route }) {
@@ -14,15 +15,37 @@ function ReviewScreen({ navigation , route }) {
   const [starText, setStarText] = useState();
 
   const ImagePick = async () => {
-    await pickImage();
+    let service = new ReviewService(cafeData.id, userData);
+    service.loadReview();
+
+    return;
+    const img= await pickImage(4,3);
+    if(img != null){
+      setImage({uri:img});
+    }else{
+      setImage({uri:""});
+    }
   }
 
-  const submitAndClear = () => {    
+  const submitAndClear = () => {
+
+
+
+    if(text.length < 5){
+      alert("5글자 이상 입력해주세요.");
+      return;
+    }
+
+    let date = new Date();
+    let service = new ReviewService(cafeData.id, userData);
+
+    console.log(cafeData, userData);
     // 리뷰 전송
     console.log(text);
     console.log(star);
 
     setText("");
+    service.uploadReview(date,text,image);
   };
 
   return (
@@ -65,7 +88,7 @@ function ReviewScreen({ navigation , route }) {
         <TouchableOpacity style={styles.imageContainer}
           onPress={ImagePick}
         >
-            <Image/>
+            <Image style={{flex:1}} source={image}/>
         </TouchableOpacity>
         <TextInput
           style={styles.textInput}
@@ -78,9 +101,8 @@ function ReviewScreen({ navigation , route }) {
         <TouchableOpacity
           style={styles.button}
           onPress={submitAndClear}
-          
         >
-          <Text style ={{color: "white", fontSize: 20, fontWeight: "700"}}>리뷰 작성하기</Text>
+        <Text style ={{color: "white", fontSize: 20, fontWeight: "700"}}>리뷰 작성하기</Text>
         </TouchableOpacity>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -105,7 +127,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     fontSize: 18,
     flexShrink: 1,
-    height: 100,
+    height: 220,
     margin: 10,
     marginHorizontal: "5%",
     borderWidth: 1,
