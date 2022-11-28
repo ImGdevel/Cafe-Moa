@@ -249,23 +249,44 @@ function ReviewPage(props){
   const [reviewList, setReviewList] = useState();
 
   async function loadReview(){
-    
+    const service = new ReviewService();
+    const reviews = []
+    let table = [];
+    for (let i = 0; i < reviews.length; i++) {
+      table.push(
+        <ReviewPanel
+          key={i}
+          cafeData={reviews[i]}
+          userData={userData}
+          navigation={navigation}
+        />
+      );
+    }
+    setReviewList(table);
   } 
 
   function ReviewPanel(props){
+    const [userID, setUserID] = useState("User");
+    const [date, setDate] = useState("Date");
+    const [text, setText] = useState("asdasdasdasdasdasdadasdsaasdasdasdasdasdasdasddasdasdadasdasdasdasasdasdadasdasda");
+    const [image, setImage] = useState(require("../../img/initialProfile.jpg"));
+
     return(
-      <View style={getReviewStyle.reviewContentHeader}>
-      <Image
-        style={{ width: 50, height: 50, borderRadius: 50 }}
-        source={require("../../img/initialProfile.jpg")}
-      ></Image>
-      <View style={getReviewStyle.reviewHead}>
-        <Text style={{ fontSize: 15 }}>--UserID--</Text>
-        <Text style={{ color: "gray" }}>--Date--</Text>
+      <View style={getReviewStyle.reviewContentContainer}>
+        <View style={getReviewStyle.reviewContentHeader}>
+          <Image
+            style={{ width: 50, height: 50, borderRadius: 50 }}
+            source={image}
+          />
+          <View style={getReviewStyle.reviewHead}>
+            <Text style={{ fontSize: 17 }}>{userID}</Text>
+            <Text style={{ color: "gray" }}>{date}</Text>
+          </View>
+        </View>
+        <Text style={getReviewStyle.reviewContent}>
+            {text}
+          </Text>
       </View>
-      <Text style={getReviewStyle.reviewContent}>
-      </Text>
-    </View>  
     )
   }
 
@@ -300,9 +321,10 @@ function ReviewPage(props){
           <Text style={getReviewStyle.reviewBtnText}>리뷰 작성하기</Text>
         </TouchableOpacity>
       </View>
-      <View style={getReviewStyle.reviewContentContainer}>
-        <ReviewPanel/>
+      <View>
+        {reviewList}
       </View>
+      
     </ScrollView>
   )
 }

@@ -65,11 +65,10 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   reviewContentContainer: {
-    flex: 1,
-    height: 200,
+    height: 170,
     width: "100%",
     borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    borderBottomColor: "#aaa",
     padding: 10,
   },
   reviewContentHeader: {
@@ -78,7 +77,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   reviewHead: {
-    paddingLeft: 10,
+    paddingLeft: 15,
     height: "100%",
     justifyContent: "space-evenly",
   },
