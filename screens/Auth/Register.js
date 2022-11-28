@@ -139,7 +139,7 @@ function RegisterScreen({ navigation }) {
               alignItems: "center",
             }}
           >
-            <Text>사업자 회원</Text>
+            <Text>사업자 회원{"\t\t"}</Text>
             <Switch
               trackColor={{ false: "#767577", true: "#81b0ff" }}
               thumbColor={isSelected ? "#f4f3f4" : "#f4f3f4"}
