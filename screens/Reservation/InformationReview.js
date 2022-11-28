@@ -10,15 +10,11 @@ import { ReviewService } from "../../lib/ReviewService";
 function ReviewScreen({ navigation , route }) {
   const { cafeData: cafeData, userData: userData } = route.params;
   const [text, setText] = useState("");
-  const [star, setStar] = useState();
+  const [star, setStar] = useState(0);
   const [image, setImage] = useState("");
   const [starText, setStarText] = useState();
 
   const ImagePick = async () => {
-    let service = new ReviewService(cafeData.id, userData);
-    service.loadReview();
-
-    return;
     const img= await pickImage(4,3);
     if(img != null){
       setImage({uri:img});
@@ -28,24 +24,19 @@ function ReviewScreen({ navigation , route }) {
   }
 
   const submitAndClear = () => {
-
-
-
-    if(text.length < 5){
-      alert("5글자 이상 입력해주세요.");
+    console.log(star);
+    if(star == 0){
+      alert("별점을 매겨주세요.");
       return;
     }
-
+    else if(text.length < 5){
+      alert("리뷰를 5글자 이상 입력해주세요.");
+      return;
+    }
     let date = new Date();
     let service = new ReviewService(cafeData.id, userData);
-
-    console.log(cafeData, userData);
-    // 리뷰 전송
-    console.log(text);
-    console.log(star);
-
-    setText("");
     service.uploadReview(date,text,image);
+    navigation.goBack();
   };
 
   return (
