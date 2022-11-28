@@ -49,20 +49,7 @@ function EditProfileScreen({ navigation, route }) {
 
   const PickImage = async () => {
     const imageuri = await pickImage();
-    console.log(imageuri);
     setImage({uri:imageuri});
-
-    /*
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 4],
-      quality: 1,
-    });
-    console.log(result);
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
-    }*/
   };
 
   function ConfirmEditProfile() {
