@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   Platform,
+  FlatList,
 } from "react-native";
 
 import * as ImagePicker from "expo-image-picker";
@@ -14,6 +15,8 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 function AddPicScreen({ navigation, route }) {
   const [image, setImage] = useState();
+
+  let addedImgArr = [];
 
   useEffect(() => {
     PermissionLib();
@@ -51,8 +54,29 @@ function AddPicScreen({ navigation, route }) {
         {image && (
           <Image source={{ uri: image }} style={{ width: 140, height: 140 }} />
         )}
+        {/* <FlatList
+          keyExtractor={(item) => item.idx}
+          data={addedImgArr}
+          style={styles.picArea}
+          renderItem={({ item }) => (
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "column",
+              }}
+            >
+              <Image style={styles.image} source={{}} />
+            </View>
+          )}
+          numColumns={3}
+        /> */}
       </View>
-      <TouchableOpacity style={styles.completeButton} onPress={() => {}}>
+      <TouchableOpacity
+        style={styles.completeButton}
+        onPress={() => {
+          navigation.pop();
+        }}
+      >
         <Text style={{ color: "#001D44", fontSize: 20, fontWeight: "900" }}>
           추가 완료하기
         </Text>
@@ -80,6 +104,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 20,
+    marginBottom: 20,
   },
   completeButton: {
     marginTop: 20,
