@@ -17,6 +17,9 @@ import getEditProfileStyle from "../../styles/screens/EditProfileStyle";
 function EditProfileScreen({ navigation, route }) {
   const { cafeData: cafeData, userData: userData } = route.params;
   const [image, setImage] = useState();
+  const [nickname, setNickname] = useState("");
+  const [email, setEmail] = useState("");
+  const [passwd, setPasswd] = useState("");
 
   const nameInputRef = createRef();
   const emailInputRef = createRef();
@@ -56,6 +59,15 @@ function EditProfileScreen({ navigation, route }) {
     }
   };
 
+  function handleChange(event) {
+    const { text, type, value } = event;
+    if (text == "") {
+      {
+        /*여기서부터 작업 시작*/
+      }
+    }
+  }
+
   function ConfirmEditProfile() {
     navigation.navigate("마이페이지");
   }
@@ -77,11 +89,12 @@ function EditProfileScreen({ navigation, route }) {
                 ref={nameInputRef}
                 style={getEditProfileStyle.textInput}
                 placeholder={"닉네임"}
-                onChangeText={() => {}}
+                onChangeText={(text) => {
+                  setNickname(text);
+                }}
                 autoCapitalize="none"
                 blurOnSubmit={false}
                 returnKeyType="next"
-                onSubmitEditing={() => {}}
               />
             </View>
             <View style={getEditProfileStyle.ChangeBtn}>
@@ -90,11 +103,12 @@ function EditProfileScreen({ navigation, route }) {
                 ref={emailInputRef}
                 style={getEditProfileStyle.textInput}
                 placeholder={"이메일"}
-                onChangeText={() => {}}
+                onChangeText={(text) => {
+                  setEmail(text);
+                }}
                 autoCapitalize="none"
                 blurOnSubmit={false}
                 returnKeyType="next"
-                onSubmitEditing={() => {}}
               />
             </View>
             <View style={getEditProfileStyle.ChangeBtn}>
@@ -103,12 +117,13 @@ function EditProfileScreen({ navigation, route }) {
                 ref={pwInputRef}
                 style={getEditProfileStyle.textInput}
                 placeholder={"비밀번호"}
-                onChangeText={() => {}}
+                onChangeText={(text) => {
+                  setPasswd(text);
+                }}
                 secureTextEntry={true}
                 autoCapitalize="none"
                 blurOnSubmit={false}
                 returnKeyType="next"
-                onSubmitEditing={() => {}}
               />
             </View>
           </View>
