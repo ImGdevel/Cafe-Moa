@@ -65,7 +65,7 @@ function ReviewScreen({ navigation , route }) {
         <TouchableOpacity style={styles.imageContainer}
           onPress={ImagePick}
         >
-            <Image source={{uri:{image}}}/>
+            <Image/>
         </TouchableOpacity>
         <TextInput
           style={styles.textInput}
