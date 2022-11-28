@@ -30,6 +30,10 @@ function RegisterScreen({ navigation }) {
     navigation.replace("InApp");
   }
 
+  function GoToCreateCafe() {
+    navigation.replace("InPutData");
+  }
+
   async function onSubmitApplication() {
     setErrorText("");
     if (!userName) {
@@ -52,9 +56,10 @@ function RegisterScreen({ navigation }) {
     await CreateUserAccount(userEmail, userPassword)
       .then((id) => {
         createUserProfile(userName, id, userEmail, userPassword);
-        GoToHomeScreen();
         if (isSelected) {
-          navigation.replace("InPutData");
+          GoToCreateCafe();
+        } else {
+          GoToHomeScreen();
         }
       })
       .catch((err) => {
