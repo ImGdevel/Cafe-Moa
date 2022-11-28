@@ -8,6 +8,7 @@ import getFindStyle from "../../styles/components/FindStyle";
 import getModalStyle from "../../styles/components/ModalStyle";
 import { ReservationService } from "../../lib/ReservationService";
 import { sendReservetionToUser } from "../../lib/UserDataService";
+import { CafeService } from "../../lib/CafeService";
 
 function ReservationScreen({ navigation, route }) {
   const { cafeData: cafe_data, userData: user_data } = route.params;
@@ -92,9 +93,10 @@ function ReservationScreen({ navigation, route }) {
 
   const submitReservation = async () => {
     await seatData.loadSeatDataBase();
+    await userData.getUserProfile();
     if(!userData.isReserve()){
       if (await seatData.doSeatReservation(time, selectedSeat)) {
-        await sendReservetionToUser(cafeData.getId(), cafeData.getSeatId(), time, selectedSeat); //수정
+        await userData.sendReservetionToUser(cafeData.getId(), cafeData.getSeatId(), time, selectedSeat); //수정
         cafeData.addNowVisitor();
         let service = new CafeService();
         service.updateCafeData(cafeData);
