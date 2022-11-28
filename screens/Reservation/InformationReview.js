@@ -3,6 +3,7 @@ import { TextInput, View, StyleSheet, Button, Image, KeyboardAvoidingView, Scrol
 import Stars from "react-native-stars";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { CafeTable } from "../../Components/CafeTable";
+import { pickImage } from "../../lib/ImageService";
 
 
 function ReviewScreen({ navigation , route }) {
@@ -12,9 +13,8 @@ function ReviewScreen({ navigation , route }) {
   const [image, setImage] = useState("");
   const [starText, setStarText] = useState();
 
-  const ImagePick = () => {
-    console.log("!")
-
+  const ImagePick = async () => {
+    await pickImage();
   }
 
   const submitAndClear = () => {    
