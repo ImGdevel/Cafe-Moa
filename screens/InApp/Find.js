@@ -79,8 +79,13 @@ function FindScreen({ navigation, route }) {
     setcafeTableList(cafeList);
   };
 
-  const search = () => {};
-  const filter = () => {};
+
+
+  const search = () => {
+    let serchData = cafeService.serchCafeData(textInputValue);
+    console.log(serchData);
+    setcafeDatas(serchData);
+  };
 
   const sortDistance = () => {
     let sortedData = cafeService.sortCafeData(SORT_DISTANCE);
@@ -133,15 +138,15 @@ function FindScreen({ navigation, route }) {
             <Text style={getFindStyle.btnSortText}> 예약자순 </Text>
           </TouchableOpacity>
         </View>
-
+        {/*
         <View style={getFindStyle.filterContainer}>
-          <TouchableOpacity style={getFindStyle.btnFilter} onPress={filter}>
+          <TouchableOpacity style={getFindStyle.btnFilter}>
             <Ionicons name="filter-outline" style={{ fontSize: 20, color: "#001D44" }}>
               <Text style={{ fontSize: 15, color: "#001D44" }}> 필터</Text>
             </Ionicons>
           </TouchableOpacity>
         </View>
-
+        */}
       </View>
 
       <View style={getFindStyle.contentContainer}>

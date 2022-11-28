@@ -6,7 +6,7 @@ const FindStyles = StyleSheet.create({
     backgroundColor: "white",
   },
   topContainer: {
-    flex: 1,
+    height: 180,
     backgroundColor: "#fafafa",
   },
   contentContainer: {
@@ -46,6 +46,7 @@ const FindStyles = StyleSheet.create({
     flex:1,
     flexDirection:"row",
     paddingHorizontal:10,
+    paddingVertical: 10,
   },
   btnSort:{
     width:90,
