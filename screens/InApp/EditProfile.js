@@ -15,6 +15,7 @@ import * as ImagePicker from "expo-image-picker";
 import getEditProfileStyle from "../../styles/screens/EditProfileStyle";
 
 function EditProfileScreen({ navigation, route }) {
+  const { cafeData: cafeData, userData: userData } = route.params;
   const [image, setImage] = useState();
 
   const nameInputRef = createRef();
@@ -22,8 +23,15 @@ function EditProfileScreen({ navigation, route }) {
   const pwInputRef = createRef();
 
   useEffect(() => {
+    start();
     PermissionLib();
   }, []);
+
+  function start() {
+    const getimage = userData.getProfileImage();
+    if (getimage == null) setImage(require("../../img/initialProfile.jpg"));
+    else setImage(getimage);
+  }
 
   const PermissionLib = async () => {
     if (Platform.OS !== "web") {
@@ -60,10 +68,7 @@ function EditProfileScreen({ navigation, route }) {
             style={getEditProfileStyle.ProfilePicBtn}
             onPress={PickImage}
           >
-            <Image
-              style={{ width: 180, height: 180 }}
-              source={require("../../img/initialProfile.jpg")}
-            ></Image>
+            <Image style={{ width: 180, height: 180 }} source={image}></Image>
           </TouchableOpacity>
           <View style={getEditProfileStyle.InputField}>
             <View style={getEditProfileStyle.ChangeBtn}>
