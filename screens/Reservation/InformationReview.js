@@ -1,30 +1,60 @@
-import React, { Component } from "react";
-import { AppRegistry, TextInput, View, StyleSheet, Button } from "react-native";
+import React, { useState } from "react";
+import { TextInput, View, StyleSheet, Button, Image, KeyboardAvoidingView, ScrollView, TouchableOpacity, Text, } from "react-native";
 import Stars from "react-native-stars";
 import Ionicons from "react-native-vector-icons/Ionicons";
-export default class ChangeText extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { text: "" };
+import { CafeTable } from "../../Components/CafeTable";
+import { pickImage } from "../../lib/ImageService";
+import { ReviewService } from "../../lib/ReviewService";
+
+
+function ReviewScreen({ navigation , route }) {
+  const { cafeData: cafeData, userData: userData } = route.params;
+  const [text, setText] = useState("");
+  const [star, setStar] = useState(0);
+  const [image, setImage] = useState("");
+  const [starText, setStarText] = useState();
+
+  const ImagePick = async () => {
+    const img= await pickImage(4,3);
+    if(img != null){
+      setImage({uri:img});
+    }else{
+      setImage({uri:""});
+    }
   }
 
-  submitAndClear = () => {
-    this.props.writeText(this.state.text);
-
-    this.setState({
-      text: "",
-    });
+  const submitAndClear = () => {
+    console.log(star);
+    if(star == 0){
+      alert("별점을 매겨주세요.");
+      return;
+    }
+    else if(text.length < 5){
+      alert("리뷰를 5글자 이상 입력해주세요.");
+      return;
+    }
+    let date = new Date();
+    let service = new ReviewService(cafeData.id, userData);
+    service.uploadReview(date,text,image);
+    navigation.goBack();
   };
 
-  render() {
-    return (
-      <View style={styles.viewContainer}>
+  return (
+    <KeyboardAvoidingView 
+      style={styles.container}
+      >
+      <ScrollView style={styles.viewContainer}>
+        <CafeTable
+          cafeData={cafeData}
+          userData={userData}
+        />
         <View style={styles.ratingContainer}>
           <Stars
             half={true}
             default={0}
             update={(val) => {
-              this.setState({ stars: val });
+              console.log(val)
+              setStar(val);
             }}
             spacing={4}
             starSize={40}
@@ -46,23 +76,28 @@ export default class ChangeText extends Component {
             }
           />
         </View>
+        <TouchableOpacity style={styles.imageContainer}
+          onPress={ImagePick}
+        >
+            <Image style={{flex:1}} source={image}/>
+        </TouchableOpacity>
         <TextInput
           style={styles.textInput}
-          onChangeText={(text) => this.setState({ text })}
-          value={this.state.text}
+          onChangeText={(text) => setText( text )}
+          value={text}
           placeholder="리뷰를 입력하세요"
           numberOfLines={5}
           multiline={true}
         />
-        <Button
+        <TouchableOpacity
           style={styles.button}
-          onPress={this.submitAndClear}
-          title="리뷰 저장하기"
-          color="#001D44"
-        />
-      </View>
-    );
-  }
+          onPress={submitAndClear}
+        >
+        <Text style ={{color: "white", fontSize: 20, fontWeight: "700"}}>리뷰 작성하기</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </KeyboardAvoidingView>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -79,11 +114,22 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     backgroundColor: "white",
   },
+
+  imageContainer: {
+    fontSize: 18,
+    flexShrink: 1,
+    height: 220,
+    margin: 10,
+    marginHorizontal: "5%",
+    borderWidth: 1,
+    borderColor: "#aaa",
+    borderRadius: 0,
+  },
   ratingContainer: {
     width: "100%",
     height: 60,
     alignItems: "center",
-    justifyContent: "flex-end",
+    justifyContent: "center",
   },
   myStarStyle: {
     fontSize: 35,
@@ -93,30 +139,29 @@ const styles = StyleSheet.create({
     color: "#ccc",
   },
   textInput: {
+    fontSize: 18,
     flexShrink: 1,
-    height: 250,
-    margin: 12,
-    marginTop: 40,
+    height: 150,
+    margin: 10,
+    marginHorizontal: "5%",
     textAlignVertical: "top",
     borderWidth: 1,
     borderColor: "#bbb",
     borderRadius: 15,
-    padding: 10,
+    padding: 15,
   },
 
   button: {
-    paddingHorizontal: 8,
-    paddingVertical: 6,
-    borderRadius: 4,
-    backgroundColor: "#ccc",
+    marginHorizontal:"5%",
+    borderRadius: 5,
     alignItems: "center",
-    marginHorizontal: "2%",
-    marginBottom: 5,
-    height: 40,
+    justifyContent:"center",
+    alignSelf:"center",
+    marginBottom: 10,
+    height: 53,
     width: "80%",
-    minWidth: "29%",
-    textAlign: "center",
+    backgroundColor: "#001D44",
   },
 });
 
-AppRegistry.registerComponent("clear-text", () => ChangeText);
+export default ReviewScreen;

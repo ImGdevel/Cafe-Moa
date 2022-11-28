@@ -28,7 +28,7 @@ const CafeTableStyles = StyleSheet.create({
     width: "70%",
     height: "70%",
     borderRadius: 20,
-    borderColor: "#ddd",
+    borderColor: "#fff",
     borderWidth: 1,
   },
   contentContainer: {
