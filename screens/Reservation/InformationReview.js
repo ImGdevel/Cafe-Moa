@@ -33,9 +33,8 @@ function ReviewScreen({ navigation , route }) {
       alert("리뷰를 5글자 이상 입력해주세요.");
       return;
     }
-    let date = new Date();
-    let service = new ReviewService(cafeData.id, userData);
-    service.uploadReview(date,text,image);
+    let service = new ReviewService(cafeData, userData);
+    service.uploadReview(text,image);
     navigation.goBack();
   };
 
@@ -120,7 +119,8 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     height: 220,
     margin: 10,
-    marginHorizontal: "5%",
+    marginHorizontal: "7%",
+    borderRadius:5,
     borderWidth: 1,
     borderColor: "#aaa",
     borderRadius: 0,
