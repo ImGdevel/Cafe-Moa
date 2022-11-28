@@ -20,6 +20,13 @@ import CancelReservationScreen from "./screens/Reservation/CancelReservation";
 import InformationReviewScreen from "./screens/Reservation/InformationReview";
 import EditProfileScreen from "./screens/InApp/EditProfile";
 import OptionScreen from "./screens/InApp/Option";
+import BusinessHomeScreen from "./screens/ForBusiness/BusinessHome";
+import BusinessInformationScreen from "./screens/ForBusiness/BusinessInformation";
+import ReserveManageScreen from "./screens/ForBusiness/ReserveManage";
+import WriteNoticeScreen from "./screens/ForBusiness/WriteNotice";
+import CafePicManageScreen from "./screens/ForBusiness/CafePicManager";
+import ZoomImageScreen from "./screens/ForBusiness/ZoomImage";
+import AddPicScreen from "./screens/ForBusiness/AddPicScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -105,9 +112,34 @@ const InApp = () => {
   );
 };
 
+const InBusiness = () => {
+  return (
+    <Stack.Navigator name="forBusiness" options={{ headerShown: false }}>
+      <Stack.Screen
+        name="사업자홈"
+        component={BusinessHomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name="좌석 및 예약 관리" component={ReserveManageScreen} />
+      <Stack.Screen
+        name="카페정보-사업자용"
+        component={BusinessInformationScreen}
+      />
+      <Stack.Screen name="공지 작성" component={WriteNoticeScreen} />
+      <Stack.Screen name="카페 사진 관리" component={CafePicManageScreen} />
+      <Stack.Screen
+        name="사진 확대"
+        component={ZoomImageScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name="카페 사진 추가" component={AddPicScreen} />
+    </Stack.Navigator>
+  );
+};
+
 // 프로젝트 시작
 export default function App() {
-  return ( 
+  return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="로그인">
@@ -125,6 +157,7 @@ export default function App() {
                 options={{ headerShown: false }}
               />
               <Stack.Screen name="InApp" component={InApp} />
+              <Stack.Screen name="Business" component={InBusiness} />
             </Stack.Navigator>
           )}
         </Stack.Screen>
@@ -156,12 +189,12 @@ const Auth = () => {
 };
 
 const CafeNavigation = () => {
-  return(
+  return (
     <Stack.Navigator>
-      <Stack.Screen 
-        name="Find" 
-        component={FindScreen} 
-        options={{headerShown: false}}
+      <Stack.Screen
+        name="Find"
+        component={FindScreen}
+        options={{ headerShown: false }}
       />
       <Stack.Screen name="카페 정보" component={InformationScreen} />
       <Stack.Screen name="예약하기" component={ReservationScreen} />
@@ -172,5 +205,5 @@ const CafeNavigation = () => {
         component={ReserveEndScreen}
       />
     </Stack.Navigator>
-  )
-}
+  );
+};

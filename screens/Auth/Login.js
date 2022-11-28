@@ -115,6 +115,13 @@ function LogInScreen({ navigation }) {
           >
             <Text style={{ color: "#bbb", fontSize: 20 }}>관리자</Text>
           </TouchableOpacity>
+
+          <TouchableOpacity
+            style={getLoginStyle.btnRegister}
+            onPress={()=>{navigation.replace("Business");}}
+          >
+            <Text style={{ color: "#bbb", fontSize: 20 }}>사업자 로그인</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={{ flex: 4 }}></View>

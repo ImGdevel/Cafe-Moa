@@ -65,8 +65,6 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   reviewContentContainer: {
-    flex: 1,
-    height: 200,
     width: "100%",
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",
