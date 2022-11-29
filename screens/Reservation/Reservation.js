@@ -8,6 +8,8 @@ import getFindStyle from "../../styles/components/FindStyle";
 import getModalStyle from "../../styles/components/ModalStyle";
 import { ReservationService } from "../../lib/ReservationService";
 import { sendReservetionToUser } from "../../lib/UserDataService";
+import { CafeService } from "../../lib/CafeService";
+import * as Notifications from 'expo-notifications';
 
 function ReservationScreen({ navigation, route }) {
   const { cafeData: cafe_data, userData: user_data } = route.params;
@@ -92,18 +94,19 @@ function ReservationScreen({ navigation, route }) {
 
   const submitReservation = async () => {
     await seatData.loadSeatDataBase();
+    await userData.getUserProfile();
+
     if(!userData.isReserve()){
       if (await seatData.doSeatReservation(time, selectedSeat)) {
-        await sendReservetionToUser(cafeData.getId(), cafeData.getSeatId(), time, selectedSeat); //수정
+        await userData.sendReservetionToUser(cafeData.getId(), cafeData.getSeatId(), time, selectedSeat);
         cafeData.addNowVisitor();
         let service = new CafeService();
         service.updateCafeData(cafeData);
 
-        // 푸시 알림
-        Notifications.scheduleNotificationAsync({
+        Notifications.scheduleNotificationAsync ({
           content: {
-            title: "CafeMoa "+cafeData.getName()+" 예약알림",
-            body: "약 10분 후 좌석 배정 확정 마감 ("+cafeData.getSeatId()+"번 좌석)",
+            title: "CafeMoa " + cafeData.getName() + " 예약알림",
+            body: "약 10분 후 좌석 배정 확정 마감 (" + selectedSeat + "번 좌석)",
           },
           trigger: {
             seconds: 2, // 초 뒤에 알람, 10분이니까 600 이지만 시연시 2초로 사용 바람
