@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#001D44",
-    borderRadius:5,
+    borderRadius: 5,
   },
   btnPress: {
     margin: 5,
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#A0A0FF",
-    borderRadius:5,
+    borderRadius: 5,
   },
   btnRegister: {
     margin: 5,
