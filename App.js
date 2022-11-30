@@ -17,7 +17,7 @@ import ReserveEndScreen from "./screens/Reservation/ReserveEnd";
 import InPutDataScreen from "./screens/ForBusiness/InPutData";
 import ConfirmScreen from "./screens/InApp/ConfirmReservation";
 import CancelReservationScreen from "./screens/Reservation/CancelReservation";
-import ReviewScreen from "./screens/Reservation/InformationReview";
+import ReviewScreen from "./screens/Reservation/Review";
 import EditProfileScreen from "./screens/InApp/EditProfile";
 import OptionScreen from "./screens/InApp/Option";
 
