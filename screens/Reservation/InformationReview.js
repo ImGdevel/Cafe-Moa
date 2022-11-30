@@ -75,11 +75,12 @@ function ReviewScreen({ navigation , route }) {
             }
           />
         </View>
+        {/* 이미지 선택
         <TouchableOpacity style={styles.imageContainer}
           onPress={ImagePick}
-        >
+          >
             <Image style={{flex:1}} source={image}/>
-        </TouchableOpacity>
+        </TouchableOpacity>*/}
         <TextInput
           style={styles.textInput}
           onChangeText={(text) => setText( text )}

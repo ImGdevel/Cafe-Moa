@@ -15,6 +15,7 @@ import getReviewStyle from "../../styles/components/ReviewStyle";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { ReviewService } from "../../lib/ReviewService";
 import { CafeData } from "../../lib/CafeData";
+import { dbService } from "../../FireServer";
 
 // Array that bring cafe's image
 const imgArr = [];
@@ -247,18 +248,31 @@ function PreviewLayout (props){
 function ReviewPage(props){
   const {navigation: navigation, cafeData:cafeData ,userData:userData} = props;
   const [reviewList, setReviewList] = useState();
+  const [notice, setNotice] = useState("공지사항 내용(사업자가 작성한 공지사항)");
+  const [reviewDatas, setreviewDatas] = useState([]);
+
+  useEffect(()=>{
+    dbService.collection("CafeData").doc(cafeData.getId()).collection("Review").onSnapshot((snapshot)=>{
+      const reviews = snapshot.docs.map((doc)=>({
+        id:doc.id,
+        ...doc.data(),
+      }))
+      setreviewDatas(reviews);
+    })
+  },[])
+  
+  useEffect(()=>{
+    loadReview();
+  },[reviewDatas])
 
   async function loadReview(){
-    const service = new ReviewService();
-    const reviews = []
+    const reviews = reviewDatas;
     let table = [];
     for (let i = 0; i < reviews.length; i++) {
       table.push(
         <ReviewPanel
           key={i}
-          cafeData={reviews[i]}
-          userData={userData}
-          navigation={navigation}
+          review={reviews[i]}
         />
       );
     }
@@ -266,10 +280,26 @@ function ReviewPage(props){
   } 
 
   function ReviewPanel(props){
-    const [userID, setUserID] = useState("User");
-    const [date, setDate] = useState("Date");
-    const [text, setText] = useState("asdasdasdasdasdasdadasdsaasdasdasdasdasdasdasddasdasdadasdasdasdasasdasdadasdasda");
+    const {review:review} = props;
+    const [userID, setUserID] = useState("user");
+    const [date, setDate] = useState("date");
+    const [text, setText] = useState("");
     const [image, setImage] = useState(require("../../img/initialProfile.jpg"));
+
+    function leadingZeros(n, digits) {
+      var zero = ''; n = n.toString();
+      if (n.length < digits) {
+        for (var i = 0; i < digits - n.length; i++)
+          zero += '0';
+        }
+      return zero + n;
+    }
+    useEffect(()=>{
+      const date = review.date.toDate();
+      setUserID(review.user.name);
+      setDate(`${leadingZeros(date.getMonth()+1,2)}/${leadingZeros(date.getDate(),2)} (${leadingZeros(date.getHours(),2)}:${leadingZeros(date.getMinutes(),2)})`);
+      setText(review.text)
+    },[])
 
     return(
       <View style={getReviewStyle.reviewContentContainer}>
@@ -301,7 +331,7 @@ function ReviewPage(props){
           사장님 공지
         </Text>
         <Text style={getReviewStyle.notice}>
-          공지사항 내용(사업자가 작성한 공지사항)
+          {notice}
         </Text>
       </View>
       <View style={getReviewStyle.ratingHeader}>
