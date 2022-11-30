@@ -11,8 +11,10 @@ import {
   ScrollView,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import Modal from "react-native-modal";
 
 import getEditProfileStyle from "../../styles/screens/EditProfileStyle";
+import getModalStyle from "../../styles/components/ModalStyle";
 import { pickImage } from "../../lib/ImageService";
 
 function EditProfileScreen({ navigation, route }) {
@@ -26,6 +28,10 @@ function EditProfileScreen({ navigation, route }) {
   const emailInputRef = createRef();
   const pwInputRef = createRef();
 
+  const [modalVisible, setModalVisible] = useState(false);
+  const [key, setKey] = useState(0);
+  const [ph, setPh] = useState("");
+
   useEffect(() => {
     start();
     PermissionLib();
@@ -33,7 +39,7 @@ function EditProfileScreen({ navigation, route }) {
 
   async function start() {
     const getimage = await userData.getProfileImage();
-    if (getimage == null){
+    if (getimage == null) {
       setImage(require("../../img/initialProfile.jpg"));
     } else {
       setImage(getimage);
@@ -52,20 +58,26 @@ function EditProfileScreen({ navigation, route }) {
 
   const PickImage = async () => {
     const imageuri = await pickImage();
-    setImage({uri:imageuri});
+    setImage({ uri: imageuri });
   };
 
-  function handleChange(event) {
-    const { text, type, value } = event;
-    if (text == "") {
-      {
-        /*여기서부터 작업 시작*/
-      }
+  function checkCorrectPW(text) {
+    // 비밀번호가 일치하지 않으면 초기화한다.
+    if (text != passwd) {
+      setPasswd("");
     }
   }
 
-  function ConfirmEditProfile() {
-    navigation.navigate("마이페이지");
+  function OpenModal() {
+    setModalVisible(!modalVisible);
+  }
+
+  function SubmitChange() {
+    if (key == 1) {
+    } else if (key == 2) {
+    } else if (key == 3) {
+    } else {
+    }
   }
 
   return (
@@ -81,60 +93,154 @@ function EditProfileScreen({ navigation, route }) {
           <View style={getEditProfileStyle.InputField}>
             <View style={getEditProfileStyle.ChangeBtn}>
               <Text style={getEditProfileStyle.FieldText}>닉네임</Text>
-              <TextInput
-                ref={nameInputRef}
-                style={getEditProfileStyle.textInput}
-                placeholder={"닉네임"}
-                onChangeText={(text) => {
-                  setNickname(text);
-                }}
-                autoCapitalize="none"
-                blurOnSubmit={false}
-                returnKeyType="next"
-              />
+              <View style={getEditProfileStyle.confirmContainer}>
+                <TouchableOpacity
+                  style={getEditProfileStyle.confirmEditBtn}
+                  onPress={() => {
+                    setKey(1);
+                    setPh("새 닉네임");
+                    OpenModal();
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "black",
+                      fontSize: 15,
+                      alignSelf: "center",
+                    }}
+                  >
+                    변경
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
             <View style={getEditProfileStyle.ChangeBtn}>
               <Text style={getEditProfileStyle.FieldText}>이메일</Text>
-              <TextInput
-                ref={emailInputRef}
-                style={getEditProfileStyle.textInput}
-                placeholder={"이메일"}
-                onChangeText={(text) => {
-                  setEmail(text);
-                }}
-                autoCapitalize="none"
-                blurOnSubmit={false}
-                returnKeyType="next"
-              />
+              <View style={getEditProfileStyle.confirmContainer}>
+                <TouchableOpacity
+                  style={getEditProfileStyle.confirmEditBtn}
+                  onPress={() => {
+                    setKey(2);
+                    setPh("새 이메일");
+                    OpenModal();
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "black",
+                      fontSize: 15,
+                      alignSelf: "center",
+                    }}
+                  >
+                    변경
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
             <View style={getEditProfileStyle.ChangeBtn}>
               <Text style={getEditProfileStyle.FieldText}>비밀번호</Text>
-              <TextInput
-                ref={pwInputRef}
-                style={getEditProfileStyle.textInput}
-                placeholder={"비밀번호"}
-                onChangeText={(text) => {
-                  setPasswd(text);
+              <View style={getEditProfileStyle.confirmContainer}>
+                <TouchableOpacity
+                  style={getEditProfileStyle.confirmEditBtn}
+                  onPress={() => {
+                    setKey(3);
+                    setPh("새 비밀번호");
+                    OpenModal();
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "black",
+                      fontSize: 15,
+                      alignSelf: "center",
+                    }}
+                  >
+                    변경
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <Modal
+                isVisible={modalVisible}
+                useNativeDriver={true}
+                hideModalContentWhileAnimating={true}
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
-                secureTextEntry={true}
-                autoCapitalize="none"
-                blurOnSubmit={false}
-                returnKeyType="next"
-              />
-            </View>
-          </View>
-
-          <View style={getEditProfileStyle.confirmContainer}>
-            <TouchableOpacity
-              style={getEditProfileStyle.confirmEditBtn}
-              onPress={ConfirmEditProfile}
-            >
-              <Text
-                style={{ color: "white", fontSize: 20, alignSelf: "center" }}
               >
-                개인정보 수정하기
-              </Text>
-            </TouchableOpacity>
+                <>
+                  <View style={getEditProfileStyle.modalView}>
+                    <View style={getModalStyle.modalWrapper}>
+                      <Text
+                        style={{
+                          alignSelf: "center",
+                          fontSize: 20,
+                          color: "black",
+                        }}
+                      >
+                        개인정보수정
+                      </Text>
+                    </View>
+                    <View style={getModalStyle.ScrollView}>
+                      <TextInput
+                        ref={pwInputRef}
+                        style={getEditProfileStyle.textInput}
+                        placeholder={ph}
+                        onChangeText={(text) => setPasswd(text)}
+                        secureTextEntry={true}
+                        autoCapitalize="none"
+                      />
+                      {() => {
+                        if (key === 3) {
+                          return (
+                            <TextInput
+                              ref={pwInputRef}
+                              style={getEditProfileStyle.textInput}
+                              placeholder={"새 비밀번호 확인"}
+                              onChangeText={(text) => checkCorrectPW(text)}
+                              secureTextEntry={true}
+                              autoCapitalize="none"
+                            />
+                          );
+                        }
+                      }}
+
+                      <View style={getEditProfileStyle.btnArea}>
+                        <TouchableOpacity
+                          style={getEditProfileStyle.modalButton}
+                          onPress={() => {
+                            setModalVisible(!modalVisible);
+                          }}
+                        >
+                          <Text
+                            style={{
+                              color: "black",
+                              fontSize: 15,
+                            }}
+                          >
+                            취소
+                          </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          style={getEditProfileStyle.modalButton}
+                          onPress={SubmitChange}
+                        >
+                          <Text
+                            style={{
+                              color: "black",
+                              fontSize: 15,
+                            }}
+                          >
+                            변경
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </View>
+                </>
+              </Modal>
+            </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
