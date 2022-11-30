@@ -63,6 +63,7 @@ function RegisterScreen({ navigation }) {
         }
       })
       .catch((err) => {
+        console.log(err);
         alert("계정 생성에 실패 했습니다.");
       });
   }
