@@ -21,6 +21,7 @@ import getPicManageStyle from "../../styles/screens/PicManageStyle";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { ReviewService } from "../../lib/ReviewService";
+import { pickImage } from "../../lib/ImageService";
 
 // Array that bring cafe's image
 const imgArr = [
@@ -33,8 +34,8 @@ const imgArr = [
 ];
 
 function CafePicManageScreen({ navigation, route }) {
-  // const { cafeData: cafe_Data, userData: user_data } = route.params;
-  // const [cafeData, setCafeData] = useState(cafe_Data);
+  //const { cafeData: cafeData, userData: userData } = route.params;
+  const [cafeData, setCafeData] = useState();
   // const [userData, setUserData] = useState(user_data);
   const [direction, setDirection] = useState("사진");
   // const [seatImage, setSeatImage] = useState(cafe_Data.getSeatImage());
@@ -43,15 +44,9 @@ function CafePicManageScreen({ navigation, route }) {
   );
   const [seatImage, setSeatImage] = useState();
 
-  useEffect(async () => {
-    if (Platform.OS !== "web") {
-      const { status } =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== "granted") {
-        alert("Permission Denied.");
-      }
-    }
-  }, []);
+  useEffect(() => {
+    
+  },[]);
 
   return (
     <>
@@ -59,11 +54,11 @@ function CafePicManageScreen({ navigation, route }) {
         <View style={getFindStyle.container}>
           <View style={getFindStyle.contentContainer}>
             <CafeTable
-              name={"--카페 이름--"}
-              location={"--카페 위치--"}
-              image={logoImage}
-              information={"--카페 정보--"}
-              // cafeData={cafeData}
+              //name={"--카페 이름--"}
+              //location={"--카페 위치--"}
+              images={logoImage}
+              //information={"--카페 정보--"}
+              cafeDatas={cafeData}
               navigation={navigation}
             />
           </View>
@@ -149,11 +144,30 @@ const PicklogoImage = async () => {
 
 //카페 테이블
 function CafeTable(props) {
-  // const cafeData = props.cafeData;
-  const [cafeName, setCafeName] = useState(props.name);
-  const [cafeLocation, setCafeLocation] = useState(props.location);
-  const [cafeInformation, setCafeInformaion] = useState(props.information);
-  const [cafeLogoImage, setCafeLogoImage] = useState(props.image);
+  const { cafeDatas: cafeData, images:image} = props;
+  const [cafeName, setCafeName] = useState();
+  const [cafeLocation, setCafeLocation] = useState();
+  const [cafeInformation, setCafeInformaion] = useState();
+  const [cafeLogoImage, setCafeLogoImage] = useState();
+  const [rating, setRating] = useState();
+  
+  useEffect(()=>{
+    if(cafeData != null){
+      setCafeName(cafeData.getName());
+      setCafeLocation(cafeData.getAdress(1, 3));
+      setCafeInformaion( "Open : " + cafeData.getOpenTime() +":00 ~ Close : " +cafeData.getCloseTime() +":00");
+      setCafeLogoImage(cafeData.getLogo());
+      setRating(cafeData.getRating());
+    }else{
+      setCafeLogoImage(image);
+    }
+  },[,cafeData])
+
+  async function changeLogo(){
+    const img = await pickImage();
+    setCafeLogoImage({uri:img}); //이미지 피커에서 가져온 이미지 쓸라면 {uri: 가져온 uri} 로 싸야한다.
+    //
+  }
 
   return (
     <>
@@ -172,9 +186,7 @@ function CafeTable(props) {
           <View style={getCafeTableStyle.logoPickerContainer}>
             <TouchableOpacity
               style={getCafeTableStyle.LogoImagePicker}
-              onPress={() => {
-                setCafeLogoImage(PicklogoImage);
-              }}
+              onPress={changeLogo}
             >
               <Text style={{ color: "white", fontSize: 18 }}>
                 로고 변경하기

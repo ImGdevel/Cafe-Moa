@@ -14,10 +14,16 @@ import getBusinessHomeStyle from "../../styles/screens/BusinessHomeStyle";
 import getInfoStyle from "../../styles/screens/InfoStyle";
 
 function BusinessHomeScreen({ navigation }) {
+  const [cafeData, setCafeData] = useState();
+  
   function GoToLogoutScreen() {
     // signOut();
     navigation.replace("Auth");
   }
+
+
+
+  
 
   return (
     <KeyboardAvoidingView style={getHomeStyle.container}>
