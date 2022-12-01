@@ -191,51 +191,46 @@ function EditProfileScreen({ navigation, route }) {
                         secureTextEntry={true}
                         autoCapitalize="none"
                       />
-                      {() => {
-                        if (key === 3) {
-                          return (
-                            <TextInput
-                              ref={pwInputRef}
-                              style={getEditProfileStyle.textInput}
-                              placeholder={"새 비밀번호 확인"}
-                              onChangeText={(text) => checkCorrectPW(text)}
-                              secureTextEntry={true}
-                              autoCapitalize="none"
-                            />
-                          );
-                        }
-                      }}
-
-                      <View style={getEditProfileStyle.btnArea}>
-                        <TouchableOpacity
-                          style={getEditProfileStyle.modalButton}
-                          onPress={() => {
-                            setModalVisible(!modalVisible);
+                      {key === 3 && (
+                        <TextInput
+                          ref={pwInputRef}
+                          style={getEditProfileStyle.textInput}
+                          placeholder={"새 비밀번호 확인"}
+                          onChangeText={(text) => checkCorrectPW(text)}
+                          secureTextEntry={true}
+                          autoCapitalize="none"
+                        />
+                      )}
+                    </View>
+                    <View style={getEditProfileStyle.btnArea}>
+                      <TouchableOpacity
+                        style={getEditProfileStyle.modalButton}
+                        onPress={() => {
+                          setModalVisible(!modalVisible);
+                        }}
+                      >
+                        <Text
+                          style={{
+                            color: "black",
+                            fontSize: 15,
                           }}
                         >
-                          <Text
-                            style={{
-                              color: "black",
-                              fontSize: 15,
-                            }}
-                          >
-                            취소
-                          </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          style={getEditProfileStyle.modalButton}
-                          onPress={SubmitChange}
+                          취소
+                        </Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={getEditProfileStyle.modalButton}
+                        onPress={SubmitChange}
+                      >
+                        <Text
+                          style={{
+                            color: "black",
+                            fontSize: 15,
+                          }}
                         >
-                          <Text
-                            style={{
-                              color: "black",
-                              fontSize: 15,
-                            }}
-                          >
-                            변경
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
+                          변경
+                        </Text>
+                      </TouchableOpacity>
                     </View>
                   </View>
                 </>

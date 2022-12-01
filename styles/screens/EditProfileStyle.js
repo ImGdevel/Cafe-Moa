@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   btnArea: {
+    flex: 1,
     width: "100%",
     height: "50%",
     flexDirection: "row",

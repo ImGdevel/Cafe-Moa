@@ -48,7 +48,6 @@ function ReservationScreen({ navigation, route }) {
     "20:00",
   ];
 
-
   for (let i = 0; i < timeArr.length; i++) {
     timeLoop.push(
       <TouchableOpacity
@@ -92,21 +91,25 @@ function ReservationScreen({ navigation, route }) {
 
   const submitReservation = async () => {
     await seatData.loadSeatDataBase();
-    if(!userData.isReserve()){
+    if (!userData.isReserve()) {
       if (await seatData.doSeatReservation(time, selectedSeat)) {
-        await sendReservetionToUser(cafeData.getId(), cafeData.getSeatId(), time, selectedSeat); //수정
+        await sendReservetionToUser(
+          cafeData.getId(),
+          cafeData.getSeatId(),
+          time,
+          selectedSeat
+        ); //수정
         cafeData.addNowVisitor();
         let service = new CafeService();
         service.updateCafeData(cafeData);
         navigation.navigate("ReserveEnd");
-      }else{
+      } else {
         alert("이미 예약된 좌석입니다.");
       }
-    }else{
+    } else {
       alert("이미 예약 내역이 있습니다.");
     }
   };
-  
 
   return (
     <View style={getReserveStyle.container}>
@@ -118,11 +121,9 @@ function ReservationScreen({ navigation, route }) {
       >
         <>
           <View style={getModalStyle.modalView}>
-            <View style={getModalStyle.modalWrapper}>
-              <Text style={getModalStyle.modalGradeText}>
-                시간을 선택해 주세요
-              </Text>
-            </View>
+            <Text style={getModalStyle.modalGradeText}>
+              시간을 선택해 주세요
+            </Text>
             <ScrollView style={getModalStyle.ScrollView}>{timeLoop}</ScrollView>
           </View>
         </>
