@@ -16,13 +16,15 @@ import Modal from "react-native-modal";
 import getEditProfileStyle from "../../styles/screens/EditProfileStyle";
 import getModalStyle from "../../styles/components/ModalStyle";
 import { pickImage } from "../../lib/ImageService";
+import { UserDataService } from "../../lib/UserDataService";
 
 function EditProfileScreen({ navigation, route }) {
   const { cafeData: cafeData, userData: userData } = route.params;
   const [image, setImage] = useState();
-  const [nickname, setNickname] = useState("");
-  const [email, setEmail] = useState("");
-  const [passwd, setPasswd] = useState("");
+  const [nickname, setNickname] = useState(userData.getName());
+  const [email, setEmail] = useState(userData.getEmail());
+  const [passwd, setPasswd] = useState(userData.getPassword());
+  const [errorText, setErrorText] = useState("");
 
   const nameInputRef = createRef();
   const emailInputRef = createRef();
@@ -64,7 +66,8 @@ function EditProfileScreen({ navigation, route }) {
   function checkCorrectPW(text) {
     // 비밀번호가 일치하지 않으면 초기화한다.
     if (text != passwd) {
-      setPasswd("");
+      setPasswd(userData.getPassword());
+      setErrorText("비밀번호가 일치하지 않습니다.");
     }
   }
 
@@ -74,10 +77,21 @@ function EditProfileScreen({ navigation, route }) {
 
   function SubmitChange() {
     if (key == 1) {
+      // nickname 바꾼 경우
+      console.log(nickname);
+      userData.setUserProfile(nickname, email, passwd);
+      console.log(userData.getName());
     } else if (key == 2) {
+      // email 바꾼 경우
+      console.log(email);
+      userData.setUserProfile(nickname, email, passwd);
+      console.log(userData.getEmail());
     } else if (key == 3) {
-    } else {
+      console.log(passwd);
+      userData.setUserProfile(nickname, email, passwd);
+      console.log(userData.getPassword());
     }
+    setModalVisible(!modalVisible);
   }
 
   return (
@@ -187,8 +201,18 @@ function EditProfileScreen({ navigation, route }) {
                         ref={pwInputRef}
                         style={getEditProfileStyle.textInput}
                         placeholder={ph}
-                        onChangeText={(text) => setPasswd(text)}
-                        secureTextEntry={true}
+                        onChangeText={(text) => {
+                          if (key == 1) {
+                            // nickname 바꾼 경우
+                            setNickname(text);
+                          } else if (key == 2) {
+                            // email 바꾼 경우
+                            setEmail(text);
+                          } else if (key == 3) {
+                            setPasswd(text);
+                          }
+                        }}
+                        secureTextEntry={false}
                         autoCapitalize="none"
                       />
                       {key === 3 && (
@@ -201,6 +225,7 @@ function EditProfileScreen({ navigation, route }) {
                           autoCapitalize="none"
                         />
                       )}
+                      <Text>{errorText}</Text>
                     </View>
                     <View style={getEditProfileStyle.btnArea}>
                       <TouchableOpacity
