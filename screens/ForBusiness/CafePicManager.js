@@ -34,14 +34,10 @@ const imgArr = [
 ];
 
 function CafePicManageScreen({ navigation, route }) {
-  //const { cafeData: cafeData, userData: userData } = route.params;
-  const [cafeData, setCafeData] = useState();
-  // const [userData, setUserData] = useState(user_data);
+  const { cafeData: cafeData, userData: userData } = route.params;
   const [direction, setDirection] = useState("사진");
   // const [seatImage, setSeatImage] = useState(cafe_Data.getSeatImage());
-  const [logoImage, setLogoImage] = useState(
-    require("../../img/coffeebayLogo_test.jpg")
-  );
+  
   const [seatImage, setSeatImage] = useState();
 
   useEffect(() => {
@@ -54,10 +50,6 @@ function CafePicManageScreen({ navigation, route }) {
         <View style={getFindStyle.container}>
           <View style={getFindStyle.contentContainer}>
             <CafeTable
-              //name={"--카페 이름--"}
-              //location={"--카페 위치--"}
-              images={logoImage}
-              //information={"--카페 정보--"}
               cafeDatas={cafeData}
               navigation={navigation}
             />
@@ -72,7 +64,7 @@ function CafePicManageScreen({ navigation, route }) {
             style={getInfoStyle.contentLayout}
             navigation={navigation}
             // cafeData={cafeData}
-          >
+          >{/*
             <FlatList
               keyExtractor={(item) => item.idx}
               data={imgArr}
@@ -97,7 +89,7 @@ function CafePicManageScreen({ navigation, route }) {
                 </TouchableHighlight>
               )}
               numColumns={3}
-            />
+                  />*/}
           </PreviewLayout>
         </View>
 

@@ -12,14 +12,32 @@ import {
 import getHomeStyle from "../../styles/screens/HomeStyle";
 import getBusinessHomeStyle from "../../styles/screens/BusinessHomeStyle";
 import getInfoStyle from "../../styles/screens/InfoStyle";
+import { BuisnessUserDataService } from "../../lib/UserDataService";
+import { CafeService, getCafeData, getCafeDatas } from "../../lib/CafeService";
 
 function BusinessHomeScreen({ navigation }) {
   const [cafeData, setCafeData] = useState();
+  const [userData, setUserData] = useState();
   
   function GoToLogoutScreen() {
     // signOut();
     navigation.replace("Auth");
   }
+
+  useEffect(()=>{
+    start();
+  },[])
+
+  async function start(){
+    //const user = new BuisnessUserDataService();
+    //await user.getBuisnessUserProfile();
+    //setCafeData(user.getCafeId());
+    const cafeId = "KW8l6oYhXj6g2xcUbstU";
+    setCafeData(await getCafeData(cafeId));
+    console.log(cafeId);
+  }
+
+  
 
 
 
@@ -55,7 +73,10 @@ function BusinessHomeScreen({ navigation }) {
           <TouchableOpacity
             style={getBusinessHomeStyle.button}
             onPress={() => {
-              navigation.navigate("카페정보-사업자용");
+              navigation.navigate("카페정보-사업자용",{
+                  cafeData: cafeData, 
+                  userData: userData,               
+              });
             }}
           >
             <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>
