@@ -15,6 +15,7 @@ import getReviewStyle from "../../styles/components/ReviewStyle";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { ReviewService } from "../../lib/ReviewService";
 import { CafeData } from "../../lib/CafeData";
+import { dbService } from "../../FireServer";
 
 // Array that bring cafe's image
 const imgArr = [];
@@ -247,25 +248,75 @@ function PreviewLayout (props){
 function ReviewPage(props){
   const {navigation: navigation, cafeData:cafeData ,userData:userData} = props;
   const [reviewList, setReviewList] = useState();
+  const [notice, setNotice] = useState("공지사항 내용(사업자가 작성한 공지사항)");
+  const [reviewDatas, setreviewDatas] = useState([]);
+
+  useEffect(()=>{
+    dbService.collection("CafeData").doc(cafeData.getId()).collection("Review").onSnapshot((snapshot)=>{
+      const reviews = snapshot.docs.map((doc)=>({
+        id:doc.id,
+        ...doc.data(),
+      }))
+      setreviewDatas(reviews);
+    })
+  },[])
+  
+  useEffect(()=>{
+    loadReview();
+  },[reviewDatas])
 
   async function loadReview(){
-    
+    const reviews = reviewDatas;
+    let table = [];
+    for (let i = 0; i < reviews.length; i++) {
+      table.push(
+        <ReviewPanel
+          key={i}
+          review={reviews[i]}
+        />
+      );
+    }
+    setReviewList(table);
   } 
 
   function ReviewPanel(props){
+    const {review:review} = props;
+    const [userID, setUserID] = useState("user");
+    const [date, setDate] = useState("date");
+    const [text, setText] = useState("");
+    const [image, setImage] = useState(require("../../img/initialProfile.jpg"));
+
+    function leadingZeros(n, digits) {
+      var zero = ''; n = n.toString();
+      if (n.length < digits) {
+        for (var i = 0; i < digits - n.length; i++)
+          zero += '0';
+        }
+      return zero + n;
+    }
+    useEffect(()=>{
+      const date = review.date.toDate();
+      setUserID(review.user.name);
+      setDate(`${leadingZeros(date.getMonth()+1,2)}/${leadingZeros(date.getDate(),2)} (${leadingZeros(date.getHours(),2)}:${leadingZeros(date.getMinutes(),2)})`);
+      setText(review.text)
+    },[])
+
     return(
-      <View style={getReviewStyle.reviewContentHeader}>
-      <Image
-        style={{ width: 50, height: 50, borderRadius: 50 }}
-        source={require("../../img/initialProfile.jpg")}
-      ></Image>
-      <View style={getReviewStyle.reviewHead}>
-        <Text style={{ fontSize: 15 }}>--UserID--</Text>
-        <Text style={{ color: "gray" }}>--Date--</Text>
+      <View style={getReviewStyle.reviewContentContainer}>
+        <View style={getReviewStyle.reviewContentHeader}>
+          <Image
+            style={{ width: 50, height: 50, borderRadius: 50 }}
+            source={image}
+          />
+          <View style={getReviewStyle.reviewHead}>
+            <Text style={{ fontSize: 17 }}>{userID}</Text>
+            <Text style={{ color: "gray" }}>{date}</Text>
+          </View>
+        </View>
+        <Text style={getReviewStyle.reviewContent}>
+            {text}
+          </Text>
       </View>
-      <Text style={getReviewStyle.reviewContent}>
-      </Text>
-    </View>  
     )
   }
 
@@ -280,7 +331,7 @@ function ReviewPage(props){
           사장님 공지
         </Text>
         <Text style={getReviewStyle.notice}>
-          공지사항 내용(사업자가 작성한 공지사항)
+          {notice}
         </Text>
       </View>
       <View style={getReviewStyle.ratingHeader}>
@@ -300,9 +351,10 @@ function ReviewPage(props){
           <Text style={getReviewStyle.reviewBtnText}>리뷰 작성하기</Text>
         </TouchableOpacity>
       </View>
-      <View style={getReviewStyle.reviewContentContainer}>
-        <ReviewPanel/>
+      <View>
+        {reviewList}
       </View>
+      
     </ScrollView>
   )
 }

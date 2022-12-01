@@ -33,9 +33,8 @@ function ReviewScreen({ navigation , route }) {
       alert("리뷰를 5글자 이상 입력해주세요.");
       return;
     }
-    let date = new Date();
-    let service = new ReviewService(cafeData.id, userData);
-    service.uploadReview(date,text,image);
+    let service = new ReviewService(cafeData, userData, star);
+    service.uploadReview(text,image);
     navigation.goBack();
   };
 
@@ -76,11 +75,12 @@ function ReviewScreen({ navigation , route }) {
             }
           />
         </View>
+        {/* 이미지 선택
         <TouchableOpacity style={styles.imageContainer}
           onPress={ImagePick}
-        >
+          >
             <Image style={{flex:1}} source={image}/>
-        </TouchableOpacity>
+        </TouchableOpacity>*/}
         <TextInput
           style={styles.textInput}
           onChangeText={(text) => setText( text )}
@@ -120,7 +120,8 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     height: 220,
     margin: 10,
-    marginHorizontal: "5%",
+    marginHorizontal: "7%",
+    borderRadius:5,
     borderWidth: 1,
     borderColor: "#aaa",
     borderRadius: 0,
