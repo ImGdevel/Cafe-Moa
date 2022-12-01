@@ -178,15 +178,6 @@ function CafeTable(props) {
     setRating(cafe_data.getRating());
   },[,cafe_data])
 
-  useEffect(()=>{
-    setUserData(user_data);
-    setCafeData(cafe_data);
-    setCafeName(cafe_data.getName());
-    setCafeLocation(cafe_data.getAdress(1, 3));
-    setCafeInformaion( "Open : " + cafe_data.getOpenTime() +":00 ~ Close : " +cafe_data.getCloseTime() +":00");
-    setCafeLogoImage(cafe_data.getLogo());
-    setRating(cafe_data.getRating());
-  },[,cafe_data])
 
   return (
     <TouchableHighlight
