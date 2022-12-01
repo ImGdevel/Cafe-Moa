@@ -17,7 +17,7 @@ function MyPageScreen({ navigation }) {
   const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", async() => {
+    const unsubscribe = navigation.addListener("focus", async () => {
       LoadHomePage();
     });
     return unsubscribe;
@@ -28,7 +28,7 @@ function MyPageScreen({ navigation }) {
     let user = new UserDataService();
     await user.getUserProfile();
     setUserData(user);
-  }
+  };
 
   useEffect(() => {
     getData();
@@ -51,7 +51,7 @@ function MyPageScreen({ navigation }) {
 
   //
   function GoToMyMOAScreen() {
-    console.log("데이터",userData);
+    console.log("데이터", userData);
     navigation.navigate("북마크", {
       userData: userData,
     });
@@ -87,7 +87,10 @@ function MyPageScreen({ navigation }) {
           <Text style={{ fontWeight: "600", fontSize: 25 }}>{userName}</Text>
           <Text style={{ fontWeight: "400", fontSize: 15 }}>{userEmail}</Text>
           <Text></Text>
-          <TouchableOpacity style={getMyPageStyle.infoBtn} onPress={GoToEditProfileScreen}>
+          <TouchableOpacity
+            style={getMyPageStyle.infoBtn}
+            onPress={GoToEditProfileScreen}
+          >
             <Text style={{ color: "white", fontSize: 20 }}>개인정보변경</Text>
           </TouchableOpacity>
         </View>
@@ -112,7 +115,10 @@ function MyPageScreen({ navigation }) {
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={getMyPageStyle.btn} onPress={GoToDeleteAccountScreen}>
+        <TouchableOpacity
+          style={getMyPageStyle.btn}
+          onPress={GoToDeleteAccountScreen}
+        >
           <Text style={{ color: "red", fontWeight: "500", fontSize: 20 }}>
             회원탈퇴
           </Text>
@@ -120,6 +126,6 @@ function MyPageScreen({ navigation }) {
       </View>
     </KeyboardAvoidingView>
   );
-} 
+}
 
 export default MyPageScreen;

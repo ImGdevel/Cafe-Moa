@@ -75,20 +75,20 @@ function EditProfileScreen({ navigation, route }) {
     setModalVisible(!modalVisible);
   }
 
-  function SubmitChange() {
+  async function SubmitChange() {
     if (key == 1) {
       // nickname 바꾼 경우
       console.log(nickname);
-      userData.setUserProfile(nickname, email, passwd);
+      await userData.setUserProfile(nickname, email, passwd);
       console.log(userData.getName());
     } else if (key == 2) {
       // email 바꾼 경우
       console.log(email);
-      userData.setUserProfile(nickname, email, passwd);
+      await userData.setUserProfile(nickname, email, passwd);
       console.log(userData.getEmail());
     } else if (key == 3) {
       console.log(passwd);
-      userData.setUserProfile(nickname, email, passwd);
+      await userData.setUserProfile(nickname, email, passwd);
       console.log(userData.getPassword());
     }
     setModalVisible(!modalVisible);
