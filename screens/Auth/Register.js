@@ -2,7 +2,7 @@ import React, { useState, createRef } from "react";
 import {
   View,
   Text,
-  Image,
+  Switch,
   TouchableHighlight,
   TextInput,
   KeyboardAvoidingView,
@@ -19,6 +19,8 @@ function RegisterScreen({ navigation }) {
   const [userPasswordChk, setUserPasswordChk] = useState("");
   const [errorText, setErrorText] = useState("");
 
+  const [isSelected, setSelection] = useState(false);
+
   const idInputRef = createRef();
   const emailInputRef = createRef();
   const passwordInputRef = createRef();
@@ -26,6 +28,10 @@ function RegisterScreen({ navigation }) {
 
   function GoToHomeScreen() {
     navigation.replace("InApp");
+  }
+
+  function GoToCreateCafe() {
+    navigation.replace("InPutData");
   }
 
   async function onSubmitApplication() {
@@ -50,9 +56,14 @@ function RegisterScreen({ navigation }) {
     await CreateUserAccount(userEmail, userPassword)
       .then((id) => {
         createUserProfile(userName, id, userEmail, userPassword);
-        GoToHomeScreen();
+        if (isSelected) {
+          GoToCreateCafe();
+        } else {
+          GoToHomeScreen();
+        }
       })
       .catch((err) => {
+        console.log(err);
         alert("계정 생성에 실패 했습니다.");
       });
   }
@@ -129,6 +140,25 @@ function RegisterScreen({ navigation }) {
             autoCapitalize="none"
             secureTextEntry={true}
           />
+          <View
+            style={{
+              width: "100%",
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              alignItems: "center",
+            }}
+          >
+            <Text>사업자 회원{"\t\t"}</Text>
+            <Switch
+              trackColor={{ false: "#767577", true: "#81b0ff" }}
+              thumbColor={isSelected ? "#f4f3f4" : "#f4f3f4"}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={() => {
+                setSelection(!isSelected);
+              }}
+              value={isSelected}
+            />
+          </View>
 
           <Text style={getRegisterStyle.errorText}>{errorText}</Text>
         </View>

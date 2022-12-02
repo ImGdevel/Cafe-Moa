@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
   contentArea: {
     width: "90%",
-    height: 500,
+    height: 560,
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
   },
   titleText: {
     marginTop: 0,
-    marginBottom: 10,
   },
   subTitleText: {
     paddingRight: 200,
@@ -33,31 +32,25 @@ const styles = StyleSheet.create({
     width: "75%",
     height: 100,
   },
-  btnNormal: {
+  btnLogin: {
     margin: 5,
     width: "100%",
-    height: 63,
+    height: 60,
+    borderRadius: 7,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#001D44",
-    borderRadius: 5,
-  },
-  btnPress: {
-    margin: 5,
-    width: "100%",
-    height: 63,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#A0A0FF",
-    borderRadius: 5,
+    backgroundColor: "#111111",
   },
   btnRegister: {
     margin: 5,
     width: "100%",
-    height: 30,
+    height: 60,
+    borderRadius: 7,
+    borderWidth: 3,
+    borderColor: "black",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: "white",
   },
   btnText: {
     color: "white",
@@ -67,11 +60,17 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     width: "100%",
     height: 60,
-    borderBottomWidth: 1,
-    borderColor: "#ccc",
+    borderWidth: 2,
+    borderColor: "black",
+    borderRadius: 10,
     paddingHorizontal: 20,
     backgroundColor: "#fff",
     fontSize: 20,
+  },
+  errorText: {
+    color: "red",
+    fontSize: 15,
+    fontWeight: "400",
   },
 });
 

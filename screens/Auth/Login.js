@@ -18,18 +18,16 @@ function LogInScreen({ navigation }) {
   const idInputRef = createRef();
   const passwordInputRef = createRef();
 
-  useEffect(()=>{
-    isLogin()
-  },[])
+  useEffect(() => {
+    isLogin();
+  }, []);
 
-  async function isLogin(){
-    
+  async function isLogin() {
     let id = await getCurrentUserId();
-    if(id != null){
+    if (id != null) {
       console.log("지동 로그인...", id);
       GoToHomeScreen();
     }
-    
   }
 
   function GoToRgisterScreen() {
@@ -44,16 +42,14 @@ function LogInScreen({ navigation }) {
       .then(() => {
         GoToHomeScreen();
       })
-      .catch(() => {
-
-      });
+      .catch(() => {});
   }
 
   const [isPress, setIsPress] = useState(false);
   const touchProps = {
     activeOpacity: 1,
     underlayColor: "#2C3972",
-    style: isPress ? getLoginStyle.btnPress : getLoginStyle.btnNormal, 
+    style: isPress ? getLoginStyle.btnPress : getLoginStyle.btnNormal,
     onHideUnderlay: () => setIsPress(false),
     onShowUnderlay: () => setIsPress(true),
     onPress: () => {
@@ -95,10 +91,7 @@ function LogInScreen({ navigation }) {
         </View>
         <Text>{errorText}</Text>
         <View style={getLoginStyle.btnArea}>
-          <TouchableHighlight 
-            {...touchProps}
-            onPress={onSubmit}
-          >
+          <TouchableHighlight {...touchProps} onPress={onSubmit}>
             <Text style={{ color: "white", fontSize: 23 }}>로그인</Text>
           </TouchableHighlight>
 
@@ -111,14 +104,18 @@ function LogInScreen({ navigation }) {
 
           <TouchableOpacity
             style={getLoginStyle.btnRegister}
-            onPress={()=>{navigation.navigate("InPutData");}}
+            onPress={() => {
+              navigation.navigate("InPutData");
+            }}
           >
             <Text style={{ color: "#bbb", fontSize: 20 }}>관리자</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={getLoginStyle.btnRegister}
-            onPress={()=>{navigation.replace("Business");}}
+            onPress={() => {
+              navigation.replace("Business");
+            }}
           >
             <Text style={{ color: "#bbb", fontSize: 20 }}>사업자 로그인</Text>
           </TouchableOpacity>
