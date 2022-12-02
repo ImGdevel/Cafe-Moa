@@ -102,7 +102,10 @@ function EditProfileScreen({ navigation, route }) {
             style={getEditProfileStyle.ProfilePicBtn}
             onPress={PickImage}
           >
-            <Image style={{ width: 180, height: 180 }} source={image}></Image>
+            <Image
+              style={{ width: 180, height: 180, borderRadius: 90 }}
+              source={image}
+            ></Image>
           </TouchableOpacity>
           <View style={getEditProfileStyle.InputField}>
             <View style={getEditProfileStyle.ChangeBtn}>
