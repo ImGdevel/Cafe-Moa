@@ -17,6 +17,8 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { ReviewService } from "../../lib/ReviewService";
 import { CafeData } from "../../lib/CafeData";
 import { dbService } from "../../FireServer";
+import Star from "../../Components/Star";
+import { getImage } from "../../lib/ImageService";
 
 // Array that bring cafe's image
 const imgArr = [];
@@ -246,6 +248,7 @@ function ReviewPage(props){
   const [reviewList, setReviewList] = useState();
   const [notice, setNotice] = useState("공지사항 내용(사업자가 작성한 공지사항)");
   const [reviewDatas, setreviewDatas] = useState([]);
+  const [rating, setRating] = useState();
 
   useEffect(()=>{
     dbService.collection("CafeData").doc(cafeData.getId()).collection("Review").onSnapshot((snapshot)=>{
@@ -255,6 +258,9 @@ function ReviewPage(props){
       }))
       setreviewDatas(reviews);
     })
+    setNotice(cafeData.getNotice());
+    setRating(cafeData.getRating());
+    
   },[])
   
   useEffect(()=>{
@@ -273,50 +279,6 @@ function ReviewPage(props){
       );
     }
     setReviewList(table);
-  } 
-
-  function ReviewPanel(props){
-    const {review:review} = props;
-    const [userID, setUserID] = useState("user");
-    const [date, setDate] = useState("date");
-    const [text, setText] = useState("");
-    const [image, setImage] = useState(require("../../img/initialProfile.jpg"));
-
-    function leadingZeros(n, digits) {
-      var zero = ''; n = n.toString();
-      if (n.length < digits) {
-        for (var i = 0; i < digits - n.length; i++)
-          zero += '0';
-        }
-      return zero + n;
-    }
-    useEffect(()=>{
-      if(review !=null){
-        const date = review.date.toDate();
-        setUserID(review.user.name);
-        setDate(`${leadingZeros(date.getMonth()+1,2)}/${leadingZeros(date.getDate(),2)} (${leadingZeros(date.getHours(),2)}:${leadingZeros(date.getMinutes(),2)})`);
-        setText(review.text)
-      }
-
-    },[])
-
-    return(
-      <View style={getReviewStyle.reviewContentContainer}>
-        <View style={getReviewStyle.reviewContentHeader}>
-          <Image
-            style={{ width: 50, height: 50, borderRadius: 50 }}
-            source={image}
-          />
-          <View style={getReviewStyle.reviewHead}>
-            <Text style={{ fontSize: 17 }}>{userID}</Text>
-            <Text style={{ color: "gray" }}>{date}</Text>
-          </View>
-        </View>
-        <Text style={getReviewStyle.reviewContent}>
-            {text}
-          </Text>
-      </View>
-    )
   }
 
   return(
@@ -336,7 +298,7 @@ function ReviewPage(props){
       <View style={getReviewStyle.ratingHeader}>
         <View style={getReviewStyle.ratingContainer}>
           <Ionicons name="star" style={getReviewStyle.ratings}></Ionicons>
-          <Text style={getReviewStyle.ratingsText}>4.7</Text>
+          <Text style={getReviewStyle.ratingsText}>{rating}</Text>
         </View>
         <TouchableOpacity
           style={getReviewStyle.reviewBtn}
@@ -353,8 +315,69 @@ function ReviewPage(props){
       <View>
         {reviewList}
       </View>
-      
     </ScrollView>
+  )
+}
+
+function ReviewPanel(props){
+  const {review:review} = props;
+  const [userID, setUserID] = useState(null);
+  const [userName, setUserName] = useState("user");
+  const [date, setDate] = useState("date");
+  const [text, setText] = useState("");
+  const [image, setImage] = useState();
+
+  function leadingZeros(n, digits) {
+    var zero = ''; n = n.toString();
+    if (n.length < digits) {
+      for (var i = 0; i < digits - n.length; i++)
+        zero += '0';
+      }
+    return zero + n;
+  }
+  useEffect(()=>{
+    console.log(review);
+    if(review !=null){
+      const date = review.date.toDate();
+      setUserName(review.user.name);
+      setUserID(review.user.id);
+      setDate(`${leadingZeros(date.getMonth()+1,2)}/${leadingZeros(date.getDate(),2)} (${leadingZeros(date.getHours(),2)}:${leadingZeros(date.getMinutes(),2)})`);
+      setText(review.text)
+      getImages(review.user.id);
+    }
+  },[])
+
+  async function getImages(id){
+    if(id != null){
+      console.log("이미지 출력")
+      const img = await getImage("User",id,"profile");
+      setImage({uri:img});
+    }else{
+      setImage(require("../../img/initialProfile.jpg"))
+    }
+  }
+
+  return(
+    <View style={getReviewStyle.reviewContentContainer}>
+      <View style={getReviewStyle.reviewContentHeader}>
+        <Image
+          style={{ width: 50, height: 50, borderRadius: 50 }}
+          source={image}
+        />
+        <View style={getReviewStyle.reviewHead}>
+          <View>
+            <Star value={review.rate}/>
+          </View>
+          <View style={{flexDirection:"row", marginLeft:0, justifyContent:"flex-end", }}>
+            <Text style={{fontSize: 15, color:"gray"}}>{userName}</Text>
+            <Text style={{fontSize: 13, color:"gray", marginLeft:10, marginTop:2}}>{date}</Text> 
+          </View> 
+        </View>
+      </View>
+      <Text style={getReviewStyle.reviewContent}>
+          {text}
+        </Text>
+    </View>
   )
 }
 

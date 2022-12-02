@@ -36,7 +36,10 @@ function ReviewScreen({ navigation , route }) {
     console.log(star);
     let service = new ReviewService(cafeData, userData);
     service.uploadReview(text,image,star);
+    setStar(0);
+    setText("");
     navigation.goBack();
+    
   };
 
   return (
