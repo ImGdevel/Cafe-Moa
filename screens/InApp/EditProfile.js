@@ -20,6 +20,7 @@ import { UserDataService } from "../../lib/UserDataService";
 
 function EditProfileScreen({ navigation, route }) {
   const { cafeData: cafeData, userData: userData } = route.params;
+  console.log(userData);
   const [image, setImage] = useState();
   const [nickname, setNickname] = useState(userData.getName());
   const [email, setEmail] = useState(userData.getEmail());
@@ -41,10 +42,12 @@ function EditProfileScreen({ navigation, route }) {
 
   async function start() {
     const getimage = await userData.getProfileImage();
+    
     if (getimage == null) {
       setImage(require("../../img/initialProfile.jpg"));
     } else {
-      setImage(getimage);
+      console.log("이미지 출력!");
+      setImage({uri:getimage});
     }
   }
 
@@ -60,6 +63,7 @@ function EditProfileScreen({ navigation, route }) {
 
   const PickImage = async () => {
     const imageuri = await pickImage();
+    userData.uploadProfileImage(imageuri);
     setImage({ uri: imageuri });
   };
 
@@ -237,12 +241,7 @@ function EditProfileScreen({ navigation, route }) {
                           setModalVisible(!modalVisible);
                         }}
                       >
-                        <Text
-                          style={{
-                            color: "black",
-                            fontSize: 15,
-                          }}
-                        >
+                        <Text style={{ color: "black", fontSize: 15}}>
                           취소
                         </Text>
                       </TouchableOpacity>
@@ -250,12 +249,7 @@ function EditProfileScreen({ navigation, route }) {
                         style={getEditProfileStyle.modalButton}
                         onPress={SubmitChange}
                       >
-                        <Text
-                          style={{
-                            color: "black",
-                            fontSize: 15,
-                          }}
-                        >
+                        <Text style={{ color: "black", fontSize: 15}}>
                           변경
                         </Text>
                       </TouchableOpacity>

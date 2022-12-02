@@ -15,6 +15,7 @@ function MyPageScreen({ navigation }) {
   const [userData, setUserData] = useState();
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
+  const [userImage, setUserImage] = useState(require("../../img/initialProfile.jpg"));
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", async() => {
@@ -32,17 +33,17 @@ function MyPageScreen({ navigation }) {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [userData]);
 
   const getData = async () => {
-    let UserId = new UserDataService();
-    let user_data = await UserId.getUserProfile();
-    setUserData(user_data);
-    setUserName(user_data.Name);
-    setUserEmail(user_data.email);
+    if(userData!= null){
+      console.log("새로고침");
+      setUserName(userData.getName())
+      setUserEmail(userData.getEmail())
+      setUserImage({uri:await userData.getProfileImage()});
+    }
   };
 
-  //
   function GoToOptionScreen() {
     navigation.navigate("옵션", {
       userData: userData,
@@ -74,13 +75,15 @@ function MyPageScreen({ navigation }) {
     //navigation.navigate("DeleteUser")
   }
 
+  
+
   return (
     <KeyboardAvoidingView style={getMyPageStyle.container}>
       <View style={getMyPageStyle.upContentContainer}>
         <View style={getMyPageStyle.profilePicture}>
           <Image
             style={{ width: "100%", height: "100%", borderRadius: 50 }}
-            source={require("../../img/initialProfile.jpg")}
+            source={userImage}
           ></Image>
         </View>
         <View style={getMyPageStyle.idText}>
