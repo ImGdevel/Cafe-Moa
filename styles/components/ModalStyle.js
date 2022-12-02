@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   modalWrapper: {
-    flex: 0.5,
     width: "100%",
     justifyContent: "center",
   },
