@@ -67,7 +67,7 @@ function InPutDataScreen({ navigation }) {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <KeyboardAvoidingView style={getInputStyle.container}>
       <View style={{ flex: 3 }}></View>
       <View style={getInputStyle.contentArea}>
         <View style={getInputStyle.titleText}>
