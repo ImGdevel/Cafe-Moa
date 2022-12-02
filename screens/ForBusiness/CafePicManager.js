@@ -198,8 +198,17 @@ const seatLongPressButton = () =>
       onPress: () => console.log("Cancel Pressed"),
       style: "cancel",
     },
-    { text: "확인", onPress: () => console.log("OK Pressed") },
-  ]);
+    { 
+      text: "확인", 
+      onPress: () => console.log("OK Pressed") 
+    },
+]);
+
+async function changeSeatImage(){
+  
+
+}
+
 
 const PreviewLayout = ({
   children,
