@@ -47,11 +47,6 @@ function InformationScreen({ navigation, route }) {
 
 
 
-
-
-
-
-
   return (
     <>
       <View style={getInfoStyle.container}>
@@ -296,10 +291,13 @@ function ReviewPage(props){
       return zero + n;
     }
     useEffect(()=>{
-      const date = review.date.toDate();
-      setUserID(review.user.name);
-      setDate(`${leadingZeros(date.getMonth()+1,2)}/${leadingZeros(date.getDate(),2)} (${leadingZeros(date.getHours(),2)}:${leadingZeros(date.getMinutes(),2)})`);
-      setText(review.text)
+      if(review !=null){
+        const date = review.date.toDate();
+        setUserID(review.user.name);
+        setDate(`${leadingZeros(date.getMonth()+1,2)}/${leadingZeros(date.getDate(),2)} (${leadingZeros(date.getHours(),2)}:${leadingZeros(date.getMinutes(),2)})`);
+        setText(review.text)
+      }
+
     },[])
 
     return(

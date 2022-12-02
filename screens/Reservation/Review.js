@@ -33,8 +33,9 @@ function ReviewScreen({ navigation , route }) {
       alert("리뷰를 5글자 이상 입력해주세요.");
       return;
     }
-    let service = new ReviewService(cafeData, userData, star);
-    service.uploadReview(text,image);
+    console.log(star);
+    let service = new ReviewService(cafeData, userData);
+    service.uploadReview(text,image,star);
     navigation.goBack();
   };
 
