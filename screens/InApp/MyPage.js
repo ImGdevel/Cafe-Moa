@@ -111,7 +111,7 @@ function MyPageScreen({ navigation }) {
             로그아웃
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={getMyPageStyle.btn} onPress={()=>this.propsnavigation.navigate("DeleteUser")}>
+        <TouchableOpacity style={getMyPageStyle.btn} onPress={()=>navigation.navigate("DeleteUser")}>
           <Text style={{ color: "red", fontWeight: "500", fontSize: 20 }}>
             회원탈퇴
           </Text>
