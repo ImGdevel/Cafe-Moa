@@ -29,4 +29,8 @@ npm install --save react-geocode
 //지오 로케이션2
 npx expo install expo-location
 
-//
+// react-native-stars
+npm install react-native-stars --save
+
+// expo-notifications
+expo install expo-notifications

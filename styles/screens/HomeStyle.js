@@ -34,52 +34,110 @@ const styles = StyleSheet.create({
   },
 
   reserveArea:{
-    marginTop:10,
-    height:140,
+    marginTop:25,
+    height:260,
     width:'100%',
-    backgroundColor: "#dddddd",
+    backgroundColor: "#fff",
+    borderRadius: 30,
+  },
+
+  reserveAreaTop:{
+    height: 50,
+  },
+  reserveAreaContent:{
+    flex: 1,
+    backgroundColor: "#fff",
+    borderColor: "#ddd",
+    borderWidth: 1,
+  },
+  reserveCafeContainer: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  reserveBtnContainer: {
+    height: 48,
+    flexDirection: "row",
+    alignItems:"center",
+    justifyContent:"space-evenly",
+    backgroundColor: "#fff",
+  },
+  reserveBtn:{
+    width: "45%",
+    height: "95%",
+    marginBottom: "3%",
+    backgroundColor:"#001D44",
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  reserveBtnText:{
+    color:"#fff",
+    fontSize: 18,
   },
 
   BookMarkArea:{
     marginTop:10,
-    height:200,
+    height:270,
     width:'100%',
-    backgroundColor: "#ffffff",
+    backgroundColor: "#fff",
   },
 
-  BookMarkPanel:{
-    height: 200, 
+  BookMarkContainer:{
+    height: 210, 
     width: 160, 
-    marginLeft:5,
-    borderColor: "#dddddd",
-    borderWidth: 2,
-    borderRadius: 10,
+    marginHorizontal:4,
+    
+    borderColor: "#aaa",
+    borderWidth: 1,
+    borderRadius: 5,
   },
 
-  BookMarkPanelImageBox:{
-    flex:2,
-    backgroundColor:"#dddddd",
+  BookMarkPanelImageArea:{
+    flex:7,
+    margin:"5%",
+    borderRadius:10,
   },
-  BookMarkPanelTextBox:{
+
+  BookMarkPanelTextArea:{
+    flex:3,
+    borderColor:"#ddd",
+    paddingHorizontal: "5%",
+    // //borderWidth:1,
+    // borderColor: "#aaa",
+    // borderWidth: 1,
+    // borderRadius: 5,
+  },
+
+  BookMarkPanelTextAreaTop:{
     flex:1,
-    backgroundColor: "#aaaaaa",
+    flexDirection:"row",
   },
 
-
+  AreaTitle:{
+    fontSize: 23,
+    fontWeight:"600",
+    paddingLeft:15,
+  },
+  AreaTitleLink:{
+    fontSize: 17,
+    paddingTop: 9,
+    fontWeight:"600",
+    color: "#777",
+    paddingLeft:15,
+  },
 
 
   AdArea:{
     marginTop:10,
     height:200,
     width:'100%',
-    backgroundColor: "#ffffff",
   },
 
   AdPanel:{
     height: 200, 
     width: 300 , 
     marginHorizontal: 10 ,
-    borderColor: "#dddddd",
+    borderColor: "#aaa",
     borderWidth: 2,
     borderRadius: 10,
   },

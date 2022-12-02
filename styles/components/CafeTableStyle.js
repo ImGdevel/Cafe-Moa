@@ -11,6 +11,13 @@ const CafeTableStyles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
   },
+  container_NoneStyle: {
+    width: "100%",
+    height: 140,
+    backgroundColor: "white",
+    flexDirection: "row",
+    justifyContent: "center",
+  },
   imageContainer: {
     width: 140,
     height: 140,
@@ -21,12 +28,13 @@ const CafeTableStyles = StyleSheet.create({
     width: "70%",
     height: "70%",
     borderRadius: 20,
-    borderColor: "#ddd",
+    borderColor: "#fff",
     borderWidth: 1,
   },
   contentContainer: {
     flex: 1,
     flexDirection: "column",
+    justifyContent: "center",
   },
   textContent: {
     flex: 1,
@@ -60,6 +68,24 @@ const CafeTableStyles = StyleSheet.create({
   },
   iconContainer: {
     flexDirection: "row",
+  },
+  divideContent: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingRight: 20,
+  },
+  logoPickerContainer: {
+    width: "100%",
+    height: 32,
+    marginBottom: 10,
+  },
+  LogoImagePicker: {
+    width: "80%",
+    height: "100%",
+    backgroundColor: "#001D44",
+    borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
