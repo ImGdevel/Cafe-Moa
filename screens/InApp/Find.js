@@ -76,12 +76,15 @@ function FindScreen({ navigation, route }) {
     setcafeTableList(cafeList);
   };
 
-
-
   const search = () => {
     let serchData = cafeService.serchCafeData(textInputValue);
-    console.log(serchData);
     setcafeDatas(serchData);
+  };
+
+  
+  const sortCafeDataList = (type) => {
+    let sortedData = cafeService.sortCafeData(type);
+    setcafeDatas(sortedData);
   };
 
 
