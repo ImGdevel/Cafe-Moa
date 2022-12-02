@@ -20,7 +20,6 @@ import CancelReservationScreen from "./screens/Reservation/CancelReservation";
 import ReviewScreen from "./screens/Reservation/Review";
 import EditProfileScreen from "./screens/InApp/EditProfile";
 import OptionScreen from "./screens/InApp/Option";
-import * as Notifications from 'expo-notifications';
 import BusinessHomeScreen from "./screens/ForBusiness/BusinessHome";
 import BusinessInformationScreen from "./screens/ForBusiness/BusinessInformation";
 import ReserveManageScreen from "./screens/ForBusiness/ReserveManage";
@@ -208,12 +207,3 @@ const CafeNavigation = () => {
     </Stack.Navigator>
   );
 };
-
-
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-});
