@@ -182,7 +182,7 @@ function ReservationView(props){
   return(
     <View  style = {getHomeStyle.reserveArea}>
       <View style = {getHomeStyle.reserveAreaTop}>
-        <Text style={getHomeStyle.AreaTitle}> 현제 예약 내역 </Text>
+        <Text style={getHomeStyle.AreaTitle}> 현재 예약 내역 </Text>
       </View>
       <View style = {getHomeStyle.reserveAreaContent}>
         <View style = {getHomeStyle.reserveCafeContainer}>
