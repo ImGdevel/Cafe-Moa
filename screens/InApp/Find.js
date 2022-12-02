@@ -44,8 +44,7 @@ function FindScreen({ navigation, route }) {
 
   useEffect(() => {
     FindStart();
-    CafeListLoad();
-  }, [setcafeTableList]);
+  }, []);
 
   /** 카페 리스트 출력 */
   useEffect(() => {
@@ -54,12 +53,10 @@ function FindScreen({ navigation, route }) {
 
   /** 시작 */
   async function FindStart() {
-    /** defalut */
     let cafeservice = new CafeService();
-    await cafeservice.getCafeDatabaseAd();
+    await cafeservice.getCafeDatabasea();
     setCafeService(cafeservice);
     setcafeDatas(cafeservice.getCafeDataListArray());
-    
   };
 
   /** 카페리스트 출력 */
@@ -87,23 +84,6 @@ function FindScreen({ navigation, route }) {
     setcafeDatas(serchData);
   };
 
-  const sortDistance = () => {
-    let sortedData = cafeService.sortCafeData(SORT_DISTANCE);
-    setcafeDatas(sortedData);
-  };
-  const sortRating = () => {
-    let sortedData = cafeService.sortCafeData(SORT_RATING);
-    setcafeDatas(sortedData);
-  };
-  const sortVisitor = () => {
-    let sortedData = cafeService.sortCafeData(SORT_VISITIORS);
-    setcafeDatas(sortedData);
-  };
-  const sortNowVisitor = () => {
-    let sortedData = cafeService.sortCafeData(SORT_NOW_VISITIORS);
-    setcafeDatas(sortedData);
-  };
-
 
   return (
     <View style={getFindStyle.container}>
@@ -125,16 +105,16 @@ function FindScreen({ navigation, route }) {
         </View>
 
         <View style={getFindStyle.SortContainer}>
-          <TouchableOpacity style={getFindStyle.btnSort} onPress={sortDistance}>
+          <TouchableOpacity style={getFindStyle.btnSort} onPress={() => sortCafeDataList(SORT_DISTANCE)}>
             <Text  style={getFindStyle.btnSortText}> 거리순 </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={getFindStyle.btnSort} onPress={sortRating}>
+          <TouchableOpacity style={getFindStyle.btnSort} onPress={() => sortCafeDataList(SORT_RATING)}>
             <Text style={getFindStyle.btnSortText}> 별점순 </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={getFindStyle.btnSort} onPress={sortVisitor}>
+          <TouchableOpacity style={getFindStyle.btnSort} onPress={() => sortCafeDataList(SORT_VISITIORS)}>
             <Text style={getFindStyle.btnSortText}> 방문자순 </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={getFindStyle.btnSort} onPress={sortDistance}>
+          <TouchableOpacity style={getFindStyle.btnSort} onPress={() => sortCafeDataList(SORT_NOW_VISITIORS)}>
             <Text style={getFindStyle.btnSortText}> 예약자순 </Text>
           </TouchableOpacity>
         </View>
