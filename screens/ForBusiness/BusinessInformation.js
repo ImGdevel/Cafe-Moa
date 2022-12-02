@@ -24,17 +24,16 @@ const imgArr = [];
 const reviewArr = [];
 
 function BusinessInformationScreen({ navigation, route }) {
-  // const { cafeData: cafe_Data, userData: user_data } = route.params;
+  const { cafeData: cafeData, userData: userData } = route.params;
   // const [cafeData, setCafeData] = useState(cafe_Data);
   // const [userData, setUserData] = useState(user_data);
   const [direction, setDirection] = useState("사진");
   // const [seatImage, setSeatImage] = useState(cafe_Data.getSeatImage());
 
-  // useEffect(()=>{
-  //   //리뷰 및 사진 불러오기
-  //   //
+  useEffect(()=>{
+    //리뷰 및 사진 불러오기
 
-  // },[])
+  },[])
 
   // const loadreview = () => {
   //   let Review = ReviewService(cafeData.id);
@@ -89,8 +88,8 @@ function BusinessInformationScreen({ navigation, route }) {
             style={getBusinessInfoStyle.reserveButton}
             onPress={() =>
               navigation.navigate("카페 사진 관리", {
-                // cafeData: cafeData,
-                // userData: userData,
+                cafeData: cafeData,
+                userData: userData,
               })
             }
           >

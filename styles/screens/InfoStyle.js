@@ -62,8 +62,9 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   cafeLogo: {
-    width: 100,
-    height: 100,
+    width: "100%",
+    height: "100%",
+    resizeMode: "contain",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,

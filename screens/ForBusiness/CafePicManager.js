@@ -21,6 +21,7 @@ import getPicManageStyle from "../../styles/screens/PicManageStyle";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { ReviewService } from "../../lib/ReviewService";
+import { pickImage } from "../../lib/ImageService";
 
 // Array that bring cafe's image
 const imgArr = [
@@ -32,42 +33,16 @@ const imgArr = [
   require("../../img/coffeebayLogo_test.jpg"),
 ];
 
-const PickImage = async () => {
-  let result = await ImagePicker.launchImageLibraryAsync({
-    mediaTypes: ImagePicker.MediaTypeOptions.All,
-    allowsEditing: true,
-    aspect: [4, 4],
-    quality: 1,
-  });
-  console.log(result);
-  if (!result.canceled) {
-    CafePicManageScreen.setLogoImage(result.assets[0].uri);
-  }
-};
-
 function CafePicManageScreen({ navigation, route }) {
-  // const { cafeData: cafe_Data, userData: user_data } = route.params;
-  // const [cafeData, setCafeData] = useState(cafe_Data);
-  // const [userData, setUserData] = useState(user_data);
+  const { cafeData: cafeData, userData: userData } = route.params;
   const [direction, setDirection] = useState("사진");
   // const [seatImage, setSeatImage] = useState(cafe_Data.getSeatImage());
-  const [logoImage, setLogoImage] = useState();
+  
   const [seatImage, setSeatImage] = useState();
 
-  useEffect(async () => {
-    if (Platform.OS !== "web") {
-      const { status } =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== "granted") {
-        alert("Permission Denied.");
-      }
-    }
-  }, []);
-
-  // const loadreview = () => {
-  //   let Review = ReviewService(cafeData.id);
-
-  // }
+  useEffect(() => {
+    
+  },[]);
 
   return (
     <>
@@ -75,11 +50,7 @@ function CafePicManageScreen({ navigation, route }) {
         <View style={getFindStyle.container}>
           <View style={getFindStyle.contentContainer}>
             <CafeTable
-              name={"--카페 이름--"}
-              location={"--카페 위치--"}
-              image={require("../../img/coffeebayLogo_test.jpg")}
-              information={"--카페 정보--"}
-              // cafeData={cafeData}
+              cafeDatas={cafeData}
               navigation={navigation}
             />
           </View>
@@ -93,7 +64,7 @@ function CafePicManageScreen({ navigation, route }) {
             style={getInfoStyle.contentLayout}
             navigation={navigation}
             // cafeData={cafeData}
-          >
+          >{/*
             <FlatList
               keyExtractor={(item) => item.idx}
               data={imgArr}
@@ -118,7 +89,7 @@ function CafePicManageScreen({ navigation, route }) {
                 </TouchableHighlight>
               )}
               numColumns={3}
-            />
+                  />*/}
           </PreviewLayout>
         </View>
 
@@ -150,13 +121,45 @@ const longPressButton = () =>
     { text: "삭제", onPress: () => console.log("OK Pressed") },
   ]);
 
+const PicklogoImage = async () => {
+  let result = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.All,
+    allowsEditing: true,
+    aspect: [4, 4],
+    quality: 1,
+  });
+  console.log(result);
+  if (!result.canceled) {
+    return result.assets[0].uri;
+  }
+};
+
 //카페 테이블
 function CafeTable(props) {
-  // const cafeData = props.cafeData;
-  const [cafeName, setCafeName] = useState(props.name);
-  const [cafeLocation, setCafeLocation] = useState(props.location);
-  const [cafeInformation, setCafeInformaion] = useState(props.information);
-  const [cafeLogoImage, setCafeLogoImage] = useState(props.image);
+  const { cafeDatas: cafeData, images:image} = props;
+  const [cafeName, setCafeName] = useState();
+  const [cafeLocation, setCafeLocation] = useState();
+  const [cafeInformation, setCafeInformaion] = useState();
+  const [cafeLogoImage, setCafeLogoImage] = useState();
+  const [rating, setRating] = useState();
+  
+  useEffect(()=>{
+    if(cafeData != null){
+      setCafeName(cafeData.getName());
+      setCafeLocation(cafeData.getAdress(1, 3));
+      setCafeInformaion( "Open : " + cafeData.getOpenTime() +":00 ~ Close : " +cafeData.getCloseTime() +":00");
+      setCafeLogoImage(cafeData.getLogo());
+      setRating(cafeData.getRating());
+    }else{
+      setCafeLogoImage(image);
+    }
+  },[,cafeData])
+
+  async function changeLogo(){
+    const img = await pickImage();
+    setCafeLogoImage({uri:img}); //이미지 피커에서 가져온 이미지 쓸라면 {uri: 가져온 uri} 로 싸야한다.
+    //
+  }
 
   return (
     <>
@@ -175,7 +178,7 @@ function CafeTable(props) {
           <View style={getCafeTableStyle.logoPickerContainer}>
             <TouchableOpacity
               style={getCafeTableStyle.LogoImagePicker}
-              onPress={PickImage}
+              onPress={changeLogo}
             >
               <Text style={{ color: "white", fontSize: 18 }}>
                 로고 변경하기

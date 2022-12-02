@@ -11,12 +11,85 @@ import {
 } from "react-native";
 import getHomeStyle from "../../styles/screens/HomeStyle";
 import getBusinessHomeStyle from "../../styles/screens/BusinessHomeStyle";
-import getInfoStyle from "../../styles/screens/InfoStyle";
+import { getCafeData} from "../../lib/CafeService";
+import { ReservationService } from "../../lib/ReservationService";
 
 function BusinessHomeScreen({ navigation }) {
+  const [cafeData, setCafeData] = useState();
+  const [userData, setUserData] = useState();
+  const [seatDate, setSeatData] = useState();
+  const [seatImage, setSeatImage] = useState();
+  
+  
   function GoToLogoutScreen() {
     // signOut();
     navigation.replace("Auth");
+  }
+
+  useEffect(()=>{
+    start();
+  },[])
+
+  async function start(){
+    //const user = new BuisnessUserDataService();
+    //await user.getBuisnessUserProfile();
+    //setCafeData(user.getCafeId());
+    const cafeId = "KW8l6oYhXj6g2xcUbstU";
+    setCafeData(await getCafeData(cafeId));
+    console.log(cafeId);
+  }
+
+  useEffect(()=>{
+    if(cafeData != null){
+      setSeatImage(cafeData.getSeatImage());
+      const seat =  new ReservationService(cafeData.getId())
+      setSeatData(seat.loadSeatDataBase());
+    }
+  },[cafeData])
+
+
+  useEffect(()=>{
+    if(seatDate){
+
+    }
+    setReserveSeatInfo();
+  },[seatDate])
+
+
+  function setReserveSeatInfo(){
+    console.log(seatDate);
+    
+
+  }
+
+
+
+  function SeatBtn(props){
+   const [seatNumber, setSeatNumber] = useState(7);
+
+    const onSeat = () =>{
+      Alert.alert("", "좌석을 사용완료합니다.", [
+        {
+          text: "취소",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        {
+          text: "완료",
+          onPress: () => console.log("OK Pressed"),
+        },
+      ]);
+    }
+    return (
+      <TouchableOpacity
+        style={getBusinessHomeStyle.reserveTimeBox}
+        onPress={onSeat}
+      >
+        <Text style={{ color: "white", fontWeight: "500", fontSize: 15 }}>
+          {seatNumber}
+        </Text>
+      </TouchableOpacity>
+    )
   }
 
   return (
@@ -49,7 +122,10 @@ function BusinessHomeScreen({ navigation }) {
           <TouchableOpacity
             style={getBusinessHomeStyle.button}
             onPress={() => {
-              navigation.navigate("카페정보-사업자용");
+              navigation.navigate("카페정보-사업자용",{
+                  cafeData: cafeData, 
+                  userData: userData,               
+              });
             }}
           >
             <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>
@@ -81,33 +157,13 @@ function BusinessHomeScreen({ navigation }) {
           <View style={getBusinessHomeStyle.seatPicArea}>
             <Image
               style={{ width: "100%", height: "100%", resizeMode: "contain" }}
-              source={require("../../img/anySeatPic_text.png")}
+              source={{uri:seatImage}}
             />
           </View>
           <View style={getBusinessHomeStyle.reservationListContainer}>
             <View style={getBusinessHomeStyle.reservationList}>
-              <TouchableOpacity
-                style={getBusinessHomeStyle.reserveTimeBox}
-                onPress={() => {
-                  Alert.alert("", "좌석을 사용완료합니다.", [
-                    {
-                      text: "취소",
-                      onPress: () => console.log("Cancel Pressed"),
-                      style: "cancel",
-                    },
-                    {
-                      text: "완료",
-                      onPress: () => console.log("OK Pressed"),
-                    },
-                  ]);
-                }}
-              >
-                <Text
-                  style={{ color: "white", fontWeight: "500", fontSize: 15 }}
-                >
-                  7
-                </Text>
-              </TouchableOpacity>
+              <SeatBtn/>
+             
             </View>
           </View>
         </ScrollView>
