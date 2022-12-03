@@ -9,30 +9,94 @@ import StartPageScreen from "./screens/Auth/StartPage";
 import LoginScreen from "./screens/Auth/Login";
 import RegisterScreen from "./screens/Auth/Register";
 import HomeScreen from "./screens/InApp/Home";
-import MyPageScreen from "./screens/InApp/MyPage";
+import MyPageScreen from "./screens/MyPage/MyPage";
 import FindScreen from "./screens/InApp/Find";
-import BookMarkScreen from "./screens/InApp/BookMark";
+import BookMarkScreen from "./screens/MyPage/BookMark";
 import InformationScreen from "./screens/Reservation/Information";
 import ReservationScreen from "./screens/Reservation/Reservation";
 import ReserveEndScreen from "./screens/Reservation/ReserveEnd";
-import CafeCreatFormScreen from "./screens/ForBusiness/CafeCreatForm";
+import CafeCreatFormScreen from "./screens/Business/CafeCreatForm";
 import ConfirmScreen from "./screens/InApp/ConfirmReservation";
 import CancelReservationScreen from "./screens/Reservation/CancelReservation";
 import ReviewScreen from "./screens/Reservation/Review";
-import EditProfileScreen from "./screens/InApp/EditProfile";
-import OptionScreen from "./screens/InApp/Option";
-import BusinessHomeScreen from "./screens/ForBusiness/BusinessHome";
-import BusinessInformationScreen from "./screens/ForBusiness/BusinessInformation";
-import ReserveManageScreen from "./screens/ForBusiness/ReserveManage";
-import WriteNoticeScreen from "./screens/ForBusiness/WriteNotice";
-import CafePicManageScreen from "./screens/ForBusiness/CafePicManager";
-import ZoomImageScreen from "./screens/ForBusiness/ZoomImage";
-import AddPicScreen from "./screens/ForBusiness/AddPicScreen";
-
-
+import EditProfileScreen from "./screens/MyPage/EditProfile";
+import OptionScreen from "./screens/MyPage/Option";
+import BusinessHomeScreen from "./screens/Business/BusinessHome";
+import BusinessInformationScreen from "./screens/Business/BusinessInformation";
+import ReserveManageScreen from "./screens/Business/ReserveManage";
+import WriteNoticeScreen from "./screens/Business/WriteNotice";
+import CafePicManageScreen from "./screens/Business/CafePicManager";
+import ZoomImageScreen from "./screens/Business/ZoomImage";
+import AddPicScreen from "./screens/Business/AddPicScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+
+
+
+
+// 프로젝트 시작
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Moa">
+          {() => (
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+              <Stack.Screen
+                name="Start"
+                component={StartPageScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Auth"
+                component={Auth}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen name="InApp" component={InApp} />
+              <Stack.Screen name="Business" component={InBusiness} />
+            </Stack.Navigator>
+          )}
+        </Stack.Screen>
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+const Auth = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Register"
+        component={RegisterScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="CafeCreatForm"
+        component={CafeCreatFormScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+function InApp(){
+  return(
+    <Stack.Navigator>
+       <Stack.Screen name="텝페이지" options={{ headerShown: false }} component ={TabHome}/>
+      <Stack.Screen name="카페 정보" component={InformationScreen} />
+      <Stack.Screen name="예약하기" component={ReservationScreen} />
+      <Stack.Screen name="리뷰 작성" component={ReviewScreen} />
+      <Stack.Screen name="사진 확대" component={ZoomImageScreen} options={{ headerShown: false }}/>
+      <Stack.Screen name="ReserveEnd" options={{ headerShown: false }} component={ReserveEndScreen}/>
+    </Stack.Navigator>
+  )
+}
 
 const TabHome = () => {
   return (
@@ -137,91 +201,6 @@ const InBusiness = () => {
   );
 };
 
-function InApp(){
-  return(
-    <Stack.Navigator>
-       <Stack.Screen name="텝페이지" options={{ headerShown: false }} component ={TabHome}/>
-      <Stack.Screen name="카페 정보" component={InformationScreen} />
-      <Stack.Screen name="예약하기" component={ReservationScreen} />
-      <Stack.Screen name="리뷰 작성" component={ReviewScreen} />
-      <Stack.Screen name="사진 확대" component={ZoomImageScreen} options={{ headerShown: false }}/>
-      <Stack.Screen name="ReserveEnd" options={{ headerShown: false }} component={ReserveEndScreen}/>
-    </Stack.Navigator>
-  )
-}   
-
-// 프로젝트 시작
-export default function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="로그인">
-          {() => (
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
-              <Stack.Screen
-                name="Start"
-                component={StartPageScreen}
-                options={{ headerShown: false }}
-              />
-              {/*______로그인 페이지________*/}
-              <Stack.Screen
-                name="Auth"
-                component={Auth}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen name="InApp" component={InApp} />
-              <Stack.Screen name="Business" component={InBusiness} />
-            </Stack.Navigator>
-          )}
-        </Stack.Screen>
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
-
-const Auth = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Login"
-        component={LoginScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Register"
-        component={RegisterScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="CafeCreatForm"
-        component={CafeCreatFormScreen}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
-  );
-};
-
-/*
-const CafeNavigation = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Find"
-        component={FindScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen name="카페 정보" component={InformationScreen} />
-      <Stack.Screen name="예약하기" component={ReservationScreen} />
-      <Stack.Screen name="리뷰 작성" component={ReviewScreen} />
-      <Stack.Screen
-        name="ReserveEnd"
-        options={{ headerShown: false }}
-        component={ReserveEndScreen}
-      />
-    </Stack.Navigator>
-  );
-};
-*/
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
