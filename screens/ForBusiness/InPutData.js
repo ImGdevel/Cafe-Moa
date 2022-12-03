@@ -29,8 +29,8 @@ function InPutDataScreen({ navigation }) {
   const [cafeInfo, setcafeImfo] = useState("");
   const cafeNameInputRef = createRef();
   const cafeLocationInputRef = createRef();
-  const cafeInfoInputRef = createRef();
-  const cafeTimeRef = createRef();
+  const cafeOTInputRef = createRef();
+  const cafeCTInputRef = createRef();
   const [local, setLocal] = useState("");
 
   const [cafeDatas, setCafeDatas] = useState([]); //가져와질 데이터
@@ -138,7 +138,7 @@ function InPutDataScreen({ navigation }) {
                 }}
               >
                 <TextInput
-                  ref={cafeNameInputRef}
+                  ref={cafeOTInputRef}
                   style={getInputStyle.timeTextInput}
                   placeholder={"시간"}
                   onChangeText={(text) => setcCafeName(text)}
@@ -194,7 +194,7 @@ function InPutDataScreen({ navigation }) {
                 }}
               >
                 <TextInput
-                  ref={cafeNameInputRef}
+                  ref={cafeCTInputRef}
                   style={getInputStyle.timeTextInput}
                   placeholder={"시간"}
                   onChangeText={(text) => setcCafeName(text)}
