@@ -30,6 +30,8 @@ function BusinessInformationScreen({ navigation, route }) {
   const { cafeData: cafeData, userData: userData } = route.params;
   const [direction, setDirection] = useState("사진");
 
+
+
   useEffect(()=>{
   },[])
 

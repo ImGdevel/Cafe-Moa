@@ -33,6 +33,8 @@ const imgArr = [
   require("../../img/coffeebayLogo_test.jpg"),
 ];
 
+let cafe;
+
 function CafePicManageScreen({ navigation, route }) {
   const { cafeData: cafeData, userData: userData } = route.params;
   const [direction, setDirection] = useState("사진");
@@ -41,7 +43,7 @@ function CafePicManageScreen({ navigation, route }) {
   const [seatImage, setSeatImage] = useState();
 
   useEffect(() => {
-    
+        
   },[]);
 
 
@@ -64,7 +66,7 @@ function CafePicManageScreen({ navigation, route }) {
             setSelectedValue={setDirection}
             style={getInfoStyle.contentLayout}
             navigation={navigation}
-            // cafeData={cafeData}
+            cafeData={cafeData}
           >{/*
             <FlatList
               keyExtractor={(item) => item.idx}
@@ -180,7 +182,21 @@ function CafeTable(props) {
   );
 }
 
-const seatLongPressButton = () =>
+
+
+
+const PreviewLayout = ({
+  children,
+  values,
+  selectedValue,
+  setSelectedValue,
+  cafeData,
+  navigation,
+}) => {
+  console.log(cafeData);
+  const [seatImage, setSeatImage] = useState(cafeData.getSeatImage());
+
+  const seatLongPressButton = () =>
   Alert.alert("", "사진을 변경하시겠습까?", [
     {
       text: "취소",
@@ -189,25 +205,18 @@ const seatLongPressButton = () =>
     },
     { 
       text: "확인", 
-      onPress: () => console.log("OK Pressed") 
+      onPress: () => changeSeatImage()
     },
-]);
+  ]);
+
+  async function changeSeatImage(){
+    const img =  await pickImage(7,5,false);
+    setSeatImage(img);
+    uploadImage(img,"Cafe",cafeData.getId(),"seatImage");
+  }
 
 
-async function changeSeatImage(){
-  
-
-}
-
-
-const PreviewLayout = ({
-  children,
-  values,
-  selectedValue,
-  setSelectedValue,
-  // cafeData,
-  navigation,
-}) => (
+  return(
   <View style={{ paddingHorizontal: 10, flex: 1 }}>
     <Text style={{ fontSize: 22 }}></Text>
     <View style={getInfoStyle.row}>
@@ -236,18 +245,18 @@ const PreviewLayout = ({
         return <View style={getInfoStyle.container}>{children}</View>;
       else
         return (
-          <TouchableHighlight
+          <TouchableOpacity
             style={{ alignItems: "center", justifyContent: "center" }}
             onLongPress={seatLongPressButton}
           >
             <Image
-              source={require("../../img/anySeatPic_text.png")}
+              source={{uri:seatImage}}
               style={getInfoStyle.seatPic}
             />
-          </TouchableHighlight>
+          </TouchableOpacity>
         );
     })()}
   </View>
-);
+)};
 
 export default CafePicManageScreen;
