@@ -122,18 +122,6 @@ const longPressButton = () =>
     { text: "삭제", onPress: () => console.log("OK Pressed") },
   ]);
 
-const PicklogoImage = async () => {
-  let result = await ImagePicker.launchImageLibraryAsync({
-    mediaTypes: ImagePicker.MediaTypeOptions.All,
-    allowsEditing: true,
-    aspect: [4, 4],
-    quality: 1,
-  });
-  console.log(result);
-  if (!result.canceled) {
-    return result.assets[0].uri;
-  }
-};
 
 //카페 테이블
 function CafeTable(props) {
@@ -192,201 +180,74 @@ function CafeTable(props) {
   );
 }
 
-function PreviewLayout (props){
-  const { children: children, 
-          values: values, 
-          selectedValue: selectedValue, 
-          setSelectedValue: setSelectedValue, 
-          cafeData: cafeData, 
-          userData: userData, 
-          navigation: navigation} = props;
+const seatLongPressButton = () =>
+  Alert.alert("", "사진을 변경하시겠습까?", [
+    {
+      text: "취소",
+      onPress: () => console.log("Cancel Pressed"),
+      style: "cancel",
+    },
+    { 
+      text: "확인", 
+      onPress: () => console.log("OK Pressed") 
+    },
+]);
 
-  return(
-    <View style={{ padding: 10, flex: 1 }}>
-      <Text style={{ marginBottom: 10, fontSize: 24 }}></Text>
-      <View style={getInfoStyle.row}>
-        {values.map((value) => (
-          <TouchableOpacity
-            key={value}
-            onPress={() => setSelectedValue(value)}
-            style={[getInfoStyle.button,
-              selectedValue === value && getInfoStyle.selected,
+
+async function changeSeatImage(){
+  
+
+}
+
+
+const PreviewLayout = ({
+  children,
+  values,
+  selectedValue,
+  setSelectedValue,
+  // cafeData,
+  navigation,
+}) => (
+  <View style={{ paddingHorizontal: 10, flex: 1 }}>
+    <Text style={{ fontSize: 22 }}></Text>
+    <View style={getInfoStyle.row}>
+      {values.map((value) => (
+        <TouchableOpacity
+          key={value}
+          onPress={() => setSelectedValue(value)}
+          style={[
+            getPicManageStyle.button,
+            selectedValue === value && getInfoStyle.selected,
+          ]}
+        >
+          <Text
+            style={[
+              getInfoStyle.buttonLabel,
+              selectedValue === value && getInfoStyle.selectedLabel,
             ]}
           >
-            <Text
-              style={[
-                getInfoStyle.buttonLabel,
-                selectedValue === value && getInfoStyle.selectedLabel,
-              ]}
-            >
-              {`${value}`}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-      {(() => {
-        if (selectedValue === "사진")
-          return <View style={getInfoStyle.container}>{children}</View>;
-        else if (selectedValue === "좌석")
-          return (
-            <View style={{ alignItems: "center", justifyContent: "center" }}>
-              <Image
-                source={cafeData ? { uri: cafeData.getSeatImage() } : {}}
-                style={getInfoStyle.seatPic}
-              />
-            </View>
-          );
-        else
-          return (
-            <ReviewPage
-              cafeData={cafeData}
-              userData={userData}
-              navigation={navigation}
-            />
-          );
-      })()}
-    </View>
-  );
-}
-
-
-
-function ReviewPage(props){
-  const {navigation: navigation, cafeData:cafeData ,userData:userData} = props;
-  const [reviewList, setReviewList] = useState();
-  const [notice, setNotice] = useState("공지사항 내용(사업자가 작성한 공지사항)");
-  const [reviewDatas, setreviewDatas] = useState([]);
-  const [rating, setRating] = useState();
-
-  useEffect(()=>{
-    dbService.collection("CafeData").doc(cafeData.getId()).collection("Review").onSnapshot((snapshot)=>{
-      const reviews = snapshot.docs.map((doc)=>({
-        id:doc.id,
-        ...doc.data(),
-      }))
-      setreviewDatas(reviews);
-    })
-    setNotice(cafeData.getNotice());
-    setRating(cafeData.getRating());
-    
-  },[])
-  
-  useEffect(()=>{
-    loadReview();
-  },[reviewDatas])
-
-  async function loadReview(){
-    const reviews = reviewDatas;
-    let table = [];
-    for (let i = 0; i < reviews.length; i++) {
-      table.push(
-        <ReviewPanel
-          key={i}
-          review={reviews[i]}
-        />
-      );
-    }
-    setReviewList(table);
-  }
-
-  return(
-    <ScrollView style={getReviewStyle.container}>
-      <View style={getReviewStyle.noticeHeader}>
-        <Text style={getReviewStyle.noticeText}>
-          <Ionicons
-            name="alert-circle-outline"
-            style={{ fontSize: 20 }}
-          ></Ionicons>{" "}
-          사장님 공지
-        </Text>
-        <Text style={getReviewStyle.notice}>
-          {notice}
-        </Text>
-      </View>
-      <View style={getReviewStyle.ratingHeader}>
-        <View style={getReviewStyle.ratingContainer}>
-          <Ionicons name="star" style={getReviewStyle.ratings}></Ionicons>
-          <Text style={getReviewStyle.ratingsText}>{rating}</Text>
-        </View>
-        <TouchableOpacity
-          style={getReviewStyle.reviewBtn}
-          onPress={() => {
-            navigation.navigate("리뷰 작성",{
-              cafeData: cafeData,
-              userData: userData,
-            });
-          }}
-        >
-          <Text style={getReviewStyle.reviewBtnText}>리뷰 작성하기</Text>
+            {value}
+          </Text>
         </TouchableOpacity>
-      </View>
-      <View>
-        {reviewList}
-      </View>
-    </ScrollView>
-  )
-}
-
-function ReviewPanel(props){
-  const {review:review} = props;
-  const [userID, setUserID] = useState(null);
-  const [userName, setUserName] = useState("user");
-  const [date, setDate] = useState("date");
-  const [text, setText] = useState("");
-  const [image, setImage] = useState();
-
-  function leadingZeros(n, digits) {
-    var zero = ''; n = n.toString();
-    if (n.length < digits) {
-      for (var i = 0; i < digits - n.length; i++)
-        zero += '0';
-      }
-    return zero + n;
-  }
-  useEffect(()=>{
-    console.log(review);
-    if(review !=null){
-      const date = review.date.toDate();
-      setUserName(review.user.name);
-      setUserID(review.user.id);
-      setDate(`${leadingZeros(date.getMonth()+1,2)}/${leadingZeros(date.getDate(),2)} (${leadingZeros(date.getHours(),2)}:${leadingZeros(date.getMinutes(),2)})`);
-      setText(review.text)
-      getImages(review.user.id);
-    }
-  },[])
-
-  async function getImages(id){
-    if(id != null){
-      console.log("이미지 출력")
-      const img = await getImage("User",id,"profile");
-      setImage({uri:img});
-    }else{
-      setImage(require("../../img/initialProfile.jpg"))
-    }
-  }
-
-  return(
-    <View style={getReviewStyle.reviewContentContainer}>
-      <View style={getReviewStyle.reviewContentHeader}>
-        <Image
-          style={{ width: 50, height: 50, borderRadius: 50 }}
-          source={image}
-        />
-        <View style={getReviewStyle.reviewHead}>
-          <View>
-            <Star value={review.rate}/>
-          </View>
-          <View style={{flexDirection:"row", marginLeft:0, justifyContent:"flex-end", }}>
-            <Text style={{fontSize: 15, color:"gray"}}>{userName}</Text>
-            <Text style={{fontSize: 13, color:"gray", marginLeft:10, marginTop:2}}>{date}</Text> 
-          </View> 
-        </View>
-      </View>
-      <Text style={getReviewStyle.reviewContent}>
-          {text}
-        </Text>
+      ))}
     </View>
-  )
-}
+    {(() => {
+      if (selectedValue === "사진")
+        return <View style={getInfoStyle.container}>{children}</View>;
+      else
+        return (
+          <TouchableHighlight
+            style={{ alignItems: "center", justifyContent: "center" }}
+            onLongPress={seatLongPressButton}
+          >
+            <Image
+              source={require("../../img/anySeatPic_text.png")}
+              style={getInfoStyle.seatPic}
+            />
+          </TouchableHighlight>
+        );
+    })()}
+  </View>
+);
 
 export default CafePicManageScreen;
