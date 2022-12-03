@@ -26,28 +26,16 @@ const imgArr = [];
 // Array that bring cafe's review
 const reviewArr = [];
 
-
 function InformationScreen({ navigation, route }) {
   const { cafeData: cafeData, userData: userData } = route.params;
   const [direction, setDirection] = useState("사진");
   const [seatImage, setSeatImage] = useState(cafeData.getSeatImage());
 
-  useEffect(()=>{
-    
-
-
-  },[])
-  
-
+  useEffect(() => {}, []);
 
   const loadreview = () => {
     let Review = ReviewService(cafeData.id);
-    
-  }
-
-
-
-
+  };
 
   return (
     <>
@@ -77,7 +65,13 @@ function InformationScreen({ navigation, route }) {
               data={imgArr}
               style={getInfoStyle.picArea}
               renderItem={({ item }) => (
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("사진 확대", {
+                      // source: "../../img/coffeebayLogo_test.jpg",
+                    })
+                  }
+                >
                   <View
                     style={{ flex: 1, flexDirection: "column", margin: 10 }}
                   >
@@ -100,7 +94,9 @@ function InformationScreen({ navigation, route }) {
               })
             }
           >
-            <Text style={{ color: "white", fontSize: 23, fontWeight: "600" }}>예 약 하 기</Text>
+            <Text style={{ color: "white", fontSize: 23, fontWeight: "600" }}>
+              예 약 하 기
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -110,7 +106,11 @@ function InformationScreen({ navigation, route }) {
 
 //카페 테이블
 function CafeTable(props) {
-  const {cafeData: cafeData, userData: userData, navigation: navigation } = props;
+  const {
+    cafeData: cafeData,
+    userData: userData,
+    navigation: navigation,
+  } = props;
   const [cafeName, setCafeName] = useState(cafeData.getName());
   const [cafeLocation, setCafeLocation] = useState(cafeData.getAdress(1, 3));
   const [cafeInformation, setCafeInformaion] = useState(
@@ -122,40 +122,37 @@ function CafeTable(props) {
   );
   const [cafeLogoImage, setCafeLogoImage] = useState(cafeData.getLogo());
 
-  function Bookmark(props){
+  function Bookmark(props) {
     const cafeId = cafeData.getId();
     const [icon, seticon] = useState("heart-outline");
-    const [iconStyle, setIconStyle] = useState({fontSize: 30, color: "black"});
+    const [iconStyle, setIconStyle] = useState({
+      fontSize: 30,
+      color: "black",
+    });
     const [checked, setChecked] = useState(false);
 
-    useEffect(()=>{
-      if(userData.isBookmarked(cafeId)){
+    useEffect(() => {
+      if (userData.isBookmarked(cafeId)) {
         seticon("heart");
-        setIconStyle({fontSize: 30, color: "#e00"});
+        setIconStyle({ fontSize: 30, color: "#e00" });
         setChecked(true);
       }
-    },[])
-    
-    async function bookMarked(){
-      if(checked){
+    }, []);
+
+    async function bookMarked() {
+      if (checked) {
         await userData.deletBookMark(cafeId);
         seticon("heart-outline");
-        setIconStyle({fontSize: 30, color: "black"});
+        setIconStyle({ fontSize: 30, color: "black" });
         setChecked(false);
-      }else{
+      } else {
         await userData.addBookMark(cafeId);
         seticon("heart");
-        setIconStyle({fontSize: 30, color: "#e00"});
+        setIconStyle({ fontSize: 30, color: "#e00" });
         setChecked(true);
       }
     }
-    return(
-      <Ionicons
-        name={icon}
-        style={iconStyle}
-        onPress={bookMarked}
-      />
-    )
+    return <Ionicons name={icon} style={iconStyle} onPress={bookMarked} />;
   }
 
   return (
@@ -173,7 +170,7 @@ function CafeTable(props) {
           <View style={getCafeTableStyle.textContent}>
             <View style={getCafeTableStyle.divideContent}>
               <Text style={getCafeTableStyle.nameText}>{cafeName}</Text>
-              <Bookmark/>
+              <Bookmark />
             </View>
             <Text style={getCafeTableStyle.contentText}>{cafeLocation}</Text>
             <Text style={getCafeTableStyle.contentText}>{cafeInformation}</Text>
@@ -184,16 +181,18 @@ function CafeTable(props) {
   );
 }
 
-function PreviewLayout (props){
-  const { children: children, 
-          values: values, 
-          selectedValue: selectedValue, 
-          setSelectedValue: setSelectedValue, 
-          cafeData: cafeData, 
-          userData: userData, 
-          navigation: navigation} = props;
+function PreviewLayout(props) {
+  const {
+    children: children,
+    values: values,
+    selectedValue: selectedValue,
+    setSelectedValue: setSelectedValue,
+    cafeData: cafeData,
+    userData: userData,
+    navigation: navigation,
+  } = props;
 
-  return(
+  return (
     <View style={{ padding: 10, flex: 1 }}>
       <Text style={{ marginBottom: 10, fontSize: 24 }}></Text>
       <View style={getInfoStyle.row}>
@@ -201,7 +200,8 @@ function PreviewLayout (props){
           <TouchableOpacity
             key={value}
             onPress={() => setSelectedValue(value)}
-            style={[getInfoStyle.button,
+            style={[
+              getInfoStyle.button,
               selectedValue === value && getInfoStyle.selected,
             ]}
           >
@@ -241,47 +241,49 @@ function PreviewLayout (props){
   );
 }
 
-
-
-function ReviewPage(props){
-  const {navigation: navigation, cafeData:cafeData ,userData:userData} = props;
+function ReviewPage(props) {
+  const {
+    navigation: navigation,
+    cafeData: cafeData,
+    userData: userData,
+  } = props;
   const [reviewList, setReviewList] = useState();
-  const [notice, setNotice] = useState("공지사항 내용(사업자가 작성한 공지사항)");
+  const [notice, setNotice] = useState(
+    "공지사항 내용(사업자가 작성한 공지사항)"
+  );
   const [reviewDatas, setreviewDatas] = useState([]);
   const [rating, setRating] = useState();
 
-  useEffect(()=>{
-    dbService.collection("CafeData").doc(cafeData.getId()).collection("Review").onSnapshot((snapshot)=>{
-      const reviews = snapshot.docs.map((doc)=>({
-        id:doc.id,
-        ...doc.data(),
-      }))
-      setreviewDatas(reviews);
-    })
+  useEffect(() => {
+    dbService
+      .collection("CafeData")
+      .doc(cafeData.getId())
+      .collection("Review")
+      .onSnapshot((snapshot) => {
+        const reviews = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setreviewDatas(reviews);
+      });
     setNotice(cafeData.getNotice());
     setRating(cafeData.getRating());
-    
-  },[])
-  
-  useEffect(()=>{
-    loadReview();
-  },[reviewDatas])
+  }, []);
 
-  async function loadReview(){
+  useEffect(() => {
+    loadReview();
+  }, [reviewDatas]);
+
+  async function loadReview() {
     const reviews = reviewDatas;
     let table = [];
     for (let i = 0; i < reviews.length; i++) {
-      table.push(
-        <ReviewPanel
-          key={i}
-          review={reviews[i]}
-        />
-      );
+      table.push(<ReviewPanel key={i} review={reviews[i]} />);
     }
     setReviewList(table);
   }
 
-  return(
+  return (
     <ScrollView style={getReviewStyle.container}>
       <View style={getReviewStyle.noticeHeader}>
         <Text style={getReviewStyle.noticeText}>
@@ -291,9 +293,7 @@ function ReviewPage(props){
           ></Ionicons>{" "}
           사장님 공지
         </Text>
-        <Text style={getReviewStyle.notice}>
-          {notice}
-        </Text>
+        <Text style={getReviewStyle.notice}>{notice}</Text>
       </View>
       <View style={getReviewStyle.ratingHeader}>
         <View style={getReviewStyle.ratingContainer}>
@@ -303,7 +303,7 @@ function ReviewPage(props){
         <TouchableOpacity
           style={getReviewStyle.reviewBtn}
           onPress={() => {
-            navigation.navigate("리뷰 작성",{
+            navigation.navigate("리뷰 작성", {
               cafeData: cafeData,
               userData: userData,
             });
@@ -312,15 +312,13 @@ function ReviewPage(props){
           <Text style={getReviewStyle.reviewBtnText}>리뷰 작성하기</Text>
         </TouchableOpacity>
       </View>
-      <View>
-        {reviewList}
-      </View>
+      <View>{reviewList}</View>
     </ScrollView>
-  )
+  );
 }
 
-function ReviewPanel(props){
-  const {review:review} = props;
+function ReviewPanel(props) {
+  const { review: review } = props;
   const [userID, setUserID] = useState(null);
   const [userName, setUserName] = useState("user");
   const [date, setDate] = useState("date");
@@ -328,36 +326,44 @@ function ReviewPanel(props){
   const [image, setImage] = useState();
 
   function leadingZeros(n, digits) {
-    var zero = ''; n = n.toString();
+    var zero = "";
+    n = n.toString();
     if (n.length < digits) {
-      for (var i = 0; i < digits - n.length; i++)
-        zero += '0';
-      }
+      for (var i = 0; i < digits - n.length; i++) zero += "0";
+    }
     return zero + n;
   }
-  useEffect(()=>{
+  useEffect(() => {
     console.log(review);
-    if(review !=null){
+    if (review != null) {
       const date = review.date.toDate();
       setUserName(review.user.name);
       setUserID(review.user.id);
-      setDate(`${leadingZeros(date.getMonth()+1,2)}/${leadingZeros(date.getDate(),2)} (${leadingZeros(date.getHours(),2)}:${leadingZeros(date.getMinutes(),2)})`);
-      setText(review.text)
+      setDate(
+        `${leadingZeros(date.getMonth() + 1, 2)}/${leadingZeros(
+          date.getDate(),
+          2
+        )} (${leadingZeros(date.getHours(), 2)}:${leadingZeros(
+          date.getMinutes(),
+          2
+        )})`
+      );
+      setText(review.text);
       getImages(review.user.id);
     }
-  },[])
+  }, []);
 
-  async function getImages(id){
-    if(id != null){
-      console.log("이미지 출력")
-      const img = await getImage("User",id,"profile");
-      setImage({uri:img});
-    }else{
-      setImage(require("../../img/initialProfile.jpg"))
+  async function getImages(id) {
+    if (id != null) {
+      console.log("이미지 출력");
+      const img = await getImage("User", id, "profile");
+      setImage({ uri: img });
+    } else {
+      setImage(require("../../img/initialProfile.jpg"));
     }
   }
 
-  return(
+  return (
     <View style={getReviewStyle.reviewContentContainer}>
       <View style={getReviewStyle.reviewContentHeader}>
         <Image
@@ -366,19 +372,32 @@ function ReviewPanel(props){
         />
         <View style={getReviewStyle.reviewHead}>
           <View>
-            <Star value={review.rate}/>
+            <Star value={review.rate} />
           </View>
-          <View style={{flexDirection:"row", marginLeft:0, justifyContent:"flex-end", }}>
-            <Text style={{fontSize: 15, color:"gray"}}>{userName}</Text>
-            <Text style={{fontSize: 13, color:"gray", marginLeft:10, marginTop:2}}>{date}</Text> 
-          </View> 
+          <View
+            style={{
+              flexDirection: "row",
+              marginLeft: 0,
+              justifyContent: "flex-end",
+            }}
+          >
+            <Text style={{ fontSize: 15, color: "gray" }}>{userName}</Text>
+            <Text
+              style={{
+                fontSize: 13,
+                color: "gray",
+                marginLeft: 10,
+                marginTop: 2,
+              }}
+            >
+              {date}
+            </Text>
+          </View>
         </View>
       </View>
-      <Text style={getReviewStyle.reviewContent}>
-          {text}
-        </Text>
+      <Text style={getReviewStyle.reviewContent}>{text}</Text>
     </View>
-  )
+  );
 }
 
 export default InformationScreen;
