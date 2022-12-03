@@ -42,12 +42,12 @@ function EditProfileScreen({ navigation, route }) {
 
   async function start() {
     const getimage = await userData.getProfileImage();
-    
+
     if (getimage == null) {
       setImage(require("../../img/initialProfile.jpg"));
     } else {
       console.log("이미지 출력!");
-      setImage({uri:getimage});
+      setImage({ uri: getimage });
     }
   }
 
@@ -241,7 +241,7 @@ function EditProfileScreen({ navigation, route }) {
                           setModalVisible(!modalVisible);
                         }}
                       >
-                        <Text style={{ color: "black", fontSize: 15}}>
+                        <Text style={{ color: "black", fontSize: 15 }}>
                           취소
                         </Text>
                       </TouchableOpacity>
@@ -249,7 +249,7 @@ function EditProfileScreen({ navigation, route }) {
                         style={getEditProfileStyle.modalButton}
                         onPress={SubmitChange}
                       >
-                        <Text style={{ color: "black", fontSize: 15}}>
+                        <Text style={{ color: "black", fontSize: 15 }}>
                           변경
                         </Text>
                       </TouchableOpacity>
