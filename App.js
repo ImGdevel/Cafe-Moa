@@ -14,7 +14,7 @@ import BookMarkScreen from "./screens/InApp/BookMark";
 import InformationScreen from "./screens/Reservation/Information";
 import ReservationScreen from "./screens/Reservation/Reservation";
 import ReserveEndScreen from "./screens/Reservation/ReserveEnd";
-import InPutDataScreen from "./screens/ForBusiness/InPutData";
+import CafeCreatFormScreen from "./screens/ForBusiness/CafeCreatForm";
 import ConfirmScreen from "./screens/InApp/ConfirmReservation";
 import CancelReservationScreen from "./screens/Reservation/CancelReservation";
 import ReviewScreen from "./screens/Reservation/Review";
@@ -28,6 +28,8 @@ import WriteNoticeScreen from "./screens/ForBusiness/WriteNotice";
 import CafePicManageScreen from "./screens/ForBusiness/CafePicManager";
 import ZoomImageScreen from "./screens/ForBusiness/ZoomImage";
 import AddPicScreen from "./screens/ForBusiness/AddPicScreen";
+
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -191,8 +193,8 @@ const Auth = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="InPutData"
-        component={InPutDataScreen}
+        name="CafeCreatForm"
+        component={CafeCreatFormScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
