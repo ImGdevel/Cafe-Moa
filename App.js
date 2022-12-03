@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import * as Notifications from "expo-notifications";
 
 import StartPageScreen from "./screens/Auth/StartPage";
 import LoginScreen from "./screens/Auth/Login";
@@ -20,7 +21,6 @@ import CancelReservationScreen from "./screens/Reservation/CancelReservation";
 import ReviewScreen from "./screens/Reservation/Review";
 import EditProfileScreen from "./screens/InApp/EditProfile";
 import OptionScreen from "./screens/InApp/Option";
-import * as Notifications from "expo-notifications";
 import BusinessHomeScreen from "./screens/ForBusiness/BusinessHome";
 import BusinessInformationScreen from "./screens/ForBusiness/BusinessInformation";
 import ReserveManageScreen from "./screens/ForBusiness/ReserveManage";
@@ -140,7 +140,7 @@ const InBusiness = () => {
 function InApp(){
   return(
     <Stack.Navigator>
-       <Stack.Screen name="InApp" options={{ headerShown: false }} component ={TabHome}/>
+       <Stack.Screen name="텝페이지" options={{ headerShown: false }} component ={TabHome}/>
       <Stack.Screen name="카페 정보" component={InformationScreen} />
       <Stack.Screen name="예약하기" component={ReservationScreen} />
       <Stack.Screen name="리뷰 작성" component={ReviewScreen} />
