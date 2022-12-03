@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Image, Text } from "react-native";
+import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
 
 import getDeleteUserStyle from "../../styles/screens/DeleteUserStyle";
 
@@ -19,9 +19,8 @@ function GoToHomeScreen() {
       </Text>
       <TouchableOpacity
               onPress={() => {
-                navigation.navigate("ConfirmReservation", {
-                  cafeData: reserveCafeInfo,
-                  userData: userData,
+                navigation.navigate("Auth", {
+
                 });
               }}
             >

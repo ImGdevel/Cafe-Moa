@@ -21,7 +21,7 @@ import getPicManageStyle from "../../styles/screens/PicManageStyle";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { ReviewService } from "../../lib/ReviewService";
-import { pickImage } from "../../lib/ImageService";
+import { getImage, pickImage, uploadImage } from "../../lib/ImageService";
 
 // Array that bring cafe's image
 const imgArr = [
@@ -33,6 +33,8 @@ const imgArr = [
   require("../../img/coffeebayLogo_test.jpg"),
 ];
 
+let cafe;
+
 function CafePicManageScreen({ navigation, route }) {
   const { cafeData: cafeData, userData: userData } = route.params;
   const [direction, setDirection] = useState("사진");
@@ -41,8 +43,9 @@ function CafePicManageScreen({ navigation, route }) {
   const [seatImage, setSeatImage] = useState();
 
   useEffect(() => {
-    
+        
   },[]);
+
 
   return (
     <>
@@ -63,7 +66,7 @@ function CafePicManageScreen({ navigation, route }) {
             setSelectedValue={setDirection}
             style={getInfoStyle.contentLayout}
             navigation={navigation}
-            // cafeData={cafeData}
+            cafeData={cafeData}
           >{/*
             <FlatList
               keyExtractor={(item) => item.idx}
@@ -121,22 +124,10 @@ const longPressButton = () =>
     { text: "삭제", onPress: () => console.log("OK Pressed") },
   ]);
 
-const PicklogoImage = async () => {
-  let result = await ImagePicker.launchImageLibraryAsync({
-    mediaTypes: ImagePicker.MediaTypeOptions.All,
-    allowsEditing: true,
-    aspect: [4, 4],
-    quality: 1,
-  });
-  console.log(result);
-  if (!result.canceled) {
-    return result.assets[0].uri;
-  }
-};
 
 //카페 테이블
 function CafeTable(props) {
-  const { cafeDatas: cafeData, images:image} = props;
+  const { cafeDatas: cafeData } = props;
   const [cafeName, setCafeName] = useState();
   const [cafeLocation, setCafeLocation] = useState();
   const [cafeInformation, setCafeInformaion] = useState();
@@ -150,15 +141,15 @@ function CafeTable(props) {
       setCafeInformaion( "Open : " + cafeData.getOpenTime() +":00 ~ Close : " +cafeData.getCloseTime() +":00");
       setCafeLogoImage(cafeData.getLogo());
       setRating(cafeData.getRating());
+      setCafeLogoImage( {uri:cafeData.getLogo()});
     }else{
-      setCafeLogoImage(image);
     }
   },[,cafeData])
 
-  async function changeLogo(){
+  const changeLogo = async() => {
     const img = await pickImage();
     setCafeLogoImage({uri:img}); //이미지 피커에서 가져온 이미지 쓸라면 {uri: 가져온 uri} 로 싸야한다.
-    //
+    await uploadImage(img,"Cafe",cafeData.getId(),"logo")
   }
 
   return (
@@ -191,24 +182,41 @@ function CafeTable(props) {
   );
 }
 
-const seatLongPressButton = () =>
-  Alert.alert("", "사진을 변경하시겠습까?", [
-    {
-      text: "취소",
-      onPress: () => console.log("Cancel Pressed"),
-      style: "cancel",
-    },
-    { text: "확인", onPress: () => console.log("OK Pressed") },
-  ]);
+
+
 
 const PreviewLayout = ({
   children,
   values,
   selectedValue,
   setSelectedValue,
-  // cafeData,
+  cafeData,
   navigation,
-}) => (
+}) => {
+  console.log(cafeData);
+  const [seatImage, setSeatImage] = useState(cafeData.getSeatImage());
+
+  const seatLongPressButton = () =>
+  Alert.alert("", "사진을 변경하시겠습까?", [
+    {
+      text: "취소",
+      onPress: () => console.log("Cancel Pressed"),
+      style: "cancel",
+    },
+    { 
+      text: "확인", 
+      onPress: () => changeSeatImage()
+    },
+  ]);
+
+  async function changeSeatImage(){
+    const img =  await pickImage(7,5,false);
+    setSeatImage(img);
+    uploadImage(img,"Cafe",cafeData.getId(),"seatImage");
+  }
+
+
+  return(
   <View style={{ paddingHorizontal: 10, flex: 1 }}>
     <Text style={{ fontSize: 22 }}></Text>
     <View style={getInfoStyle.row}>
@@ -237,18 +245,18 @@ const PreviewLayout = ({
         return <View style={getInfoStyle.container}>{children}</View>;
       else
         return (
-          <TouchableHighlight
+          <TouchableOpacity
             style={{ alignItems: "center", justifyContent: "center" }}
             onLongPress={seatLongPressButton}
           >
             <Image
-              source={require("../../img/anySeatPic_text.png")}
+              source={{uri:seatImage}}
               style={getInfoStyle.seatPic}
             />
-          </TouchableHighlight>
+          </TouchableOpacity>
         );
     })()}
   </View>
-);
+)};
 
 export default CafePicManageScreen;

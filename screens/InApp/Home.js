@@ -11,6 +11,7 @@ import { getCafeData, getCafeDatas } from "../../lib/CafeService";
 import { UserDataService } from "../../lib/UserDataService";
 import { CafeTable } from "../../Components/CafeTable";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { Updated } from "../../lib/TestSample";
 
 function HomeScreen({ navigation }) {
   const [userData, setUserData] = useState();

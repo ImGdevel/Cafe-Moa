@@ -34,11 +34,12 @@ function ConfirmReservationScreen({ navigation, route }) {
   async function CancelReserve() {
     let timeTable = new ReservationService(cafeData.getSeatId());
     await timeTable.loadSeatDataBase();
+    
     timeTable.doSeatCancel(
       userData.reservation.time,
       userData.reservation.seatNumber
     );
-
+    
     await userData.deleteReservationToUser();
     GotoCancelReservation();
   }

@@ -16,13 +16,15 @@ import { ReservationService } from "../../lib/ReservationService";
 
 function BusinessHomeScreen({ navigation }) {
   const [cafeData, setCafeData] = useState();
+  const [reserveService, setReserveService] = useState();
   const [userData, setUserData] = useState();
-  const [seatDate, setSeatData] = useState();
+  const [seatData, setSeatData] = useState();
   const [seatImage, setSeatImage] = useState();
-  
+  const [time, setTime] = useState(9);
+  const [seatList, setSeatList] = useState();
   
   function GoToLogoutScreen() {
-    // signOut();
+    //signOut();
     navigation.replace("Auth");
   }
 
@@ -36,36 +38,44 @@ function BusinessHomeScreen({ navigation }) {
     //setCafeData(user.getCafeId());
     const cafeId = "KW8l6oYhXj6g2xcUbstU";
     setCafeData(await getCafeData(cafeId));
-    console.log(cafeId);
   }
 
   useEffect(()=>{
     if(cafeData != null){
       setSeatImage(cafeData.getSeatImage());
-      const seat =  new ReservationService(cafeData.getId())
-      setSeatData(seat.loadSeatDataBase());
+      loadSeat();
     }
   },[cafeData])
 
-
-  useEffect(()=>{
-    if(seatDate){
-
-    }
-    setReserveSeatInfo();
-  },[seatDate])
-
-
-  function setReserveSeatInfo(){
-    console.log(seatDate);
-    
-
+  async function loadSeat(){
+    const reves =  new ReservationService(cafeData.getSeatId())
+    await reves.loadSeatDataBase();
+    setReserveService(reves);
   }
 
 
+  useEffect(()=>{
+    if(reserveService != null){
+      loadSeatInfo();
+    }
+  },[reserveService])
 
-  function SeatBtn(props){
-   const [seatNumber, setSeatNumber] = useState(7);
+
+  function loadSeatInfo(){
+    const seats = reserveService.getSeatDataOnTime(time);
+    setSeatData(seats);
+
+    const list = []
+    seats.map((item)=>{
+      list.push(
+        <SeatBtn key={item.seat} number={item.seat} uid={item.uid}/>
+      );
+    })
+    setSeatList(list);
+  }
+
+  function SeatBtn({number, uid}){
+   const [seatNumber, setSeatNumber] = useState(number);
 
     const onSeat = () =>{
       Alert.alert("", "좌석을 사용완료합니다.", [
@@ -162,8 +172,7 @@ function BusinessHomeScreen({ navigation }) {
           </View>
           <View style={getBusinessHomeStyle.reservationListContainer}>
             <View style={getBusinessHomeStyle.reservationList}>
-              <SeatBtn/>
-             
+             {seatList}
             </View>
           </View>
         </ScrollView>

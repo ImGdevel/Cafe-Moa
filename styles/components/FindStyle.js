@@ -15,7 +15,7 @@ const FindStyles = StyleSheet.create({
   },
 
   searchbarContainer: {
-    flex:2,
+    flex: 2,
     marginTop: "10%",
     backgroundColor: "#fafafa",
     justifyContent: "center",
@@ -43,30 +43,31 @@ const FindStyles = StyleSheet.create({
   },
 
   SortContainer: {
-    flex:1,
-    flexDirection:"row",
-    paddingHorizontal:10,
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    paddingHorizontal: 10,
     paddingVertical: 10,
   },
-  btnSort:{
-    width:90,
-    height:"100%",
-    marginHorizontal:4,
-    borderRadius:10,
-    borderWidth:1,
+  btnSort: {
+    width: 90,
+    height: "100%",
+    marginHorizontal: 4,
+    borderRadius: 10,
+    borderWidth: 1,
     borderColor: "#aaa",
-    justifyContent:"center",
-    alignItems:"center",
+    justifyContent: "center",
+    alignItems: "center",
   },
-  btnSortText:{
-    color:"#555",
-    fontSize:13,
+  btnSortText: {
+    color: "#555",
+    fontSize: 13,
   },
 
   filterContainer: {
-    flex:1,
+    flex: 1,
     alignItems: "flex-end",
-    backgroundColor:"#f8f8f8",
+    backgroundColor: "#f8f8f8",
   },
   btnFilter: {
     height: "100%",

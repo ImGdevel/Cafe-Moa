@@ -17,7 +17,7 @@ function ReservationScreen({ navigation, route }) {
   const [cafeData, setCafeData] = useState(cafe_data);
   const [userData, setUserData] = useState(user_data);
   const [seatImage, setSeatImage] = useState(cafe_data.getSeatImage());
-  const [seatData, setSeatData] = useState();
+  const [seatData, setSeatData] = useState(new ReservationService());
   const [selectedSeat, setSelectedSeat] = useState();
   const [modalVisible, setModalVisible] = useState(true);
   const [modalOutput, setModalOutput] = useState("Open Modal");
@@ -93,6 +93,11 @@ function ReservationScreen({ navigation, route }) {
   };
 
   const submitReservation = async () => {
+    if(seatData.seatId == null) {
+      console.log("!?");
+      return;
+    }
+
     await seatData.loadSeatDataBase();
     await userData.getUserProfile();
 
@@ -103,6 +108,8 @@ function ReservationScreen({ navigation, route }) {
         let service = new CafeService();
         service.updateCafeData(cafeData);
 
+
+
         Notifications.scheduleNotificationAsync ({
           content: {
             title: "CafeMoa " + cafeData.getName() + " 예약알림",
@@ -112,6 +119,8 @@ function ReservationScreen({ navigation, route }) {
             seconds: 2, // 초 뒤에 알람, 10분이니까 600 이지만 시연시 2초로 사용 바람
           },
         });
+
+
 
         navigation.navigate("ReserveEnd");
       }else{

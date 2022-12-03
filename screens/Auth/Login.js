@@ -105,15 +105,6 @@ function LogInScreen({ navigation }) {
           <TouchableOpacity
             style={getLoginStyle.btnRegister}
             onPress={() => {
-              navigation.navigate("InPutData");
-            }}
-          >
-            <Text style={{ color: "#bbb", fontSize: 20 }}>관리자</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={getLoginStyle.btnRegister}
-            onPress={() => {
               navigation.replace("Business");
             }}
           >
