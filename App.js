@@ -144,7 +144,6 @@ function InApp(){
       <Stack.Screen name="리뷰 작성" component={ReviewScreen} />
       <Stack.Screen name="ReserveEnd" options={{ headerShown: false }} component={ReserveEndScreen}/>
     </Stack.Navigator>
-
   )
 }   
 
