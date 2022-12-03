@@ -67,6 +67,10 @@ function InPutDataScreen({ navigation }) {
     // console.log(userdel);
   };
 
+  function SubmitCreateCafe() {
+    navigation.replace("Business");
+  }
+
   return (
     <KeyboardAvoidingView style={getInputStyle.container}>
       <View style={getInputStyle.headerContainer}>
@@ -222,7 +226,10 @@ function InPutDataScreen({ navigation }) {
         </View>
       </View>
       <View style={getInputStyle.submitBtnContainer}>
-        <TouchableOpacity style={getInputStyle.submitButton}>
+        <TouchableOpacity
+          style={getInputStyle.submitButton}
+          onPress={SubmitCreateCafe}
+        >
           <Text style={{ color: "white", fontSize: 25, fontWeight: "bold" }}>
             카페 만들기
           </Text>
