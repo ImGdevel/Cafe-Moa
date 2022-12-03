@@ -26,14 +26,6 @@ function RegisterScreen({ navigation }) {
   const passwordInputRef = createRef();
   const passwordChkInputRef = createRef();
 
-  function GoToHomeScreen() {
-    navigation.replace("InApp");
-  }
-
-  function GoToCreateCafe() {
-    navigation.replace("InPutData");
-  }
-
   async function onSubmitApplication() {
     setErrorText("");
     if (!userName) {
@@ -52,24 +44,29 @@ function RegisterScreen({ navigation }) {
       setErrorText("비밀번호가 일치하지 않습니다");
       return;
     }
+    await CreateUserAccount(userEmail, userPassword).then((id) => {
+      createUserProfile(userName, id, userEmail, userPassword);
+      if (isSelected) {
+        GoToCreateCafe();
+      } else {
+        GoToHomeScreen();
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      alert("계정 생성에 실패 했습니다.");
+    });
+  }
 
-    await CreateUserAccount(userEmail, userPassword)
-      .then((id) => {
-        createUserProfile(userName, id, userEmail, userPassword);
-        if (isSelected) {
-          GoToCreateCafe();
-        } else {
-          GoToHomeScreen();
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("계정 생성에 실패 했습니다.");
-      });
+  function GoToHomeScreen() {
+    navigation.replace("InApp");
+  }
+
+  function GoToCreateCafe() {
+    navigation.replace("CafeCreatForm");
   }
 
   const [isPress, setIsPress] = useState(false);
-
   const touchProps = {
     activeOpacity: 1,
     underlayColor: "#2C3972",
@@ -77,7 +74,7 @@ function RegisterScreen({ navigation }) {
     onHideUnderlay: () => setIsPress(false),
     onShowUnderlay: () => setIsPress(true),
     onPress: () => {
-      onSubmitApplication;
+      onSubmitApplication
     },
   };
 

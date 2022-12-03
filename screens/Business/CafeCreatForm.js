@@ -12,11 +12,28 @@ import getInputStyle from "../../styles/screens/InputDataStyle";
 
 
 function CafeCreatFormScreen({ navigation }) {
+  const [cafeName, setcCafeName] = useState("");
+  const [cafeLocation, setCafeLocation] = useState({
+    latitude: 37,
+    longitude: 127,
+  });
+  const [cafeInfo, setcafeImfo] = useState("");
+  const cafeNameInputRef = createRef();
+  const cafeLocationInputRef = createRef();
+  const cafeInfoInputRef = createRef();
+  const cafeTimeRef = createRef();
+  const [local, setLocal] = useState("");
+
+  const [cafeDatas, setCafeDatas] = useState([]); //가져와질 데이터
+  const [cafeClass, setCafeClass] = useState([]);
+  const [image, setImage] = useState();
+  const [name, setName] = useState();
+  
 
   function SubmitCreateCafe() {
     navigation.replace("Business");
   }
-
+  
 
   return (
     <KeyboardAvoidingView style={getInputStyle.container}>
