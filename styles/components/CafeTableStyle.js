@@ -10,7 +10,6 @@ const CafeTableStyles = StyleSheet.create({
     borderColor: "#DDD",
     borderWidth: 1,
     borderRadius: 10,
-    paddingBottom:"10%",
   },
   container_NoneStyle: {
     width: "100%",
