@@ -7,9 +7,20 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import { dbService } from "../../FireServer";
 
-function WriteNoticeScreen({ navigation }) {
-  const [text, onChangeText] = useState();
+function WriteNoticeScreen({ navigation, route }) {
+  const { cafeData: cafeData } = route.params;
+  const [text, onChangeText] = useState(cafeData.getNotice());
+
+  function noticeUpload(){
+    dbService.collection("CafeData").doc(cafeData.getId()).update({
+      notice: text,
+    })
+    navigation.pop();
+  }
+
+
 
   return (
     <View style={styles.container}>
@@ -33,7 +44,7 @@ function WriteNoticeScreen({ navigation }) {
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            navigation.pop();
+            noticeUpload();
           }}
         >
           <Text style={{ color: "white", fontWeight: "900", fontSize: 20 }}>
@@ -62,7 +73,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#bbb",
     borderRadius: 15,
-    padding: 10,
+    padding: 20,
+    fontSize: 18,
   },
   button: {
     height: "100%",

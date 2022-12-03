@@ -37,7 +37,7 @@ function EditProfileScreen({ navigation, route }) {
 
   useEffect(() => {
     start();
-    PermissionLib();
+    //PermissionLib();
   }, []);
 
   async function start() {
@@ -51,6 +51,7 @@ function EditProfileScreen({ navigation, route }) {
     }
   }
 
+  /*
   const PermissionLib = async () => {
     if (Platform.OS !== "web") {
       const { status } =
@@ -59,7 +60,7 @@ function EditProfileScreen({ navigation, route }) {
         alert("Permission Denied.");
       }
     }
-  };
+  };*/
 
   const PickImage = async () => {
     const imageuri = await pickImage();

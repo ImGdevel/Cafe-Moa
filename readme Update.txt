@@ -34,3 +34,6 @@ npm install react-native-stars --save
 
 // expo-notifications
 expo install expo-notifications
+
+//로딩바
+expo install expo-app-loading

@@ -39,7 +39,7 @@ function InformationScreen({ navigation, route }) {
 
   return (
     <>
-      <View style={getInfoStyle.container}>
+      <View style={getInfoStyle.mainContainer}>
         <View style={getFindStyle.container}>
           <View style={getFindStyle.contentContainer}>
             <CafeTable
