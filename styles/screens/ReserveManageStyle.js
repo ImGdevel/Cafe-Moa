@@ -21,18 +21,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   pickerContainer: {
-    width: "20%",
+    width: "22%",
     height: "100%",
-  },
-  picker: {
     alignItems: "center",
     justifyContent: "center",
+    marginLeft: 2,
+  },
+  picker: {
     width: "100%",
     height: "50%",
-    paddingLeft: 10,
   },
   addButtonContainer: {
-    width: "20%",
+    width: "18%",
     height: "100%",
     padding: 5,
   },
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   timeText: {
-    fontSize: "18",
+    fontSize: 18,
     fontWeight: "400",
     color: "white",
   },

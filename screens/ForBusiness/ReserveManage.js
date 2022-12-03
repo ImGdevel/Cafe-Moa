@@ -13,7 +13,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import getManageStyle from "../../styles/screens/ReserveManageStyle";
 
 function ReserveManageScreen({ navigation }) {
-  const [selectedSeat, setSelectedSeat] = useState();
+  const [selectedSeat, setSelectedSeat] = useState("");
   const [seatList, setSeatList] = useState([]);
   const [manageVisible, setManageVisible] = useState(false);
 
@@ -23,27 +23,21 @@ function ReserveManageScreen({ navigation }) {
 
   // picker item에 추가하는 loop
   const makePickerItem = () => {
-    let arr = new Array();
-    var seatLoop = [];
-    for (var i = 1; i <= 20; i++) {
-      if (
-        arr.find(function (data) {
-          return data == i;
-        }) == null
-      ) {
-        seatLoop.push(<Picker.Item key={i} label={String(i)} value={i} />);
-      }
+    let seatLoop = [];
+    for (let i = 1; i <= 20; i++) {
+      seatLoop.push(<Picker.Item key={i} label={String(i)} value={i} />);
     }
     setSeatList(seatLoop);
   };
+
   return (
     <ScrollView style={getManageStyle.container}>
       <View style={getManageStyle.manualContianer}>
         <View style={getManageStyle.descriptionContainer}>
-          <Text style={{ fontSize: "18", color: "#001D44" }}>
+          <Text style={{ fontSize: 18, color: "#001D44" }}>
             수동으로 사용중인 좌석 추가...
           </Text>
-          <Text style={{ fontSize: "12", color: "gray" }}>
+          <Text style={{ fontSize: 12, color: "gray" }}>
             예약내역이 있다면, 아래에 표시됩니다.
           </Text>
         </View>
@@ -83,15 +77,16 @@ function ReserveManageScreen({ navigation }) {
                 <Text>
                   <Ionicons
                     name="checkmark-sharp"
-                    style={{ fontSize: "30", color: "lightgreen" }}
+                    style={{ fontSize: 30, color: "lightgreen" }}
                   ></Ionicons>
                 </Text>
               </TouchableOpacity>
+
               <TouchableOpacity style={getManageStyle.manageMenu}>
                 <Text>
                   <Ionicons
                     name="close-sharp"
-                    style={{ fontSize: "30", color: "red" }}
+                    style={{ fontSize: 30, color: "red" }}
                   ></Ionicons>
                 </Text>
               </TouchableOpacity>
