@@ -9,7 +9,7 @@ import {
 
 import getMyPageStyle from "../../styles/screens/MyPageStyle";
 import { signOut } from "../../lib/AuthService";
-import { getUserProfile, UserDataService } from "../../lib/UserDataService";
+import { UserDataService } from "../../lib/UserDataService";
 
 function MyPageScreen({ navigation }) {
   const [userData, setUserData] = useState();
@@ -44,13 +44,14 @@ function MyPageScreen({ navigation }) {
     }
   };
 
+  //옵션
   function GoToOptionScreen() {
     navigation.navigate("옵션", {
       userData: userData,
     });
   }
 
-  //
+  //북마크
   function GoToMyMOAScreen() {
     console.log("데이터",userData);
     navigation.navigate("북마크", {
@@ -65,14 +66,15 @@ function MyPageScreen({ navigation }) {
     });
   }
 
-  //
+  //로그아웃
   function GoToLogoutScreen() {
     signOut();
     navigation.replace("Auth");
   }
 
+  //유저 삭제
   function GoToDeleteAccountScreen() {
-    //navigation.navigate("DeleteUser")
+    navigation.navigate("DeleteUser")
   }
 
   
@@ -114,7 +116,7 @@ function MyPageScreen({ navigation }) {
             로그아웃
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={getMyPageStyle.btn} onPress={()=>navigation.navigate("DeleteUser")}>
+        <TouchableOpacity style={getMyPageStyle.btn} onPress={GoToDeleteAccountScreen}>
           <Text style={{ color: "red", fontWeight: "500", fontSize: 20 }}>
             회원탈퇴
           </Text>

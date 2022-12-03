@@ -28,6 +28,7 @@ import WriteNoticeScreen from "./screens/Business/WriteNotice";
 import CafePicManageScreen from "./screens/Business/CafePicManager";
 import ZoomImageScreen from "./screens/Business/ZoomImage";
 import AddPicScreen from "./screens/Business/AddPicScreen";
+import DeleteUserScreen from "./screens/MyPage/DeleteUser";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -169,6 +170,7 @@ const TabHome = () => {
             <Stack.Screen name="개인정보수정" component={EditProfileScreen} />
             <Stack.Screen name="옵션" component={OptionScreen} />
             <Stack.Screen name="북마크" component={BookMarkScreen} />
+            <Stack.Screen name="DeleteUser" component={DeleteUserScreen} />
           </Stack.Navigator>
         )}
       </Tab.Screen>
