@@ -41,9 +41,14 @@ function BusinessInformationScreen({ navigation, route }) {
   const openTimeInputRef = createRef();
   const closeTimeInputRef = createRef();
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log(cafeData.getOpenTime());
+    console.log(cafeData.getCloseTime());
+  }, []);
 
   function SubmitTime() {
+    cafeData.setOpenTime(openTime);
+    cafeData.setCloseTime(closeTime);
     setModalVisible(!modalVisible);
   }
 
