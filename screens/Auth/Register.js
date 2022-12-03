@@ -27,6 +27,7 @@ function RegisterScreen({ navigation }) {
   const passwordChkInputRef = createRef();
 
   async function onSubmitApplication() {
+    GoToCreateCafe();
     setErrorText("");
     if (!userName) {
       setErrorText("이름을 입력해주세요");
@@ -44,6 +45,8 @@ function RegisterScreen({ navigation }) {
       setErrorText("비밀번호가 일치하지 않습니다");
       return;
     }
+    
+    
     await CreateUserAccount(userEmail, userPassword).then((id) => {
       createUserProfile(userName, id, userEmail, userPassword);
       if (isSelected) {

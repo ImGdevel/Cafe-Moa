@@ -7,33 +7,28 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Image,
+  ScrollView,
 } from "react-native";
 import getInputStyle from "../../styles/screens/InputDataStyle";
 
 
 function CafeCreatFormScreen({ navigation }) {
   const [cafeName, setcCafeName] = useState("");
-  const [cafeLocation, setCafeLocation] = useState({
-    latitude: 37,
-    longitude: 127,
-  });
-  const [cafeInfo, setcafeImfo] = useState("");
+  const [logoImage, setLogoImage] = useState();
+  const [seatImage, setSeatImage] = useState();
+  const [time, setTime] = useState({open:null, close:null});
+  
   const cafeNameInputRef = createRef();
   const cafeLocationInputRef = createRef();
-  const cafeInfoInputRef = createRef();
-  const cafeTimeRef = createRef();
-  const [local, setLocal] = useState("");
-
-  const [cafeDatas, setCafeDatas] = useState([]); //가져와질 데이터
-  const [cafeClass, setCafeClass] = useState([]);
-  const [image, setImage] = useState();
-  const [name, setName] = useState();
-  
+  const cafeOTInputRef = createRef();
+  const cafeCTInputRef = createRef();
 
   function SubmitCreateCafe() {
     navigation.replace("Business");
   }
   
+
+
 
   return (
     <KeyboardAvoidingView style={getInputStyle.container}>
@@ -46,7 +41,7 @@ function CafeCreatFormScreen({ navigation }) {
         <View style={getInputStyle.cafeInfoHeader}>
           <View style={getInputStyle.cafeImagePicker}>
             <Image
-              source={require("../../img/coffeebayLogo_test.jpg")}
+              source={require("../../img/DefaultSeatImage.png")}
               style={{ width: "100%", height: "100%", borderRadius: 15 }}
             />
           </View>
@@ -178,7 +173,7 @@ function CafeCreatFormScreen({ navigation }) {
         <View style={getInputStyle.seatImagePickerContainer}>
           <View style={getInputStyle.setImagePicker}>
             <Image
-              source={require("../../img/anySeatPic_text.png")}
+              source={require("../../img/DefaultSeatImage.png")}
               style={{
                 width: "100%",
                 height: "100%",
