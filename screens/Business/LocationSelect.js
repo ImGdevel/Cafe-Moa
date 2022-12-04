@@ -7,10 +7,15 @@ const LocationSelectionScreen = (navigator) =>{
 
 
     return ( 
-    <View style ={styles.container} >
-        <View style={styles.header}>
+    <View style ={styles.container}>
+        <View style={styles.headerContainer}>
+
         </View>
-        <View>
+
+        <View style={styles.contentContainer}>
+          <View>
+
+          </View>
         </View>
     </View>
     )
@@ -25,7 +30,11 @@ const styles = StyleSheet.create({
     height: "100%",
     alignItems: "center",
   },
-  header: {
+  headerContainer: {
+    flex:1,
+    backgroundColor:"red",
+  },
+  contentContainer: {
     flex:1,
     backgroundColor:"red",
   }
