@@ -1,4 +1,5 @@
-import React, { useState, useEffect, createRef } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useState, useEffect, createRef, useReducer } from "react";
 import {
   StyleSheet,
   View,
@@ -9,23 +10,44 @@ import {
   Image,
   ScrollView,
 } from "react-native";
+import { CafeData } from "../../lib/CafeData";
+import { pickImage } from "../../lib/ImageService";
 import getInputStyle from "../../styles/screens/InputDataStyle";
 
 
 function CafeCreatFormScreen({ navigation }) {
   const [cafeName, setcCafeName] = useState("");
-  const [logoImage, setLogoImage] = useState();
-  const [seatImage, setSeatImage] = useState();
-  const [time, setTime] = useState({open:null, close:null});
+  const [logoImage, setLogoImage] = useState(require("../../img/DefaultSeatImage.png"));
+  const [seatImage, setSeatImage] = useState(require("../../img/DefaultSeatImage.png"));
+  const [openTime, setOpenTime] = useState();
+  const [closeTime, setCloseTime] = useState();
   
   const cafeNameInputRef = createRef();
   const cafeLocationInputRef = createRef();
   const cafeOTInputRef = createRef();
   const cafeCTInputRef = createRef();
+  const cafeData = new CafeData();
+
+  useEffect(()=>{
+    
+  },[])
+
 
   function SubmitCreateCafe() {
     navigation.replace("Business");
   }
+  
+  async function selectSeatImage(){
+    const img = await pickImage();
+    setSeatImage({uri: img})
+  }
+
+  async function selectLogoImage(){
+    const img = await pickImage();
+    setLogoImage({uri: img})
+  }
+
+  
   
 
 
@@ -37,14 +59,18 @@ function CafeCreatFormScreen({ navigation }) {
           Create MOA Cafe
         </Text>
       </View>
+      
       <View style={getInputStyle.contentContainer}>
-        <View style={getInputStyle.cafeInfoHeader}>
+        <View style={getInputStyle.cafeInfoHeader}>    
           <View style={getInputStyle.cafeImagePicker}>
-            <Image
-              source={require("../../img/DefaultSeatImage.png")}
-              style={{ width: "100%", height: "100%", borderRadius: 15 }}
-            />
+            <TouchableOpacity onPress={selectLogoImage} >
+              <Image
+                source={logoImage}
+                style={{ width: "100%", height: "100%", borderRadius: 15 }}
+              />
+            </TouchableOpacity>
           </View>
+
           <View style={getInputStyle.nameInputContainer}>
             <TextInput
               ref={cafeNameInputRef}
@@ -60,17 +86,13 @@ function CafeCreatFormScreen({ navigation }) {
               }
             />
             <TouchableOpacity style={getInputStyle.locationButton}>
-              <Text
-                style={{ color: "#001D44", fontSize: 20, fontWeight: "bold" }}
-              >
+              <Text style={{ color: "#001D44", fontSize: 20, fontWeight: "bold" }}>
                 카페 위치
               </Text>
             </TouchableOpacity>
           </View>
         </View>
-        <View
-          style={{ width: "100%", height: "5%", backgroundColor: "white" }}
-        ></View>
+        <View style={{ width: "100%", height: "5%", backgroundColor: "white" }}></View>
         <View style={getInputStyle.cafeTimeContainer}>
           <View style={getInputStyle.oncTimeContainer}>
             <View
@@ -100,14 +122,16 @@ function CafeCreatFormScreen({ navigation }) {
                   ref={cafeOTInputRef}
                   style={getInputStyle.timeTextInput}
                   placeholder={"시간"}
-                  onChangeText={(text) => setcCafeName(text)}
+                  onChangeText={()=>{
+
+                  }}
                   autoCapitalize="none"
                   keyboardType="number-pad"
                   blurOnSubmit={false}
                   returnKeyType="next"
                   onSubmitEditing={() =>
                     cafeLocationInputRef.current &&
-                    cafeLocationInputRef.current.focus()
+                    cafeLocationInputRef.current.setOpenTime()
                   }
                 />
               </View>
@@ -138,9 +162,7 @@ function CafeCreatFormScreen({ navigation }) {
                 paddingTop: 8,
               }}
             >
-              <Text
-                style={{ color: "#001D44", fontSize: 20, fontWeight: "bold" }}
-              >
+              <Text style={{ color: "#001D44", fontSize: 20, fontWeight: "bold" }}>
                 Close
               </Text>
               <View
@@ -156,7 +178,7 @@ function CafeCreatFormScreen({ navigation }) {
                   ref={cafeCTInputRef}
                   style={getInputStyle.timeTextInput}
                   placeholder={"시간"}
-                  onChangeText={(text) => setcCafeName(text)}
+                  onChangeText={(text) => setCloseTime(text)}
                   autoCapitalize="none"
                   keyboardType="number-pad"
                   blurOnSubmit={false}
@@ -172,15 +194,18 @@ function CafeCreatFormScreen({ navigation }) {
         </View>
         <View style={getInputStyle.seatImagePickerContainer}>
           <View style={getInputStyle.setImagePicker}>
-            <Image
-              source={require("../../img/DefaultSeatImage.png")}
-              style={{
-                width: "100%",
-                height: "100%",
-                borderRadius: 15,
-                resizeMode: "contain",
-              }}
-            />
+            <TouchableOpacity onPress={selectSeatImage}>
+              <Image
+                source={seatImage}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: 15,
+                  resizeMode: "contain",
+                }}
+              />
+            </TouchableOpacity>
+
           </View>
         </View>
       </View>
