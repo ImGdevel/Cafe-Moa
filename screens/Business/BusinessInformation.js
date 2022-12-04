@@ -34,7 +34,6 @@ function BusinessInformationScreen({ navigation, route }) {
   const { cafeData: cafeData, userData: userData } = route.params;
   const [direction, setDirection] = useState("사진");
   const [modalVisible, setModalVisible] = useState(false);
-
   const [openTime, setOpenTime] = useState();
   const [closeTime, setCloseTime] = useState();
 
@@ -45,6 +44,13 @@ function BusinessInformationScreen({ navigation, route }) {
     console.log(cafeData.getOpenTime());
     console.log(cafeData.getCloseTime());
   }, []);
+
+
+  useEffect(()=>{
+    dbService.collection("CafeData").doc(cafeData.getId()).onSnapshot((doc)=>{
+      cafeData.loadData(doc.data());
+    })
+  },[])
 
   function SubmitTime() {
     cafeData.setOpenTime(openTime);
@@ -195,46 +201,7 @@ function BusinessInformationScreen({ navigation, route }) {
     </>
   );
 }
-/*
-//카페 테이블
-function CafeTable(props) {
-  const { cafeData: cafeData } = props;
-  const [cafeName, setCafeName] = useState(cafeData.getName());
-  const [cafeLocation, setCafeLocation] = useState(cafeData.getAdress(1, 3));
-  const [cafeInformation, setCafeInformaion] = useState(
-    "Open : " +
-      cafeData.getOpenTime() +
-      ":00 ~ Close : " +
-      cafeData.getCloseTime() +
-      ":00"
-  );
-  const [cafeLogoImage, setCafeLogoImage] = useState(cafeData.getLogo());
 
-  return (
-    <>
-      <View style={getCafeTableStyle.container}>
-        <View style={getCafeTableStyle.imageContainer}>
-          <View style={getCafeTableStyle.image}>
-            <Image
-              source={{ uri: cafeLogoImage }}
-              style={getInfoStyle.cafeLogo}
-            />
-          </View>
-        </View>
-        <View style={getCafeTableStyle.contentContainer}>
-          <View style={getCafeTableStyle.textContent}>
-            <View style={getCafeTableStyle.divideContent}>
-              <Text style={getCafeTableStyle.nameText}>{cafeName}</Text>
-            </View>
-            <Text style={getCafeTableStyle.contentText}>{cafeLocation}</Text>
-            <Text style={getCafeTableStyle.contentText}>{cafeInformation}</Text>
-          </View>
-        </View>
-      </View>
-    </>
-  );
-}
-*/
 function PreviewLayout(props) {
   const {
     children: children,
@@ -318,10 +285,16 @@ function ReviewPage(props) {
         }));
         setreviewDatas(reviews);
       });
+    dbService.collection("CafeData").doc(cafeData.getId()).onSnapshot((doc)=>{
+      if(doc.exists && doc.data().notice != null){
+        setNotice(doc.data().notice)
+      }else{
+
+      }
+    })
     setNotice(cafeData.getNotice());
     setRating(cafeData.getRating());
   }, []);
-
   useEffect(() => {
     loadReview();
   }, [reviewDatas]);
@@ -377,7 +350,7 @@ function ReviewPanel(props) {
   const [text, setText] = useState("");
   const [image, setImage] = useState();
 
-  function leadingZeros(n, digits) {
+  const leadingZeros = (n, digits) => {
     var zero = "";
     n = n.toString();
     if (n.length < digits) {
@@ -385,6 +358,16 @@ function ReviewPanel(props) {
     }
     return zero + n;
   }
+
+  const getImages = async(id) => {
+    if (id != null) {
+      const img = await getImage("User", id, "profile");
+      setImage({ uri: img });
+    } else {
+      setImage(require("../../img/initialProfile.jpg"));
+    }
+  }
+
   useEffect(() => {
     if (review != null) {
       const date = review.date.toDate();
@@ -404,14 +387,6 @@ function ReviewPanel(props) {
     }
   }, []);
 
-  async function getImages(id) {
-    if (id != null) {
-      const img = await getImage("User", id, "profile");
-      setImage({ uri: img });
-    } else {
-      setImage(require("../../img/initialProfile.jpg"));
-    }
-  }
 
   return (
     <View style={getReviewStyle.reviewContentContainer}>

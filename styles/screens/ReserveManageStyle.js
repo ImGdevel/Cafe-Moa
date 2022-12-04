@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   timeArea: {
-    width: 70,
-    height: 30,
+    width: 80,
+    height: 40,
     justifyContent: "center",
     backgroundColor: "#001D44",
     margin: 10,

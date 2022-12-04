@@ -22,6 +22,7 @@ import getPicManageStyle from "../../styles/screens/PicManageStyle";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { ReviewService } from "../../lib/ReviewService";
 import { getImage, pickImage, uploadImage } from "../../lib/ImageService";
+import { dbService } from "../../FireServer";
 
 // Array that bring cafe's image
 const imgArr = [
@@ -42,9 +43,11 @@ function CafePicManageScreen({ navigation, route }) {
   
   const [seatImage, setSeatImage] = useState();
 
-  useEffect(() => {
-        
-  },[]);
+  useEffect(()=>{
+    dbService.collection("CafeData").doc(cafeData.getId()).onSnapshot((doc)=>{
+      cafeData.loadData(doc.data());
+    })
+  },[])
 
 
   return (
