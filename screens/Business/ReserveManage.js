@@ -8,14 +8,15 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import BottomSheet from "../../Components/BottomSheet";
 
 import getManageStyle from "../../styles/screens/ReserveManageStyle";
 
 function ReserveManageScreen({ navigation }) {
   const [selectedSeat, setSelectedSeat] = useState("");
   const [seatList, setSeatList] = useState([]);
-  const [manageVisible, setManageVisible] = useState(false);
+
+  const [isModalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     makePickerItem();
@@ -30,8 +31,16 @@ function ReserveManageScreen({ navigation }) {
     setSeatList(seatLoop);
   };
 
+  const pressButton = () => {
+    setModalVisible(true);
+  };
+
   return (
     <ScrollView style={getManageStyle.container}>
+      <BottomSheet
+        modalVisible={isModalVisible}
+        setModalVisible={setModalVisible}
+      />
       <View style={getManageStyle.manualContianer}>
         <View style={getManageStyle.descriptionContainer}>
           <Text style={{ fontSize: 18, color: "#001D44" }}>
@@ -66,33 +75,17 @@ function ReserveManageScreen({ navigation }) {
           <TouchableOpacity
             style={getManageStyle.setNumBox}
             onPress={() => {
-              setManageVisible(!manageVisible);
+              pressButton();
             }}
           >
             <Text style={{ color: "#001D44" }}>7번 좌석</Text>
           </TouchableOpacity>
-          {manageVisible && (
-            <View style={getManageStyle.manageMenuContiner}>
-              <TouchableOpacity style={getManageStyle.manageMenu}>
-                <Text>
-                  <Ionicons
-                    name="checkmark-sharp"
-                    style={{ fontSize: 30, color: "lightgreen" }}
-                  ></Ionicons>
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity style={getManageStyle.manageMenu}>
-                <Text>
-                  <Ionicons
-                    name="close-sharp"
-                    style={{ fontSize: 30, color: "red" }}
-                  ></Ionicons>
-                </Text>
-              </TouchableOpacity>
-            </View>
-          )}
-          <TouchableOpacity style={getManageStyle.setNumBox}>
+          <TouchableOpacity
+            style={getManageStyle.setNumBox}
+            onPress={() => {
+              pressButton();
+            }}
+          >
             <Text style={{ color: "#001D44" }}>8번 좌석</Text>
           </TouchableOpacity>
         </ScrollView>
@@ -101,7 +94,12 @@ function ReserveManageScreen({ navigation }) {
         </View>
         <ScrollView horizontal={true} style={getManageStyle.numContainer}>
           <View>
-            <TouchableOpacity style={getManageStyle.setNumBox}>
+            <TouchableOpacity
+              style={getManageStyle.setNumBox}
+              onPress={() => {
+                pressButton();
+              }}
+            >
               <Text style={{ color: "#001D44" }}>7번 좌석</Text>
             </TouchableOpacity>
           </View>
