@@ -16,10 +16,10 @@ import getInputStyle from "../../styles/screens/InputDataStyle";
 function CafeCreatFormScreen({ navigation }) {
   const [cafeName, setcCafeName] = useState("");
   const [logoImage, setLogoImage] = useState(
-    require("../../img/DefaultSeatImage.png")
+    require("../../img/AddLogoPic.jpeg")
   );
   const [seatImage, setSeatImage] = useState(
-    require("../../img/DefaultSeatImage.png")
+    require("../../img/AddSeatPic.jpeg")
   );
   const [openTime, setOpenTime] = useState();
   const [closeTime, setCloseTime] = useState();
@@ -60,7 +60,12 @@ function CafeCreatFormScreen({ navigation }) {
             <TouchableOpacity onPress={selectLogoImage}>
               <Image
                 source={logoImage}
-                style={{ width: "100%", height: "100%", borderRadius: 15 }}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: 15,
+                  resizeMode: "cover",
+                }}
               />
             </TouchableOpacity>
           </View>
@@ -199,7 +204,7 @@ function CafeCreatFormScreen({ navigation }) {
                   width: "100%",
                   height: "100%",
                   borderRadius: 15,
-                  resizeMode: "contain",
+                  resizeMode: "cover",
                 }}
               />
             </TouchableOpacity>
