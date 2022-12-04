@@ -87,7 +87,6 @@ function FindScreen({ navigation, route }) {
     setcafeDatas(sortedData);
   };
 
-
   return (
     <View style={getFindStyle.container}>
       <View style={getFindStyle.topContainer}>
@@ -96,6 +95,7 @@ function FindScreen({ navigation, route }) {
           <TextInput
             style={getFindStyle.textinputBox}
             onChangeText={(text) => setTextInputValue(text)}
+            onSubmitEditing={search}
             value={textInputValue}
             placeholder="검색"
           />
