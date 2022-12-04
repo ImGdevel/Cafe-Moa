@@ -18,6 +18,7 @@ const BottomSheet = (props) => {
     modalVisible: modalVisible,
     setModalVisible: setModalVisible,
     reserveSeat: selectedSeat,
+    cafeData: cafeData,
   } = props;
   const screenHeight = Dimensions.get("screen").height;
   const panY = useRef(new Animated.Value(screenHeight)).current;

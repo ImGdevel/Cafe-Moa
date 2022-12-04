@@ -64,6 +64,7 @@ function ReserveManageScreen({ navigation, route }) {
         modalVisible={isModalVisible}
         setModalVisible={setModalVisible}
         reserveSeat={selectedReserveSeat}
+        cafeData={cafeData}
       />
       <View style={getManageStyle.manualContianer}>
         <View style={getManageStyle.descriptionContainer}>
