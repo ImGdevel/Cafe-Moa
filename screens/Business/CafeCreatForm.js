@@ -84,10 +84,10 @@ function CafeCreatFormScreen({ navigation }) {
                 cafeLocationInputRef.current.focus()
               }
             />
-            <TouchableOpacity style={getInputStyle.locationButton}>
-              <Text
-                style={{ color: "black", fontSize: 20, fontWeight: "bold" }}
-              >
+            <TouchableOpacity style={getInputStyle.locationButton}  
+              onPress={() => navigation.navigate("LocationSelection")
+              }>
+              <Text style={{ color: "black", fontSize: 20, fontWeight: "bold" }}>
                 카페 위치
               </Text>
             </TouchableOpacity>

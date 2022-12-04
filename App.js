@@ -29,6 +29,7 @@ import CafePicManageScreen from "./screens/Business/CafePicManager";
 import ZoomImageScreen from "./screens/Business/ZoomImage";
 import AddPicScreen from "./screens/Business/AddPicScreen";
 import DeleteUserScreen from "./screens/MyPage/DeleteUser";
+import LocationSelectionScreen from "./screens/Business/LocationSelect";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -82,7 +83,13 @@ const Auth = () => {
         component={CafeCreatFormScreen}
         options={{ headerShown: false }}
       />
+      <Stack.Screen 
+        name="LocationSelection" 
+        component={LocationSelectionScreen}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
+    
   );
 };
 
@@ -199,6 +206,7 @@ const InBusiness = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen name="카페 사진 추가" component={AddPicScreen} />
+      
     </Stack.Navigator>
   );
 };
