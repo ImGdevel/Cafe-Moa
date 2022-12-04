@@ -13,6 +13,8 @@ import { CafeData } from "../../lib/CafeData";
 import { pickImage } from "../../lib/ImageService";
 import getInputStyle from "../../styles/screens/InputDataStyle";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { CafeService } from "../../lib/CafeService";
+import { getGeoLocation } from "../../lib/LocationService";
 
 function CafeCreatFormScreen({ navigation }) {
   const [cafeName, setcCafeName] = useState("");
@@ -25,16 +27,39 @@ function CafeCreatFormScreen({ navigation }) {
   const [openTime, setOpenTime] = useState();
   const [closeTime, setCloseTime] = useState();
   const [seatCount, setSeatCount] = useState();
-  const [adress, setAdress] = useState("북적골 동남쪽 뱃실따라 이백리");
+  const [address, setAddress] = useState();
+  const [location, setLocation] = useState();
   const cafeNameInputRef = createRef();
   const cafeLocationInputRef = createRef();
   const cafeOTInputRef = createRef();
   const cafeCTInputRef = createRef();
   const cafeData = new CafeData();
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    locationInpur();
+  }, []);
 
-  function SubmitCreateCafe() {
+  async function SubmitCreateCafe() {
+    if(seatImage.uri == null){
+      alert("카페 이미지를 등록해주세요");
+      return;
+    }else if(cafeName == null){
+      alert("카페이름을 입력해주세요");
+      return;
+    }else if(seatCount == null){
+      alert("총 좌석수를 입력해주세요");
+      return;
+    }else if(openTime == null || closeTime == null ){
+      alert("매장 운영 시간을 입력해주세요");
+      return;
+    }else if(logoImage.uri == null){
+      alert("좌석 이미지를 등록해주세요");
+      return;
+    }
+
+    const cafe = new CafeData(cafeName,location,address,seatCount,openTime,closeTime,logoImage.uri,seatImage.uri);
+    await (new CafeService).addCafeDatabase(cafe);
+
     navigation.replace("Business");
   }
 
@@ -46,6 +71,14 @@ function CafeCreatFormScreen({ navigation }) {
   async function selectLogoImage() {
     const img = await pickImage();
     setLogoImage({ uri: img });
+  }
+
+  async function locationInpur(){
+    const {latitude:latitude, longitude:longitude, address:addresss} = await getGeoLocation();
+    console.log(latitude,longitude,addresss);
+    setLocation({latitude:latitude, longitude:longitude});
+    setAddress(1)
+    //setAddress({latitude:latitude, longitude:longitude});
   }
 
   return (
@@ -126,7 +159,7 @@ function CafeCreatFormScreen({ navigation }) {
           <View style={getInputStyle.locationTextContainer}>
             <Text style={getInputStyle.locationText}>
               <Ionicons name="location-sharp" style={{ fontSize: 25 }} />
-              {adress}
+              {address}
             </Text>
           </View>
         </View>
