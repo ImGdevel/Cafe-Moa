@@ -17,6 +17,7 @@ function ReserveManageScreen({ navigation }) {
   const [seatList, setSeatList] = useState([]);
 
   const [isModalVisible, setModalVisible] = useState(false);
+  const [selectedReserveSeat, setSelectedReserveSeat] = useState("");
 
   useEffect(() => {
     makePickerItem();
@@ -31,7 +32,8 @@ function ReserveManageScreen({ navigation }) {
     setSeatList(seatLoop);
   };
 
-  const pressButton = () => {
+  const pressButton = (number) => {
+    setSelectedReserveSeat(number);
     setModalVisible(true);
   };
 
@@ -40,6 +42,7 @@ function ReserveManageScreen({ navigation }) {
       <BottomSheet
         modalVisible={isModalVisible}
         setModalVisible={setModalVisible}
+        reserveSeat={selectedReserveSeat}
       />
       <View style={getManageStyle.manualContianer}>
         <View style={getManageStyle.descriptionContainer}>
@@ -75,7 +78,7 @@ function ReserveManageScreen({ navigation }) {
           <TouchableOpacity
             style={getManageStyle.setNumBox}
             onPress={() => {
-              pressButton();
+              pressButton(7);
             }}
           >
             <Text style={{ color: "#001D44" }}>7번 좌석</Text>
@@ -83,7 +86,7 @@ function ReserveManageScreen({ navigation }) {
           <TouchableOpacity
             style={getManageStyle.setNumBox}
             onPress={() => {
-              pressButton();
+              pressButton(8);
             }}
           >
             <Text style={{ color: "#001D44" }}>8번 좌석</Text>
@@ -97,7 +100,7 @@ function ReserveManageScreen({ navigation }) {
             <TouchableOpacity
               style={getManageStyle.setNumBox}
               onPress={() => {
-                pressButton();
+                pressButton(7);
               }}
             >
               <Text style={{ color: "#001D44" }}>7번 좌석</Text>

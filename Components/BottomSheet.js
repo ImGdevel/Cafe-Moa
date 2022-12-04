@@ -14,7 +14,11 @@ import {
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 const BottomSheet = (props) => {
-  const { modalVisible, setModalVisible } = props;
+  const {
+    modalVisible: modalVisible,
+    setModalVisible: setModalVisible,
+    reserveSeat: selectedSeat,
+  } = props;
   const screenHeight = Dimensions.get("screen").height;
   const panY = useRef(new Animated.Value(screenHeight)).current;
   const translateY = panY.interpolate({
@@ -81,6 +85,7 @@ const BottomSheet = (props) => {
           }}
           {...panResponders.panHandlers}
         >
+          <Text style={styles.header}>{selectedSeat}번 좌석</Text>
           <TouchableOpacity
             style={styles.Button}
             onPress={() => {
@@ -109,6 +114,7 @@ const BottomSheet = (props) => {
               ></Ionicons>
             </Text>
           </TouchableOpacity>
+          <View style={{ height: "7%" }}></View>
         </Animated.View>
       </View>
     </Modal>
@@ -125,16 +131,23 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   bottomSheetContainer: {
-    height: 150,
-    justifyContent: "center",
-    alignItems: "center",
+    height: 200,
     backgroundColor: "white",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
+  header: {
+    width: "100%",
+    height: "33%",
+    justifyContent: "center",
+    fontSize: 25,
+    fontWeight: "600",
+    paddingTop: 20,
+    paddingLeft: 20,
+  },
   Button: {
     width: "100%",
-    height: "50%",
+    height: "30%",
     backgroundColor: "white",
     justifyContent: "center",
     paddingLeft: 20,
