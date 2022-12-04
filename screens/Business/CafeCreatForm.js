@@ -32,12 +32,7 @@ function CafeCreatFormScreen({ navigation }) {
   const cafeCTInputRef = createRef();
   const cafeData = new CafeData();
 
-  useEffect(() => {
-
-  }, []);
-
-  
-
+  useEffect(() => {}, []);
 
   function SubmitCreateCafe() {
     navigation.replace("Business");
@@ -52,16 +47,15 @@ function CafeCreatFormScreen({ navigation }) {
     const img = await pickImage();
     setLogoImage({ uri: img });
   }
-  
 
   return (
     <KeyboardAvoidingView style={getInputStyle.container}>
       <View style={getInputStyle.headerContainer}>
-        <Text style={{ fontSize: 25, fontWeight: "bold"}}>
+        <Text style={{ fontSize: 25, fontWeight: "bold" }}>
           Create MOA Cafe
         </Text>
       </View>
-      
+
       <ScrollView style={getInputStyle.contentContainer}>
         <View style={getInputStyle.cafeInfoHeader}>
           <View style={getInputStyle.cafeImagePicker}>
@@ -92,20 +86,32 @@ function CafeCreatFormScreen({ navigation }) {
                 cafeLocationInputRef.current.focus()
               }
             />
-            <TextInput
-              ref={cafeNameInputRef}
-              style={getInputStyle.nameTextInput}
-              placeholder={"배치 좌석 수"}
-              onChangeText={(seatCount) => setSeatCount(seatCount)}
-              autoCapitalize="none"
-              blurOnSubmit={false}
-              returnKeyType="next"
-              onSubmitEditing={() =>
-                cafeLocationInputRef.current &&
-                cafeLocationInputRef.current.focus()
-              }
-            />
-              {/*             
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "flex-end",
+                alignItems: "center",
+              }}
+            >
+              <TextInput
+                ref={cafeNameInputRef}
+                style={getInputStyle.seatInput}
+                placeholder={"배치 좌석 수"}
+                onChangeText={(seatCount) => setSeatCount(seatCount)}
+                autoCapitalize="none"
+                blurOnSubmit={false}
+                returnKeyType="next"
+                onSubmitEditing={() =>
+                  cafeLocationInputRef.current &&
+                  cafeLocationInputRef.current.focus()
+                }
+              />
+              <TouchableOpacity
+                style={getInputStyle.locationBtn}
+              ></TouchableOpacity>
+            </View>
+
+            {/*             
             <TouchableOpacity style={getInputStyle.locationButton}  
               onPress={() => navigation.navigate("LocationSelection")
               }>
@@ -118,12 +124,9 @@ function CafeCreatFormScreen({ navigation }) {
         <View style={getInputStyle.locationContainer}>
           <View style={getInputStyle.locationTextContainer}>
             <Text style={getInputStyle.locationText}>
-              <Ionicons name="location-sharp" style={{fontSize:25}}/>
+              <Ionicons name="location-sharp" style={{ fontSize: 25 }} />
               {adress}
             </Text>
-            <TouchableOpacity style={getInputStyle.locationBtn}>
-
-            </TouchableOpacity>
           </View>
         </View>
         <View style={getInputStyle.cafeTimeContainer}>
@@ -137,9 +140,7 @@ function CafeCreatFormScreen({ navigation }) {
                 paddingTop: 8,
               }}
             >
-              <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                Open
-              </Text>
+              <Text style={{ fontSize: 20, fontWeight: "bold" }}>Open</Text>
               <View
                 style={{
                   width: "100%",
@@ -174,11 +175,7 @@ function CafeCreatFormScreen({ navigation }) {
               alignItems: "center",
             }}
           >
-            <Text
-              style={{fontSize: 30, fontWeight: "bold" }}
-            >
-              ~
-            </Text>
+            <Text style={{ fontSize: 30, fontWeight: "bold" }}>~</Text>
           </View>
           <View style={getInputStyle.oncTimeContainer}>
             <View
@@ -191,7 +188,7 @@ function CafeCreatFormScreen({ navigation }) {
               }}
             >
               <Text
-                style={{ color: "#001D44", fontSize: 20, fontWeight: "bold" }}
+                style={{ color: "black", fontSize: 20, fontWeight: "bold" }}
               >
                 Close
               </Text>
@@ -237,7 +234,6 @@ function CafeCreatFormScreen({ navigation }) {
             </TouchableOpacity>
           </View>
         </View>
-        
       </ScrollView>
       <View style={getInputStyle.submitBtnContainer}>
         <TouchableOpacity
@@ -251,7 +247,6 @@ function CafeCreatFormScreen({ navigation }) {
       </View>
     </KeyboardAvoidingView>
   );
-  
 }
 
 export default CafeCreatFormScreen;
