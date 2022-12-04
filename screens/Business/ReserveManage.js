@@ -54,7 +54,9 @@ function ReserveManageScreen({ navigation, route }) {
 
 
 
-
+  const SeatLabel = () =>{
+    
+  }
 
 
 
