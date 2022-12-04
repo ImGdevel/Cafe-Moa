@@ -96,10 +96,11 @@ function CafeCreatFormScreen({ navigation }) {
               <TextInput
                 ref={cafeNameInputRef}
                 style={getInputStyle.seatInput}
-                placeholder={"배치 좌석 수"}
+                placeholder={"총 좌석 수"}
                 onChangeText={(seatCount) => setSeatCount(seatCount)}
                 autoCapitalize="none"
                 blurOnSubmit={false}
+                keyboardType="number-pad"
                 returnKeyType="next"
                 onSubmitEditing={() =>
                   cafeLocationInputRef.current &&
