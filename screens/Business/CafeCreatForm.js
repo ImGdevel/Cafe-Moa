@@ -16,7 +16,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { CafeService } from "../../lib/CafeService";
 import { getGeoLocation } from "../../lib/LocationService";
 
-function CafeCreatFormScreen({ navigation }) {
+function CafeCreatFormScreen({ navigation, route }) {
   const [cafeName, setcCafeName] = useState("");
   const [logoImage, setLogoImage] = useState(
     require("../../img/AddLogoPic.jpeg")
@@ -81,6 +81,18 @@ function CafeCreatFormScreen({ navigation }) {
     //setAddress({latitude:latitude, longitude:longitude});
   }
 
+  function goMap(){
+    console.log(location,location.latitude,location.longitude)
+    if(location != null){
+      navigation.navigate("LocationSelection", {
+        location: location,
+        latitude: location.latitude,
+        longitude: location.longitude,
+      })
+
+    }
+  }
+
   return (
     <KeyboardAvoidingView style={getInputStyle.container}>
       <View style={getInputStyle.headerContainer}>
@@ -142,7 +154,11 @@ function CafeCreatFormScreen({ navigation }) {
               />
               <TouchableOpacity
                 style={getInputStyle.locationBtn}
-              ></TouchableOpacity>
+                onPress={goMap}
+              >
+
+
+              </TouchableOpacity>
             </View>
 
             {/*             

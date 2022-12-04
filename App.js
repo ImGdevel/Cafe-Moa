@@ -1,3 +1,9 @@
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs([
+  "Overwriting fontFamily style attribute preprocessor"
+]);
+
+
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -33,7 +39,6 @@ import LocationSelectionScreen from "./screens/Business/LocationSelect";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-
 
 
 
