@@ -1,4 +1,3 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useState, useEffect, createRef, useReducer } from "react";
 import {
   StyleSheet,
@@ -14,43 +13,38 @@ import { CafeData } from "../../lib/CafeData";
 import { pickImage } from "../../lib/ImageService";
 import getInputStyle from "../../styles/screens/InputDataStyle";
 
-
 function CafeCreatFormScreen({ navigation }) {
   const [cafeName, setcCafeName] = useState("");
-  const [logoImage, setLogoImage] = useState(require("../../img/DefaultSeatImage.png"));
-  const [seatImage, setSeatImage] = useState(require("../../img/DefaultSeatImage.png"));
+  const [logoImage, setLogoImage] = useState(
+    require("../../img/DefaultSeatImage.png")
+  );
+  const [seatImage, setSeatImage] = useState(
+    require("../../img/DefaultSeatImage.png")
+  );
   const [openTime, setOpenTime] = useState();
   const [closeTime, setCloseTime] = useState();
-  
+
   const cafeNameInputRef = createRef();
   const cafeLocationInputRef = createRef();
   const cafeOTInputRef = createRef();
   const cafeCTInputRef = createRef();
   const cafeData = new CafeData();
 
-  useEffect(()=>{
-    
-  },[])
-
+  useEffect(() => {}, []);
 
   function SubmitCreateCafe() {
     navigation.replace("Business");
   }
-  
-  async function selectSeatImage(){
+
+  async function selectSeatImage() {
     const img = await pickImage();
-    setSeatImage({uri: img})
+    setSeatImage({ uri: img });
   }
 
-  async function selectLogoImage(){
+  async function selectLogoImage() {
     const img = await pickImage();
-    setLogoImage({uri: img})
+    setLogoImage({ uri: img });
   }
-
-  
-  
-
-
 
   return (
     <KeyboardAvoidingView style={getInputStyle.container}>
@@ -59,11 +53,11 @@ function CafeCreatFormScreen({ navigation }) {
           Create MOA Cafe
         </Text>
       </View>
-      
+
       <View style={getInputStyle.contentContainer}>
-        <View style={getInputStyle.cafeInfoHeader}>    
+        <View style={getInputStyle.cafeInfoHeader}>
           <View style={getInputStyle.cafeImagePicker}>
-            <TouchableOpacity onPress={selectLogoImage} >
+            <TouchableOpacity onPress={selectLogoImage}>
               <Image
                 source={logoImage}
                 style={{ width: "100%", height: "100%", borderRadius: 15 }}
@@ -86,13 +80,17 @@ function CafeCreatFormScreen({ navigation }) {
               }
             />
             <TouchableOpacity style={getInputStyle.locationButton}>
-              <Text style={{ color: "#001D44", fontSize: 20, fontWeight: "bold" }}>
+              <Text
+                style={{ color: "#001D44", fontSize: 20, fontWeight: "bold" }}
+              >
                 카페 위치
               </Text>
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{ width: "100%", height: "5%", backgroundColor: "white" }}></View>
+        <View
+          style={{ width: "100%", height: "5%", backgroundColor: "white" }}
+        ></View>
         <View style={getInputStyle.cafeTimeContainer}>
           <View style={getInputStyle.oncTimeContainer}>
             <View
@@ -122,9 +120,7 @@ function CafeCreatFormScreen({ navigation }) {
                   ref={cafeOTInputRef}
                   style={getInputStyle.timeTextInput}
                   placeholder={"시간"}
-                  onChangeText={()=>{
-
-                  }}
+                  onChangeText={() => {}}
                   autoCapitalize="none"
                   keyboardType="number-pad"
                   blurOnSubmit={false}
@@ -162,7 +158,9 @@ function CafeCreatFormScreen({ navigation }) {
                 paddingTop: 8,
               }}
             >
-              <Text style={{ color: "#001D44", fontSize: 20, fontWeight: "bold" }}>
+              <Text
+                style={{ color: "#001D44", fontSize: 20, fontWeight: "bold" }}
+              >
                 Close
               </Text>
               <View
@@ -205,7 +203,6 @@ function CafeCreatFormScreen({ navigation }) {
                 }}
               />
             </TouchableOpacity>
-
           </View>
         </View>
       </View>
