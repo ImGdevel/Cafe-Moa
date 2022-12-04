@@ -49,7 +49,7 @@ function CafeCreatFormScreen({ navigation }) {
   return (
     <KeyboardAvoidingView style={getInputStyle.container}>
       <View style={getInputStyle.headerContainer}>
-        <Text style={{ fontSize: 23, fontWeight: "bold", color: "#001D44" }}>
+        <Text style={{ fontSize: 23, fontWeight: "bold", color: "black" }}>
           Create MOA Cafe
         </Text>
       </View>
@@ -81,7 +81,7 @@ function CafeCreatFormScreen({ navigation }) {
             />
             <TouchableOpacity style={getInputStyle.locationButton}>
               <Text
-                style={{ color: "#001D44", fontSize: 20, fontWeight: "bold" }}
+                style={{ color: "black", fontSize: 20, fontWeight: "bold" }}
               >
                 카페 위치
               </Text>
@@ -103,7 +103,7 @@ function CafeCreatFormScreen({ navigation }) {
               }}
             >
               <Text
-                style={{ color: "#001D44", fontSize: 20, fontWeight: "bold" }}
+                style={{ color: "black", fontSize: 20, fontWeight: "bold" }}
               >
                 Open
               </Text>
