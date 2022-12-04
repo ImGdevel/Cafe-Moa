@@ -77,20 +77,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  manageMenuContiner: {
-    width: 40,
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  manageMenu: {
-    width: "100%",
-    height: "45%",
-    borderWidth: 1,
-    borderColor: "gray",
-    justifyContent: "center",
-    alignItems: "center",
-  },
 });
 
 export default styles;

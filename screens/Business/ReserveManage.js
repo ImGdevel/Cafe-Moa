@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import BottomSheet from "../../Components/BottomSheet";
 
 import getManageStyle from "../../styles/screens/ReserveManageStyle";
 import { dbService } from "../../FireServer";
@@ -19,17 +19,21 @@ function ReserveManageScreen({ navigation, route }) {
   const [selectedSeat, setSelectedSeat] = useState("");
   const [reserveService, setReserveService] = useState();
   const [seatList, setSeatList] = useState([]);
-  const [manageVisible, setManageVisible] = useState(false);
   const [time, setTime] = useState(new Date().getHours());
   const [timeTable, setTimeTable] = useState();
 
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [selectedReserveSeat, setSelectedReserveSeat] = useState("");
 
   useEffect(() => {
-    const reves =  new ReservationService(cafeData.getSeatId());
-    dbService.collection("Seat").doc(cafeData.getSeatId()).onSnapshot(async()=>{
-      await reves.loadSeatDataBase();
-      setReserveService(reves);
-    })
+    const reves = new ReservationService(cafeData.getSeatId());
+    dbService
+      .collection("Seat")
+      .doc(cafeData.getSeatId())
+      .onSnapshot(async () => {
+        await reves.loadSeatDataBase();
+        setReserveService(reves);
+      });
     makePickerItem();
   }, []);
 
@@ -42,33 +46,25 @@ function ReserveManageScreen({ navigation, route }) {
     setSeatList(seatLoop);
   };
 
+  const onTimeSeats = () => {
+    reves.getSeatDataOnTimeReserve(time, false);
+  };
 
-  
-  const onTimeSeats = ()=>{
-    reves.getSeatDataOnTimeReserve(time,false);
-  }
+  const TimeTable = () => {};
 
-  const TimeTable = () => {
-
-  }
-
-
-
-  const SeatLabel = () =>{
-    
-  }
-
-
-
-
-
-
-
-
-
+  const SeatLabel = () => {};
+  const pressButton = (number) => {
+    setSelectedReserveSeat(number);
+    setModalVisible(true);
+  };
 
   return (
-    <View style={getManageStyle.container}>
+    <ScrollView style={getManageStyle.container}>
+      <BottomSheet
+        modalVisible={isModalVisible}
+        setModalVisible={setModalVisible}
+        reserveSeat={selectedReserveSeat}
+      />
       <View style={getManageStyle.manualContianer}>
         <View style={getManageStyle.descriptionContainer}>
           <Text style={{ fontSize: 18, color: "#001D44" }}>
@@ -103,33 +99,17 @@ function ReserveManageScreen({ navigation, route }) {
           <TouchableOpacity
             style={getManageStyle.setNumBox}
             onPress={() => {
-              setManageVisible(!manageVisible);
+              pressButton(7);
             }}
           >
             <Text style={{ color: "#001D44" }}>7번 좌석</Text>
           </TouchableOpacity>
-          {manageVisible && (
-            <View style={getManageStyle.manageMenuContiner}>
-              <TouchableOpacity style={getManageStyle.manageMenu}>
-                <Text>
-                  <Ionicons
-                    name="checkmark-sharp"
-                    style={{ fontSize: 30, color: "lightgreen" }}
-                  ></Ionicons>
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity style={getManageStyle.manageMenu}>
-                <Text>
-                  <Ionicons
-                    name="close-sharp"
-                    style={{ fontSize: 30, color: "red" }}
-                  ></Ionicons>
-                </Text>
-              </TouchableOpacity>
-            </View>
-          )}
-          <TouchableOpacity style={getManageStyle.setNumBox}>
+          <TouchableOpacity
+            style={getManageStyle.setNumBox}
+            onPress={() => {
+              pressButton(8);
+            }}
+          >
             <Text style={{ color: "#001D44" }}>8번 좌석</Text>
           </TouchableOpacity>
         </ScrollView>
@@ -137,14 +117,20 @@ function ReserveManageScreen({ navigation, route }) {
           <Text style={getManageStyle.timeText}>12시</Text>
         </View>
         <ScrollView horizontal={true} style={getManageStyle.numContainer}>
-          <TouchableOpacity style={getManageStyle.setNumBox}>
-            <Text style={{ color: "#001D44" }}>7번 좌석</Text>
-          </TouchableOpacity>
+          <View>
+            <TouchableOpacity
+              style={getManageStyle.setNumBox}
+              onPress={() => {
+                pressButton(7);
+              }}
+            >
+              <Text style={{ color: "#001D44" }}>7번 좌석</Text>
+            </TouchableOpacity>
+          </View>
         </ScrollView>
       </ScrollView>
-    </View>
+    </ScrollView>
   );
 }
-
 
 export default ReserveManageScreen;
