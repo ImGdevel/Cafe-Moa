@@ -33,8 +33,11 @@ function CafeCreatFormScreen({ navigation }) {
   const cafeData = new CafeData();
 
   useEffect(() => {
-    
+
   }, []);
+
+  
+
 
   function SubmitCreateCafe() {
     navigation.replace("Business");
@@ -49,11 +52,12 @@ function CafeCreatFormScreen({ navigation }) {
     const img = await pickImage();
     setLogoImage({ uri: img });
   }
+  
 
   return (
     <KeyboardAvoidingView style={getInputStyle.container}>
       <View style={getInputStyle.headerContainer}>
-        <Text style={{ fontSize: 25, fontWeight: "bold", color: "black" }}>
+        <Text style={{ fontSize: 25, fontWeight: "bold"}}>
           Create MOA Cafe
         </Text>
       </View>
@@ -133,7 +137,7 @@ function CafeCreatFormScreen({ navigation }) {
                 paddingTop: 8,
               }}
             >
-              <Text style={{ color: "black", fontSize: 20, fontWeight: "bold" }}>
+              <Text style={{ fontSize: 20, fontWeight: "bold" }}>
                 Open
               </Text>
               <View
