@@ -13,6 +13,7 @@ import BottomSheet from "../../Components/BottomSheet";
 import getManageStyle from "../../styles/screens/ReserveManageStyle";
 import { dbService } from "../../FireServer";
 import { ReservationService } from "../../lib/ReservationService";
+import { UserDataService } from "../../lib/UserDataService";
 
 function ReserveManageScreen({ navigation, route }) {
   const { cafeData: cafeData, userData: userData } = route.params;
@@ -21,9 +22,9 @@ function ReserveManageScreen({ navigation, route }) {
   const [seatList, setSeatList] = useState([]);
   const [time, setTime] = useState(new Date().getHours());
   const [timeTableList, setTimeTableList] = useState();
-
+  const [loadPage, setLoadPage] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
-  const [selectedReserveSeat, setSelectedReserveSeat] = useState("");
+  const [selectedReserveSeat, setSelectedReserveSeat] = useState();
 
   useEffect(() => {
     const reves = new ReservationService(cafeData.getSeatId());
@@ -46,10 +47,25 @@ function ReserveManageScreen({ navigation, route }) {
     setSeatList(seatLoop);
   };
   
-  const pressButton = (number) => {
-    setSelectedReserveSeat(number);
+  const pressButton = (time,seat) => {
+    setSelectedReserveSeat({time,seat});
     setModalVisible(true);
   };
+
+  /** 확인 */
+  const AssignmentConfirm = async() => {
+    console.log("배정",selectedReserveSeat);
+    
+    
+  }
+
+  const ReservationCancel = async() => {
+    const data = selectedReserveSeat;
+    const user = new UserDataService(data.seat.uid);
+    const fd = await reserveService.doSeatCancel(data.time,data.seat.seat);
+    await user.deleteReservationToUser();
+    setLoadPage(fd);
+  }
 
   useEffect(()=>{
     if(reserveService == null){
@@ -63,7 +79,7 @@ function ReserveManageScreen({ navigation, route }) {
       )
     }
     setTimeTableList(arr);
-  },[reserveService])
+  },[,reserveService, loadPage])
 
   /** 시간 라벨 */
   function TimeTable({time}){
@@ -72,18 +88,20 @@ function ReserveManageScreen({ navigation, route }) {
     useEffect(()=>{
       const seats = reserveService.getSeatDataOnTimeReserve(time, false);
       const list = seats.map((data, index)=>{
-        return <SeatLabel key={index} num={data.seat}/>
+        return <SeatLabel key={index} seat={data}/>
       })
       setSeatList(list);
-    },[reserveService])
+    },[,reserveService, loadPage])
 
     /** 좌석 */
-    const SeatLabel = ({num}) => (
+    const SeatLabel = ({seat}) => (
       <TouchableOpacity
         style={getManageStyle.setNumBox}
-        onPress={() => {pressButton(num)}}
+        onPress={() => { 
+          pressButton(time,seat)
+        }}
       >
-        <Text style={{ color: "#001D44" }}>{`${num}번 좌석`}</Text>
+        <Text style={{ color: "#001D44" }}>{`${seat.seat}번 좌석`}</Text>
       </TouchableOpacity>
     )
     return(
@@ -96,9 +114,7 @@ function ReserveManageScreen({ navigation, route }) {
         </ScrollView>
       </>
     )
-
   }
-
 
   return (
     <ScrollView style={getManageStyle.container}>
@@ -106,6 +122,9 @@ function ReserveManageScreen({ navigation, route }) {
         modalVisible={isModalVisible}
         setModalVisible={setModalVisible}
         reserveSeat={selectedReserveSeat}
+        reserveService={reserveService}
+        AssignmentConfirm={AssignmentConfirm}
+        ReservationCancel={ReservationCancel}
         cafeData={cafeData}
       />
       <View style={getManageStyle.manualContianer}>
