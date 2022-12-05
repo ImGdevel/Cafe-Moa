@@ -52,7 +52,7 @@ function CafeCreatFormScreen({ navigation, route }) {
 
   function goMap(){
     
-    console.log(location?.latitude)
+    console.log( "text", adressText)
     if(location?.latitude != null && address?.city1 != null){
       navigation.navigate("LocationSelection", {
         location: location,
@@ -64,7 +64,6 @@ function CafeCreatFormScreen({ navigation, route }) {
   
   async function locationInpur(){
     const {latitude:la, longitude:lon, address:add, adressText:adt} = await getGeoLocation();
-    console.log(la,lon,add);
     setLocation({latitude:la, longitude:lon});
     setAddress(add);
     setAddressText(adt);
