@@ -15,9 +15,8 @@ import MapView, {Marker} from 'react-native-maps';
 import { getAddressFromLocation } from "../../lib/LocationService";
 
 function LocationSelectionScreen({ navigation, route }){
-  console.log(route.params)
-  const {location:loc, address: add, adressText:adt} = route.params;
-  const [location, setLocation] = useState();
+  const {location:loc, address: add, addressText: adt} = route.params;
+  const [location, setLocation] = useState({latitude:37.0, longitude:128.0});
   const [address, setAddress] = useState();
   const [adressText, setAddressText] = useState();
   useState(()=>{
@@ -46,7 +45,7 @@ function LocationSelectionScreen({ navigation, route }){
   return ( 
   <View style ={styles.container}>
       <View style={styles.headerContainer}>
-        <Text>{adressText}</Text>
+        <Text>{`주소 ${adressText}`}</Text>
       </View>
       <View style={styles.contentContainer}>
         <View style={styles.mapContainer}>
@@ -68,10 +67,11 @@ function LocationSelectionScreen({ navigation, route }){
             }}
             minZoomLevel = {15}
           >
+            
             <Marker
-                  coordinate={{latitude: loc?.latitude,longitude: loc?.longitude}}
-                  title={"현위치"}
-                />
+              coordinate={{latitude: location.latitude,longitude: location.longitude}}
+              title={"현위치"}
+            />
               
           </MapView>
         </View>
@@ -100,6 +100,9 @@ const styles = StyleSheet.create({
   headerContainer: {
     flex:2,
     backgroundColor:"#fff",
+    alignItems:"center",
+    justifyContent:"flex-end",
+    paddingBottom: 10,
   },
   contentContainer: {
     flex:6,
