@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
 
+import { signOut } from "../../lib/AuthService";
+
 import getDeleteUserStyle from "../../styles/screens/DeleteUserStyle";
 
 function DeleteUserScreen({ navigation }) {
