@@ -12,7 +12,7 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
-
+ApiKey.js
 
 
 # macOS
