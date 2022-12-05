@@ -5,7 +5,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 
 export function CafeTable(props) {
-    const { cafeData: cafeData, userData: userData } = props;
+    const { cafeData: cafeData } = props;
     const [cafeName, setCafeName] = useState(cafeData.getName());
     const [cafeLocation, setCafeLocation] = useState(cafeData.getAdress(1, 3));
     const [cafeInformation, setCafeInformaion] = useState("Open : " + cafeData.getOpenTime() + ":00 ~ Close : " + cafeData.getCloseTime() + ":00");

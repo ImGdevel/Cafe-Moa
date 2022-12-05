@@ -9,7 +9,7 @@ import getModalStyle from "../../styles/components/ModalStyle";
 import { ReservationService } from "../../lib/ReservationService";
 import { sendReservetionToUser } from "../../lib/UserDataService";
 import { CafeService } from "../../lib/CafeService";
-import * as Notifications from 'expo-notifications';
+import * as Notifications from "expo-notifications";
 
 function ReservationScreen({ navigation, route }) {
   const { cafeData: cafe_data, userData: user_data } = route.params;
@@ -48,8 +48,8 @@ function ReservationScreen({ navigation, route }) {
     "18:00",
     "19:00",
     "20:00",
+    "21:00",
   ];
-
 
   for (let i = 0; i < timeArr.length; i++) {
     timeLoop.push(
@@ -58,8 +58,8 @@ function ReservationScreen({ navigation, route }) {
         style={getModalStyle.modalButton}
         onPress={() => {
           setModalOutput("선택");
-          setModalVisible(false);
-          onSelectTime(i + cafeData.getOpenTime());
+          setModalVisible(false); //창닫기
+          onSelectTime(i + Number(cafeData.getOpenTime())); //시간 선택
         }}
       >
         <Text style={{ alignSelf: "center", fontSize: 20 }}>{timeArr[i]}</Text>
@@ -93,44 +93,42 @@ function ReservationScreen({ navigation, route }) {
   };
 
   const submitReservation = async () => {
-    if(seatData.seatId == null) {
-      console.log("!?");
-      return;
-    }
+    if (seatData.seatId == null) return;
 
     await seatData.loadSeatDataBase();
     await userData.getUserProfile();
 
-    if(!userData.isReserve()){
+    if (!userData.isReserve()) {
       if (await seatData.doSeatReservation(time, selectedSeat)) {
-        await userData.sendReservetionToUser(cafeData.getId(), cafeData.getSeatId(), time, selectedSeat);
+        await userData.sendReservetionToUser(
+          cafeData.getId(),
+          cafeData.getSeatId(),
+          time,
+          selectedSeat
+        );
         cafeData.addNowVisitor();
         let service = new CafeService();
         service.updateCafeData(cafeData);
 
-
-
-        Notifications.scheduleNotificationAsync ({
+        Notifications.scheduleNotificationAsync({
           content: {
             title: "CafeMoa " + cafeData.getName() + " 예약알림",
-            body: "약 10분 후 좌석 배정 확정 마감 (" + selectedSeat + "번 좌석)",
+            body:
+              "약 10분 후 좌석 배정 확정 마감 (" + selectedSeat + "번 좌석)",
           },
           trigger: {
             seconds: 2, // 초 뒤에 알람, 10분이니까 600 이지만 시연시 2초로 사용 바람
           },
         });
 
-
-
         navigation.navigate("ReserveEnd");
-      }else{
+      } else {
         alert("이미 예약된 좌석입니다.");
       }
-    }else{
+    } else {
       alert("이미 예약 내역이 있습니다.");
     }
   };
-  
 
   return (
     <View style={getReserveStyle.container}>

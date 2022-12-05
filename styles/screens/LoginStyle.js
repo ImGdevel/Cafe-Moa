@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   btnNormal: {
     margin: 5,
     width: "100%",
-    height: 63,
+    height: 60,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#001D44",
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   btnPress: {
     margin: 5,
     width: "100%",
-    height: 63,
+    height: 60,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#A0A0FF",

@@ -12,6 +12,7 @@ import {
 import getHomeStyle from "../../styles/screens/HomeStyle";
 import getBusinessHomeStyle from "../../styles/screens/BusinessHomeStyle";
 import { getCafeData} from "../../lib/CafeService";
+import { dbService } from "../../FireServer";
 import { ReservationService } from "../../lib/ReservationService";
 
 function BusinessHomeScreen({ navigation }) {
@@ -38,19 +39,25 @@ function BusinessHomeScreen({ navigation }) {
     //setCafeData(user.getCafeId());
     const cafeId = "KW8l6oYhXj6g2xcUbstU";
     setCafeData(await getCafeData(cafeId));
+
   }
 
   useEffect(()=>{
     if(cafeData != null){
+      dbService.collection("CafeData").doc(cafeData.getId()).onSnapshot((doc)=>{
+        cafeData.loadData(doc.data());
+      })
       setSeatImage(cafeData.getSeatImage());
       loadSeat();
     }
   },[cafeData])
 
   async function loadSeat(){
-    const reves =  new ReservationService(cafeData.getSeatId())
-    await reves.loadSeatDataBase();
-    setReserveService(reves);
+    const reves =  new ReservationService(cafeData.getSeatId());
+    dbService.collection("Seat").doc(cafeData.getSeatId()).onSnapshot(async()=>{
+      await reves.loadSeatDataBase();
+      setReserveService(reves);
+    })
   }
 
 
@@ -76,7 +83,6 @@ function BusinessHomeScreen({ navigation }) {
 
   function SeatBtn({number, uid}){
    const [seatNumber, setSeatNumber] = useState(number);
-
     const onSeat = () =>{
       Alert.alert("", "좌석을 사용완료합니다.", [
         {
@@ -132,9 +138,10 @@ function BusinessHomeScreen({ navigation }) {
           <TouchableOpacity
             style={getBusinessHomeStyle.button}
             onPress={() => {
+              if(cafeData ==null) return;
               navigation.navigate("카페정보-사업자용",{
                   cafeData: cafeData, 
-                  userData: userData,               
+                  userData: userData,
               });
             }}
           >
@@ -145,7 +152,11 @@ function BusinessHomeScreen({ navigation }) {
           <TouchableOpacity
             style={getBusinessHomeStyle.button}
             onPress={() => {
-              navigation.navigate("좌석 및 예약 관리");
+              if(cafeData ==null) return;
+              navigation.navigate("좌석 및 예약 관리",{
+                cafeData: cafeData, 
+                userData: userData,
+              });
             }}
           >
             <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>

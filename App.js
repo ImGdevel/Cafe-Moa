@@ -1,3 +1,9 @@
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs([
+  "AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-async-storage/async-storage' instead of 'react-native'. See https://github.com/react-native-async-storage/async-storage"
+]);
+
+
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -29,10 +35,10 @@ import CafePicManageScreen from "./screens/Business/CafePicManager";
 import ZoomImageScreen from "./screens/Business/ZoomImage";
 import AddPicScreen from "./screens/Business/AddPicScreen";
 import DeleteUserScreen from "./screens/MyPage/DeleteUser";
+import LocationSelectionScreen from "./screens/Business/LocationSelect";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-
 
 
 
@@ -82,7 +88,13 @@ const Auth = () => {
         component={CafeCreatFormScreen}
         options={{ headerShown: false }}
       />
+      <Stack.Screen 
+        name="LocationSelection" 
+        component={LocationSelectionScreen}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
+    
   );
 };
 
@@ -199,6 +211,7 @@ const InBusiness = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen name="카페 사진 추가" component={AddPicScreen} />
+      
     </Stack.Navigator>
   );
 };

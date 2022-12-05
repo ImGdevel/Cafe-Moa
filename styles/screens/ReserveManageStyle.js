@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   timeArea: {
-    width: 70,
-    height: 30,
+    width: 80,
+    height: 40,
     justifyContent: "center",
     backgroundColor: "#001D44",
     margin: 10,
@@ -76,20 +76,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignItems: "center",
     justifyContent: "center",
-  },
-  manageMenuContiner: {
-    width: 40,
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  manageMenu: {
-    width: "100%",
-    height: "45%",
-    borderWidth: 1,
-    borderColor: "gray",
-    justifyContent: "center",
-    alignItems: "center",
   },
 });
 

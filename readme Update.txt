@@ -37,3 +37,6 @@ expo install expo-notifications
 
 //로딩바
 expo install expo-app-loading
+
+//맵
+npm install react-native-maps

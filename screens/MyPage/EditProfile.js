@@ -37,30 +37,16 @@ function EditProfileScreen({ navigation, route }) {
 
   useEffect(() => {
     start();
-    //PermissionLib();
   }, []);
 
   async function start() {
     const getimage = await userData.getProfileImage();
-
     if (getimage == null) {
       setImage(require("../../img/initialProfile.jpg"));
     } else {
-      console.log("이미지 출력!");
       setImage({ uri: getimage });
     }
   }
-
-  /*
-  const PermissionLib = async () => {
-    if (Platform.OS !== "web") {
-      const { status } =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== "granted") {
-        alert("Permission Denied.");
-      }
-    }
-  };*/
 
   const PickImage = async () => {
     const imageuri = await pickImage();
