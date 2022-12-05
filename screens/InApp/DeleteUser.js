@@ -9,7 +9,8 @@ function DeleteUserScreen({ navigation }) {
   }, []);
 
 function GoToHomeScreen() {
-    navigation.navigate("홈");
+    signOut();
+    navigation.replace("Auth");
   }
 
   return (
