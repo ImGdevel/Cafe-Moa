@@ -69,7 +69,8 @@ function BusinessHomeScreen({ navigation }) {
 
 
   function loadSeatInfo(){
-    const seats = reserveService.getSeatDataOnTime(time);
+    console.log("예약 내역 가져옴")
+    const seats = reserveService.getSeatDataOnTimeReserve(time,true);
     setSeatData(seats);
 
     const list = []

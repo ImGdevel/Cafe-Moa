@@ -55,8 +55,16 @@ function ReserveManageScreen({ navigation, route }) {
   /** 확인 */
   const AssignmentConfirm = async() => {
     console.log("배정",selectedReserveSeat);
-    
-    
+    const data = selectedReserveSeat;
+    const fd = await reserveService.assignmentSeats(data.time,data.seat.seat);
+    setLoadPage(fd);
+    /*
+    dbService.collection("User").doc(data.seat.uid).update({
+      reservation: {
+        state: true,
+      },
+    })
+    */
   }
 
   const ReservationCancel = async() => {
