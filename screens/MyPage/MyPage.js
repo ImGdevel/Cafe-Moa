@@ -15,10 +15,12 @@ function MyPageScreen({ navigation }) {
   const [userData, setUserData] = useState();
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
-  const [userImage, setUserImage] = useState(require("../../img/initialProfile.jpg"));
+  const [userImage, setUserImage] = useState(
+    require("../../img/initialProfile.jpg")
+  );
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", async() => {
+    const unsubscribe = navigation.addListener("focus", async () => {
       LoadHomePage();
     });
     return unsubscribe;
@@ -29,18 +31,18 @@ function MyPageScreen({ navigation }) {
     let user = new UserDataService();
     await user.getUserProfile();
     setUserData(user);
-  }
+  };
 
   useEffect(() => {
     getData();
   }, [userData]);
 
   const getData = async () => {
-    if(userData!= null){
+    if (userData != null) {
       console.log("새로고침");
-      setUserName(userData.getName())
-      setUserEmail(userData.getEmail())
-      setUserImage({uri:await userData.getProfileImage()});
+      setUserName(userData.getName());
+      setUserEmail(userData.getEmail());
+      setUserImage({ uri: await userData.getProfileImage() });
     }
   };
 
@@ -53,8 +55,16 @@ function MyPageScreen({ navigation }) {
 
   //북마크
   function GoToMyMOAScreen() {
-    console.log("데이터",userData);
+    console.log("데이터", userData);
     navigation.navigate("북마크", {
+      userData: userData,
+    });
+  }
+
+  // 리뷰
+  function GoToMyReviewScreen() {
+    console.log("데이터", userData);
+    navigation.navigate("My Review", {
       userData: userData,
     });
   }
@@ -74,10 +84,8 @@ function MyPageScreen({ navigation }) {
 
   //유저 삭제
   function GoToDeleteAccountScreen() {
-    navigation.navigate("DeleteUser")
+    navigation.navigate("DeleteUser");
   }
-
-  
 
   return (
     <KeyboardAvoidingView style={getMyPageStyle.container}>
@@ -92,7 +100,10 @@ function MyPageScreen({ navigation }) {
           <Text style={{ fontWeight: "600", fontSize: 25 }}>{userName}</Text>
           <Text style={{ fontWeight: "400", fontSize: 15 }}>{userEmail}</Text>
           <Text></Text>
-          <TouchableOpacity style={getMyPageStyle.infoBtn} onPress={GoToEditProfileScreen}>
+          <TouchableOpacity
+            style={getMyPageStyle.infoBtn}
+            onPress={GoToEditProfileScreen}
+          >
             <Text style={{ color: "white", fontSize: 20 }}>개인정보변경</Text>
           </TouchableOpacity>
         </View>
@@ -102,6 +113,15 @@ function MyPageScreen({ navigation }) {
         <TouchableOpacity style={getMyPageStyle.btn} onPress={GoToMyMOAScreen}>
           <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>
             My 모아
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={getMyPageStyle.btn}
+          onPress={GoToMyReviewScreen}
+        >
+          <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>
+            My Review
           </Text>
         </TouchableOpacity>
 
@@ -116,7 +136,10 @@ function MyPageScreen({ navigation }) {
             로그아웃
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={getMyPageStyle.btn} onPress={GoToDeleteAccountScreen}>
+        <TouchableOpacity
+          style={getMyPageStyle.btn}
+          onPress={GoToDeleteAccountScreen}
+        >
           <Text style={{ color: "red", fontWeight: "500", fontSize: 20 }}>
             회원탈퇴
           </Text>
@@ -124,6 +147,6 @@ function MyPageScreen({ navigation }) {
       </View>
     </KeyboardAvoidingView>
   );
-} 
+}
 
 export default MyPageScreen;
