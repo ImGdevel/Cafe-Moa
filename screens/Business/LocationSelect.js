@@ -15,10 +15,16 @@ import MapView, {Marker} from 'react-native-maps';
 import { getAddressFromLocation } from "../../lib/LocationService";
 
 function LocationSelectionScreen({ navigation, route }){
-  const {location:loc, address: add} = route.params;
-  const [location, setLocation] = useState(loc);
-  const [address, setAddress] = useState(add);
+  console.log(route.params)
+  const {location:loc, address: add, adressText:adt} = route.params;
+  const [location, setLocation] = useState();
+  const [address, setAddress] = useState();
   const [adressText, setAddressText] = useState();
+  useState(()=>{
+    setLocation(loc);
+    setAddress(add);
+    setAddressText(adt);
+  },[])
 
   const onSubmit = () =>{
     navigation.navigate("CafeCreatForm",{
@@ -31,11 +37,8 @@ function LocationSelectionScreen({ navigation, route }){
   const selectedLocation = async(loc) =>{
     const locate = {latitude:loc.latitude, longitude:loc.longitude}
     const adds = await getAddressFromLocation(locate);
-    console.log(locate)
-    console.log(adds);
     setLocation(locate);
     setAddress(adds);
-    console.log(adds.text)
     setAddressText(adds.text);
   }
 
@@ -51,8 +54,8 @@ function LocationSelectionScreen({ navigation, route }){
             mapType="standard"
             style={{flex:1}}
             initialRegion={{
-              latitude: location.latitude,
-              longitude: location.longitude,
+              latitude: loc.latitude,
+              longitude: loc.longitude,
               latitudeDelta: 0.01,
               longitudeDelta: 0.01,
             }}
@@ -65,10 +68,11 @@ function LocationSelectionScreen({ navigation, route }){
             }}
             minZoomLevel = {15}
           >
-              <Marker
-                  coordinate={{latitude: location.latitude,longitude: location.longitude}}
+            <Marker
+                  coordinate={{latitude: loc?.latitude,longitude: loc?.longitude}}
                   title={"현위치"}
                 />
+              
           </MapView>
         </View>
       </View>
@@ -95,7 +99,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     flex:2,
-    backgroundColor:"#ddd",
+    backgroundColor:"#fff",
   },
   contentContainer: {
     flex:6,

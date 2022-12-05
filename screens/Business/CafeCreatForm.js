@@ -51,11 +51,13 @@ function CafeCreatFormScreen({ navigation, route }) {
   }, [route.params?.location]);
 
   function goMap(){
-    console.log(location,location.latitude,location.longitude)
-    if(location != null){
+    
+    console.log(location?.latitude)
+    if(location?.latitude != null && address?.city1 != null){
       navigation.navigate("LocationSelection", {
         location: location,
         address: address,
+        addressText: adressText,
       })
     }
   }
@@ -81,7 +83,7 @@ function CafeCreatFormScreen({ navigation, route }) {
   async function SubmitCreateCafe() {
     console.log(openTime,closeTime)
     if(seatImage.uri == null){
-      alert("카페 이미지를 등록해주세요");
+      alert("카페 대표 이미지를 등록해주세요");
       return;
     }else if(cafeName == null){
       alert("카페이름을 입력해주세요");
@@ -93,7 +95,7 @@ function CafeCreatFormScreen({ navigation, route }) {
       alert("매장 운영 시간을 입력해주세요");
       return;
     }else if(logoImage.uri == null){
-      alert("좌석 이미지를 등록해주세요");
+      alert("카페 좌석 이미지를 등록해주세요");
       return;
     }
     try{
@@ -103,9 +105,6 @@ function CafeCreatFormScreen({ navigation, route }) {
       console.log("문제 발생");
       return;
     }
-    
-
-
     navigation.replace("Business");
   }
 
