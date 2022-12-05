@@ -20,7 +20,7 @@ function ReserveManageScreen({ navigation, route }) {
   const [reserveService, setReserveService] = useState();
   const [seatList, setSeatList] = useState([]);
   const [time, setTime] = useState(new Date().getHours());
-  const [timeTable, setTimeTable] = useState();
+  const [timeTableList, setTimeTableList] = useState();
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedReserveSeat, setSelectedReserveSeat] = useState("");
@@ -45,50 +45,59 @@ function ReserveManageScreen({ navigation, route }) {
     }
     setSeatList(seatLoop);
   };
-
-  const onTimeSeats = () => {
-    reves.getSeatDataOnTimeReserve(time, false);
-  };
-  
   
   const pressButton = (number) => {
     setSelectedReserveSeat(number);
     setModalVisible(true);
   };
 
-  function TimeTable(num = 9){
-    const [seats, setSeats] = useState();
+  useEffect(()=>{
+    if(reserveService == null){
+      return;        
+    }
+    const {open:op, close:cl} = reserveService;
+    const arr =[];
+    for(var i=op; i< cl; i++){
+      arr.push(
+        <TimeTable key={i} time={i}/>
+      )
+    }
+    setTimeTableList(arr);
+  },[reserveService])
+
+  /** 시간 라벨 */
+  function TimeTable({time}){
+    const [seatList, setSeatList] = useState([]);
+
     useEffect(()=>{
-      if(reserveService != null){
-        reserveService.getSeatDataOnTimeReserve(num,false); //예약된(선택) 좌석 가져오기
-      }
+      const seats = reserveService.getSeatDataOnTimeReserve(time, false);
+      const list = seats.map((data, index)=>{
+        return <SeatLabel key={index} num={data.seat}/>
+      })
+      setSeatList(list);
+    },[reserveService])
 
-      seats.forEach(element => {
-        
-      });
-
-    },[])
-
-
-    const SeatLabel = (num) => {
+    /** 좌석 */
+    const SeatLabel = ({num}) => (
       <TouchableOpacity
         style={getManageStyle.setNumBox}
         onPress={() => {pressButton(num)}}
       >
         <Text style={{ color: "#001D44" }}>{`${num}번 좌석`}</Text>
       </TouchableOpacity>
-    }
+    )
+    return(
+      <>
+        <View style={getManageStyle.timeArea}>
+          <Text style={getManageStyle.timeText}>{time}시</Text>
+        </View>
+        <ScrollView horizontal={true} style={getManageStyle.numContainer}>
+          {seatList}
+        </ScrollView>
+      </>
+    )
 
-    return (
-    <>
-      <View style={getManageStyle.timeArea}>
-        <Text style={getManageStyle.timeText}>11시</Text>
-      </View>
-      <ScrollView horizontal={true} style={getManageStyle.numContainer}>
-        {seatList}   
-      </ScrollView>
-    </>)
-  };
+  }
 
 
   return (
@@ -126,35 +135,7 @@ function ReserveManageScreen({ navigation, route }) {
         </View>
       </View>
       <ScrollView>
-        <View style={getManageStyle.timeArea}>
-          <Text style={getManageStyle.timeText}>11시</Text>
-        </View>
-        <ScrollView horizontal={true} style={getManageStyle.numContainer}>
-         
-          <TouchableOpacity
-            style={getManageStyle.setNumBox}
-            onPress={() => {
-              pressButton(8);
-            }}
-          >
-            <Text style={{ color: "#001D44" }}>8번 좌석</Text>
-          </TouchableOpacity>
-        </ScrollView>
-        <View style={getManageStyle.timeArea}>
-          <Text style={getManageStyle.timeText}>12시</Text>
-        </View>
-        <ScrollView horizontal={true} style={getManageStyle.numContainer}>
-          <View>
-            <TouchableOpacity
-              style={getManageStyle.setNumBox}
-              onPress={() => {
-                pressButton(7);
-              }}
-            >
-              <Text style={{ color: "#001D44" }}>7번 좌석</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
+        {timeTableList}
       </ScrollView>
     </ScrollView>
   );

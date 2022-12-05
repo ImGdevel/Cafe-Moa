@@ -2,13 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
-  Image,
   TouchableOpacity,
-  ScrollView,
-  FlatList,
-  TouchableHighlight,
-  Alert,
-  Platform,
   StyleSheet,
 } from "react-native";
 import MapView, {Marker} from 'react-native-maps';
@@ -40,6 +34,7 @@ function LocationSelectionScreen({ navigation, route }){
     setAddress(adds);
     setAddressText(adds.text);
   }
+  
 
 
   return ( 
@@ -67,12 +62,10 @@ function LocationSelectionScreen({ navigation, route }){
             }}
             minZoomLevel = {15}
           >
-            
             <Marker
               coordinate={{latitude: location.latitude,longitude: location.longitude}}
               title={"현위치"}
-            />
-              
+            />   
           </MapView>
         </View>
       </View>
