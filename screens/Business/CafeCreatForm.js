@@ -28,7 +28,10 @@ function CafeCreatFormScreen({ navigation, route }) {
   const [closeTime, setCloseTime] = useState();
   const [seatCount, setSeatCount] = useState();
   const [address, setAddress] = useState();
+  const [adressText, setAddressText] = useState();
   const [location, setLocation] = useState();
+  
+
   const cafeNameInputRef = createRef();
   const cafeLocationInputRef = createRef();
   const cafeOTInputRef = createRef();
@@ -38,6 +41,42 @@ function CafeCreatFormScreen({ navigation, route }) {
   useEffect(() => {
     locationInpur();
   }, []);
+
+  useEffect(() => {
+    if (route.params?.location) {
+      setLocation(route.params?.location)
+      setAddress(route.params?.address)
+      setAddressText(route.params?.addressText);
+    }
+  }, [route.params?.location]);
+
+  function goMap(){
+    console.log(location,location.latitude,location.longitude)
+    if(location != null){
+      navigation.navigate("LocationSelection", {
+        location: location,
+        address: address,
+      })
+    }
+  }
+  
+  async function locationInpur(){
+    const {latitude:la, longitude:lon, address:add, adressText:adt} = await getGeoLocation();
+    console.log(la,lon,add);
+    setLocation({latitude:la, longitude:lon});
+    setAddress(add);
+    setAddressText(adt);
+  }
+
+  async function selectSeatImage() {
+    const img = await pickImage();
+    setSeatImage({ uri: img });
+  }
+
+  async function selectLogoImage() {
+    const img = await pickImage();
+    setLogoImage({ uri: img });
+  }
 
   async function SubmitCreateCafe() {
     if(seatImage.uri == null){
@@ -59,38 +98,7 @@ function CafeCreatFormScreen({ navigation, route }) {
 
     const cafe = new CafeData(cafeName,location,address,seatCount,openTime,closeTime,logoImage.uri,seatImage.uri);
     await (new CafeService).addCafeDatabase(cafe);
-
     navigation.replace("Business");
-  }
-
-  async function selectSeatImage() {
-    const img = await pickImage();
-    setSeatImage({ uri: img });
-  }
-
-  async function selectLogoImage() {
-    const img = await pickImage();
-    setLogoImage({ uri: img });
-  }
-
-  async function locationInpur(){
-    const {latitude:latitude, longitude:longitude, address:addresss} = await getGeoLocation();
-    console.log(latitude,longitude,addresss);
-    setLocation({latitude:latitude, longitude:longitude});
-    setAddress(1)
-    //setAddress({latitude:latitude, longitude:longitude});
-  }
-
-  function goMap(){
-    console.log(location,location.latitude,location.longitude)
-    if(location != null){
-      navigation.navigate("LocationSelection", {
-        location: location,
-        latitude: location.latitude,
-        longitude: location.longitude,
-      })
-
-    }
   }
 
   return (
@@ -175,7 +183,7 @@ function CafeCreatFormScreen({ navigation, route }) {
           <View style={getInputStyle.locationTextContainer}>
             <Text style={getInputStyle.locationText}>
               <Ionicons name="location-sharp" style={{ fontSize: 25 }} />
-              {address}
+              {adressText}
             </Text>
           </View>
         </View>

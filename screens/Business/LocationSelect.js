@@ -12,34 +12,41 @@ import {
   StyleSheet,
 } from "react-native";
 import MapView, {Marker} from 'react-native-maps';
+import { getAddressFromLocation } from "../../lib/LocationService";
 
 function LocationSelectionScreen({ navigation, route }){
-  const {location:loc} = route.params;
-  console.log(loc);
+  const {location:loc, address: add} = route.params;
   const [location, setLocation] = useState(loc);
-
-  
+  const [address, setAddress] = useState(add);
+  const [adressText, setAddressText] = useState();
 
   const onSubmit = () =>{
     navigation.navigate("CafeCreatForm",{
-
+      location:location,
+      address: address,
     });
   }
 
-  const selectedLocation = (loc) =>{
-    setLocation({latitude:loc.latitude, longitude:loc.longitude});
-    
+  const selectedLocation = async(loc) =>{
+    const locate = {latitude:loc.latitude, longitude:loc.longitude}
+    const adds = "" //await getAddressFromLocation(locate);
+    console.log(locate)
+    console.log(adds);
+    setLocation(locate);
+    setAddress(adds);
+    setAddressText(adds.text);
   }
 
 
   return ( 
   <View style ={styles.container}>
       <View style={styles.headerContainer}>
-        <Text></Text>
+        <Text>{adressText}</Text>
       </View>
       <View style={styles.contentContainer}>
         <View style={styles.mapContainer}>
           <MapView
+            mapType="standard"
             style={{flex:1}}
             initialRegion={{
               latitude: location.latitude,
@@ -47,14 +54,19 @@ function LocationSelectionScreen({ navigation, route }){
               latitudeDelta: 0.01,
               longitudeDelta: 0.01,
             }}
-
             onRegionChangeComplete={(e)=>{
               selectedLocation(e)
             }}
-            
-            
+            onRegionChange={(loc)=>{
+              const locate = {latitude:loc.latitude, longitude:loc.longitude}
+              setLocation(locate);
+            }}
             minZoomLevel = {15}
           >
+              <Marker
+                  coordinate={{latitude: location.latitude,longitude: location.longitude}}
+                  title={"현위치"}
+                />
           </MapView>
         </View>
       </View>
@@ -106,8 +118,6 @@ const styles = StyleSheet.create({
     alignItems:"center",
     justifyContent:"center",
   }
-
-
 });
 
 export default LocationSelectionScreen;
