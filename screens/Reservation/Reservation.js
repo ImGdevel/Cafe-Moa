@@ -48,6 +48,7 @@ function ReservationScreen({ navigation, route }) {
     "18:00",
     "19:00",
     "20:00",
+    "21:00",
   ];
 
   for (let i = 0; i < timeArr.length; i++) {
@@ -57,8 +58,8 @@ function ReservationScreen({ navigation, route }) {
         style={getModalStyle.modalButton}
         onPress={() => {
           setModalOutput("선택");
-          setModalVisible(false);
-          onSelectTime(i + cafeData.getOpenTime());
+          setModalVisible(false); //창닫기
+          onSelectTime(i + Number(cafeData.getOpenTime())); //시간 선택
         }}
       >
         <Text style={{ alignSelf: "center", fontSize: 20 }}>{timeArr[i]}</Text>
@@ -92,10 +93,7 @@ function ReservationScreen({ navigation, route }) {
   };
 
   const submitReservation = async () => {
-    if (seatData.seatId == null) {
-      console.log("!?");
-      return;
-    }
+    if (seatData.seatId == null) return;
 
     await seatData.loadSeatDataBase();
     await userData.getUserProfile();

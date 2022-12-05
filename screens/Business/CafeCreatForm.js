@@ -69,7 +69,7 @@ function CafeCreatFormScreen({ navigation, route }) {
   }
 
   async function selectSeatImage() {
-    const img = await pickImage();
+    const img = await pickImage(4,3,false);
     setSeatImage({ uri: img });
   }
 
@@ -79,6 +79,7 @@ function CafeCreatFormScreen({ navigation, route }) {
   }
 
   async function SubmitCreateCafe() {
+    console.log(openTime,closeTime)
     if(seatImage.uri == null){
       alert("카페 이미지를 등록해주세요");
       return;
@@ -95,9 +96,16 @@ function CafeCreatFormScreen({ navigation, route }) {
       alert("좌석 이미지를 등록해주세요");
       return;
     }
+    try{
+      const cafe = new CafeData(cafeName,location,address,seatCount,openTime,closeTime,logoImage.uri,seatImage.uri);
+      await (new CafeService).addCafeDatabase(cafe).catch((err)=>{console.log(err)});
+    }catch{
+      console.log("문제 발생");
+      return;
+    }
+    
 
-    const cafe = new CafeData(cafeName,location,address,seatCount,openTime,closeTime,logoImage.uri,seatImage.uri);
-    await (new CafeService).addCafeDatabase(cafe);
+
     navigation.replace("Business");
   }
 
@@ -164,7 +172,7 @@ function CafeCreatFormScreen({ navigation, route }) {
                 style={getInputStyle.locationBtn}
                 onPress={goMap}
               >
-
+                <Text> 위치 설정 </Text>
 
               </TouchableOpacity>
             </View>
@@ -212,7 +220,7 @@ function CafeCreatFormScreen({ navigation, route }) {
                   ref={cafeOTInputRef}
                   style={getInputStyle.timeTextInput}
                   placeholder={"시간"}
-                  onChangeText={() => {}}
+                  onChangeText={(openTime) => {setOpenTime(openTime)}}
                   autoCapitalize="none"
                   keyboardType="number-pad"
                   blurOnSubmit={false}

@@ -76,7 +76,9 @@ const styles = StyleSheet.create({
     backgroundColor: "10",
   },
   locationBtn: {
-    width: "46%",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "45%",
     height: 45,
     borderColor: "#ccc",
     borderRadius: 10,

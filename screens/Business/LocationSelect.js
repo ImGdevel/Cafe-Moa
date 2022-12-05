@@ -24,16 +24,18 @@ function LocationSelectionScreen({ navigation, route }){
     navigation.navigate("CafeCreatForm",{
       location:location,
       address: address,
+      addressText: adressText,
     });
   }
 
   const selectedLocation = async(loc) =>{
     const locate = {latitude:loc.latitude, longitude:loc.longitude}
-    const adds = "" //await getAddressFromLocation(locate);
+    const adds = await getAddressFromLocation(locate);
     console.log(locate)
     console.log(adds);
     setLocation(locate);
     setAddress(adds);
+    console.log(adds.text)
     setAddressText(adds.text);
   }
 
