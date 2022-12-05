@@ -152,6 +152,7 @@ function BusinessHomeScreen({ navigation }) {
           <TouchableOpacity
             style={getBusinessHomeStyle.button}
             onPress={() => {
+              if(cafeData ==null) return;
               navigation.navigate("좌석 및 예약 관리",{
                 cafeData: cafeData, 
                 userData: userData,
