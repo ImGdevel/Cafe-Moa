@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     width: "97%",
-    flex: 1,
+    flex:1,
   },
   cafeInfoHeader: {
     width: "100%",
@@ -38,11 +38,11 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   nameInputContainer: {
-    flex: 1,
+    flex:1,
     justifyContent: "flex-start",
-    alignItems: "center",
-    padding: 5,
-    paddingRight: 20,
+    alignItems:"center",
+    padding:5,
+    paddingRight:20,
   },
   nameTextInput: {
     backgroundColor: "white",
@@ -51,41 +51,32 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderBottomWidth: 1,
     fontSize: 17,
-    paddingLeft: 10,
-    marginTop: 10,
+    paddingLeft:10,
+    marginTop:10,
   },
-  seatInput: {
-    backgroundColor: "white",
-    width: "50%",
-    height: 45,
-    borderColor: "#ccc",
-    borderBottomWidth: 1,
-    fontSize: 17,
-    paddingLeft: 10,
-    marginTop: 10,
-  },
-  locationContainer: {
+  locationContainer:{
     height: 70,
     width: "100%",
     justifyContent: "center",
-    padding: 20,
-    paddingHorizontal: 10,
+    padding:20,
+    paddingHorizontal:10,
+
   },
-  locationTextContainer: {
-    flexDirection: "row",
-    backgroundColor: "10",
+  locationTextContainer:{
+    flexDirection:"row",
+    backgroundColor: "10"
   },
-  locationBtn: {
-    width: "46%",
-    height: 45,
+  locationBtn:{
+    width:80,
+    height: 40,
     borderColor: "#ccc",
     borderRadius: 10,
     borderWidth: 1,
-    marginTop: 10,
-    marginLeft: "4%",
+    marginRight: 10,
+
   },
-  locationText: {
-    width: "80%",
+  locationText:{
+    width:"80%",
     fontSize: 15,
   },
   locationButton: {
@@ -100,7 +91,7 @@ const styles = StyleSheet.create({
     height: 100,
     justifyContent: "center",
     alignItems: "center",
-    alignSelf: "center",
+    alignSelf:"center",
     flexDirection: "row",
   },
   oncTimeContainer: {
@@ -114,7 +105,7 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderBottomWidth: 1,
   },
-
+  
   seatImagePickerContainer: {
     width: "100%",
     height: 300,
@@ -135,7 +126,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#fff",
     alignItems: "center",
-    padding: 20,
+    padding:20,
+    
   },
   submitButton: {
     width: "100%",
