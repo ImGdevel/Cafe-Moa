@@ -23,6 +23,7 @@ function ReserveManageScreen({ navigation, route }) {
   const [time, setTime] = useState(new Date().getHours());
   const [timeTableList, setTimeTableList] = useState();
   const [loadPage, setLoadPage] = useState(false);
+
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedReserveSeat, setSelectedReserveSeat] = useState();
 
@@ -38,6 +39,11 @@ function ReserveManageScreen({ navigation, route }) {
     makePickerItem();
   }, []);
 
+  useEffect(()=>{
+
+
+  },[route?.seatData])
+
   // picker item에 추가하는 loop
   const makePickerItem = () => {
     let seatLoop = [];
@@ -52,19 +58,17 @@ function ReserveManageScreen({ navigation, route }) {
     setModalVisible(true);
   };
 
-  /** 확인 */
+  /** 배정 */
   const AssignmentConfirm = async() => {
     console.log("배정",selectedReserveSeat);
     const data = selectedReserveSeat;
     const fd = await reserveService.assignmentSeats(data.time,data.seat.seat);
-    setLoadPage(fd);
-    /*
     dbService.collection("User").doc(data.seat.uid).update({
       reservation: {
         state: true,
       },
     })
-    */
+    setLoadPage(fd);
   }
 
   const ReservationCancel = async() => {
@@ -130,10 +134,8 @@ function ReserveManageScreen({ navigation, route }) {
         modalVisible={isModalVisible}
         setModalVisible={setModalVisible}
         reserveSeat={selectedReserveSeat}
-        reserveService={reserveService}
         AssignmentConfirm={AssignmentConfirm}
         ReservationCancel={ReservationCancel}
-        cafeData={cafeData}
       />
       <View style={getManageStyle.manualContianer}>
         <View style={getManageStyle.descriptionContainer}>

@@ -19,10 +19,8 @@ const BottomSheet = (props) => {
     modalVisible: modalVisible,
     setModalVisible: setModalVisible,
     reserveSeat: selectedSeat,
-    reserveService: reserveService,
     AssignmentConfirm: AssignmentConfirm,
     ReservationCancel: ReservationCancel,
-    cafeData: cafeData,
   } = props;
 
   const screenHeight = Dimensions.get("screen").height;
@@ -72,20 +70,6 @@ const BottomSheet = (props) => {
       setModalVisible(false);
     });
   };
-  /*
-
-  const AssignmentConfirmed = async() =>{
-    console.log(reserveService, selectedSeat);
-    reserveService.assignmentSeats(selectedSeat.seat);
-    console.log("배정")
-  };
-
-  const ReservationCancel = async() =>{
-    console.log(reserveService);
-    console.log("취소")
-  };
-  */
-
 
   return (
     <Modal

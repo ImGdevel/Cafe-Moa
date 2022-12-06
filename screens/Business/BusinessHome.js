@@ -14,14 +14,15 @@ import getBusinessHomeStyle from "../../styles/screens/BusinessHomeStyle";
 import { getCafeData} from "../../lib/CafeService";
 import { dbService } from "../../FireServer";
 import { ReservationService } from "../../lib/ReservationService";
+import { UserDataService } from "../../lib/UserDataService";
 
-function BusinessHomeScreen({ navigation }) {
+function BusinessHomeScreen({ navigation, route }) {
   const [cafeData, setCafeData] = useState();
   const [reserveService, setReserveService] = useState();
   const [userData, setUserData] = useState();
-  const [seatData, setSeatData] = useState();
   const [seatImage, setSeatImage] = useState();
   const [time, setTime] = useState(9);
+  const [pageLoad, setPageLoad] = useState(false);
   const [seatList, setSeatList] = useState();
   
   function GoToLogoutScreen() {
@@ -39,7 +40,6 @@ function BusinessHomeScreen({ navigation }) {
     //setCafeData(user.getCafeId());
     const cafeId = "KW8l6oYhXj6g2xcUbstU";
     setCafeData(await getCafeData(cafeId));
-
   }
 
   useEffect(()=>{
@@ -51,6 +51,11 @@ function BusinessHomeScreen({ navigation }) {
       loadSeat();
     }
   },[cafeData])
+
+  useEffect(()=>{
+    
+  },[route?.seatData])
+
 
   async function loadSeat(){
     const reves =  new ReservationService(cafeData.getSeatId());
@@ -65,14 +70,12 @@ function BusinessHomeScreen({ navigation }) {
     if(reserveService != null){
       loadSeatInfo();
     }
-  },[reserveService])
+  },[reserveService, pageLoad])
 
 
   function loadSeatInfo(){
     console.log("예약 내역 가져옴")
     const seats = reserveService.getSeatDataOnTimeReserve(time,true);
-    setSeatData(seats);
-
     const list = []
     seats.map((item)=>{
       list.push(
@@ -83,9 +86,8 @@ function BusinessHomeScreen({ navigation }) {
   }
 
   function SeatBtn({number, uid}){
-   const [seatNumber, setSeatNumber] = useState(number);
     const onSeat = () =>{
-      Alert.alert("", "좌석을 사용완료합니다.", [
+      Alert.alert("", `${number}번 좌석을 사용완료합니다.`, [
         {
           text: "취소",
           onPress: () => console.log("Cancel Pressed"),
@@ -93,7 +95,12 @@ function BusinessHomeScreen({ navigation }) {
         },
         {
           text: "완료",
-          onPress: () => console.log("OK Pressed"),
+          onPress: async() => {
+            const user = new UserDataService(uid);
+            const fd = await reserveService.doSeatCancel(time,number);
+            await user.deleteReservationToUser();
+            setPageLoad(fd);
+          },
         },
       ]);
     }
@@ -103,7 +110,7 @@ function BusinessHomeScreen({ navigation }) {
         onPress={onSeat}
       >
         <Text style={{ color: "white", fontWeight: "500", fontSize: 15 }}>
-          {seatNumber}
+          {number}
         </Text>
       </TouchableOpacity>
     )
@@ -157,6 +164,7 @@ function BusinessHomeScreen({ navigation }) {
               navigation.navigate("좌석 및 예약 관리",{
                 cafeData: cafeData, 
                 userData: userData,
+                seatData: reserveService,
               });
             }}
           >
