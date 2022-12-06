@@ -19,6 +19,7 @@ import { CafeData } from "../../lib/CafeData";
 import { dbService } from "../../FireServer";
 import Star from "../../Components/Star";
 import { getImage } from "../../lib/ImageService";
+import { ReviewList } from "../../lib/DataStructure/List";
 
 // Array that bring cafe's image
 const imgArr = [];
@@ -264,6 +265,7 @@ function ReviewPage(props) {
           id: doc.id,
           ...doc.data(),
         }));
+        reviews.sort((a,b)=>a.date < b.date);
         setreviewDatas(reviews);
       });
     setNotice(cafeData.getNotice());
@@ -276,11 +278,12 @@ function ReviewPage(props) {
 
   async function loadReview() {
     const reviews = reviewDatas;
-    let table = [];
+    let table = new ReviewList();
     for (let i = 0; i < reviews.length; i++) {
-      table.push(<ReviewPanel key={i} review={reviews[i]} />);
+      table.push(<ReviewPanel key={reviews[i].id} review={reviews[i]} />);
     }
-    setReviewList(table);
+    
+    setReviewList(table.getArray());
   }
 
   return (
@@ -333,8 +336,8 @@ function ReviewPanel(props) {
     }
     return zero + n;
   }
+
   useEffect(() => {
-    console.log(review);
     if (review != null) {
       const date = review.date.toDate();
       setUserName(review.user.name);
@@ -355,7 +358,6 @@ function ReviewPanel(props) {
 
   async function getImages(id) {
     if (id != null) {
-      console.log("이미지 출력");
       const img = await getImage("User", id, "profile");
       setImage({ uri: img });
     } else {

@@ -29,17 +29,12 @@ function ReviewScreen({ navigation , route }) {
       alert("별점을 매겨주세요.");
       return;
     }
-    else if(text.length < 5){
-      alert("리뷰를 5글자 이상 입력해주세요.");
-      return;
-    }
     console.log(star);
     let service = new ReviewService(cafeData, userData);
     service.uploadReview(text,image,star);
     setStar(0);
     setText("");
     navigation.goBack();
-    
   };
 
   return (
