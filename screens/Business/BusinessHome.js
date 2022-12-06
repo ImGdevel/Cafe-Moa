@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import getHomeStyle from "../../styles/screens/HomeStyle";
 import getBusinessHomeStyle from "../../styles/screens/BusinessHomeStyle";
-import { getCafeData} from "../../lib/CafeService";
+import { getCafeData } from "../../lib/CafeService";
 import { dbService } from "../../FireServer";
 import { ReservationService } from "../../lib/ReservationService";
 import { UserDataService } from "../../lib/UserDataService";
@@ -24,17 +24,17 @@ function BusinessHomeScreen({ navigation, route }) {
   const [nowTime, setNowTime] = useState(12);
   const [pageLoad, setPageLoad] = useState(false);
   const [seatList, setSeatList] = useState();
-  
+
   function GoToLogoutScreen() {
     //signOut();
     navigation.replace("Auth");
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     start();
-  },[])
+  }, []);
 
-  async function start(){
+  async function start() {
     //const user = new BuisnessUserDataService();
     //await user.getBuisnessUserProfile();
     //setCafeData(user.getCafeId());
@@ -42,51 +42,50 @@ function BusinessHomeScreen({ navigation, route }) {
     setCafeData(await getCafeData(cafeId));
   }
 
-  useEffect(()=>{
-    if(cafeData != null){
-      dbService.collection("CafeData").doc(cafeData.getId()).onSnapshot((doc)=>{
-        cafeData.loadData(doc.data());
-      })
+  useEffect(() => {
+    if (cafeData != null) {
+      dbService
+        .collection("CafeData")
+        .doc(cafeData.getId())
+        .onSnapshot((doc) => {
+          cafeData.loadData(doc.data());
+        });
       setSeatImage(cafeData.getSeatImage());
       loadSeat();
     }
-  },[cafeData])
+  }, [cafeData]);
 
-  useEffect(()=>{
+  useEffect(() => {}, [route?.seatData]);
 
-  },[route?.seatData])
-
-
-  async function loadSeat(){
-    const reves =  new ReservationService(cafeData.getSeatId());
-    dbService.collection("Seat").doc(cafeData.getSeatId()).onSnapshot(async()=>{
-      await reves.loadSeatDataBase();
-      setReserveService(reves);
-      setPageLoad((prev)=>prev+1);
-    })
+  async function loadSeat() {
+    const reves = new ReservationService(cafeData.getSeatId());
+    dbService
+      .collection("Seat")
+      .doc(cafeData.getSeatId())
+      .onSnapshot(async () => {
+        await reves.loadSeatDataBase();
+        setReserveService(reves);
+        setPageLoad((prev) => prev + 1);
+      });
   }
 
-
-  useEffect(()=>{
-    if(reserveService != null){
+  useEffect(() => {
+    if (reserveService != null) {
       loadSeatInfo();
     }
-  },[reserveService, pageLoad])
+  }, [reserveService, pageLoad]);
 
-
-  function loadSeatInfo(){
-    const seats = reserveService.getSeatDataOnTimeReserve(nowTime,true);
-    const list = []
-    seats.map((item)=>{
-      list.push(
-        <SeatBtn key={item.seat} number={item.seat} uid={item.uid}/>
-      );
-    })
+  function loadSeatInfo() {
+    const seats = reserveService.getSeatDataOnTimeReserve(nowTime, true);
+    const list = [];
+    seats.map((item) => {
+      list.push(<SeatBtn key={item.seat} number={item.seat} uid={item.uid} />);
+    });
     setSeatList(list);
   }
 
-  function SeatBtn({number, uid}){
-    const onSeat = () =>{
+  function SeatBtn({ number, uid }) {
+    const onSeat = () => {
       Alert.alert("", `${number}번 좌석을 사용완료합니다.`, [
         {
           text: "취소",
@@ -95,15 +94,15 @@ function BusinessHomeScreen({ navigation, route }) {
         },
         {
           text: "완료",
-          onPress: async() => {
+          onPress: async () => {
             const user = new UserDataService(uid);
-            const fd = await reserveService.doSeatCancel(nowTime,number);
+            const fd = await reserveService.doSeatCancel(nowTime, number);
             await user.deleteReservationToUser();
             setPageLoad(fd);
           },
         },
       ]);
-    }
+    };
     return (
       <TouchableOpacity
         style={getBusinessHomeStyle.reserveTimeBox}
@@ -113,7 +112,7 @@ function BusinessHomeScreen({ navigation, route }) {
           {number}
         </Text>
       </TouchableOpacity>
-    )
+    );
   }
 
   return (
@@ -138,18 +137,13 @@ function BusinessHomeScreen({ navigation, route }) {
       </View>
       <View style={getBusinessHomeStyle.contentContainer}>
         <View style={getBusinessHomeStyle.btnContainer}>
-          <TouchableOpacity style={getBusinessHomeStyle.button}>
-            <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>
-              예약 관리
-            </Text>
-          </TouchableOpacity>
           <TouchableOpacity
             style={getBusinessHomeStyle.button}
             onPress={() => {
-              if(cafeData ==null) return;
-              navigation.navigate("카페정보-사업자용",{
-                  cafeData: cafeData, 
-                  userData: userData,
+              if (cafeData == null) return;
+              navigation.navigate("카페정보-사업자용", {
+                cafeData: cafeData,
+                userData: userData,
               });
             }}
           >
@@ -160,9 +154,9 @@ function BusinessHomeScreen({ navigation, route }) {
           <TouchableOpacity
             style={getBusinessHomeStyle.button}
             onPress={() => {
-              if(cafeData ==null) return;
-              navigation.navigate("좌석 및 예약 관리",{
-                cafeData: cafeData, 
+              if (cafeData == null) return;
+              navigation.navigate("좌석 및 예약 관리", {
+                cafeData: cafeData,
                 userData: userData,
                 seatData: reserveService,
               });
@@ -170,11 +164,6 @@ function BusinessHomeScreen({ navigation, route }) {
           >
             <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>
               좌석 및 예약 관리
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={getBusinessHomeStyle.button}>
-            <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>
-              카페 정보
             </Text>
           </TouchableOpacity>
         </View>
@@ -187,13 +176,11 @@ function BusinessHomeScreen({ navigation, route }) {
           <View style={getBusinessHomeStyle.seatPicArea}>
             <Image
               style={{ width: "100%", height: "100%", resizeMode: "contain" }}
-              source={{uri:seatImage}}
+              source={{ uri: seatImage }}
             />
           </View>
           <View style={getBusinessHomeStyle.reservationListContainer}>
-            <View style={getBusinessHomeStyle.reservationList}>
-             {seatList}
-            </View>
+            <View style={getBusinessHomeStyle.reservationList}>{seatList}</View>
           </View>
         </ScrollView>
         <View style={getBusinessHomeStyle.logoutContainer}>
