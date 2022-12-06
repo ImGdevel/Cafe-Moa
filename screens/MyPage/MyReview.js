@@ -10,38 +10,96 @@ import {
 
 import getMyReviewStyle from "../../styles/screens/MyReviewStyle";
 import getReviewStyle from "../../styles/components/ReviewStyle";
-
 import Star from "../../Components/Star";
 
 import { getCafeDatas } from "../../lib/CafeService";
+import { getImage } from "../../lib/ImageService";
+import { dbService } from "../../FireServer";
 
 function MyReviewScreen({ navigation, route }) {
   const [userData, setUserData] = useState(route.params.userData);
-
-  const [userID, setUserID] = useState(null);
-  const [userName, setUserName] = useState("user");
-  const [date, setDate] = useState("date");
-  const [text, setText] = useState("");
-  const [image, setImage] = useState();
+  const [reviewList, setReviewList] = useState();
+  const [reviews, setReviews] = useState();
 
   useEffect(() => {
-    getImages(userData.id);
+    loadReview();
   }, []);
 
-  async function getImages(id) {
-    if (id != null) {
-      console.log("이미지 출력");
-      const img = await getImage("User", id, "profile");
-      setImage({ uri: img });
-    } else {
-      setImage(require("../../img/initialProfile.jpg"));
-    }
+   async function loadReview(){
+    const review = userData.getReview();
+    const promises = review.map(async(data)=>{
+      const cafeColl = dbService.collection("CafeData").doc(data.cafe);
+      const cafe = (await cafeColl.get()).data();
+      const review = (await cafeColl.collection("Review").doc(data.review).get()).data();  
+      return {cafe,review}
+    })
+    const reviewlist = await Promise.all(promises);
+   
+    const list = reviewlist.map((data,index)=>{
+      console.log(data)
+      return (<ReviewContent key={index} review={data.review} cafe={data.cafe}/>)
+    })
+    setReviewList(list);
   }
 
-  return (
-    <View style={getMyReviewStyle.container}>
-      <ScrollView style={getMyReviewStyle.contentContainer}>
-        <View style={getReviewStyle.reviewContentContainer}>
+
+
+  
+
+
+
+
+
+
+  
+  function ReviewContent({review,cafe}) {
+    const [userID, setUserID] = useState(null);
+    const [userName, setUserName] = useState("user");
+    const [date, setDate] = useState("date");
+    const [text, setText] = useState("");
+    const [image, setImage] = useState();
+
+  
+    function leadingZeros(n, digits) {
+      var zero = "";
+      n = n.toString();
+      if (n.length < digits) {
+        for (var i = 0; i < digits - n.length; i++) zero += "0";
+      }
+      return zero + n;
+    }
+    useEffect(() => {
+      console.log(review);
+      if (review != null) {
+        const date = review.date.toDate();
+        setUserName(review.user.name);
+        setUserID(review.user.id);
+        setDate(
+          `${leadingZeros(date.getMonth() + 1, 2)}/${leadingZeros(
+            date.getDate(),
+            2
+          )} (${leadingZeros(date.getHours(), 2)}:${leadingZeros(
+            date.getMinutes(),
+            2
+          )})`
+        );
+        setText(review.text);
+        getImages(review.user.id);
+      }
+    }, []);
+  
+    async function getImages(id) {
+      if (id != " ") {
+        const img = await getImage("User", id, "profile");
+        setImage({ uri: img });
+      } else {
+        setImage(require("../../img/initialProfile.jpg"));
+      }
+    }
+
+    return(
+      <>
+       <View style={getReviewStyle.reviewContentContainer}>
           <View style={getReviewStyle.reviewContentHeader}>
             <Image
               style={{ width: 50, height: 50, borderRadius: 50 }}
@@ -82,10 +140,7 @@ function MyReviewScreen({ navigation, route }) {
             </View>
           </View>
           <Text style={getReviewStyle.reviewContent}>
-            이게 뭔데 이게 뭔데 이게 뭔데 이게 뭔데 이게 뭔데 이게 뭔데 이게
-            뭔데 이게 뭔데 이게 뭔데 이게 뭔데 이게 뭔데 이게 뭔데 이게 뭔데
-            이게 뭔데 이게 뭔데 이게 뭔데 이게 뭔데 이게 뭔데 이게 뭔데 이게
-            뭔데 이게 뭔데 이게 뭔데 이게 뭔데 이게 뭔데
+            {text}
           </Text>
           <View style={getMyReviewStyle.reviewedCafeInfoContainer}>
             <View style={getMyReviewStyle.cafeLogoContainer}>
@@ -106,6 +161,14 @@ function MyReviewScreen({ navigation, route }) {
             </View>
           </View>
         </View>
+      </>
+    )
+  }
+
+  return (
+    <View style={getMyReviewStyle.container}>
+      <ScrollView style={getMyReviewStyle.contentContainer}>
+        {reviewList}
       </ScrollView>
     </View>
   );

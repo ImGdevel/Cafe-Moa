@@ -121,7 +121,7 @@ function MyPageScreen({ navigation }) {
           onPress={GoToMyReviewScreen}
         >
           <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>
-            My Review
+            My 리뷰
           </Text>
         </TouchableOpacity>
 
