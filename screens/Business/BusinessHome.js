@@ -21,7 +21,7 @@ function BusinessHomeScreen({ navigation, route }) {
   const [reserveService, setReserveService] = useState();
   const [userData, setUserData] = useState();
   const [seatImage, setSeatImage] = useState();
-  const [time, setTime] = useState(9);
+  const [nowTime, setNowTime] = useState(12);
   const [pageLoad, setPageLoad] = useState(false);
   const [seatList, setSeatList] = useState();
   
@@ -53,7 +53,7 @@ function BusinessHomeScreen({ navigation, route }) {
   },[cafeData])
 
   useEffect(()=>{
-    
+
   },[route?.seatData])
 
 
@@ -62,6 +62,7 @@ function BusinessHomeScreen({ navigation, route }) {
     dbService.collection("Seat").doc(cafeData.getSeatId()).onSnapshot(async()=>{
       await reves.loadSeatDataBase();
       setReserveService(reves);
+      setPageLoad((prev)=>prev+1);
     })
   }
 
@@ -74,8 +75,7 @@ function BusinessHomeScreen({ navigation, route }) {
 
 
   function loadSeatInfo(){
-    console.log("예약 내역 가져옴")
-    const seats = reserveService.getSeatDataOnTimeReserve(time,true);
+    const seats = reserveService.getSeatDataOnTimeReserve(nowTime,true);
     const list = []
     seats.map((item)=>{
       list.push(
@@ -97,7 +97,7 @@ function BusinessHomeScreen({ navigation, route }) {
           text: "완료",
           onPress: async() => {
             const user = new UserDataService(uid);
-            const fd = await reserveService.doSeatCancel(time,number);
+            const fd = await reserveService.doSeatCancel(nowTime,number);
             await user.deleteReservationToUser();
             setPageLoad(fd);
           },

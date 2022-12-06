@@ -20,7 +20,7 @@ function ReserveManageScreen({ navigation, route }) {
   const [selectedSeat, setSelectedSeat] = useState("");
   const [reserveService, setReserveService] = useState();
   const [seatList, setSeatList] = useState([]);
-  const [time, setTime] = useState(new Date().getHours());
+  const [nowTime, setNowTime] = useState(12 /*new Date().getHours()*/);
   const [timeTableList, setTimeTableList] = useState();
   const [loadPage, setLoadPage] = useState(false);
 
@@ -85,7 +85,7 @@ function ReserveManageScreen({ navigation, route }) {
     }
     const {open:op, close:cl} = reserveService;
     const arr =[];
-    for(var i=op; i< cl; i++){
+    for(var i=nowTime; i< cl; i++){
       arr.push(
         <TimeTable key={i} time={i}/>
       )
