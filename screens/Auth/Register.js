@@ -8,7 +8,7 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import { CreateUserAccount } from "../../lib/AuthService";
-import { createUserProfile } from "../../lib/UserDataService";
+import { createBuisnessUserProfile, createUserProfile } from "../../lib/UserDataService";
 
 import getRegisterStyle from "../../styles/screens/RegisterStyle";
 
@@ -27,7 +27,6 @@ function RegisterScreen({ navigation }) {
   const passwordChkInputRef = createRef();
 
   async function onSubmitApplication() {
-    GoToCreateCafe();
     setErrorText("");
     if (!userName) {
       setErrorText("이름을 입력해주세요");
@@ -45,19 +44,19 @@ function RegisterScreen({ navigation }) {
       setErrorText("비밀번호가 일치하지 않습니다");
       return;
     }
-    
-    
-    await CreateUserAccount(userEmail, userPassword).then((id) => {
-      createUserProfile(userName, id, userEmail, userPassword);
+
+  
+    await CreateUserAccount(userEmail, userPassword,isSelected).then((id) => {
       if (isSelected) {
+        createBuisnessUserProfile(userName, id, userEmail, userPassword);
         GoToCreateCafe();
       } else {
+        createUserProfile(userName, id, userEmail, userPassword);
         GoToHomeScreen();
       }
     })
     .catch((err) => {
       console.log(err);
-      alert("계정 생성에 실패 했습니다.");
     });
   }
 
@@ -66,6 +65,7 @@ function RegisterScreen({ navigation }) {
   }
 
   function GoToCreateCafe() {
+    console.log("이동")
     navigation.replace("CafeCreatForm");
   }
 
@@ -86,10 +86,10 @@ function RegisterScreen({ navigation }) {
       <View style={{ flex: 3 }}></View>
       <View style={getRegisterStyle.contentArea}>
         <View style={getRegisterStyle.titleText}>
-          <Text style={{ fontWeight: "900", fontSize: 55 }}> M O A </Text>
+          <Text style={{ color: "#001D44", fontWeight: "900", fontSize: 55 }}> M O A </Text>
         </View>
         <View style={getRegisterStyle.subTitleText}>
-          <Text style={{ fontWeight: "600", fontSize: 30 }}> Sign Up </Text>
+          <Text style={{ color: "#001D44", fontWeight: "600", fontSize: 30 }}> Sign Up </Text>
         </View>
         <View style={getRegisterStyle.formArea}>
           <TextInput

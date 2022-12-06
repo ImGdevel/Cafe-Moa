@@ -283,13 +283,14 @@ function ReviewPage(props) {
           id: doc.id,
           ...doc.data(),
         }));
+        reviews.sort((a,b)=>a.date < b.date);
         setreviewDatas(reviews);
       });
     dbService.collection("CafeData").doc(cafeData.getId()).onSnapshot((doc)=>{
       if(doc.exists && doc.data().notice != null){
         setNotice(doc.data().notice)
       }else{
-
+        setNotice("");
       }
     })
     setNotice(cafeData.getNotice());
