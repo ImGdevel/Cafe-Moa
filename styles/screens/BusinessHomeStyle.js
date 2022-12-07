@@ -58,6 +58,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  pickerContent:{
+    width: "100%",
+  },
   addButtonContainer: {
     width: "30%",
     height: "100%",

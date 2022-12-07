@@ -193,7 +193,7 @@ function BusinessHomeScreen({ navigation, route }) {
             </View>
             <View style={getBusinessHomeStyle.pickerBox}>
               <Picker
-                style={{ width: "100%" }}
+                style={ getBusinessHomeStyle.pickerContent }
                 selectedValue={selectedSeat}
                 onValueChange={(itemValue, itemIndex) => {
                   setSelectedSeat(itemValue);
