@@ -19,7 +19,6 @@ function HomeScreen({ navigation }) {
   const [reserveCafeInfo, setReserveCafeInfo] = useState();
   const [bookMarkList, setBookMarkList] = useState();
 
-
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", async() => {
       LoadHomePage();
@@ -109,13 +108,15 @@ function HomeScreen({ navigation }) {
 
           {/** 광고  */}
           <View style = {getHomeStyle.AdArea}>
+            <Text style={getHomeStyle.AreaTitle}> Ad </Text>
             <ScrollView 
               horizontal={true}
               showsHorizontalScrollIndicator = {false}>
-              <AdPanel/>
-              <AdPanel/>
-              <AdPanel/>
-              <AdPanel/>
+                <AdPanel img={require("../../img/Advertisement/Ad1.png")}/>
+                <AdPanel img={require("../../img/Advertisement/Ad2.png")}/>
+                <AdPanel img={require("../../img/Advertisement/Ad3.png")}/>
+                <AdPanel img={require("../../img/Advertisement/Ad4.png")}/>
+                <AdPanel img={require("../../img/Advertisement/Ad5.png")}/>
             </ScrollView>
           </View>
         
@@ -216,10 +217,17 @@ function ReservationView(props){
 }
 
 /** 광고 패널 */
-function AdPanel(){
+function AdPanel({img}){
   return(
     <View style={getHomeStyle.AdPanel}>
-      <Image/>
+      <Image 
+        style={{
+        resizeMode: "contain",
+        width: "101%",
+        height: "101%",
+        borderRadius:10,
+      }}
+        source={img}/>
     </View>
   );
 }
