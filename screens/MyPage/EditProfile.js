@@ -197,9 +197,9 @@ function EditProfileScreen({ navigation, route }) {
                           if (key == 1) {
                             // nickname 바꾼 경우
                             setNickname(text);
-                          } else if (key == 2) {
-                            // email 바꾼 경우
-                            setEmail(text);
+                            // } else if (key == 2) {
+                            //   // email 바꾼 경우
+                            //   setEmail(text);
                           } else if (key == 3) {
                             setPasswd(text);
                           }
