@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderWidth: 1,
     borderRadius: 10,
-    paddingVertical:0,
+    paddingVertical: 0,
   },
   noticeHeader: {
     width: "100%",
@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   reviewContentContainer: {
-    height: 150,
     width: "100%",
     borderBottomWidth: 1,
     borderBottomColor: "#aaa",

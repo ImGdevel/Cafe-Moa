@@ -18,12 +18,14 @@ function HomeScreen({ navigation }) {
   const [reserveCafeInfo, setReserveCafeInfo] = useState();
   const [bookMarkList, setBookMarkList] = useState();
 
+
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", async() => {
       LoadHomePage();
     });
     return unsubscribe;
   }, [navigation, setUserData]);
+
 
   /** 유저 데이터 가져오기 */
   const LoadHomePage = async () => {
@@ -40,7 +42,6 @@ function HomeScreen({ navigation }) {
   const updateConfirmReservation = async () => {
     if (userData != null && userData.reservation.cafeId != null) {
       setReserveCafeInfo(await getCafeData(userData.reservation.cafeId));
-      //refreshReserve();
     } else {
       setReserveCafeInfo(null);
     }
@@ -48,6 +49,7 @@ function HomeScreen({ navigation }) {
 
   /** Bookmark 리스트 */
   async function refresBookMark(){
+    console.log("리로드");
     if(userData == null) return;
     if(userData.bookmark != null){
       let cafeList = new Array();  

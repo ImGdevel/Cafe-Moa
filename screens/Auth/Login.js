@@ -18,18 +18,6 @@ function LogInScreen({ navigation }) {
   const idInputRef = createRef();
   const passwordInputRef = createRef();
 
-  useEffect(() => {
-    isLogin();
-  }, []);
-
-  async function isLogin() {
-    let id = await getCurrentUserId();
-    if (id != null) {
-      console.log("지동 로그인...", id);
-      GoToHomeScreen();
-    }
-  }
-
   function GoToRgisterScreen() {
     navigation.navigate("Register");
   }
@@ -62,10 +50,10 @@ function LogInScreen({ navigation }) {
       <View style={{ flex: 3 }}></View>
       <View style={getLoginStyle.contentArea}>
         <View style={getLoginStyle.titleText}>
-          <Text style={{ fontWeight: "900", fontSize: 55 }}> M O A </Text>
+          <Text style={{ color: "#001D44", fontWeight: "900", fontSize: 55 }}> M O A </Text>
         </View>
         <View style={getLoginStyle.subTitleText}>
-          <Text style={{ fontWeight: "600", fontSize: 30 }}> Login </Text>
+          <Text style={{ color: "#001D44", fontWeight: "600", fontSize: 30 }}> Login </Text>
         </View>
         <View style={getLoginStyle.formArea}>
           <TextInput

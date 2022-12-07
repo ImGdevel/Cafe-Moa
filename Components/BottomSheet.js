@@ -12,14 +12,17 @@ import {
 } from "react-native";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { dbService } from "../FireServer";
 
 const BottomSheet = (props) => {
   const {
     modalVisible: modalVisible,
     setModalVisible: setModalVisible,
     reserveSeat: selectedSeat,
-    cafeData: cafeData,
+    AssignmentConfirm: AssignmentConfirm,
+    ReservationCancel: ReservationCancel,
   } = props;
+
   const screenHeight = Dimensions.get("screen").height;
   const panY = useRef(new Animated.Value(screenHeight)).current;
   const translateY = panY.interpolate({
@@ -86,10 +89,11 @@ const BottomSheet = (props) => {
           }}
           {...panResponders.panHandlers}
         >
-          <Text style={styles.header}>{selectedSeat}번 좌석</Text>
+          <Text style={styles.header}>{selectedSeat?.seat.seat}번 좌석</Text>
           <TouchableOpacity
             style={styles.Button}
-            onPress={() => {
+            onPress={async() => {
+              await AssignmentConfirm(),
               closeModal();
             }}
           >
@@ -103,7 +107,8 @@ const BottomSheet = (props) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.Button}
-            onPress={() => {
+            onPress={async() => {
+              await ReservationCancel();
               closeModal();
             }}
           >

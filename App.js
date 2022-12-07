@@ -1,8 +1,8 @@
 import { LogBox } from 'react-native';
 LogBox.ignoreLogs([
-  "AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-async-storage/async-storage' instead of 'react-native'. See https://github.com/react-native-async-storage/async-storage"
+  "AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-async-storage/async-storage' instead of 'react-native'. See https://github.com/react-native-async-storage/async-storage",
+  "Possible Unhandled Promise Rejection",
 ]);
-
 
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
@@ -36,11 +36,10 @@ import ZoomImageScreen from "./screens/Business/ZoomImage";
 import AddPicScreen from "./screens/Business/AddPicScreen";
 import DeleteUserScreen from "./screens/MyPage/DeleteUser";
 import LocationSelectionScreen from "./screens/Business/LocationSelect";
+import MyReviewScreen from "./screens/MyPage/MyReview";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-
-
 
 // 프로젝트 시작
 export default function App() {
@@ -88,27 +87,38 @@ const Auth = () => {
         component={CafeCreatFormScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen 
-        name="LocationSelection" 
+      <Stack.Screen
+        name="LocationSelection"
         component={LocationSelectionScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
-    
   );
 };
 
-function InApp(){
-  return(
+function InApp() {
+  return (
     <Stack.Navigator>
-       <Stack.Screen name="텝페이지" options={{ headerShown: false }} component ={TabHome}/>
+      <Stack.Screen
+        name="텝페이지"
+        options={{ headerShown: false }}
+        component={TabHome}
+      />
       <Stack.Screen name="카페 정보" component={InformationScreen} />
       <Stack.Screen name="예약하기" component={ReservationScreen} />
       <Stack.Screen name="리뷰 작성" component={ReviewScreen} />
-      <Stack.Screen name="사진 확대" component={ZoomImageScreen} options={{ headerShown: false }}/>
-      <Stack.Screen name="ReserveEnd" options={{ headerShown: false }} component={ReserveEndScreen}/>
+      <Stack.Screen
+        name="사진 확대"
+        component={ZoomImageScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ReserveEnd"
+        options={{ headerShown: false }}
+        component={ReserveEndScreen}
+      />
     </Stack.Navigator>
-  )
+  );
 }
 
 const TabHome = () => {
@@ -132,7 +142,11 @@ const TabHome = () => {
       >
         {() => (
           <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Find" component={FindScreen} options={{ headerShown: false }}/>
+            <Stack.Screen
+              name="Find"
+              component={FindScreen}
+              options={{ headerShown: false }}
+            />
           </Stack.Navigator>
         )}
       </Tab.Screen>
@@ -156,7 +170,10 @@ const TabHome = () => {
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="홈" component={HomeScreen} />
             <Stack.Screen name="ConfirmReservation" component={ConfirmScreen} />
-            <Stack.Screen name="CancelReservation" component={CancelReservationScreen}/>
+            <Stack.Screen
+              name="CancelReservation"
+              component={CancelReservationScreen}
+            />
           </Stack.Navigator>
         )}
       </Tab.Screen>
@@ -183,6 +200,7 @@ const TabHome = () => {
             <Stack.Screen name="옵션" component={OptionScreen} />
             <Stack.Screen name="북마크" component={BookMarkScreen} />
             <Stack.Screen name="DeleteUser" component={DeleteUserScreen} />
+            <Stack.Screen name="My Review" component={MyReviewScreen} />
           </Stack.Navigator>
         )}
       </Tab.Screen>
@@ -211,11 +229,9 @@ const InBusiness = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen name="카페 사진 추가" component={AddPicScreen} />
-      
     </Stack.Navigator>
   );
 };
-
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({

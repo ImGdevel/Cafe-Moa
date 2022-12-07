@@ -27,9 +27,7 @@ function EditProfileScreen({ navigation, route }) {
   const [passwd, setPasswd] = useState(userData.getPassword());
   const [errorText, setErrorText] = useState("");
 
-  const nameInputRef = createRef();
-  const emailInputRef = createRef();
-  const pwInputRef = createRef();
+  const changeInfoRef = createRef();
 
   const [modalVisible, setModalVisible] = useState(false);
   const [key, setKey] = useState(0);
@@ -72,11 +70,11 @@ function EditProfileScreen({ navigation, route }) {
       console.log(nickname);
       await userData.setUserProfile(nickname, email, passwd);
       console.log(userData.getName());
-    } else if (key == 2) {
-      // email 바꾼 경우
-      console.log(email);
-      await userData.setUserProfile(nickname, email, passwd);
-      console.log(userData.getEmail());
+      // } else if (key == 2) {
+      //   // email 바꾼 경우
+      //   console.log(email);
+      //   await userData.setUserProfile(nickname, email, passwd);
+      //   console.log(userData.getEmail());
     } else if (key == 3) {
       console.log(passwd);
       await userData.setUserProfile(nickname, email, passwd);
@@ -122,7 +120,7 @@ function EditProfileScreen({ navigation, route }) {
                 </TouchableOpacity>
               </View>
             </View>
-            <View style={getEditProfileStyle.ChangeBtn}>
+            {/* <View style={getEditProfileStyle.ChangeBtn}>
               <Text style={getEditProfileStyle.FieldText}>이메일</Text>
               <View style={getEditProfileStyle.confirmContainer}>
                 <TouchableOpacity
@@ -144,7 +142,7 @@ function EditProfileScreen({ navigation, route }) {
                   </Text>
                 </TouchableOpacity>
               </View>
-            </View>
+            </View> */}
             <View style={getEditProfileStyle.ChangeBtn}>
               <Text style={getEditProfileStyle.FieldText}>비밀번호</Text>
               <View style={getEditProfileStyle.confirmContainer}>
@@ -192,16 +190,16 @@ function EditProfileScreen({ navigation, route }) {
                     </View>
                     <View style={getModalStyle.ScrollView}>
                       <TextInput
-                        ref={pwInputRef}
+                        ref={changeInfoRef}
                         style={getEditProfileStyle.textInput}
                         placeholder={ph}
                         onChangeText={(text) => {
                           if (key == 1) {
                             // nickname 바꾼 경우
                             setNickname(text);
-                          } else if (key == 2) {
-                            // email 바꾼 경우
-                            setEmail(text);
+                            // } else if (key == 2) {
+                            //   // email 바꾼 경우
+                            //   setEmail(text);
                           } else if (key == 3) {
                             setPasswd(text);
                           }
@@ -211,7 +209,7 @@ function EditProfileScreen({ navigation, route }) {
                       />
                       {key === 3 && (
                         <TextInput
-                          ref={pwInputRef}
+                          ref={changeInfoRef}
                           style={getEditProfileStyle.textInput}
                           placeholder={"새 비밀번호 확인"}
                           onChangeText={(text) => checkCorrectPW(text)}
