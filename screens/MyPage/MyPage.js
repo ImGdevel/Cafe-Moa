@@ -15,9 +15,7 @@ function MyPageScreen({ navigation }) {
   const [userData, setUserData] = useState();
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
-  const [userImage, setUserImage] = useState(
-    require("../../img/initialProfile.jpg")
-  );
+  const [userImage, setUserImage] = useState();
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", async () => {
@@ -40,9 +38,15 @@ function MyPageScreen({ navigation }) {
   const getData = async () => {
     if (userData != null) {
       console.log("새로고침");
-      setUserName(userData.getName());
-      setUserEmail(userData.getEmail());
-      setUserImage({ uri: await userData.getProfileImage() });
+      setUserName(userData.getName())
+      setUserEmail(userData.getEmail())
+      const imgs = await userData.getProfileImage();
+      if(imgs != " "){
+        setUserImage({uri:imgs});
+      }else{
+        setUserImage(require("../../img/initialProfile.jpg"));
+      }
+      
     }
   };
 

@@ -357,7 +357,7 @@ function ReviewPanel(props) {
   }, []);
 
   async function getImages(id) {
-    if (id != null) {
+    if (id != " ") {
       const img = await getImage("User", id, "profile");
       setImage({ uri: img });
     } else {

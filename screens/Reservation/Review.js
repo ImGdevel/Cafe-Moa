@@ -12,7 +12,6 @@ function ReviewScreen({ navigation , route }) {
   const [text, setText] = useState("");
   const [star, setStar] = useState(0);
   const [image, setImage] = useState("");
-  const [starText, setStarText] = useState();
 
   const ImagePick = async () => {
     const img= await pickImage(4,3);

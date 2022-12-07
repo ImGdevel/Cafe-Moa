@@ -1,14 +1,46 @@
 import React, { useEffect } from "react";
 import { View, Image } from "react-native";
+import { dbService } from "../../FireServer";
+import { getCurrentUserId } from "../../lib/AuthService";
 import getStartPageStyle from "../../styles/screens/StartPageStyle";
 
 function StartPageScreen({ navigation }) {
+
   useEffect(() => {
-    setTimeout(() => GoToLoginScreen(), 1500);
+    setTimeout(() =>  isLogin(), 1500);
   }, []);
+
+  async function isLogin() {
+    const id = await getCurrentUserId();
+    let us = true;
+    if(id != null){
+      await dbService.collection("BuisnessUser").get().then((list)=>{
+        list.forEach((ids)=>{
+          if(id == ids.id){
+            console.log("비지니스계정");
+            us = false;
+            GoToBusiness();
+          }
+        })
+      });
+      if(us){
+        GoToHomeScreen();
+      }
+    }else{
+      GoToLoginScreen();
+    }
+  }
 
   function GoToLoginScreen() {
     navigation.replace("Auth");
+  }
+
+  function GoToHomeScreen() {
+    navigation.replace("InApp");
+  }
+
+  function GoToBusiness() {
+    navigation.replace("Business");
   }
 
   return (
