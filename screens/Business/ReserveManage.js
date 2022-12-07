@@ -39,10 +39,7 @@ function ReserveManageScreen({ navigation, route }) {
     makePickerItem();
   }, []);
 
-  useEffect(()=>{
-
-
-  },[route?.seatData])
+  useEffect(() => {}, [route?.seatData]);
 
   // picker item에 추가하는 loop
   const makePickerItem = () => {
@@ -52,71 +49,72 @@ function ReserveManageScreen({ navigation, route }) {
     }
     setSeatList(seatLoop);
   };
-  
-  const pressButton = (time,seat) => {
-    setSelectedReserveSeat({time,seat});
+
+  const pressButton = (time, seat) => {
+    setSelectedReserveSeat({ time, seat });
     setModalVisible(true);
   };
 
   /** 배정 */
-  const AssignmentConfirm = async() => {
-    console.log("배정",selectedReserveSeat);
+  const AssignmentConfirm = async () => {
+    console.log("배정", selectedReserveSeat);
     const data = selectedReserveSeat;
-    const fd = await reserveService.assignmentSeats(data.time,data.seat.seat);
-    dbService.collection("User").doc(data.seat.uid).update({
-      reservation: {
-        state: true,
-      },
-    })
+    const fd = await reserveService.assignmentSeats(data.time, data.seat.seat);
+    dbService
+      .collection("User")
+      .doc(data.seat.uid)
+      .update({
+        reservation: {
+          state: true,
+        },
+      });
     setLoadPage(fd);
-  }
+  };
 
-  const ReservationCancel = async() => {
+  const ReservationCancel = async () => {
     const data = selectedReserveSeat;
     const user = new UserDataService(data.seat.uid);
-    const fd = await reserveService.doSeatCancel(data.time,data.seat.seat);
+    const fd = await reserveService.doSeatCancel(data.time, data.seat.seat);
     await user.deleteReservationToUser();
     setLoadPage(fd);
-  }
+  };
 
-  useEffect(()=>{
-    if(reserveService == null){
-      return;        
+  useEffect(() => {
+    if (reserveService == null) {
+      return;
     }
-    const {open:op, close:cl} = reserveService;
-    const arr =[];
-    for(var i=nowTime; i< cl; i++){
-      arr.push(
-        <TimeTable key={i} time={i}/>
-      )
+    const { open: op, close: cl } = reserveService;
+    const arr = [];
+    for (var i = nowTime; i < cl; i++) {
+      arr.push(<TimeTable key={i} time={i} />);
     }
     setTimeTableList(arr);
-  },[,reserveService, loadPage])
+  }, [, reserveService, loadPage]);
 
   /** 시간 라벨 */
-  function TimeTable({time}){
+  function TimeTable({ time }) {
     const [seatList, setSeatList] = useState([]);
 
-    useEffect(()=>{
+    useEffect(() => {
       const seats = reserveService.getSeatDataOnTimeReserve(time, false);
-      const list = seats.map((data, index)=>{
-        return <SeatLabel key={index} seat={data}/>
-      })
+      const list = seats.map((data, index) => {
+        return <SeatLabel key={index} seat={data} />;
+      });
       setSeatList(list);
-    },[,reserveService, loadPage])
+    }, [, reserveService, loadPage]);
 
     /** 좌석 */
-    const SeatLabel = ({seat}) => (
+    const SeatLabel = ({ seat }) => (
       <TouchableOpacity
         style={getManageStyle.setNumBox}
-        onPress={() => { 
-          pressButton(time,seat)
+        onPress={() => {
+          pressButton(time, seat);
         }}
       >
         <Text style={{ color: "#001D44" }}>{`${seat.seat}번 좌석`}</Text>
       </TouchableOpacity>
-    )
-    return(
+    );
+    return (
       <>
         <View style={getManageStyle.timeArea}>
           <Text style={getManageStyle.timeText}>{time}시</Text>
@@ -125,7 +123,7 @@ function ReserveManageScreen({ navigation, route }) {
           {seatList}
         </ScrollView>
       </>
-    )
+    );
   }
 
   return (
@@ -137,35 +135,7 @@ function ReserveManageScreen({ navigation, route }) {
         AssignmentConfirm={AssignmentConfirm}
         ReservationCancel={ReservationCancel}
       />
-      <View style={getManageStyle.manualContianer}>
-        <View style={getManageStyle.descriptionContainer}>
-          <Text style={{ fontSize: 18, color: "#001D44" }}>
-            수동으로 사용중인 좌석 추가...
-          </Text>
-          <Text style={{ fontSize: 12, color: "gray" }}>
-            예약내역이 있다면, 아래에 표시됩니다.
-          </Text>
-        </View>
-        <View style={getManageStyle.pickerContainer}>
-          <Picker
-            style={getManageStyle.picker}
-            selectedValue={selectedSeat}
-            onValueChange={(itemValue, itemIndex) => {
-              setSelectedSeat(itemValue);
-            }}
-          >
-            {seatList}
-          </Picker>
-        </View>
-        <View style={getManageStyle.addButtonContainer}>
-          <TouchableOpacity style={getManageStyle.addButton}>
-            <Text style={{ color: "white" }}>추가하기</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <ScrollView>
-        {timeTableList}
-      </ScrollView>
+      <ScrollView>{timeTableList}</ScrollView>
     </ScrollView>
   );
 }

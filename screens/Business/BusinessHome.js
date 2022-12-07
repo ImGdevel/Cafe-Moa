@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import getHomeStyle from "../../styles/screens/HomeStyle";
 import getBusinessHomeStyle from "../../styles/screens/BusinessHomeStyle";
+import { Picker } from "@react-native-picker/picker";
 import { getCafeData } from "../../lib/CafeService";
 import { dbService } from "../../FireServer";
 import { ReservationService } from "../../lib/ReservationService";
@@ -24,11 +25,23 @@ function BusinessHomeScreen({ navigation, route }) {
   const [nowTime, setNowTime] = useState(12);
   const [pageLoad, setPageLoad] = useState(false);
   const [seatList, setSeatList] = useState();
+  const [offlineList, setOfflineList] = useState([]);
+  const [selectedSeat, setSelectedSeat] = useState("");
 
   function GoToLogoutScreen() {
     //signOut();
     navigation.replace("Auth");
   }
+
+  // picker item에 추가하는 loop
+  const makePickerItem = () => {
+    let seatLoop = [];
+    console.log(cafeData.getSeatCount());
+    for (let i = 1; i <= cafeData.getSeatCount(); i++) {
+      seatLoop.push(<Picker.Item key={i} label={String(i)} value={i} />);
+    }
+    setOfflineList(seatLoop);
+  };
 
   useEffect(() => {
     start();
@@ -82,6 +95,7 @@ function BusinessHomeScreen({ navigation, route }) {
       list.push(<SeatBtn key={item.seat} number={item.seat} uid={item.uid} />);
     });
     setSeatList(list);
+    makePickerItem();
   }
 
   function SeatBtn({ number, uid }) {
@@ -172,6 +186,27 @@ function BusinessHomeScreen({ navigation, route }) {
             <Text style={{ color: "black", fontWeight: "500", fontSize: 30 }}>
               현재 좌석 현황
             </Text>
+          </View>
+          <View style={getBusinessHomeStyle.pickerContainer}>
+            <View style={getBusinessHomeStyle.pickerHeader}>
+              <Text>수동으로 좌석 추가... {">>"}</Text>
+            </View>
+            <View style={getBusinessHomeStyle.pickerBox}>
+              <Picker
+                style={{ width: "100%" }}
+                selectedValue={selectedSeat}
+                onValueChange={(itemValue, itemIndex) => {
+                  setSelectedSeat(itemValue);
+                }}
+              >
+                {offlineList}
+              </Picker>
+            </View>
+            <View style={getBusinessHomeStyle.addButtonContainer}>
+              <TouchableOpacity style={getBusinessHomeStyle.addButton}>
+                <Text style={{ color: "white" }}>추가하기</Text>
+              </TouchableOpacity>
+            </View>
           </View>
           <View style={getBusinessHomeStyle.seatPicArea}>
             <Image

@@ -7,43 +7,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  manualContianer: {
-    width: "100%",
-    height: 60,
-    flexDirection: "row",
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
-  },
-  descriptionContainer: {
-    width: "60%",
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  pickerContainer: {
-    width: "22%",
-    height: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-    marginLeft: 2,
-  },
-  picker: {
-    width: "100%",
-    height: "50%",
-  },
-  addButtonContainer: {
-    width: "18%",
-    height: "100%",
-    padding: 5,
-  },
-  addButton: {
-    width: "100%",
-    height: "100%",
-    backgroundColor: "#001D44",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 15,
-  },
   timeArea: {
     width: 80,
     height: 40,
