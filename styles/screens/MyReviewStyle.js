@@ -10,8 +10,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   reviewedCafeInfoContainer: {
+    marginTop:20,
+    backgroundColor: "#fff",
     width: "100%",
-    height: 100,
+    height: 80,
     flexDirection: "row",
   },
   reviewHead: {
@@ -23,17 +25,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   deleteButton: {
-    width: 50,
-    height: 25,
+    width: 70,
+    height: 30,
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#aaa",
+    backgroundColor:"#fdfdfd",
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
   },
   cafeLogoContainer: {
-    width: 90,
-    height: 90,
+    width: 70,
+    height: 70,
     margin: 5,
     borderWidth: 1,
     borderColor: "#ccc",
@@ -45,7 +48,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   cafeData: {
-    height: "50%",
+
+    height: "38%",
     justifyContent: "center",
     paddingLeft: 10,
   },
