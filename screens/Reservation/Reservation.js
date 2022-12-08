@@ -37,21 +37,22 @@ function ReservationScreen({ navigation, route }) {
 
   var timeLoop = [];
 
-  for (let i = cafe_data.getOpenTime(); i < cafe_data.getEndTime(); i++) {
+  for (let i = cafe_data.getOpenTime(); i < cafe_data.getCloseTime(); i++) {
 
-    const clock = `${(i<10)?"0"+1:i}:00`;
+    const clock = `${(i<10)?"0"+i:i}:00`;
     let lock = (i >= nowTime) ? true : false;
     console.log(clock, lock);
-    
+
     timeLoop.push(
       <TouchableOpacity
         key={i}
-        style={getModalStyle.modalButton}
-        disabled = {lock}
+        style={[getModalStyle.modalButton, lock || { backgroundColor:"#bbb"}]}
         onPress={() => {
-          setModalOutput("선택");
-          setModalVisible(false); //창닫기
-          onSelectTime(i); //시간 선택
+          if(lock){
+            setModalOutput("선택");
+            setModalVisible(false); //창닫기
+            onSelectTime(i); //시간 선택
+          }
         }}
       >
         <Text style={{ alignSelf: "center", fontSize: 20 }}>{clock}</Text>
