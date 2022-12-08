@@ -23,6 +23,7 @@ function ReservationScreen({ navigation, route }) {
   const [modalOutput, setModalOutput] = useState("Open Modal");
   const [time, setTime] = useState(0);
   const [seatList, setSeatList] = useState();
+  const [nowTime, setNowTime] = useState(12);
 
   useEffect(() => {
     SeatTimeTable();
@@ -35,34 +36,25 @@ function ReservationScreen({ navigation, route }) {
   };
 
   var timeLoop = [];
-  const timeArr = [
-    "09:00",
-    "10:00",
-    "11:00",
-    "12:00",
-    "13:00",
-    "14:00",
-    "15:00",
-    "16:00",
-    "17:00",
-    "18:00",
-    "19:00",
-    "20:00",
-    "21:00",
-  ];
 
-  for (let i = 0; i < timeArr.length; i++) {
+  for (let i = cafe_data.getOpenTime(); i < cafe_data.getEndTime(); i++) {
+
+    const clock = `${(i<10)?"0"+1:i}:00`;
+    let lock = (i >= nowTime) ? true : false;
+    console.log(clock, lock);
+    
     timeLoop.push(
       <TouchableOpacity
         key={i}
         style={getModalStyle.modalButton}
+        disabled = {lock}
         onPress={() => {
           setModalOutput("선택");
           setModalVisible(false); //창닫기
-          onSelectTime(i + Number(cafeData.getOpenTime())); //시간 선택
+          onSelectTime(i); //시간 선택
         }}
       >
-        <Text style={{ alignSelf: "center", fontSize: 20 }}>{timeArr[i]}</Text>
+        <Text style={{ alignSelf: "center", fontSize: 20 }}>{clock}</Text>
       </TouchableOpacity>
     );
   }
