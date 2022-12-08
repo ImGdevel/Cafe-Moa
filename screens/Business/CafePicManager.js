@@ -9,6 +9,7 @@ import {
   TouchableHighlight,
   Alert,
   Platform,
+  StyleSheet,
 } from "react-native";
 
 import * as ImagePicker from "expo-image-picker";
@@ -24,31 +25,58 @@ import { ReviewService } from "../../lib/ReviewService";
 import { getImage, pickImage, uploadImage } from "../../lib/ImageService";
 import { dbService } from "../../FireServer";
 
-// Array that bring cafe's image
-const imgArr = [
-  require("../../img/coffeebayLogo_test.jpg"),
-  require("../../img/coffeebayLogo_test.jpg"),
-  require("../../img/coffeebayLogo_test.jpg"),
-  require("../../img/coffeebayLogo_test.jpg"),
-  require("../../img/coffeebayLogo_test.jpg"),
-  require("../../img/coffeebayLogo_test.jpg"),
-];
-
-let cafe;
 
 function CafePicManageScreen({ navigation, route }) {
   const { cafeData: cafeData, userData: userData } = route.params;
   const [direction, setDirection] = useState("사진");
   // const [seatImage, setSeatImage] = useState(cafe_Data.getSeatImage());
-  
+  const [imageDatas, setImageDatas ] = useState([]);
   const [seatImage, setSeatImage] = useState();
+
+
+  const loadCafeImages = async() =>{
+    console.log("!");    
+    const datas = [];
+    const arr = cafeData.getCafeImage();
+    const promises = cafeIds.map(async (id) => {
+      datas.push(await getImage("Cafe",cafeData.getId(),`Img/${id}`));
+    });
+    await Promise.all(promises);
+
+    setImageDatas(datas);
+  }
+  
 
   useEffect(()=>{
     dbService.collection("CafeData").doc(cafeData.getId()).onSnapshot((doc)=>{
       cafeData.loadData(doc.data());
     })
+    loadCafeImages();
   },[])
 
+
+
+  const CafeImages = ({item}) => {
+    return (
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("사진 확대", {
+            // source: "../../img/coffeebayLogo_test.jpg",
+          })
+        }
+        onLongPress={longPressButton}
+      >
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "column",
+          }}
+        >
+          <Image style={getInfoStyle.image} source={{}} />
+        </View>
+      </TouchableOpacity>
+    )
+  }
 
   return (
     <>
@@ -70,32 +98,15 @@ function CafePicManageScreen({ navigation, route }) {
             style={getInfoStyle.contentLayout}
             navigation={navigation}
             cafeData={cafeData}
-          >{/*
+          >
             <FlatList
-              keyExtractor={(item) => item.idx}
-              data={imgArr}
+              keyExtractor={(item) => String(item.id)}
+              data={imageDatas}
               style={getInfoStyle.picArea}
-              renderItem={({ item }) => (
-                <TouchableHighlight
-                  onPress={() =>
-                    navigation.navigate("사진 확대", {
-                      // source: "../../img/coffeebayLogo_test.jpg",
-                    })
-                  }
-                  onLongPress={longPressButton}
-                >
-                  <View
-                    style={{
-                      flex: 1,
-                      flexDirection: "column",
-                    }}
-                  >
-                    <Image style={getInfoStyle.image} source={{}} />
-                  </View>
-                </TouchableHighlight>
-              )}
+              renderItem={CafeImages}
               numColumns={3}
-                  />*/}
+            />
+            
           </PreviewLayout>
         </View>
 
@@ -104,8 +115,7 @@ function CafePicManageScreen({ navigation, route }) {
             style={getInfoStyle.reserveButton}
             onPress={() =>
               navigation.navigate("카페 사진 추가", {
-                // cafeData: cafeData,
-                // userData: userData,
+                cafeData: cafeData,
               })
             }
           >
