@@ -41,8 +41,7 @@ function ReservationScreen({ navigation, route }) {
 
     const clock = `${(i<10)?"0"+i:i}:00`;
     let lock = (i >= nowTime) ? true : false;
-    console.log(clock, lock);
-
+    
     timeLoop.push(
       <TouchableOpacity
         key={i}
@@ -143,20 +142,19 @@ function ReservationScreen({ navigation, route }) {
         </>
       </Modal>
 
-      <View style={getFindStyle.container}>
-        <View style={getFindStyle.contentContainer}>
+      <View style={getReserveStyle.container}>
+        <View style={getReserveStyle.topContainer}>
           <CafeTable cafeData={cafeData} navigation={navigation} />
         </View>
+        <View style={getReserveStyle.contentContainer}>
+          <Image
+            source={{ uri: seatImage }}
+            resizeMode = "contain"
+            style={getReserveStyle.seatPic}
+          />
+        </View>
       </View>
-
-      <View style={getFindStyle.topContainer}>
-        <Image
-          source={{ uri: seatImage }}
-          resizeMode="stretch"
-          style={getReserveStyle.seatPic}
-        />
-      </View>
-      <View style={{ flex: 1, alignItems: "center" }}>
+      <View style={getReserveStyle.bottomContainer}>
         <View style={getReserveStyle.pickerTopTextArea}>
           <Text style={getReserveStyle.pickerTopText}>좌석 예약</Text>
         </View>

@@ -3,8 +3,23 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   container: {
     display: "flex",
-    flex: 1,
+    flex: 2.5,
     backgroundColor: "white",
+  },
+  topContainer:{
+    flex:1,
+    backgroundColor:"#fff",
+  },
+  contentContainer:{
+    flex:3,
+    justifyContent: "center",
+    alignItems: "center",
+
+  },
+  bottomContainer:{
+    flex:1,
+    alignItems: "center",
+    marginBottom:"5%",
   },
   cafeLogo: {
     width: "100%",
@@ -17,9 +32,8 @@ const styles = StyleSheet.create({
     fontSize: 25,
   },
   seatPic: {
-    resizeMode: "contain",
-    width: "100%",
-    height: "75%",
+    width: "90%",
+    height: "100%"
   },
   reserveBtn: {
     backgroundColor: "#001D44",
