@@ -45,12 +45,14 @@ function BusinessInformationScreen({ navigation, route }) {
     console.log(cafeData.getCloseTime());
   }, []);
 
-
-  useEffect(()=>{
-    dbService.collection("CafeData").doc(cafeData.getId()).onSnapshot((doc)=>{
-      cafeData.loadData(doc.data());
-    })
-  },[])
+  useEffect(() => {
+    dbService
+      .collection("CafeData")
+      .doc(cafeData.getId())
+      .onSnapshot((doc) => {
+        cafeData.loadData(doc.data());
+      });
+  }, []);
 
   function SubmitTime() {
     cafeData.setOpenTime(openTime);
@@ -283,16 +285,19 @@ function ReviewPage(props) {
           id: doc.id,
           ...doc.data(),
         }));
-        reviews.sort((a,b)=>a.date < b.date);
+        reviews.sort((a, b) => a.date < b.date);
         setreviewDatas(reviews);
       });
-    dbService.collection("CafeData").doc(cafeData.getId()).onSnapshot((doc)=>{
-      if(doc.exists && doc.data().notice != null){
-        setNotice(doc.data().notice)
-      }else{
-        setNotice("");
-      }
-    })
+    dbService
+      .collection("CafeData")
+      .doc(cafeData.getId())
+      .onSnapshot((doc) => {
+        if (doc.exists && doc.data().notice != null) {
+          setNotice(doc.data().notice);
+        } else {
+          setNotice("");
+        }
+      });
     setNotice(cafeData.getNotice());
     setRating(cafeData.getRating());
   }, []);
@@ -358,16 +363,16 @@ function ReviewPanel(props) {
       for (var i = 0; i < digits - n.length; i++) zero += "0";
     }
     return zero + n;
-  }
+  };
 
-  const getImages = async(id) => {
+  const getImages = async (id) => {
     if (id != null) {
       const img = await getImage("User", id, "profile");
       setImage({ uri: img });
     } else {
       setImage(require("../../img/initialProfile.jpg"));
     }
-  }
+  };
 
   useEffect(() => {
     if (review != null) {
@@ -387,7 +392,6 @@ function ReviewPanel(props) {
       getImages(review.user.id);
     }
   }, []);
-
 
   return (
     <View style={getReviewStyle.reviewContentContainer}>
