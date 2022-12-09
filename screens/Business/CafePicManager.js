@@ -23,27 +23,30 @@ import getPicManageStyle from "../../styles/screens/PicManageStyle";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { ReviewService } from "../../lib/ReviewService";
 import { getImage, pickImage, uploadImage } from "../../lib/ImageService";
-import { dbService } from "../../FireServer";
+import { dbService, MyDatabase } from "../../FireServer";
+import { List } from "../../lib/DataStructure/List";
 
 
 function CafePicManageScreen({ navigation, route }) {
   const { cafeData: cafeData, userData: userData } = route.params;
   const [direction, setDirection] = useState("사진");
-  // const [seatImage, setSeatImage] = useState(cafe_Data.getSeatImage());
   const [imageDatas, setImageDatas ] = useState([]);
-  const [seatImage, setSeatImage] = useState();
-
+  const [cafeImages,setCafeImages] = useState([]);
+  const [load,loadPage] = useState(false);
 
   const loadCafeImages = async() =>{
-    console.log("!");    
-    const datas = [];
+    const datas = new List();
     const arr = cafeData.getCafeImage();
-    const promises = cafeIds.map(async (id) => {
-      datas.push(await getImage("Cafe",cafeData.getId(),`Img/${id}`));
+
+    const promises = arr.map(async (id) => {
+      const img = await getImage("Cafe",cafeData.getId(),`Img/${id.id}`)
+      datas.push(img);
     });
     await Promise.all(promises);
+    
+    datas.push("end");
 
-    setImageDatas(datas);
+    setImageDatas(datas.getArray());
   }
   
 
@@ -52,27 +55,50 @@ function CafePicManageScreen({ navigation, route }) {
       cafeData.loadData(doc.data());
     })
     loadCafeImages();
-  },[])
+  },[,load])
+
+  async function PickImage(){
+    const img = await pickImage();
+    const date = new Date();
+    const id = date.toLocaleString() + date.getMilliseconds();
+    if(img != null){
+      console.log("up?");
+      const dat =  await uploadImage(img,"Cafe",cafeData.getId(),`Img/${id}`);
+      await dbService.collection("CafeData").doc(cafeData.getId()).update({
+        image : MyDatabase.firestore.FieldValue.arrayUnion({date:date,id:id}),
+      })
+      loadPage(dat);
+    }
+  }
 
 
+  const CafeImages = ({item, key}) => {
+    if(item=="end"){
+      return(
+        <TouchableOpacity style={styles.LogoImagePicker} onPress={PickImage}>
+            <Text style={{ color: "#ccc", fontSize: 40 }}>+</Text>
+        </TouchableOpacity>
+      )
+    }
 
-  const CafeImages = ({item}) => {
     return (
       <TouchableOpacity
         onPress={() =>
           navigation.navigate("사진 확대", {
-            // source: "../../img/coffeebayLogo_test.jpg",
+            image: item,
           })
         }
+        style={{
+          flex:1,
+          flexDirection:"row",
+        }}
         onLongPress={longPressButton}
       >
         <View
           style={{
-            flex: 1,
-            flexDirection: "column",
           }}
         >
-          <Image style={getInfoStyle.image} source={{}} />
+          <Image style={getInfoStyle.image} source={{uri:item}} />
         </View>
       </TouchableOpacity>
     )
@@ -83,6 +109,7 @@ function CafePicManageScreen({ navigation, route }) {
       <View style={getInfoStyle.container}>
         <View style={getFindStyle.container}>
           <View style={getFindStyle.contentContainer}>
+            
             <CafeTable
               cafeDatas={cafeData}
               navigation={navigation}
@@ -100,13 +127,13 @@ function CafePicManageScreen({ navigation, route }) {
             cafeData={cafeData}
           >
             <FlatList
-              keyExtractor={(item) => String(item.id)}
+              keyExtractor={(item) => String(item)}
               data={imageDatas}
               style={getInfoStyle.picArea}
               renderItem={CafeImages}
               numColumns={3}
             />
-            
+             
           </PreviewLayout>
         </View>
 
@@ -119,7 +146,7 @@ function CafePicManageScreen({ navigation, route }) {
               })
             }
           >
-            <Text style={{ color: "white", fontSize: 21 }}>사진 추가하기</Text>
+            <Text style={{ color: "white", fontSize: 21 }}>사진 수정 완료</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -206,7 +233,6 @@ const PreviewLayout = ({
   cafeData,
   navigation,
 }) => {
-  console.log(cafeData);
   const [seatImage, setSeatImage] = useState(cafeData.getSeatImage());
 
   const seatLongPressButton = () =>
@@ -271,5 +297,30 @@ const PreviewLayout = ({
     })()}
   </View>
 )};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+  },
+  LogoImagePicker: {
+    width: 108,
+    height: 108,
+    borderRadius: 10,
+    borderColor: "#ccc",
+    borderStyle: "dashed",
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 2,
+    margin: 5,
+  },
+  completeButton: {
+    marginTop: 20,
+  },
+});
+
 
 export default CafePicManageScreen;

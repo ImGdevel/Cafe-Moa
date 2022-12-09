@@ -57,8 +57,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: 105,
-    height: 105,
+    width: 110,
+    height: 110,
     borderRadius: 10,
     borderColor: "#ddd",
     justifyContent: "center",
