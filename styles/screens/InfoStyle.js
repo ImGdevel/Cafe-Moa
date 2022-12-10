@@ -1,13 +1,13 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-  mainContainer:{
+  mainContainer: {
     flex: 1,
     flexDirection: "column",
     backgroundColor: "white",
-    paddingBottom:"10%",
+    paddingBottom: "10%",
   },
-  
+
   container: {
     flex: 1,
     flexDirection: "column",
@@ -57,8 +57,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: 110,
-    height: 110,
+    width: 108,
+    height: 108,
     borderRadius: 10,
     borderColor: "#ddd",
     justifyContent: "center",
