@@ -37,13 +37,18 @@ function BusinessHomeScreen({ navigation, route }) {
   }, []);
 
   async function start() {
+  
+    const cafeId = "KW8l6oYhXj6g2xcUbstU";
+    setCafeData(await getCafeData(cafeId));
+    return;
     if(cafeData != null){
       return;
     }
     const user = new BuisnessUserDataService();
     await user.getBuisnessUserProfile();
     setUserData(user);
-    let cafeId = await user.getCafeIdToBuisnessUser();
+    
+    //let cafeId = await user.getCafeIdToBuisnessUser();
     setCafeData(await getCafeData(cafeId));
   }
 
