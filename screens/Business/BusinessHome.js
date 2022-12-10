@@ -49,7 +49,6 @@ function BusinessHomeScreen({ navigation, route }) {
 
   useEffect(() => {
     if (cafeData != null) {
-      console.log("카페 데이터");
       dbService
         .collection("CafeData")
         .doc(cafeData.getId())
@@ -85,9 +84,14 @@ function BusinessHomeScreen({ navigation, route }) {
   function loadSeatInfo() {
     const seats = reserveService.getSeatDataOnTimeReserve(nowTime, true);
     const list = []
+
+    console.log(reserveService);
+    console.log("좌석 데이터",seats)
+
     seats.map((item) => {
       list.push(<SeatBtn key={item.seat} number={item.seat} uid={item.uid} />);
     });
+
     setSeatList(list);
     makePickerItem(seats);
   }
@@ -101,7 +105,7 @@ function BusinessHomeScreen({ navigation, route }) {
   const makePickerItem = (list) => {
     let seatLoop = [];
     let isIn = false;
-    
+    console.log(list);
     for (let i = 1; i <= cafeData.getSeatCount(); i++) {
       list.forEach(element => {
         if(element.seat == i)
@@ -117,11 +121,11 @@ function BusinessHomeScreen({ navigation, route }) {
 
   async function appSeatSelf(){
     if(selectedSeat != 0){
+      console.log("?", reserveService)
       await reserveService.doSeatReservation(nowTime,selectedSeat,null,true);
       setPageLoad((fd)=>fd+1);
       setSelectedSeat(0);
     }
-    
   }
 
   function SeatBtn({ number, uid }) {
