@@ -21,53 +21,44 @@ import Star from "../../Components/Star";
 import { getImage } from "../../lib/ImageService";
 import { List, ReviewList } from "../../lib/DataStructure/List";
 
-
 function InformationScreen({ navigation, route }) {
   const { cafeData: cafeData, userData: userData } = route.params;
   const [direction, setDirection] = useState("사진");
-  const [imageDatas, setImageDatas ] = useState([]);
+  const [imageDatas, setImageDatas] = useState([]);
+
+  useEffect(() => {}, []);
 
   useEffect(() => {
-  }, []);
-
-  useEffect(()=>{
     loadCafeImages();
-  },[,cafeData])
-  
-  const loadCafeImages = async() =>{
+  }, [, cafeData]);
+
+  const loadCafeImages = async () => {
     const datas = new List();
     const arr = cafeData.getCafeImage();
     const promises = arr.map(async (id) => {
-      const img = await getImage("Cafe",cafeData.getId(),`Img/${id.id}`)
-      
-      datas.push({image:img, id:id.id, date: id.date});
+      const img = await getImage("Cafe", cafeData.getId(), `Img/${id.id}`);
+
+      datas.push({ image: img, id: id.id, date: id.date });
     });
     await Promise.all(promises);
 
-    const sortdata = datas.sort((a,b)=>{
-      return a.date.seconds<b.date.seconds;
+    const sortdata = datas.sort((a, b) => {
+      return a.date.seconds < b.date.seconds;
     });
-    sortdata.push({image:"end",id:"z"});
+    sortdata.push({ image: "end", id: "z" });
     setImageDatas(sortdata);
-  }
-  
-  const CafeImages = ({item}) => {
+  };
+
+  const CafeImages = ({ item }) => {
     return (
       <TouchableOpacity
-        onPress={() =>
-          navigation.navigate("사진 확대", {image: item.image})
-        }
-        style={{ flex:1, flexDirection:"row"}}
+        onPress={() => navigation.navigate("사진 확대", { image: item.image })}
+        style={{ flexDirection: "row" }}
       >
-        <View
-          style={{
-          }}
-        >
-          <Image style={getInfoStyle.image} source={{uri:item.image}} />
-        </View>
+        <Image style={getInfoStyle.image} source={{ uri: item.image }} />
       </TouchableOpacity>
-    )
-  }
+    );
+  };
 
   return (
     <>
@@ -282,7 +273,7 @@ function ReviewPage(props) {
           id: doc.id,
           ...doc.data(),
         }));
-        reviews.sort((a,b)=>a.date < b.date);
+        reviews.sort((a, b) => a.date < b.date);
         setreviewDatas(reviews);
       });
     setNotice(cafeData.getNotice());
@@ -299,7 +290,7 @@ function ReviewPage(props) {
     for (let i = 0; i < reviews.length; i++) {
       table.push(<ReviewPanel key={reviews[i].id} review={reviews[i]} />);
     }
-    
+
     setReviewList(table.getArray());
   }
 
