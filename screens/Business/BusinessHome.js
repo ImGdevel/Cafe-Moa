@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   StatusBar,
+  FlatList,
   Alert,
 } from "react-native";
 import getHomeStyle from "../../styles/screens/HomeStyle";
@@ -15,7 +16,10 @@ import { Picker } from "@react-native-picker/picker";
 import { getCafeData } from "../../lib/CafeService";
 import { dbService } from "../../FireServer";
 import { ReservationService } from "../../lib/ReservationService";
-import { BuisnessUserDataService, UserDataService } from "../../lib/UserDataService";
+import {
+  BuisnessUserDataService,
+  UserDataService,
+} from "../../lib/UserDataService";
 import { getCurrentUserId, signOut } from "../../lib/AuthService";
 import { List } from "../../lib/DataStructure/List";
 
@@ -26,28 +30,28 @@ function BusinessHomeScreen({ navigation, route }) {
   const [seatImage, setSeatImage] = useState();
   const [nowTime, setNowTime] = useState(12);
   const [pageLoad, setPageLoad] = useState(false);
+
   const [seatList, setSeatList] = useState();
+  const [seatDatas, setSeatDatas] = useState();
+
   const [offlineList, setOfflineList] = useState([]);
   const [selectedSeat, setSelectedSeat] = useState("");
-
-  
 
   useEffect(() => {
     start();
   }, []);
 
   async function start() {
-  
     const cafeId = "KW8l6oYhXj6g2xcUbstU";
     setCafeData(await getCafeData(cafeId));
     return;
-    if(cafeData != null){
+    if (cafeData != null) {
       return;
     }
     const user = new BuisnessUserDataService();
     await user.getBuisnessUserProfile();
     setUserData(user);
-    
+
     //let cafeId = await user.getCafeIdToBuisnessUser();
     setCafeData(await getCafeData(cafeId));
   }
@@ -63,7 +67,7 @@ function BusinessHomeScreen({ navigation, route }) {
       setSeatImage(cafeData.getSeatImage());
       loadSeat();
     }
-  }, [,cafeData]);
+  }, [, cafeData]);
 
   useEffect(() => {}, [route?.seatData]);
 
@@ -88,18 +92,25 @@ function BusinessHomeScreen({ navigation, route }) {
   /** 화면 불러오기 */
   function loadSeatInfo() {
     const seats = reserveService.getSeatDataOnTimeReserve(nowTime, true);
-    const list = []
+    const list = [];
+    let data = [];
 
     console.log(reserveService);
-    console.log("좌석 데이터",seats)
+    console.log("좌석 데이터", seats);
 
     seats.map((item) => {
       list.push(<SeatBtn key={item.seat} number={item.seat} uid={item.uid} />);
+      data.push({ key: item.seat, number: item.seat, uid: item.uid });
     });
 
+    setSeatDatas(data);
     setSeatList(list);
     makePickerItem(seats);
   }
+
+  const makeSeatList = ({ item }) => {
+    return <SeatBtn key={item.key} number={item.number} uid={item.uid} />;
+  };
 
   function GoToLogoutScreen() {
     signOut();
@@ -112,11 +123,10 @@ function BusinessHomeScreen({ navigation, route }) {
     let isIn = false;
     console.log(list);
     for (let i = 1; i <= cafeData.getSeatCount(); i++) {
-      list.forEach(element => {
-        if(element.seat == i)
-          isIn = true;
+      list.forEach((element) => {
+        if (element.seat == i) isIn = true;
       });
-      if(!isIn){
+      if (!isIn) {
         seatLoop.push(<Picker.Item key={i} label={String(i)} value={i} />);
       }
       isIn = false;
@@ -124,11 +134,11 @@ function BusinessHomeScreen({ navigation, route }) {
     setOfflineList(seatLoop);
   };
 
-  async function appSeatSelf(){
-    if(selectedSeat != 0){
-      console.log("?", reserveService)
-      await reserveService.doSeatReservation(nowTime,selectedSeat,null,true);
-      setPageLoad((fd)=>fd+1);
+  async function appSeatSelf() {
+    if (selectedSeat != 0) {
+      console.log("?", reserveService);
+      await reserveService.doSeatReservation(nowTime, selectedSeat, null, true);
+      setPageLoad((fd) => fd + 1);
       setSelectedSeat(0);
     }
   }
@@ -145,8 +155,8 @@ function BusinessHomeScreen({ navigation, route }) {
           text: "완료",
           onPress: async () => {
             await reserveService.doSeatCancel(nowTime, number);
-            setPageLoad((fd)=>fd+1);
-            if(uid != null){
+            setPageLoad((fd) => fd + 1);
+            if (uid != null) {
               const user = new UserDataService(uid);
               await user.deleteReservationToUser();
             }
@@ -230,7 +240,7 @@ function BusinessHomeScreen({ navigation, route }) {
             </View>
             <View style={getBusinessHomeStyle.pickerBox}>
               <Picker
-                style={ getBusinessHomeStyle.pickerContent }
+                style={getBusinessHomeStyle.pickerContent}
                 selectedValue={selectedSeat}
                 onValueChange={(itemValue, itemIndex) => {
                   setSelectedSeat(itemValue);
@@ -240,7 +250,7 @@ function BusinessHomeScreen({ navigation, route }) {
               </Picker>
             </View>
             <View style={getBusinessHomeStyle.addButtonContainer}>
-              <TouchableOpacity 
+              <TouchableOpacity
                 style={getBusinessHomeStyle.addButton}
                 onPress={appSeatSelf}
               >
@@ -255,7 +265,14 @@ function BusinessHomeScreen({ navigation, route }) {
             />
           </View>
           <View style={getBusinessHomeStyle.reservationListContainer}>
-            <View style={getBusinessHomeStyle.reservationList}>{seatList}</View>
+            {/* {seatList} */}
+            <FlatList
+              keyExtractor={(item) => String(item.id)}
+              data={seatDatas}
+              style={getBusinessHomeStyle.reservationList}
+              renderItem={makeSeatList}
+              numColumns={4}
+            />
           </View>
         </ScrollView>
         <View style={getBusinessHomeStyle.logoutContainer}>
