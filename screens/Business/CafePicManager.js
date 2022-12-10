@@ -37,24 +37,15 @@ function CafePicManageScreen({ navigation, route }) {
   const loadCafeImages = async() =>{
     const datas = new List();
     const arr = cafeData.getCafeImage();
-    console.log(arr);
-    try{
+
     const promises = arr.map(async (id) => {
       const img = await getImage("Cafe",cafeData.getId(),`Img/${id.id}`)
       
       datas.push({image:img, id:id.id, date: id.date});
     });
-
     await Promise.all(promises);
-    console.log(promises);
-  }
-  catch{
-    console.log("???",err);
-  }
-    
 
     const sortdata = datas.sort((a,b)=>{
-      console.log(a.date,b.date);
       return a.date.seconds<b.date.seconds;
     });
     sortdata.push({image:"end",id:"z"});
@@ -66,15 +57,13 @@ function CafePicManageScreen({ navigation, route }) {
       cafeData.loadData(doc.data());
     })
     loadCafeImages();
-    console.log("리로드");
   },[,load])
 
   async function PickImage(){
     const img = await pickImage();
     const date = new Date();
     const id = date.toLocaleString() + date.getMilliseconds();
-    if(img != null){
-      console.log("up?");
+    if(img != " "){
       await uploadImage(img,"Cafe",cafeData.getId(),`Img/${id}`);
       let dat =  await dbService.collection("CafeData").doc(cafeData.getId()).update({
         image : MyDatabase.firestore.FieldValue.arrayUnion({date:date,id:id}),
@@ -82,6 +71,30 @@ function CafePicManageScreen({ navigation, route }) {
       loadPage(dat);
     }
   }
+
+  async function deletImage(item){
+    const items = imageDatas.filter((index)=>{
+      if(index.id != item.id) return true; 
+    })
+    setImageDatas(items);
+
+    await dbService.collection("CafeData").doc(cafeData.getId()).update({
+      image : MyDatabase.firestore.FieldValue.arrayRemove({date:item.date,id:item.id}),
+    })
+    console.log("삭제");
+  }
+
+  const longPressButton = (item) =>
+  Alert.alert("", "사진을 삭제하시겠습니까?", [
+    {
+      text: "취소",
+      onPress: () => console.log("Cancel Pressed"),
+      style: "cancel",
+    },
+    { text: "삭제", onPress: () => {
+      deletImage(item);
+    } },
+  ]);
 
 
   const CafeImages = ({item, key}) => {
@@ -104,7 +117,7 @@ function CafePicManageScreen({ navigation, route }) {
           flex:1,
           flexDirection:"row",
         }}
-        onLongPress={longPressButton}
+        onLongPress={()=>{longPressButton(item)}}
       >
         <View
           style={{
@@ -166,15 +179,9 @@ function CafePicManageScreen({ navigation, route }) {
   );
 }
 
-const longPressButton = () =>
-  Alert.alert("", "사진을 삭제하시겠습니까?", [
-    {
-      text: "취소",
-      onPress: () => console.log("Cancel Pressed"),
-      style: "cancel",
-    },
-    { text: "삭제", onPress: () => console.log("OK Pressed") },
-  ]);
+
+
+
 
 
 //카페 테이블
