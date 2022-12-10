@@ -24,8 +24,20 @@ function LogInScreen({ navigation }) {
   function GoToHomeScreen() {
     navigation.replace("InApp");
   }
+  function GoToBusinessLogIn() {
+    navigation.navigate("BusinessLogIn");
+    
+  }
 
   function onSubmit() {
+    if (!UserId) {
+      alert("이메일을 입력해주세요");
+      return;
+    }
+    if (!userPassword) {
+      alert("비밀번호를 입력해주세요");
+      return;
+    }
     SignInUserAccount(UserId, userPassword)
       .then(() => {
         GoToHomeScreen();
@@ -92,9 +104,7 @@ function LogInScreen({ navigation }) {
 
           <TouchableOpacity
             style={getLoginStyle.btnRegister}
-            onPress={() => {
-              navigation.replace("Business");
-            }}
+            onPress={GoToBusinessLogIn}
           >
             <Text style={{ color: "#bbb", fontSize: 20 }}>사업자 로그인</Text>
           </TouchableOpacity>

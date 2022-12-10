@@ -18,14 +18,20 @@ function BusinessLogInScreen({ navigation }) {
   const idInputRef = createRef();
   const passwordInputRef = createRef();
 
-  function GoToRgisterScreen() {
-    navigation.navigate("Register");
-  }
   function GoToHomeScreen() {
-    navigation.replace("InApp");
+    navigation.replace("Business");
   }
 
   function onSubmit() {
+    if (!UserId) {
+      alert("이메일을 입력해주세요");
+      return;
+    }
+    if (!userPassword) {
+      alert("비밀번호를 입력해주세요");
+      return;
+    }
+
     SignInUserAccount(UserId, userPassword)
       .then(() => {
         GoToHomeScreen();
@@ -53,7 +59,7 @@ function BusinessLogInScreen({ navigation }) {
           <Text style={{ color: "#001D44", fontWeight: "900", fontSize: 55 }}> M O A </Text>
         </View>
         <View style={getLoginStyle.subTitleText}>
-          <Text style={{ color: "#001D44", fontWeight: "600", fontSize: 30 }}> Login </Text>
+          <Text style={{ color: "#001D44", fontWeight: "600", fontSize: 30 }}> Business Login </Text>
         </View>
         <View style={getLoginStyle.formArea}>
           <TextInput
@@ -82,18 +88,11 @@ function BusinessLogInScreen({ navigation }) {
           <TouchableHighlight {...touchProps} onPress={onSubmit}>
             <Text style={{ color: "white", fontSize: 23 }}>로그인</Text>
           </TouchableHighlight>
-
-          <TouchableOpacity
-            style={getLoginStyle.btnRegister}
-            onPress={GoToRgisterScreen}
-          >
-            <Text style={{ color: "#bbb", fontSize: 20 }}>회원가입</Text>
-          </TouchableOpacity>
-
+          
           <TouchableOpacity
             style={getLoginStyle.btnRegister}
             onPress={() => {
-              navigation.replace("Business");
+              navigation.replace("Auth");
             }}
           >
             <Text style={{ color: "#bbb", fontSize: 20 }}>일반 로그인</Text>

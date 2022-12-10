@@ -37,6 +37,7 @@ import AddPicScreen from "./screens/Business/AddPicScreen";
 import DeleteUserScreen from "./screens/MyPage/DeleteUser";
 import LocationSelectionScreen from "./screens/Business/LocationSelect";
 import MyReviewScreen from "./screens/MyPage/MyReview";
+import BusinessLogInScreen from './screens/Auth/BusinessLogin';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -75,12 +76,26 @@ const Auth = () => {
       <Stack.Screen
         name="Login"
         component={LoginScreen}
-        options={{ headerShown: false }}
+        options={{ 
+          headerShown: false,
+          opacity: 0,
+        }}
       />
       <Stack.Screen
         name="Register"
         component={RegisterScreen}
-        options={{ headerShown: false }}
+        options={{ 
+          headerShown: false,
+          opacity: 0,
+        }}
+      />
+      <Stack.Screen
+        name="BusinessLogIn"
+        component={BusinessLogInScreen}
+        options={{ 
+          headerShown: false,
+          opacity: 0,
+        }}
       />
       <Stack.Screen
         name="CafeCreatForm"
