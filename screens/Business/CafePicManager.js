@@ -24,7 +24,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { ReviewService } from "../../lib/ReviewService";
 import { getImage, pickImage, uploadImage } from "../../lib/ImageService";
 import { dbService, MyDatabase } from "../../FireServer";
-import { List } from "../../lib/DataStructure/List";
+import { ImageList, List } from "../../lib/DataStructure/List";
 
 
 function CafePicManageScreen({ navigation, route }) {
@@ -37,24 +37,36 @@ function CafePicManageScreen({ navigation, route }) {
   const loadCafeImages = async() =>{
     const datas = new List();
     const arr = cafeData.getCafeImage();
-
+    console.log(arr);
+    try{
     const promises = arr.map(async (id) => {
       const img = await getImage("Cafe",cafeData.getId(),`Img/${id.id}`)
-      datas.push(img);
+      
+      datas.push({image:img, id:id.id, date: id.date});
     });
-    await Promise.all(promises);
-    
-    datas.push("end");
 
-    setImageDatas(datas.getArray());
+    await Promise.all(promises);
+    console.log(promises);
+  }
+  catch{
+    console.log("???",err);
+  }
+    
+
+    const sortdata = datas.sort((a,b)=>{
+      console.log(a.date,b.date);
+      return a.date.seconds<b.date.seconds;
+    });
+    sortdata.push({image:"end",id:"z"});
+    setImageDatas(sortdata);
   }
   
-
   useEffect(()=>{
     dbService.collection("CafeData").doc(cafeData.getId()).onSnapshot((doc)=>{
       cafeData.loadData(doc.data());
     })
     loadCafeImages();
+    console.log("리로드");
   },[,load])
 
   async function PickImage(){
@@ -63,8 +75,8 @@ function CafePicManageScreen({ navigation, route }) {
     const id = date.toLocaleString() + date.getMilliseconds();
     if(img != null){
       console.log("up?");
-      const dat =  await uploadImage(img,"Cafe",cafeData.getId(),`Img/${id}`);
-      await dbService.collection("CafeData").doc(cafeData.getId()).update({
+      await uploadImage(img,"Cafe",cafeData.getId(),`Img/${id}`);
+      let dat =  await dbService.collection("CafeData").doc(cafeData.getId()).update({
         image : MyDatabase.firestore.FieldValue.arrayUnion({date:date,id:id}),
       })
       loadPage(dat);
@@ -73,7 +85,7 @@ function CafePicManageScreen({ navigation, route }) {
 
 
   const CafeImages = ({item, key}) => {
-    if(item=="end"){
+    if(item.image=="end"){
       return(
         <TouchableOpacity style={styles.LogoImagePicker} onPress={PickImage}>
             <Text style={{ color: "#ccc", fontSize: 40 }}>+</Text>
@@ -85,7 +97,7 @@ function CafePicManageScreen({ navigation, route }) {
       <TouchableOpacity
         onPress={() =>
           navigation.navigate("사진 확대", {
-            image: item,
+            image: item.image,
           })
         }
         style={{
@@ -98,7 +110,7 @@ function CafePicManageScreen({ navigation, route }) {
           style={{
           }}
         >
-          <Image style={getInfoStyle.image} source={{uri:item}} />
+          <Image style={getInfoStyle.image} source={{uri:item.image}} />
         </View>
       </TouchableOpacity>
     )
@@ -127,7 +139,7 @@ function CafePicManageScreen({ navigation, route }) {
             cafeData={cafeData}
           >
             <FlatList
-              keyExtractor={(item) => String(item)}
+              keyExtractor={(item) => String(item.id)}
               data={imageDatas}
               style={getInfoStyle.picArea}
               renderItem={CafeImages}
