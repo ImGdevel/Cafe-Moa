@@ -57,8 +57,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: 105,
-    height: 105,
+    width: 110,
+    height: 110,
     borderRadius: 10,
     borderColor: "#ddd",
     justifyContent: "center",
@@ -108,6 +108,18 @@ const styles = StyleSheet.create({
   listContainer: {
     marginHorizontal: "8%",
     marginVertical: "10%",
+  },
+
+  LogoImagePicker: {
+    width: 108,
+    height: 108,
+    borderRadius: 10,
+    borderColor: "#ccc",
+    borderStyle: "dashed",
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 2,
+    margin: 5,
   },
 });
 

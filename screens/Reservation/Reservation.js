@@ -23,6 +23,7 @@ function ReservationScreen({ navigation, route }) {
   const [modalOutput, setModalOutput] = useState("Open Modal");
   const [time, setTime] = useState(0);
   const [seatList, setSeatList] = useState();
+  const [nowTime, setNowTime] = useState(12);
 
   useEffect(() => {
     SeatTimeTable();
@@ -35,34 +36,25 @@ function ReservationScreen({ navigation, route }) {
   };
 
   var timeLoop = [];
-  const timeArr = [
-    "09:00",
-    "10:00",
-    "11:00",
-    "12:00",
-    "13:00",
-    "14:00",
-    "15:00",
-    "16:00",
-    "17:00",
-    "18:00",
-    "19:00",
-    "20:00",
-    "21:00",
-  ];
 
-  for (let i = 0; i < timeArr.length; i++) {
+  for (let i = cafe_data.getOpenTime(); i < cafe_data.getCloseTime(); i++) {
+
+    const clock = `${(i<10)?"0"+i:i}:00`;
+    let lock = (i >= nowTime) ? true : false;
+    
     timeLoop.push(
       <TouchableOpacity
         key={i}
-        style={getModalStyle.modalButton}
+        style={[getModalStyle.modalButton, lock || { backgroundColor:"#bbb"}]}
         onPress={() => {
-          setModalOutput("선택");
-          setModalVisible(false); //창닫기
-          onSelectTime(i + Number(cafeData.getOpenTime())); //시간 선택
+          if(lock){
+            setModalOutput("선택");
+            setModalVisible(false); //창닫기
+            onSelectTime(i); //시간 선택
+          }
         }}
       >
-        <Text style={{ alignSelf: "center", fontSize: 20 }}>{timeArr[i]}</Text>
+        <Text style={{ alignSelf: "center", fontSize: 20 }}>{clock}</Text>
       </TouchableOpacity>
     );
   }
@@ -150,20 +142,19 @@ function ReservationScreen({ navigation, route }) {
         </>
       </Modal>
 
-      <View style={getFindStyle.container}>
-        <View style={getFindStyle.contentContainer}>
+      <View style={getReserveStyle.container}>
+        <View style={getReserveStyle.topContainer}>
           <CafeTable cafeData={cafeData} navigation={navigation} />
         </View>
+        <View style={getReserveStyle.contentContainer}>
+          <Image
+            source={{ uri: seatImage }}
+            resizeMode = "contain"
+            style={getReserveStyle.seatPic}
+          />
+        </View>
       </View>
-
-      <View style={getFindStyle.topContainer}>
-        <Image
-          source={{ uri: seatImage }}
-          resizeMode="stretch"
-          style={getReserveStyle.seatPic}
-        />
-      </View>
-      <View style={{ flex: 1, alignItems: "center" }}>
+      <View style={getReserveStyle.bottomContainer}>
         <View style={getReserveStyle.pickerTopTextArea}>
           <Text style={getReserveStyle.pickerTopText}>좌석 예약</Text>
         </View>

@@ -37,9 +37,15 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ccc",
   },
   FieldText: {
+    fontWeight:"700",
     fontSize: 18,
     paddingVertical: 6,
-    paddingLeft: 10,
+    paddingLeft: 15,
+  },
+  FieldNextText: {
+    fontSize: 15,
+    lineHeight:37,
+    paddingLeft:10,
   },
   confirmEditBtn: {
     width: "100%",

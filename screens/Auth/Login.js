@@ -60,7 +60,7 @@ function LogInScreen({ navigation }) {
             ref={idInputRef}
             style={getLoginStyle.textInput}
             placeholder={"아이디"}
-            onChangeText={(userId) => setUserId(userId)}
+            onChangeText={(userId) => setUserId(userId.trim())}
             autoCapitalize="none"
             blurOnSubmit={false}
             returnKeyType="next"

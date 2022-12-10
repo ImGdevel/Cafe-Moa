@@ -14,36 +14,21 @@ import * as ImagePicker from "expo-image-picker";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 function AddPicScreen({ navigation, route }) {
+  const { cafeData: cafeData } = route.params;
   const [image, setImage] = useState();
-
   let addedImgArr = [];
 
   useEffect(() => {
-    PermissionLib();
   }, []);
 
-  const PermissionLib = async () => {
-    if (Platform.OS !== "web") {
-      const { status } =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== "granted") {
-        alert("Permission Denied.");
-      }
-    }
-  };
+  const PickImage = () =>{
 
-  const PickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 4],
-      quality: 1,
-    });
-    console.log(result);
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
-    }
-  };
+  }
+
+
+  const onSubmit = () => {
+    navigation.pop();
+  }
 
   return (
     <View style={styles.container}>
@@ -73,9 +58,7 @@ function AddPicScreen({ navigation, route }) {
       </View>
       <TouchableOpacity
         style={styles.completeButton}
-        onPress={() => {
-          navigation.pop();
-        }}
+        onPress={onSubmit}
       >
         <Text style={{ color: "#001D44", fontSize: 20, fontWeight: "900" }}>
           추가 완료하기

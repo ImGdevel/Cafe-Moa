@@ -4,6 +4,7 @@ import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 function ZoomImageScreen({ navigation, route }) {
+  const image = route.params.image;
   return (
     <View style={styles.container}>
       <View>
@@ -29,7 +30,7 @@ function ZoomImageScreen({ navigation, route }) {
 
       <Image
         style={styles.image}
-        source={require("../../img/anySeatPic_text.png")}
+        source={{uri: image}}
       />
     </View>
   );
