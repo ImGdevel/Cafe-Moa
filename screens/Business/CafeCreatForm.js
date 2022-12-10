@@ -15,6 +15,7 @@ import getInputStyle from "../../styles/screens/InputDataStyle";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { CafeService } from "../../lib/CafeService";
 import { getGeoLocation } from "../../lib/LocationService";
+import { BuisnessUserDataService } from "../../lib/UserDataService";
 
 function CafeCreatFormScreen({ navigation, route }) {
   const [cafeName, setcCafeName] = useState("");
@@ -30,6 +31,7 @@ function CafeCreatFormScreen({ navigation, route }) {
   const [address, setAddress] = useState();
   const [adressText, setAddressText] = useState();
   const [location, setLocation] = useState();
+  const [userData, setUserData] = useState(new BuisnessUserDataService());
   
 
   const cafeNameInputRef = createRef();
@@ -39,6 +41,7 @@ function CafeCreatFormScreen({ navigation, route }) {
   const cafeData = new CafeData();
 
   useEffect(() => {
+    user();
     locationInpur();
   }, []);
 
@@ -50,8 +53,13 @@ function CafeCreatFormScreen({ navigation, route }) {
     }
   }, [route.params?.location]);
 
-  function goMap(){
-    
+  async function user(){
+    const user = new BuisnessUserDataService();
+    await user.getBuisnessUserProfile();
+    setUserData(user);
+  }
+
+  function goMap(){  
     console.log( "text", adressText)
     if(location?.latitude != null && address?.city1 != null){
       navigation.navigate("LocationSelection", {
@@ -80,7 +88,6 @@ function CafeCreatFormScreen({ navigation, route }) {
   }
 
   async function SubmitCreateCafe() {
-    console.log(openTime,closeTime)
     if(seatImage.uri == null){
       alert("카페 대표 이미지를 등록해주세요");
       return;
@@ -99,12 +106,20 @@ function CafeCreatFormScreen({ navigation, route }) {
     }
     try{
       const cafe = new CafeData(cafeName,location,address,seatCount,openTime,closeTime,logoImage.uri,seatImage.uri);
-      await (new CafeService).addCafeDatabase(cafe).catch((err)=>{console.log(err)});
+      const cafeId = await (new CafeService).addCafeDatabase(cafe).catch((err)=>{console.log(err)});
+      console.log(cafeId);
+      if(cafeId != null){
+        console.log("유저데이터",userData);
+        await userData.setBuisnessUserCafe(cafeId);
+      }
+
     }catch{
       console.log("문제 발생");
       return;
     }
-    navigation.replace("Business");
+    navigation.replace("Business",{
+      userData:userData,
+    });
   }
 
   return (

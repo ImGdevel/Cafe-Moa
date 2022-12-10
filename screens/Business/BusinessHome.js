@@ -15,7 +15,9 @@ import { Picker } from "@react-native-picker/picker";
 import { getCafeData } from "../../lib/CafeService";
 import { dbService } from "../../FireServer";
 import { ReservationService } from "../../lib/ReservationService";
-import { UserDataService } from "../../lib/UserDataService";
+import { BuisnessUserDataService, UserDataService } from "../../lib/UserDataService";
+import { getCurrentUserId, signOut } from "../../lib/AuthService";
+import { List } from "../../lib/DataStructure/List";
 
 function BusinessHomeScreen({ navigation, route }) {
   const [cafeData, setCafeData] = useState();
@@ -28,30 +30,25 @@ function BusinessHomeScreen({ navigation, route }) {
   const [offlineList, setOfflineList] = useState([]);
   const [selectedSeat, setSelectedSeat] = useState("");
 
-  function GoToLogoutScreen() {
-    //signOut();
-    navigation.replace("Auth");
-  }
-
-  // picker item에 추가하는 loop
-  const makePickerItem = () => {
-    let seatLoop = [];
-    console.log(cafeData.getSeatCount());
-    for (let i = 1; i <= cafeData.getSeatCount(); i++) {
-      seatLoop.push(<Picker.Item key={i} label={String(i)} value={i} />);
-    }
-    setOfflineList(seatLoop);
-  };
+  
 
   useEffect(() => {
     start();
   }, []);
 
   async function start() {
-    //const user = new BuisnessUserDataService();
-    //await user.getBuisnessUserProfile();
-    //setCafeData(user.getCafeId());
+  
     const cafeId = "KW8l6oYhXj6g2xcUbstU";
+    setCafeData(await getCafeData(cafeId));
+    return;
+    if(cafeData != null){
+      return;
+    }
+    const user = new BuisnessUserDataService();
+    await user.getBuisnessUserProfile();
+    setUserData(user);
+    
+    //let cafeId = await user.getCafeIdToBuisnessUser();
     setCafeData(await getCafeData(cafeId));
   }
 
@@ -66,7 +63,7 @@ function BusinessHomeScreen({ navigation, route }) {
       setSeatImage(cafeData.getSeatImage());
       loadSeat();
     }
-  }, [cafeData]);
+  }, [,cafeData]);
 
   useEffect(() => {}, [route?.seatData]);
 
@@ -88,14 +85,52 @@ function BusinessHomeScreen({ navigation, route }) {
     }
   }, [reserveService, pageLoad]);
 
+  /** 화면 불러오기 */
   function loadSeatInfo() {
     const seats = reserveService.getSeatDataOnTimeReserve(nowTime, true);
-    const list = [];
+    const list = []
+
+    console.log(reserveService);
+    console.log("좌석 데이터",seats)
+
     seats.map((item) => {
       list.push(<SeatBtn key={item.seat} number={item.seat} uid={item.uid} />);
     });
+
     setSeatList(list);
-    makePickerItem();
+    makePickerItem(seats);
+  }
+
+  function GoToLogoutScreen() {
+    signOut();
+    navigation.replace("Auth");
+  }
+
+  // picker item에 추가하는 loop
+  const makePickerItem = (list) => {
+    let seatLoop = [];
+    let isIn = false;
+    console.log(list);
+    for (let i = 1; i <= cafeData.getSeatCount(); i++) {
+      list.forEach(element => {
+        if(element.seat == i)
+          isIn = true;
+      });
+      if(!isIn){
+        seatLoop.push(<Picker.Item key={i} label={String(i)} value={i} />);
+      }
+      isIn = false;
+    }
+    setOfflineList(seatLoop);
+  };
+
+  async function appSeatSelf(){
+    if(selectedSeat != 0){
+      console.log("?", reserveService)
+      await reserveService.doSeatReservation(nowTime,selectedSeat,null,true);
+      setPageLoad((fd)=>fd+1);
+      setSelectedSeat(0);
+    }
   }
 
   function SeatBtn({ number, uid }) {
@@ -109,10 +144,12 @@ function BusinessHomeScreen({ navigation, route }) {
         {
           text: "완료",
           onPress: async () => {
-            const user = new UserDataService(uid);
-            const fd = await reserveService.doSeatCancel(nowTime, number);
-            await user.deleteReservationToUser();
-            setPageLoad(fd);
+            await reserveService.doSeatCancel(nowTime, number);
+            setPageLoad((fd)=>fd+1);
+            if(uid != null){
+              const user = new UserDataService(uid);
+              await user.deleteReservationToUser();
+            }
           },
         },
       ]);
@@ -203,7 +240,10 @@ function BusinessHomeScreen({ navigation, route }) {
               </Picker>
             </View>
             <View style={getBusinessHomeStyle.addButtonContainer}>
-              <TouchableOpacity style={getBusinessHomeStyle.addButton}>
+              <TouchableOpacity 
+                style={getBusinessHomeStyle.addButton}
+                onPress={appSeatSelf}
+              >
                 <Text style={{ color: "white" }}>추가하기</Text>
               </TouchableOpacity>
             </View>
