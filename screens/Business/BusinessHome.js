@@ -15,7 +15,8 @@ import { Picker } from "@react-native-picker/picker";
 import { getCafeData } from "../../lib/CafeService";
 import { dbService } from "../../FireServer";
 import { ReservationService } from "../../lib/ReservationService";
-import { UserDataService } from "../../lib/UserDataService";
+import { BuisnessUserDataService, UserDataService } from "../../lib/UserDataService";
+import { getCurrentUserId, signOut } from "../../lib/AuthService";
 import { List } from "../../lib/DataStructure/List";
 
 function BusinessHomeScreen({ navigation, route }) {
@@ -36,15 +37,19 @@ function BusinessHomeScreen({ navigation, route }) {
   }, []);
 
   async function start() {
-    //const user = new BuisnessUserDataService();
-    //await user.getBuisnessUserProfile();
-    //setCafeData(user.getCafeId());
-    const cafeId = "KW8l6oYhXj6g2xcUbstU";
+    if(cafeData != null){
+      return;
+    }
+    const user = new BuisnessUserDataService();
+    await user.getBuisnessUserProfile();
+    setUserData(user);
+    let cafeId = await user.getCafeIdToBuisnessUser();
     setCafeData(await getCafeData(cafeId));
   }
 
   useEffect(() => {
     if (cafeData != null) {
+      console.log("카페 데이터");
       dbService
         .collection("CafeData")
         .doc(cafeData.getId())
@@ -88,7 +93,7 @@ function BusinessHomeScreen({ navigation, route }) {
   }
 
   function GoToLogoutScreen() {
-    //signOut();
+    signOut();
     navigation.replace("Auth");
   }
 
@@ -109,7 +114,7 @@ function BusinessHomeScreen({ navigation, route }) {
     }
     setOfflineList(seatLoop);
   };
-  
+
   async function appSeatSelf(){
     if(selectedSeat != 0){
       await reserveService.doSeatReservation(nowTime,selectedSeat,null,true);
