@@ -19,24 +19,55 @@ import { CafeData } from "../../lib/CafeData";
 import { dbService } from "../../FireServer";
 import Star from "../../Components/Star";
 import { getImage } from "../../lib/ImageService";
-import { ReviewList } from "../../lib/DataStructure/List";
+import { List, ReviewList } from "../../lib/DataStructure/List";
 
-// Array that bring cafe's image
-const imgArr = [];
-
-// Array that bring cafe's review
-const reviewArr = [];
 
 function InformationScreen({ navigation, route }) {
   const { cafeData: cafeData, userData: userData } = route.params;
   const [direction, setDirection] = useState("사진");
-  const [seatImage, setSeatImage] = useState(cafeData.getSeatImage());
+  const [imageDatas, setImageDatas ] = useState([]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+  }, []);
 
-  const loadreview = () => {
-    let Review = ReviewService(cafeData.id);
-  };
+  useEffect(()=>{
+    loadCafeImages();
+  },[,cafeData])
+  
+  const loadCafeImages = async() =>{
+    const datas = new List();
+    const arr = cafeData.getCafeImage();
+    const promises = arr.map(async (id) => {
+      const img = await getImage("Cafe",cafeData.getId(),`Img/${id.id}`)
+      
+      datas.push({image:img, id:id.id, date: id.date});
+    });
+    await Promise.all(promises);
+
+    const sortdata = datas.sort((a,b)=>{
+      return a.date.seconds<b.date.seconds;
+    });
+    sortdata.push({image:"end",id:"z"});
+    setImageDatas(sortdata);
+  }
+  
+  const CafeImages = ({item}) => {
+    return (
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("사진 확대", {image: item.image})
+        }
+        style={{ flex:1, flexDirection:"row"}}
+      >
+        <View
+          style={{
+          }}
+        >
+          <Image style={getInfoStyle.image} source={{uri:item.image}} />
+        </View>
+      </TouchableOpacity>
+    )
+  }
 
   return (
     <>
@@ -62,24 +93,10 @@ function InformationScreen({ navigation, route }) {
             navigation={navigation}
           >
             <FlatList
-              keyExtractor={(item) => item.idx}
-              data={imgArr}
+              keyExtractor={(item) => String(item.id)}
+              data={imageDatas}
               style={getInfoStyle.picArea}
-              renderItem={({ item }) => (
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate("사진 확대", {
-                      // source: "../../img/coffeebayLogo_test.jpg",
-                    })
-                  }
-                >
-                  <View
-                    style={{ flex: 1, flexDirection: "column", margin: 10 }}
-                  >
-                    <Image style={getInfoStyle.image} source={{}} />
-                  </View>
-                </TouchableOpacity>
-              )}
+              renderItem={CafeImages}
               numColumns={3}
             />
           </PreviewLayout>

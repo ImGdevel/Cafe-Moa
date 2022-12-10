@@ -109,6 +109,18 @@ const styles = StyleSheet.create({
     marginHorizontal: "8%",
     marginVertical: "10%",
   },
+
+  LogoImagePicker: {
+    width: 108,
+    height: 108,
+    borderRadius: 10,
+    borderColor: "#ccc",
+    borderStyle: "dashed",
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 2,
+    margin: 5,
+  },
 });
 
 export default styles;

@@ -23,6 +23,8 @@ import { dbService } from "../../FireServer";
 import Star from "../../Components/Star";
 import { getImage } from "../../lib/ImageService";
 import { CafeTable } from "../../Components/CafeTable";
+import { signOut } from "../../lib/AuthService";
+import { List } from "../../lib/DataStructure/List";
 
 // Array that bring cafe's image
 const imgArr = [];
@@ -33,18 +35,11 @@ const reviewArr = [];
 function BusinessInformationScreen({ navigation, route }) {
   const { cafeData: cafeData, userData: userData } = route.params;
   const [direction, setDirection] = useState("사진");
-  const [modalVisible, setModalVisible] = useState(false);
-  const [openTime, setOpenTime] = useState();
-  const [closeTime, setCloseTime] = useState();
-
-  const openTimeInputRef = createRef();
-  const closeTimeInputRef = createRef();
-
-  useEffect(() => {
-    console.log(cafeData.getOpenTime());
-    console.log(cafeData.getCloseTime());
-  }, []);
-
+  // const [modalVisible, setModalVisible] = useState(false);
+  // const [openTime, setOpenTime] = useState();
+  // const [closeTime, setCloseTime] = useState();
+  // const openTimeInputRef = createRef();
+  // const closeTimeInputRef = createRef();
 
   useEffect(()=>{
     dbService.collection("CafeData").doc(cafeData.getId()).onSnapshot((doc)=>{
@@ -52,16 +47,53 @@ function BusinessInformationScreen({ navigation, route }) {
     })
   },[])
 
-  function SubmitTime() {
-    cafeData.setOpenTime(openTime);
-    cafeData.setCloseTime(closeTime);
-    setModalVisible(!modalVisible);
+  const [imageDatas, setImageDatas ] = useState([]);
+
+  useEffect(()=>{
+    loadCafeImages();
+  },[,cafeData])
+  
+  const loadCafeImages = async() =>{
+    const datas = new List();
+    const arr = cafeData.getCafeImage();
+
+    const promises = arr.map(async (id) => {
+      const img = await getImage("Cafe",cafeData.getId(),`Img/${id.id}`)
+      
+      datas.push({image:img, id:id.id, date: id.date});
+    });
+    await Promise.all(promises);
+
+    const sortdata = datas.sort((a,b)=>{
+      return a.date.seconds<b.date.seconds;
+    });
+    sortdata.push({image:"end",id:"z"});
+    setImageDatas(sortdata);
   }
+  
+  const CafeImages = ({item}) => {
+    return (
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("사진 확대", {image: item.image})
+        }
+        style={{ flex:1, flexDirection:"row"}}
+      >
+        <View
+          style={{
+          }}
+        >
+          <Image style={getInfoStyle.image} source={{uri:item.image}} />
+        </View>
+      </TouchableOpacity>
+    )
+  }
+
 
   return (
     <>
       <View style={getInfoStyle.container}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={getBusinessInfoStyle.timeManagerButton}
           onPress={() => {
             setModalVisible(!modalVisible);
@@ -139,7 +171,7 @@ function BusinessInformationScreen({ navigation, route }) {
             name="time"
             style={{ fontSize: 30, color: "#001D44" }}
           ></Ionicons>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <View style={getFindStyle.container}>
           <View style={getFindStyle.contentContainer}>
             <CafeTable cafeData={cafeData} navigation={navigation} />
@@ -156,18 +188,10 @@ function BusinessInformationScreen({ navigation, route }) {
             cafeData={cafeData}
           >
             <FlatList
-              keyExtractor={(item) => item.idx}
-              data={imgArr}
+              keyExtractor={(item) => String(item.id)}
+              data={imageDatas}
               style={getInfoStyle.picArea}
-              renderItem={({ item }) => (
-                <TouchableOpacity>
-                  <View
-                    style={{ flex: 1, flexDirection: "column", margin: 10 }}
-                  >
-                    <Image style={getInfoStyle.image} source={{}} />
-                  </View>
-                </TouchableOpacity>
-              )}
+              renderItem={CafeImages}
               numColumns={3}
             />
           </PreviewLayout>
@@ -187,12 +211,10 @@ function BusinessInformationScreen({ navigation, route }) {
           </TouchableOpacity>
           <TouchableOpacity
             style={getBusinessInfoStyle.reserveButton}
-            onPress={() =>
-              navigation.navigate("Auth", {
-                //cafeData: cafeData,
-                //userData: userData,
-              })
-            }
+            onPress={() =>{
+              signOut();
+              navigation.navigate("Auth");
+            }}
           >
             <Text style={{ color: "red", fontSize: 21 }}>카페 삭제하기</Text>
           </TouchableOpacity>

@@ -13,13 +13,11 @@ import {
 } from "react-native";
 
 import * as ImagePicker from "expo-image-picker";
-
 import getInfoStyle from "../../styles/screens/InfoStyle";
 import getCafeTableStyle from "../../styles/components/CafeTableStyle";
 import getFindStyle from "../../styles/components/FindStyle";
 import getBusinessInfoStyle from "../../styles/screens/BusinessInfoStyle";
 import getPicManageStyle from "../../styles/screens/PicManageStyle";
-
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { ReviewService } from "../../lib/ReviewService";
 import { getImage, pickImage, uploadImage } from "../../lib/ImageService";
@@ -31,7 +29,6 @@ function CafePicManageScreen({ navigation, route }) {
   const { cafeData: cafeData, userData: userData } = route.params;
   const [direction, setDirection] = useState("사진");
   const [imageDatas, setImageDatas ] = useState([]);
-  const [cafeImages,setCafeImages] = useState([]);
   const [load,loadPage] = useState(false);
 
   const loadCafeImages = async() =>{
@@ -72,29 +69,6 @@ function CafePicManageScreen({ navigation, route }) {
     }
   }
 
-  async function deletImage(item){
-    const items = imageDatas.filter((index)=>{
-      if(index.id != item.id) return true; 
-    })
-    setImageDatas(items);
-
-    await dbService.collection("CafeData").doc(cafeData.getId()).update({
-      image : MyDatabase.firestore.FieldValue.arrayRemove({date:item.date,id:item.id}),
-    })
-    console.log("삭제");
-  }
-
-  const longPressButton = (item) =>
-  Alert.alert("", "사진을 삭제하시겠습니까?", [
-    {
-      text: "취소",
-      onPress: () => console.log("Cancel Pressed"),
-      style: "cancel",
-    },
-    { text: "삭제", onPress: () => {
-      deletImage(item);
-    } },
-  ]);
 
 
   const CafeImages = ({item, key}) => {
@@ -128,6 +102,33 @@ function CafePicManageScreen({ navigation, route }) {
       </TouchableOpacity>
     )
   }
+
+  async function deletImage(item){
+    const items = imageDatas.filter((index)=>{
+      if(index.id != item.id) return true; 
+    })
+    setImageDatas(items);
+
+    await dbService.collection("CafeData").doc(cafeData.getId()).update({
+      image : MyDatabase.firestore.FieldValue.arrayRemove({date:item.date,id:item.id}),
+    })
+    console.log("삭제");
+  }
+
+  const longPressButton = (item) =>
+  Alert.alert("", "사진을 삭제하시겠습니까?", [
+    {
+      text: "취소",
+      onPress: () => console.log("Cancel Pressed"),
+      style: "cancel",
+    },
+    { text: "삭제", onPress: () => {
+      deletImage(item);
+    } },
+  ]);
+
+
+  
 
   return (
     <>
@@ -178,10 +179,6 @@ function CafePicManageScreen({ navigation, route }) {
     </>
   );
 }
-
-
-
-
 
 
 //카페 테이블
