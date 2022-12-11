@@ -41,7 +41,6 @@ function MyPageScreen({ navigation }) {
       setUserName(userData.getName());
       setUserEmail(userData.getEmail());
       const imgs = await userData.getProfileImage();
-      console.log(imgs);
       if (imgs == " " || imgs == null ) {
         setUserImage(require("../../img/initialProfile.jpg"));
       } else {
@@ -88,7 +87,7 @@ function MyPageScreen({ navigation }) {
 
   //유저 삭제
   function GoToDeleteAccountScreen() {
-    navigation.navigate("DeleteUser");
+    navigation.navigate("회원 탈퇴");
   }
 
   return (

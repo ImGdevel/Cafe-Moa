@@ -78,12 +78,18 @@ function FindScreen({ navigation, route }) {
   };
 
   const search = () => {
+    if(cafeService == null){
+      return;
+    }
     let serchData = cafeService.serchCafeData(textInputValue);
     setcafeDatas(serchData);
   };
 
   
   const sortCafeDataList = (type) => {
+    if(cafeService == null){
+      return;
+    }
     let sortedData = cafeService.sortCafeData(type);
     setcafeDatas(sortedData);
   };
