@@ -30,13 +30,13 @@ function CafePicManageScreen({ navigation, route }) {
   const [imageDatas, setImageDatas] = useState([]);
   const [load, loadPage] = useState(false);
 
+
   const loadCafeImages = async () => {
     const datas = new List();
     const arr = cafeData.getCafeImage();
 
     const promises = arr.map(async (id) => {
       const img = await getImage("Cafe", cafeData.getId(), `Img/${id.id}`);
-
       datas.push({ image: img, id: id.id, date: id.date });
     });
     await Promise.all(promises);
@@ -170,8 +170,9 @@ function CafePicManageScreen({ navigation, route }) {
           <TouchableOpacity
             style={getInfoStyle.reserveButton}
             onPress={() =>
-              navigation.navigate("카페 사진 추가", {
+              navigation.navigate("카페정보-사업자용", {
                 cafeData: cafeData,
+                Change: true,
               })
             }
           >
@@ -273,6 +274,7 @@ const PreviewLayout = ({
     const img = await pickImage(7, 5, false);
     setSeatImage(img);
     uploadImage(img, "Cafe", cafeData.getId(), "seatImage");
+    SSimg = img;
   }
 
   return (

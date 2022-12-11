@@ -15,7 +15,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { Updated } from "../../lib/TestSample";
 import { dbService } from "../../FireServer";
 
-function HomeScreen({ navigation }) {
+function HomeScreen({ navigation, route }) {
   const [userData, setUserData] = useState();
   const [reserveCafeInfo, setReserveCafeInfo] = useState();
   const [bookMarkList, setBookMarkList] = useState();
@@ -168,14 +168,14 @@ function BookMarkPanel(props) {
     if (cafeData != null) {
       setCafeName(cafeData.getName());
       setCafeLocation(cafeData.getAdress(1, 3));
-      // if(rating == null){
+      if(rating == null){
         setRating(cafeData.getRating());
-      // }else{
-      //   dbService.collection("CafeData").doc(cafeData.getId()).onSnapshot((data)=>{
-      //     const rate = data.data().rating;
-      //     setRating(rate);    
-      //   })
-      // }
+      }else{
+        dbService.collection("CafeData").doc(cafeData.getId()).onSnapshot((data)=>{
+          const rate = data.data().rating;
+          setRating(rate);    
+        })
+      }
     }
   }, [cafeData]);
 

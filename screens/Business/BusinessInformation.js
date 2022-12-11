@@ -25,6 +25,7 @@ import { getImage } from "../../lib/ImageService";
 import { CafeTable } from "../../Components/CafeTable";
 import { signOut } from "../../lib/AuthService";
 import { List } from "../../lib/DataStructure/List";
+import { getCafeData } from "../../lib/CafeService";
 
 // Array that bring cafe's image
 const imgArr = [];
@@ -34,7 +35,9 @@ const reviewArr = [];
 
 function BusinessInformationScreen({ navigation, route }) {
   const { cafeData: cafeData, userData: userData } = route.params;
+  
   const [direction, setDirection] = useState("사진");
+  
   // const [modalVisible, setModalVisible] = useState(false);
   // const [openTime, setOpenTime] = useState();
   // const [closeTime, setCloseTime] = useState();
@@ -42,10 +45,19 @@ function BusinessInformationScreen({ navigation, route }) {
   // const closeTimeInputRef = createRef();
 
   useEffect(()=>{
-    dbService.collection("CafeData").doc(cafeData.getId()).onSnapshot((doc)=>{
-      cafeData.loadData(doc.data());
+    changesCafe();
+  },[route.params?.change])
+
+  async function changesCafe(){
+    navigation.setParams({
+      cafeData: await getCafeData(cafeData.getId()),
+      change: false,
     })
-  },[])
+  }
+
+  useEffect(()=>{
+    console.log("카페 바뀜")
+  },[cafeData])
 
   const [imageDatas, setImageDatas ] = useState([]);
 
@@ -58,8 +70,7 @@ function BusinessInformationScreen({ navigation, route }) {
     const arr = cafeData.getCafeImage();
 
     const promises = arr.map(async (id) => {
-      const img = await getImage("Cafe",cafeData.getId(),`Img/${id.id}`)
-      
+      const img = await getImage("Cafe",cafeData.getId(),`Img/${id.id}`) 
       datas.push({image:img, id:id.id, date: id.date});
     });
     await Promise.all(promises);
@@ -174,7 +185,7 @@ function BusinessInformationScreen({ navigation, route }) {
         </TouchableOpacity> */}
         <View style={getFindStyle.container}>
           <View style={getFindStyle.contentContainer}>
-            <CafeTable cafeData={cafeData} navigation={navigation} />
+            <CafeTable cafeData={cafeData} navigation={navigation}/>
           </View>
         </View>
 
@@ -308,18 +319,27 @@ function ReviewPage(props) {
         reviews.sort((a, b) => a.date < b.date);
         setreviewDatas(reviews);
       });
+    
     dbService
       .collection("CafeData")
       .doc(cafeData.getId())
       .onSnapshot((doc) => {
+        if(rating != null){
+
+        }
+        const rate = doc.data().rating;
+        setRating(rate);
         if (doc.exists && doc.data().notice != null) {
           setNotice(doc.data().notice);
         } else {
           setNotice("");
         }
       });
+    if(rating == null){
+      setRating(cafeData.getRating());
+    }
     setNotice(cafeData.getNotice());
-    setRating(cafeData.getRating());
+    
   }, []);
   useEffect(() => {
     loadReview();

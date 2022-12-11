@@ -19,7 +19,7 @@ export function CafeTable(props) {
       setCafeInformaion("Open : " + cafeData.getOpenTime() + ":00 ~ Close : " + cafeData.getCloseTime() + ":00");
       setCafeLogoImage(cafeData.getLogo());
       if(rating == null){
-        setRating(cafe_data.getRating());
+        setRating(cafeData.getRating());
       }else{
         dbService.collection("CafeData").doc(cafeData.getId()).onSnapshot((data)=>{
           const rate = data.data().rating;
@@ -29,7 +29,7 @@ export function CafeTable(props) {
     },[,cafeData])
 
     
-  
+
     return (
         <View style={getCafeTableStyle.container_NoneStyle}>
           <View style={getCafeTableStyle.imageContainer}>
