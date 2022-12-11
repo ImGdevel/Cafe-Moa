@@ -41,6 +41,8 @@ function StartPageScreen({ navigation }) {
   }
 
   async function GoToBusiness(id) {
+    navigation.replace("Business");
+    return;
     const userData = (await dbService.collection("BuisnessUser").doc(id).get()).data();
     const cafeData = await getCafeData(userData.cafeId);
 

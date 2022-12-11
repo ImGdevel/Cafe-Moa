@@ -20,12 +20,6 @@ import { getCurrentUserId, signOut } from "../../lib/AuthService";
 import { List } from "../../lib/DataStructure/List";
 
 function BusinessHomeScreen({ navigation, route }) {
-  console.log("파라메터",route.params);
-  const {cafeData: cafe_data, userData: user_data} = route.params;
-  console.log("데이터 가져오기!",cafe_data,user_data);
-
-
-
   const [cafeData, setCafeData] = useState();
   const [reserveService, setReserveService] = useState();
   const [userData, setUserData] = useState();
@@ -41,9 +35,12 @@ function BusinessHomeScreen({ navigation, route }) {
   }, []);
 
   async function start() {
-    if(cafe_data != null){
-      setCafeData(cafe_data);
-    }
+    const userId = await getCurrentUserId();
+    const userData = (await dbService.collection("BuisnessUser").doc(userId).get()).data();
+    const cafeData = await getCafeData(userData.cafeId);
+
+    console.log("데이터 보내기",cafeData,userData)
+    setCafeData(cafeData);
   }
 
   useEffect(() => {
