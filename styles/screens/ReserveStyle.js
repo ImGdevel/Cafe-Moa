@@ -58,11 +58,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   picker: {
-    alignItems: "center",
     justifyContent: "center",
     width: "100%",
     height: 55,
-    paddingLeft: 10,
   },
   pickerTopText: {
     fontSize: 25,

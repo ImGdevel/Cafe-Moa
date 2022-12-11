@@ -159,15 +159,17 @@ function ReservationScreen({ navigation, route }) {
         </View>
         <View style={{ flex: 2, marginBottom: 15 }}>
           <View style={getReserveStyle.pickerBox}>
-            <Picker
-              style={getReserveStyle.pickerLine}
-              selectedValue={selectedSeat}
-              onValueChange={(itemValue, itemIndex) => {
-                setSelectedSeat(itemValue);
-              }}
-            >
-              {seatList}
-            </Picker>
+            <View style={getReserveStyle.pickerLine}>
+              <Picker
+                style={getReserveStyle.picker}
+                selectedValue={selectedSeat}
+                onValueChange={(itemValue, itemIndex) => {
+                  setSelectedSeat(itemValue);
+                }}
+              >
+                {seatList}
+              </Picker>
+            </View>
             <TouchableOpacity
               style={getReserveStyle.reserveBtn}
               onPress={submitReservation}
