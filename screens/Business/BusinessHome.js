@@ -22,6 +22,7 @@ import {
 } from "../../lib/UserDataService";
 import { getCurrentUserId, signOut } from "../../lib/AuthService";
 import { List } from "../../lib/DataStructure/List";
+import { getImage } from "../../lib/ImageService";
 
 function BusinessHomeScreen({ navigation, route }) {
   const [cafeData, setCafeData] = useState();
@@ -37,39 +38,36 @@ function BusinessHomeScreen({ navigation, route }) {
   const [offlineList, setOfflineList] = useState([]);
   const [selectedSeat, setSelectedSeat] = useState("");
 
+  
+
   useEffect(() => {
     start();
   }, []);
 
   async function start() {
-    const cafeId = "KW8l6oYhXj6g2xcUbstU";
-    setCafeData(await getCafeData(cafeId));
-    return;
-    if (cafeData != null) {
-      return;
-    }
-    const user = new BuisnessUserDataService();
-    await user.getBuisnessUserProfile();
-    setUserData(user);
-
-    //let cafeId = await user.getCafeIdToBuisnessUser();
-    setCafeData(await getCafeData(cafeId));
+    const userId = await getCurrentUserId();
+    const userData = (await dbService.collection("BuisnessUser").doc(userId).get()).data();
+    const cafeData = await getCafeData(userData.cafeId);
+    console.log(userId, userData.cafeId);
+    setCafeData(cafeData);
   }
 
+
+  /** 카페 데이터를 성공적으로 가져왔다면 */
   useEffect(() => {
     if (cafeData != null) {
       dbService
         .collection("CafeData")
         .doc(cafeData.getId())
-        .onSnapshot((doc) => {
+        .onSnapshot(async(doc) => {
           cafeData.loadData(doc.data());
+          console.log(cafeData.getId())
+          setSeatImage(await getImage("Cafe",cafeData.getId(), "seatImage"));
         });
-      setSeatImage(cafeData.getSeatImage());
+      
       loadSeat();
     }
   }, [, cafeData]);
-
-  useEffect(() => {}, [route?.seatData]);
 
   async function loadSeat() {
     const reves = new ReservationService(cafeData.getSeatId());
@@ -89,14 +87,12 @@ function BusinessHomeScreen({ navigation, route }) {
     }
   }, [reserveService, pageLoad]);
 
-  /** 화면 불러오기 */
+  /** 좌석 화면 불러오기 */
   function loadSeatInfo() {
     const seats = reserveService.getSeatDataOnTimeReserve(nowTime, true);
     const list = [];
     let data = [];
-
-    console.log(reserveService);
-    console.log("좌석 데이터", seats);
+    
 
     seats.map((item) => {
       list.push(<SeatBtn key={item.seat} number={item.seat} uid={item.uid} />);
@@ -117,11 +113,10 @@ function BusinessHomeScreen({ navigation, route }) {
     navigation.replace("Auth");
   }
 
-  // picker item에 추가하는 loop
+  // picker에 아이템 추가
   const makePickerItem = (list) => {
     let seatLoop = [];
     let isIn = false;
-    console.log(list);
     for (let i = 1; i <= cafeData.getSeatCount(); i++) {
       list.forEach((element) => {
         if (element.seat == i) isIn = true;
@@ -134,11 +129,10 @@ function BusinessHomeScreen({ navigation, route }) {
     setOfflineList(seatLoop);
   };
 
-  async function appSeatSelf() {
-    if (selectedSeat != 0) {
-      console.log("?", reserveService);
-      await reserveService.doSeatReservation(nowTime, selectedSeat, null, true);
-      setPageLoad((fd) => fd + 1);
+  async function appSeatSelf(){
+    if(selectedSeat != 0){
+      await reserveService.doSeatReservation(nowTime,selectedSeat,null,true);
+      setPageLoad((fd)=>fd+1);
       setSelectedSeat(0);
     }
   }
@@ -205,6 +199,7 @@ function BusinessHomeScreen({ navigation, route }) {
               navigation.navigate("카페정보-사업자용", {
                 cafeData: cafeData,
                 userData: userData,
+                change: false,
               });
             }}
           >

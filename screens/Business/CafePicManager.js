@@ -30,13 +30,13 @@ function CafePicManageScreen({ navigation, route }) {
   const [imageDatas, setImageDatas] = useState([]);
   const [load, loadPage] = useState(false);
 
+
   const loadCafeImages = async () => {
     const datas = new List();
     const arr = cafeData.getCafeImage();
 
     const promises = arr.map(async (id) => {
       const img = await getImage("Cafe", cafeData.getId(), `Img/${id.id}`);
-
       datas.push({ image: img, id: id.id, date: id.date });
     });
     await Promise.all(promises);
@@ -170,8 +170,9 @@ function CafePicManageScreen({ navigation, route }) {
           <TouchableOpacity
             style={getInfoStyle.reserveButton}
             onPress={() =>
-              navigation.navigate("카페 사진 추가", {
+              navigation.navigate("카페정보-사업자용", {
                 cafeData: cafeData,
+                Change: true,
               })
             }
           >
@@ -214,6 +215,9 @@ function CafeTable(props) {
     const img = await pickImage();
     setCafeLogoImage({ uri: img }); //이미지 피커에서 가져온 이미지 쓸라면 {uri: 가져온 uri} 로 싸야한다.
     await uploadImage(img, "Cafe", cafeData.getId(), "logo");
+    dbService.collection("CafeData").doc(cafeData.getId()).update({
+      Chimage: img,
+    })
   };
 
   return (
@@ -273,6 +277,9 @@ const PreviewLayout = ({
     const img = await pickImage(7, 5, false);
     setSeatImage(img);
     uploadImage(img, "Cafe", cafeData.getId(), "seatImage");
+    dbService.collection("CafeData").doc(cafeData.getId()).update({
+      Chimage: img,
+    })
   }
 
   return (

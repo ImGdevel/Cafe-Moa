@@ -8,7 +8,9 @@ import {
   TextInput,
   KeyboardAvoidingView,
 } from "react-native";
+import { dbService } from "../../FireServer";
 import { getCurrentUserId, SignInUserAccount } from "../../lib/AuthService";
+import { getCafeData } from "../../lib/CafeService";
 import getLoginStyle from "../../styles/screens/LoginStyle";
 
 function BusinessLogInScreen({ navigation }) {
@@ -18,11 +20,20 @@ function BusinessLogInScreen({ navigation }) {
   const idInputRef = createRef();
   const passwordInputRef = createRef();
 
-  function GoToHomeScreen() {
-    navigation.replace("Business");
+  async function GoToHomeScreen(id) {
+    console.log(id)
+    const userData = (await dbService.collection("BuisnessUser").doc(id).get()).data();
+    const cafeData = await getCafeData(userData.cafeId);
+
+    console.log("데이터 보내기",cafeData,userData)
+    navigation.replace("Business",{
+      cafeData: cafeData,
+      userData: userData,
+      ons: "Hi",
+    });
   }
 
-  function onSubmit() {
+  async function onSubmit() {
     if (!UserId) {
       alert("이메일을 입력해주세요");
       return;
@@ -32,9 +43,10 @@ function BusinessLogInScreen({ navigation }) {
       return;
     }
 
-    SignInUserAccount(UserId, userPassword)
-      .then(() => {
-        GoToHomeScreen();
+    await SignInUserAccount(UserId, userPassword)
+      .then((id) => {
+        console.log(id);
+        GoToHomeScreen(id);
       })
       .catch(() => {});
   }
