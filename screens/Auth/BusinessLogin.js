@@ -56,10 +56,19 @@ function BusinessLogInScreen({ navigation }) {
       <View style={{ flex: 3 }}></View>
       <View style={getLoginStyle.contentArea}>
         <View style={getLoginStyle.titleText}>
-          <Text style={{ color: "#001D44", fontWeight: "900", fontSize: 55 }}> M O A </Text>
+          <Text style={{ color: "#001D44", fontWeight: "900", fontSize: 55 }}>
+            {" "}
+            M O A{" "}
+          </Text>
+          <Text style={{ color: "#001D44", textAlign: "right" }}>
+            for Business
+          </Text>
         </View>
         <View style={getLoginStyle.subTitleText}>
-          <Text style={{ color: "#001D44", fontWeight: "600", fontSize: 30 }}> Business Login </Text>
+          <Text style={{ color: "#001D44", fontWeight: "600", fontSize: 30 }}>
+            {" "}
+            Login{" "}
+          </Text>
         </View>
         <View style={getLoginStyle.formArea}>
           <TextInput
@@ -88,7 +97,7 @@ function BusinessLogInScreen({ navigation }) {
           <TouchableHighlight {...touchProps} onPress={onSubmit}>
             <Text style={{ color: "white", fontSize: 23 }}>로그인</Text>
           </TouchableHighlight>
-          
+
           <TouchableOpacity
             style={getLoginStyle.btnRegister}
             onPress={() => {
