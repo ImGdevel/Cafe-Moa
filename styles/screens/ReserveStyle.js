@@ -6,20 +6,19 @@ const styles = StyleSheet.create({
     flex: 2.5,
     backgroundColor: "white",
   },
-  topContainer:{
-    flex:1,
-    backgroundColor:"#fff",
+  topContainer: {
+    flex: 1,
+    backgroundColor: "#fff",
   },
-  contentContainer:{
-    flex:3,
+  contentContainer: {
+    flex: 3,
     justifyContent: "center",
     alignItems: "center",
-
   },
-  bottomContainer:{
-    flex:1,
+  bottomContainer: {
+    flex: 1,
     alignItems: "center",
-    marginBottom:"5%",
+    marginBottom: "5%",
   },
   cafeLogo: {
     width: "100%",
@@ -33,7 +32,7 @@ const styles = StyleSheet.create({
   },
   seatPic: {
     width: "90%",
-    height: "100%"
+    height: "100%",
   },
   reserveBtn: {
     backgroundColor: "#001D44",
@@ -41,7 +40,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: 50,
     width: "25%",
-    borderRadius: 5,
+    borderRadius: 10,
   },
   pickerBox: {
     flex: 1,
@@ -56,12 +55,12 @@ const styles = StyleSheet.create({
     width: "63%",
     height: 55,
     marginRight: 10,
+    justifyContent: "center",
   },
   picker: {
-    alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    paddingLeft: 10,
+    height: 55,
   },
   pickerTopText: {
     fontSize: 25,
