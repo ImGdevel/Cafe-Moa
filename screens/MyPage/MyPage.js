@@ -41,10 +41,11 @@ function MyPageScreen({ navigation }) {
       setUserName(userData.getName());
       setUserEmail(userData.getEmail());
       const imgs = await userData.getProfileImage();
-      if (imgs != " ") {
-        setUserImage({ uri: imgs });
-      } else {
+      console.log(imgs);
+      if (imgs == " " || imgs == null ) {
         setUserImage(require("../../img/initialProfile.jpg"));
+      } else {
+        setUserImage({ uri: imgs });
       }
     }
   };
