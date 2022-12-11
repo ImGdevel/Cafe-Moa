@@ -223,7 +223,7 @@ const TabHome = () => {
   );
 };
 
-const InBusiness = () => {
+const InBusiness = ({params}) => {
   return (
     <Stack.Navigator name="forBusiness" options={{ headerShown: false }}>
       <Stack.Screen

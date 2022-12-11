@@ -48,6 +48,10 @@ function BusinessInformationScreen({ navigation, route }) {
     changesCafe();
   },[route.params?.change])
 
+  useEffect(()=>{
+    console.log("나야나");
+  },[])
+
   async function changesCafe(){
     navigation.setParams({
       cafeData: await getCafeData(cafeData.getId()),

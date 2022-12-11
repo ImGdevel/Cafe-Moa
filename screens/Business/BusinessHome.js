@@ -20,6 +20,12 @@ import { getCurrentUserId, signOut } from "../../lib/AuthService";
 import { List } from "../../lib/DataStructure/List";
 
 function BusinessHomeScreen({ navigation, route }) {
+  console.log("파라메터",route.params);
+  const {cafeData: cafe_data, userData: user_data} = route.params;
+  console.log("데이터 가져오기!",cafe_data,user_data);
+
+
+
   const [cafeData, setCafeData] = useState();
   const [reserveService, setReserveService] = useState();
   const [userData, setUserData] = useState();
@@ -30,26 +36,14 @@ function BusinessHomeScreen({ navigation, route }) {
   const [offlineList, setOfflineList] = useState([]);
   const [selectedSeat, setSelectedSeat] = useState("");
 
-  
-
   useEffect(() => {
     start();
   }, []);
 
   async function start() {
-  
-    const cafeId = "KW8l6oYhXj6g2xcUbstU";
-    setCafeData(await getCafeData(cafeId));
-    return;
-    if(cafeData != null){
-      return;
+    if(cafe_data != null){
+      setCafeData(cafe_data);
     }
-    const user = new BuisnessUserDataService();
-    await user.getBuisnessUserProfile();
-    setUserData(user);
-    
-    //let cafeId = await user.getCafeIdToBuisnessUser();
-    setCafeData(await getCafeData(cafeId));
   }
 
   useEffect(() => {
