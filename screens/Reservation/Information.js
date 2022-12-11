@@ -51,7 +51,6 @@ function InformationScreen({ navigation, route }) {
     const sortdata = datas.sort((a, b) => {
       return a.date.seconds < b.date.seconds;
     });
-    sortdata.push({ image: "end", id: "z" });
     setImageDatas(sortdata);
   };
 
