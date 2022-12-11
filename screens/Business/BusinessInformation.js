@@ -89,11 +89,9 @@ function BusinessInformationScreen({ navigation, route }) {
     return (
       <TouchableOpacity
         onPress={() => navigation.navigate("사진 확대", { image: item.image })}
-        style={{ flex: 1, flexDirection: "row" }}
+        style={{ flexDirection: "row" }}
       >
-        <View style={{}}>
-          <Image style={getInfoStyle.image} source={{ uri: item.image }} />
-        </View>
+        <Image style={getInfoStyle.image} source={{ uri: item.image }} />
       </TouchableOpacity>
     );
   };
