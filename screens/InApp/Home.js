@@ -13,6 +13,7 @@ import { UserDataService } from "../../lib/UserDataService";
 import { CafeTable } from "../../Components/CafeTable";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { Updated } from "../../lib/TestSample";
+import { dbService } from "../../FireServer";
 
 function HomeScreen({ navigation }) {
   const [userData, setUserData] = useState();
@@ -27,20 +28,27 @@ function HomeScreen({ navigation }) {
     return unsubscribe;
   }, [navigation, setUserData]);
 
+  useEffect(()=>{
+  
+  },[])
+
   /** 유저 데이터 가져오기 */
   const LoadHomePage = async () => {
     let user = new UserDataService();
     await user.loadUserId();
     await user.getUserProfile();
+    
     setUserData(user);
     refresBookMark();
   };
 
   /** 예약 내역 로드 */
   useEffect(() => {
+    
     updateConfirmReservation();
     refresBookMark();
   }, [userData]);
+
   const updateConfirmReservation = async () => {
     if (userData != null && userData.reservation.cafeId != null) {
       setReserveCafeInfo(await getCafeData(userData.reservation.cafeId));
@@ -62,7 +70,7 @@ function HomeScreen({ navigation }) {
       for (let i = 0; i < Mark.length; i++) {
         cafeList.push(
           <BookMarkPanel
-            key={i}
+            key={Mark[i].getId()}
             cafeData={Mark[i]}
             userData={userData}
             navigation={navigation}
@@ -125,7 +133,7 @@ function HomeScreen({ navigation }) {
                 <Text
                   style={{ alignSelf: "center", fontSize: 20, paddingLeft: 20 }}
                 >
-                  북마크가 없습니다!
+                  등록된 My 카페가 없습니다
                 </Text>
               )}
             </ScrollView>
@@ -160,7 +168,14 @@ function BookMarkPanel(props) {
     if (cafeData != null) {
       setCafeName(cafeData.getName());
       setCafeLocation(cafeData.getAdress(1, 3));
-      setRating(cafeData.getRating());
+      // if(rating == null){
+        setRating(cafeData.getRating());
+      // }else{
+      //   dbService.collection("CafeData").doc(cafeData.getId()).onSnapshot((data)=>{
+      //     const rate = data.data().rating;
+      //     setRating(rate);    
+      //   })
+      // }
     }
   }, [cafeData]);
 
@@ -243,8 +258,16 @@ function ReservationView(props) {
           >
             <Text style={getHomeStyle.reserveBtnText}> 예약 내역 확인 </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={getHomeStyle.reserveBtn}>
-            <Text style={getHomeStyle.reserveBtnText}> 배정 확정 </Text>
+          <TouchableOpacity 
+            style={getHomeStyle.reserveBtn}
+            onPress={() =>
+              props.navigation.navigate("카페 정보", {
+                cafeData: cafeData,
+                userData: userData,
+              })
+            }
+          >
+            <Text style={getHomeStyle.reserveBtnText}> 카폐 정보 </Text>
           </TouchableOpacity>
         </View>
       </View>

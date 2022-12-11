@@ -27,13 +27,16 @@ function InformationScreen({ navigation, route }) {
   const [direction, setDirection] = useState("사진");
   const [imageDatas, setImageDatas ] = useState([]);
 
-  useEffect(() => {
-  }, []);
+  // useEffect(() => {
+  //   dbService.collection("CafeData").doc(cafeData.getId()).onSnapshot((data)=>{
+  //     cafeData.loadData(data.data());
+  //   })
+  // }, []);
 
   useEffect(()=>{
     loadCafeImages();
   },[,cafeData])
-  
+
   const loadCafeImages = async() =>{
     const datas = new List();
     const arr = cafeData.getCafeImage();
@@ -260,6 +263,7 @@ function PreviewLayout(props) {
 }
 
 function ReviewPage(props) {
+  
   const {
     navigation: navigation,
     cafeData: cafeData,
@@ -271,8 +275,13 @@ function ReviewPage(props) {
   );
   const [reviewDatas, setreviewDatas] = useState([]);
   const [rating, setRating] = useState();
+  
+  useEffect(() => { 
+    dbService.collection("CafeData").doc(cafeData.getId()).onSnapshot((data)=>{
+      const rate = data.data().rating;
+      setRating(rate);
+    })
 
-  useEffect(() => {
     dbService
       .collection("CafeData")
       .doc(cafeData.getId())
@@ -286,7 +295,6 @@ function ReviewPage(props) {
         setreviewDatas(reviews);
       });
     setNotice(cafeData.getNotice());
-    setRating(cafeData.getRating());
   }, []);
 
   useEffect(() => {
