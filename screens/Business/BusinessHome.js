@@ -221,7 +221,7 @@ function BusinessHomeScreen({ navigation, route }) {
             </Text>
           </TouchableOpacity>
         </View>
-        <View style={getBusinessHomeStyle.manageReservationWindow}>
+        <ScrollView style={getBusinessHomeStyle.manageReservationWindow}>
           <View style={getBusinessHomeStyle.manageHeader}>
             <Text style={{ color: "black", fontWeight: "500", fontSize: 30 }}>
               현재 좌석 현황
@@ -263,11 +263,13 @@ function BusinessHomeScreen({ navigation, route }) {
               keyExtractor={(item) => String(item.id)}
               data={seatDatas}
               style={getBusinessHomeStyle.reservationList}
+              // contentContainerStyle={{ flexGrow: 1 }}
+              scrollEnabled={false}
               renderItem={makeSeatList}
               numColumns={4}
             />
           </View>
-        </View>
+        </ScrollView>
         <View style={getBusinessHomeStyle.logoutContainer}>
           <TouchableOpacity
             style={getBusinessHomeStyle.logoutBtn}
