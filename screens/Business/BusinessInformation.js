@@ -35,74 +35,68 @@ const reviewArr = [];
 
 function BusinessInformationScreen({ navigation, route }) {
   const { cafeData: cafeData, userData: userData } = route.params;
-  
+
   const [direction, setDirection] = useState("사진");
   const [seatImage, setSeatImage] = useState("");
-  const [imageDatas, setImageDatas ] = useState([]);
+  const [imageDatas, setImageDatas] = useState([]);
   // const [modalVisible, setModalVisible] = useState(false);
   // const [openTime, setOpenTime] = useState();
   // const [closeTime, setCloseTime] = useState();
   // const openTimeInputRef = createRef();
   // const closeTimeInputRef = createRef();
 
-  useEffect(()=>{
+  useEffect(() => {
     changesCafe();
-  },[route.params?.change])
+  }, [route.params?.change]);
 
-  useEffect(()=>{
+  useEffect(() => {
     dbService
-    .collection("CafeData")
-    .doc(cafeData.getId())
-    .onSnapshot(async(doc) => {
-      setSeatImage(await getImage("Cafe",cafeData.getId(), "seatImage"));
-    });
-  },[])
+      .collection("CafeData")
+      .doc(cafeData.getId())
+      .onSnapshot(async (doc) => {
+        setSeatImage(await getImage("Cafe", cafeData.getId(), "seatImage"));
+      });
+  }, []);
 
-  async function changesCafe(){
+  async function changesCafe() {
     navigation.setParams({
       cafeData: await getCafeData(cafeData.getId()),
       change: false,
-    })
+    });
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     loadCafeImages();
-  },[,cafeData])
-  
-  const loadCafeImages = async() =>{
+  }, [, cafeData]);
+
+  const loadCafeImages = async () => {
     const datas = new List();
     const arr = cafeData.getCafeImage();
 
     const promises = arr.map(async (id) => {
-      const img = await getImage("Cafe",cafeData.getId(),`Img/${id.id}`) 
-      datas.push({image:img, id:id.id, date: id.date});
+      const img = await getImage("Cafe", cafeData.getId(), `Img/${id.id}`);
+      datas.push({ image: img, id: id.id, date: id.date });
     });
     await Promise.all(promises);
 
-    const sortdata = datas.sort((a,b)=>{
-      return a.date.seconds<b.date.seconds;
+    const sortdata = datas.sort((a, b) => {
+      return a.date.seconds < b.date.seconds;
     });
     setImageDatas(sortdata);
-  }
-  
-  const CafeImages = ({item}) => {
+  };
+
+  const CafeImages = ({ item }) => {
     return (
       <TouchableOpacity
-        onPress={() =>
-          navigation.navigate("사진 확대", {image: item.image})
-        }
-        style={{ flex:1, flexDirection:"row"}}
+        onPress={() => navigation.navigate("사진 확대", { image: item.image })}
+        style={{ flex: 1, flexDirection: "row" }}
       >
-        <View
-          style={{
-          }}
-        >
-          <Image style={getInfoStyle.image} source={{uri:item.image}} />
+        <View style={{}}>
+          <Image style={getInfoStyle.image} source={{ uri: item.image }} />
         </View>
       </TouchableOpacity>
-    )
-  }
-
+    );
+  };
 
   return (
     <>
@@ -188,7 +182,7 @@ function BusinessInformationScreen({ navigation, route }) {
         </TouchableOpacity> */}
         <View style={getFindStyle.container}>
           <View style={getFindStyle.contentContainer}>
-            <CafeTable cafeData={cafeData} navigation={navigation}/>
+            <CafeTable cafeData={cafeData} navigation={navigation} />
           </View>
         </View>
 
@@ -224,7 +218,7 @@ function BusinessInformationScreen({ navigation, route }) {
           >
             <Text style={{ color: "white", fontSize: 21 }}>사진 관리하기</Text>
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={getBusinessInfoStyle.reserveButton}
             onPress={() =>{
               signOut();
@@ -232,7 +226,7 @@ function BusinessInformationScreen({ navigation, route }) {
             }}
           >
             <Text style={{ color: "red", fontSize: 21 }}>카페 삭제하기</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
     </>
@@ -324,13 +318,12 @@ function ReviewPage(props) {
         reviews.sort((a, b) => a.date < b.date);
         setreviewDatas(reviews);
       });
-    
+
     dbService
       .collection("CafeData")
       .doc(cafeData.getId())
       .onSnapshot((doc) => {
-        if(rating != null){
-
+        if (rating != null) {
         }
         const rate = doc.data().rating;
         setRating(rate);
@@ -340,11 +333,10 @@ function ReviewPage(props) {
           setNotice("");
         }
       });
-    if(rating == null){
+    if (rating == null) {
       setRating(cafeData.getRating());
     }
     setNotice(cafeData.getNotice());
-    
   }, []);
   useEffect(() => {
     loadReview();
