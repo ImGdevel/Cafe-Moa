@@ -19,7 +19,6 @@ function ReserveManageScreen({ navigation, route }) {
   const { cafeData: cafeData, userData: userData } = route.params;
   const [selectedSeat, setSelectedSeat] = useState("");
   const [reserveService, setReserveService] = useState();
-  const [seatList, setSeatList] = useState([]);
   const [nowTime, setNowTime] = useState(12 /*new Date().getHours()*/);
   const [timeTableList, setTimeTableList] = useState();
   const [loadPage, setLoadPage] = useState(false);
@@ -36,19 +35,11 @@ function ReserveManageScreen({ navigation, route }) {
         await reves.loadSeatDataBase();
         setReserveService(reves);
       });
-    makePickerItem();
   }, []);
 
-  useEffect(() => {}, [route?.seatData]);
+  useEffect(() => {
 
-  // picker item에 추가하는 loop
-  const makePickerItem = () => {
-    let seatLoop = [];
-    for (let i = 1; i <= 20; i++) {
-      seatLoop.push(<Picker.Item key={i} label={String(i)} value={i} />);
-    }
-    setSeatList(seatLoop);
-  };
+  }, [route?.seatData]);
 
   const pressButton = (time, seat) => {
     setSelectedReserveSeat({ time, seat });
@@ -71,6 +62,7 @@ function ReserveManageScreen({ navigation, route }) {
     setLoadPage(fd);
   };
 
+  /** 예약 취소 */
   const ReservationCancel = async () => {
     const data = selectedReserveSeat;
     const user = new UserDataService(data.seat.uid);
@@ -79,6 +71,7 @@ function ReserveManageScreen({ navigation, route }) {
     setLoadPage(fd);
   };
 
+  /** 좌석 Show */
   useEffect(() => {
     if (reserveService == null) {
       return;

@@ -38,11 +38,11 @@ function BusinessHomeScreen({ navigation, route }) {
     const userId = await getCurrentUserId();
     const userData = (await dbService.collection("BuisnessUser").doc(userId).get()).data();
     const cafeData = await getCafeData(userData.cafeId);
-
-    console.log("데이터 보내기",cafeData,userData)
     setCafeData(cafeData);
   }
 
+
+  /** 카페 데이터를 성공적으로 가져왔다면 */
   useEffect(() => {
     if (cafeData != null) {
       dbService
@@ -55,8 +55,6 @@ function BusinessHomeScreen({ navigation, route }) {
       loadSeat();
     }
   }, [,cafeData]);
-
-  useEffect(() => {}, [route?.seatData]);
 
   async function loadSeat() {
     const reves = new ReservationService(cafeData.getSeatId());
@@ -76,13 +74,12 @@ function BusinessHomeScreen({ navigation, route }) {
     }
   }, [reserveService, pageLoad]);
 
-  /** 화면 불러오기 */
+  /** 좌석 화면 불러오기 */
   function loadSeatInfo() {
     const seats = reserveService.getSeatDataOnTimeReserve(nowTime, true);
     const list = []
 
-    console.log(reserveService);
-    console.log("좌석 데이터",seats)
+    console.log("최종 좌석 데이터",seats);
 
     seats.map((item) => {
       list.push(<SeatBtn key={item.seat} number={item.seat} uid={item.uid} />);
@@ -97,11 +94,10 @@ function BusinessHomeScreen({ navigation, route }) {
     navigation.replace("Auth");
   }
 
-  // picker item에 추가하는 loop
+  // picker에 아이템 추가
   const makePickerItem = (list) => {
     let seatLoop = [];
     let isIn = false;
-    console.log(list);
     for (let i = 1; i <= cafeData.getSeatCount(); i++) {
       list.forEach(element => {
         if(element.seat == i)
@@ -117,7 +113,6 @@ function BusinessHomeScreen({ navigation, route }) {
 
   async function appSeatSelf(){
     if(selectedSeat != 0){
-      console.log("?", reserveService)
       await reserveService.doSeatReservation(nowTime,selectedSeat,null,true);
       setPageLoad((fd)=>fd+1);
       setSelectedSeat(0);
