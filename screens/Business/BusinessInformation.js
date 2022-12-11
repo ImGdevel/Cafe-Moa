@@ -37,7 +37,7 @@ function BusinessInformationScreen({ navigation, route }) {
   const { cafeData: cafeData, userData: userData } = route.params;
   
   const [direction, setDirection] = useState("사진");
-  
+  const [seatImage, setSeatImage] = useState("");
   // const [modalVisible, setModalVisible] = useState(false);
   // const [openTime, setOpenTime] = useState();
   // const [closeTime, setCloseTime] = useState();
@@ -49,7 +49,12 @@ function BusinessInformationScreen({ navigation, route }) {
   },[route.params?.change])
 
   useEffect(()=>{
-    console.log("나야나");
+    dbService
+    .collection("CafeData")
+    .doc(cafeData.getId())
+    .onSnapshot(async(doc) => {
+      setSeatImage(await getImage("Cafe",cafeData.getId(), "seatImage"));
+    });
   },[])
 
   async function changesCafe(){
@@ -201,6 +206,7 @@ function BusinessInformationScreen({ navigation, route }) {
             navigation={navigation}
             style={getInfoStyle.contentLayout}
             cafeData={cafeData}
+            seatImage={seatImage}
           >
             <FlatList
               keyExtractor={(item) => String(item.id)}
@@ -248,6 +254,7 @@ function PreviewLayout(props) {
     cafeData: cafeData,
     userData: userData,
     navigation: navigation,
+    seatImage: seatImage,
   } = props;
 
   return (
@@ -281,7 +288,7 @@ function PreviewLayout(props) {
           return (
             <View style={{ alignItems: "center", justifyContent: "center" }}>
               <Image
-                source={cafeData ? { uri: cafeData.getSeatImage() } : {}}
+                source={cafeData ? { uri: seatImage } : {}}
                 style={getInfoStyle.seatPic}
               />
             </View>

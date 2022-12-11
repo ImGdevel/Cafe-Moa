@@ -215,6 +215,9 @@ function CafeTable(props) {
     const img = await pickImage();
     setCafeLogoImage({ uri: img }); //이미지 피커에서 가져온 이미지 쓸라면 {uri: 가져온 uri} 로 싸야한다.
     await uploadImage(img, "Cafe", cafeData.getId(), "logo");
+    dbService.collection("CafeData").doc(cafeData.getId()).update({
+      Chimage: img,
+    })
   };
 
   return (
@@ -274,7 +277,9 @@ const PreviewLayout = ({
     const img = await pickImage(7, 5, false);
     setSeatImage(img);
     uploadImage(img, "Cafe", cafeData.getId(), "seatImage");
-    SSimg = img;
+    dbService.collection("CafeData").doc(cafeData.getId()).update({
+      Chimage: img,
+    })
   }
 
   return (

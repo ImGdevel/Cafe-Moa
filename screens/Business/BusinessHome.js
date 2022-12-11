@@ -18,6 +18,7 @@ import { ReservationService } from "../../lib/ReservationService";
 import { BuisnessUserDataService, UserDataService } from "../../lib/UserDataService";
 import { getCurrentUserId, signOut } from "../../lib/AuthService";
 import { List } from "../../lib/DataStructure/List";
+import { getImage } from "../../lib/ImageService";
 
 function BusinessHomeScreen({ navigation, route }) {
   const [cafeData, setCafeData] = useState();
@@ -38,6 +39,7 @@ function BusinessHomeScreen({ navigation, route }) {
     const userId = await getCurrentUserId();
     const userData = (await dbService.collection("BuisnessUser").doc(userId).get()).data();
     const cafeData = await getCafeData(userData.cafeId);
+    console.log(userId, userData.cafeId);
     setCafeData(cafeData);
   }
 
@@ -48,10 +50,12 @@ function BusinessHomeScreen({ navigation, route }) {
       dbService
         .collection("CafeData")
         .doc(cafeData.getId())
-        .onSnapshot((doc) => {
+        .onSnapshot(async(doc) => {
           cafeData.loadData(doc.data());
+          console.log(cafeData.getId())
+          setSeatImage(await getImage("Cafe",cafeData.getId(), "seatImage"));
         });
-      setSeatImage(cafeData.getSeatImage());
+      
       loadSeat();
     }
   }, [,cafeData]);
@@ -181,6 +185,7 @@ function BusinessHomeScreen({ navigation, route }) {
               navigation.navigate("카페정보-사업자용", {
                 cafeData: cafeData,
                 userData: userData,
+                change: false,
               });
             }}
           >
