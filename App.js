@@ -2,6 +2,8 @@ import { LogBox } from "react-native";
 LogBox.ignoreLogs([
   "AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-async-storage/async-storage' instead of 'react-native'. See https://github.com/react-native-async-storage/async-storage",
   "Possible Unhandled Promise Rejection",
+  "Overwriting fontFamily style attribute preprocessor",
+  "Warning: Encountered two children with the same key, `undefined:undefined:undefined:undefined`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.",
 ]);
 
 import * as React from "react";

@@ -38,20 +38,19 @@ function BusinessHomeScreen({ navigation, route }) {
   const [offlineList, setOfflineList] = useState([]);
   const [selectedSeat, setSelectedSeat] = useState("");
 
-  
-
   useEffect(() => {
     start();
   }, []);
 
   async function start() {
     const userId = await getCurrentUserId();
-    const userData = (await dbService.collection("BuisnessUser").doc(userId).get()).data();
+    const userData = (
+      await dbService.collection("BuisnessUser").doc(userId).get()
+    ).data();
     const cafeData = await getCafeData(userData.cafeId);
     console.log(userId, userData.cafeId);
     setCafeData(cafeData);
   }
-
 
   /** 카페 데이터를 성공적으로 가져왔다면 */
   useEffect(() => {
@@ -59,12 +58,12 @@ function BusinessHomeScreen({ navigation, route }) {
       dbService
         .collection("CafeData")
         .doc(cafeData.getId())
-        .onSnapshot(async(doc) => {
+        .onSnapshot(async (doc) => {
           cafeData.loadData(doc.data());
-          console.log(cafeData.getId())
-          setSeatImage(await getImage("Cafe",cafeData.getId(), "seatImage"));
+          console.log(cafeData.getId());
+          setSeatImage(await getImage("Cafe", cafeData.getId(), "seatImage"));
         });
-      
+
       loadSeat();
     }
   }, [, cafeData]);
@@ -92,7 +91,6 @@ function BusinessHomeScreen({ navigation, route }) {
     const seats = reserveService.getSeatDataOnTimeReserve(nowTime, true);
     const list = [];
     let data = [];
-    
 
     seats.map((item) => {
       list.push(<SeatBtn key={item.seat} number={item.seat} uid={item.uid} />);
@@ -129,10 +127,10 @@ function BusinessHomeScreen({ navigation, route }) {
     setOfflineList(seatLoop);
   };
 
-  async function appSeatSelf(){
-    if(selectedSeat != 0){
-      await reserveService.doSeatReservation(nowTime,selectedSeat,null,true);
-      setPageLoad((fd)=>fd+1);
+  async function appSeatSelf() {
+    if (selectedSeat != 0) {
+      await reserveService.doSeatReservation(nowTime, selectedSeat, null, true);
+      setPageLoad((fd) => fd + 1);
       setSelectedSeat(0);
     }
   }
@@ -223,7 +221,7 @@ function BusinessHomeScreen({ navigation, route }) {
             </Text>
           </TouchableOpacity>
         </View>
-        <ScrollView style={getBusinessHomeStyle.manageReservationWindow}>
+        <View style={getBusinessHomeStyle.manageReservationWindow}>
           <View style={getBusinessHomeStyle.manageHeader}>
             <Text style={{ color: "black", fontWeight: "500", fontSize: 30 }}>
               현재 좌석 현황
@@ -269,7 +267,7 @@ function BusinessHomeScreen({ navigation, route }) {
               numColumns={4}
             />
           </View>
-        </ScrollView>
+        </View>
         <View style={getBusinessHomeStyle.logoutContainer}>
           <TouchableOpacity
             style={getBusinessHomeStyle.logoutBtn}
