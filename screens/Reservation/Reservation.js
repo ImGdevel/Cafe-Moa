@@ -38,16 +38,15 @@ function ReservationScreen({ navigation, route }) {
   var timeLoop = [];
 
   for (let i = cafe_data.getOpenTime(); i < cafe_data.getCloseTime(); i++) {
+    const clock = `${i < 10 ? "0" + i : i}:00`;
+    let lock = i >= nowTime ? true : false;
 
-    const clock = `${(i<10)?"0"+i:i}:00`;
-    let lock = (i >= nowTime) ? true : false;
-    
     timeLoop.push(
       <TouchableOpacity
         key={i}
-        style={[getModalStyle.modalButton, lock || { backgroundColor:"#bbb"}]}
+        style={[getModalStyle.modalButton, lock || { backgroundColor: "#bbb" }]}
         onPress={() => {
-          if(lock){
+          if (lock) {
             setModalOutput("선택");
             setModalVisible(false); //창닫기
             onSelectTime(i); //시간 선택
@@ -149,7 +148,7 @@ function ReservationScreen({ navigation, route }) {
         <View style={getReserveStyle.contentContainer}>
           <Image
             source={{ uri: seatImage }}
-            resizeMode = "contain"
+            resizeMode="contain"
             style={getReserveStyle.seatPic}
           />
         </View>
@@ -160,17 +159,15 @@ function ReservationScreen({ navigation, route }) {
         </View>
         <View style={{ flex: 2, marginBottom: 15 }}>
           <View style={getReserveStyle.pickerBox}>
-            <View style={getReserveStyle.pickerLine}>
-              <Picker
-                style={getReserveStyle.picker}
-                selectedValue={selectedSeat}
-                onValueChange={(itemValue, itemIndex) => {
-                  setSelectedSeat(itemValue);
-                }}
-              >
-                {seatList}
-              </Picker>
-            </View>
+            <Picker
+              style={getReserveStyle.pickerLine}
+              selectedValue={selectedSeat}
+              onValueChange={(itemValue, itemIndex) => {
+                setSelectedSeat(itemValue);
+              }}
+            >
+              {seatList}
+            </Picker>
             <TouchableOpacity
               style={getReserveStyle.reserveBtn}
               onPress={submitReservation}
