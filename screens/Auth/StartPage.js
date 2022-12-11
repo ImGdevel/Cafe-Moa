@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { View, Image } from "react-native";
 import { dbService } from "../../FireServer";
 import { getCurrentUserId } from "../../lib/AuthService";
+import { getCafeData } from "../../lib/CafeService";
 import getStartPageStyle from "../../styles/screens/StartPageStyle";
 
 function StartPageScreen({ navigation }) {
@@ -19,7 +20,7 @@ function StartPageScreen({ navigation }) {
           if(id == ids.id){
             console.log("비지니스계정");
             us = false;
-            GoToBusiness();
+            GoToBusiness(ids.id);
           }
         })
       });
@@ -39,8 +40,21 @@ function StartPageScreen({ navigation }) {
     navigation.replace("InApp");
   }
 
-  function GoToBusiness() {
+  async function GoToBusiness(id) {
     navigation.replace("Business");
+    return;
+    const userData = (await dbService.collection("BuisnessUser").doc(id).get()).data();
+    const cafeData = await getCafeData(userData.cafeId);
+
+    console.log("데이터 보내기",cafeData,userData)
+
+    if(cafeData != null){
+      navigation.navigate("Business",{
+        cafeData: cafeData,
+        userData: userData,
+        ons: "Hi",
+      });
+    }
   }
 
   return (

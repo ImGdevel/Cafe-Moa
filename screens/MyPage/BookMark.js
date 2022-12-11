@@ -11,6 +11,7 @@ import getMyMOAStyle from "../../styles/screens/BookMarkStyle";
 import getBookmarkTableStyles from "../../styles/components/BookmarkTableStyle";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { getCafeDatas } from "../../lib/CafeService";
+import { dbService } from "../../FireServer";
 
 function BookMarkScreen({ navigation, route }) {
   const { userData: userData } = route.params;
@@ -73,17 +74,27 @@ function BookmarkTable(props) {
   const { cafeData: cafeData, userData: userData } = props;
   const [cafeName, setCafeName] = useState(cafeData.getName());
   const [cafeLocation, setCafeLocation] = useState(cafeData.getAdress(1, 3));
-  const [cafeInformation, setCafeInformaion] = useState(
-    "Open : " +
-      cafeData.getOpenTime() +
-      ":00 ~ Close : " +
-      cafeData.getCloseTime() +
-      ":00"
-  );
+  const [cafeInformation, setCafeInformaion] = useState("Open : " + cafeData.getOpenTime() + ":00 ~ Close : " + cafeData.getCloseTime() + ":00");
   const [cafeLogoImage, setCafeLogoImage] = useState(cafeData.getLogo());
+  const [rating, setRating] = useState(cafeData.getRating());
   const [cafeSeatImage, setCafeSeatImage] = useState(cafeData.getSeatImage());
-  const [rating, setRating] = useState(4.7);
   const [visitors, setVisitors] = useState(cafeData.getVisitors());
+
+  useEffect(()=>{
+    setCafeName(cafeData.getName());
+    setCafeLocation(cafeData.getAdress(1, 3));
+    setCafeInformaion("Open : " + cafeData.getOpenTime() + ":00 ~ Close : " + cafeData.getCloseTime() + ":00");
+    setCafeLogoImage(cafeData.getLogo());
+    if(rating == null){
+      setRating(cafeData.getRating());
+    }else{
+      dbService.collection("CafeData").doc(cafeData.getId()).onSnapshot((data)=>{
+        const rate = data.data().rating;
+        setRating(rate);
+      })
+    }
+  },[,cafeData])
+
 
   return (
     <TouchableHighlight
