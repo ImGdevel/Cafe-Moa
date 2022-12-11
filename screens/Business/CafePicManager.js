@@ -23,13 +23,13 @@ import { ReviewService } from "../../lib/ReviewService";
 import { getImage, pickImage, uploadImage } from "../../lib/ImageService";
 import { dbService, MyDatabase } from "../../FireServer";
 import { ImageList, List } from "../../lib/DataStructure/List";
+import { useIsFocused } from "@react-navigation/native";
 
 function CafePicManageScreen({ navigation, route }) {
   const { cafeData: cafeData, userData: userData } = route.params;
   const [direction, setDirection] = useState("사진");
   const [imageDatas, setImageDatas] = useState([]);
   const [load, loadPage] = useState(false);
-
 
   const loadCafeImages = async () => {
     const datas = new List();
@@ -44,6 +44,7 @@ function CafePicManageScreen({ navigation, route }) {
     const sortdata = datas.sort((a, b) => {
       return a.date.seconds < b.date.seconds;
     });
+    console.log("image loaded");
     sortdata.push({ image: "end", id: "z" });
     setImageDatas(sortdata);
   };
@@ -75,6 +76,7 @@ function CafePicManageScreen({ navigation, route }) {
         });
       loadPage(dat);
     }
+    loadCafeImages();
   }
 
   const CafeImages = ({ item, key }) => {
@@ -217,7 +219,7 @@ function CafeTable(props) {
     await uploadImage(img, "Cafe", cafeData.getId(), "logo");
     dbService.collection("CafeData").doc(cafeData.getId()).update({
       Chimage: img,
-    })
+    });
   };
 
   return (
@@ -279,7 +281,7 @@ const PreviewLayout = ({
     uploadImage(img, "Cafe", cafeData.getId(), "seatImage");
     dbService.collection("CafeData").doc(cafeData.getId()).update({
       Chimage: img,
-    })
+    });
   }
 
   return (
