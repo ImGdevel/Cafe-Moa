@@ -1,4 +1,4 @@
-import { LogBox } from 'react-native';
+import { LogBox } from "react-native";
 LogBox.ignoreLogs([
   "AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-async-storage/async-storage' instead of 'react-native'. See https://github.com/react-native-async-storage/async-storage",
   "Possible Unhandled Promise Rejection",
@@ -37,6 +37,7 @@ import AddPicScreen from "./screens/Business/AddPicScreen";
 import DeleteUserScreen from "./screens/MyPage/DeleteUser";
 import LocationSelectionScreen from "./screens/Business/LocationSelect";
 import MyReviewScreen from "./screens/MyPage/MyReview";
+import BusinessLogInScreen from "./screens/Auth/BusinessLogin";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -75,12 +76,26 @@ const Auth = () => {
       <Stack.Screen
         name="Login"
         component={LoginScreen}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+          opacity: 0,
+        }}
       />
       <Stack.Screen
         name="Register"
         component={RegisterScreen}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+          opacity: 0,
+        }}
+      />
+      <Stack.Screen
+        name="BusinessLogIn"
+        component={BusinessLogInScreen}
+        options={{
+          headerShown: false,
+          opacity: 0,
+        }}
       />
       <Stack.Screen
         name="CafeCreatForm"
@@ -199,7 +214,7 @@ const TabHome = () => {
             <Stack.Screen name="개인정보수정" component={EditProfileScreen} />
             <Stack.Screen name="옵션" component={OptionScreen} />
             <Stack.Screen name="북마크" component={BookMarkScreen} />
-            <Stack.Screen name="DeleteUser" component={DeleteUserScreen} />
+            <Stack.Screen name="회원 탈퇴" component={DeleteUserScreen} />
             <Stack.Screen name="My Review" component={MyReviewScreen} />
           </Stack.Navigator>
         )}
@@ -208,7 +223,7 @@ const TabHome = () => {
   );
 };
 
-const InBusiness = () => {
+const InBusiness = ({ params }) => {
   return (
     <Stack.Navigator name="forBusiness" options={{ headerShown: false }}>
       <Stack.Screen

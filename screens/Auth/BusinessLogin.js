@@ -8,28 +8,32 @@ import {
   TextInput,
   KeyboardAvoidingView,
 } from "react-native";
+import { dbService } from "../../FireServer";
 import { getCurrentUserId, SignInUserAccount } from "../../lib/AuthService";
+import { getCafeData } from "../../lib/CafeService";
 import getLoginStyle from "../../styles/screens/LoginStyle";
 
-function LogInScreen({ navigation }) {
+function BusinessLogInScreen({ navigation }) {
   const [UserId, setUserId] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [errorText, setErrorText] = useState("");
   const idInputRef = createRef();
   const passwordInputRef = createRef();
 
-  function GoToRgisterScreen() {
-    navigation.navigate("Register");
-  }
-  function GoToHomeScreen() {
-    navigation.replace("InApp");
-  }
-  function GoToBusinessLogIn() {
-    navigation.navigate("BusinessLogIn");
-    
+  async function GoToHomeScreen(id) {
+    console.log(id)
+    const userData = (await dbService.collection("BuisnessUser").doc(id).get()).data();
+    const cafeData = await getCafeData(userData.cafeId);
+
+    console.log("데이터 보내기",cafeData,userData)
+    navigation.replace("Business",{
+      cafeData: cafeData,
+      userData: userData,
+      ons: "Hi",
+    });
   }
 
-  function onSubmit() {
+  async function onSubmit() {
     if (!UserId) {
       alert("이메일을 입력해주세요");
       return;
@@ -38,9 +42,11 @@ function LogInScreen({ navigation }) {
       alert("비밀번호를 입력해주세요");
       return;
     }
-    SignInUserAccount(UserId, userPassword)
-      .then(() => {
-        GoToHomeScreen();
+
+    await SignInUserAccount(UserId, userPassword)
+      .then((id) => {
+        console.log(id);
+        GoToHomeScreen(id);
       })
       .catch(() => {});
   }
@@ -62,10 +68,19 @@ function LogInScreen({ navigation }) {
       <View style={{ flex: 3 }}></View>
       <View style={getLoginStyle.contentArea}>
         <View style={getLoginStyle.titleText}>
-          <Text style={{ color: "#001D44", fontWeight: "900", fontSize: 55 }}> M O A </Text>
+          <Text style={{ color: "#001D44", fontWeight: "900", fontSize: 55 }}>
+            {" "}
+            M O A{" "}
+          </Text>
+          <Text style={{ color: "#001D44", textAlign: "right" }}>
+            for Business
+          </Text>
         </View>
         <View style={getLoginStyle.subTitleText}>
-          <Text style={{ color: "#001D44", fontWeight: "600", fontSize: 30 }}> Login </Text>
+          <Text style={{ color: "#001D44", fontWeight: "600", fontSize: 30 }}>
+            {" "}
+            Login{" "}
+          </Text>
         </View>
         <View style={getLoginStyle.formArea}>
           <TextInput
@@ -97,16 +112,11 @@ function LogInScreen({ navigation }) {
 
           <TouchableOpacity
             style={getLoginStyle.btnRegister}
-            onPress={GoToRgisterScreen}
+            onPress={() => {
+              navigation.replace("Auth");
+            }}
           >
-            <Text style={{ color: "#bbb", fontSize: 20 }}>회원가입</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={getLoginStyle.btnRegister}
-            onPress={GoToBusinessLogIn}
-          >
-            <Text style={{ color: "#bbb", fontSize: 20 }}>사업자 로그인</Text>
+            <Text style={{ color: "#bbb", fontSize: 20 }}>일반 로그인</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -115,4 +125,4 @@ function LogInScreen({ navigation }) {
   );
 }
 
-export default LogInScreen;
+export default BusinessLogInScreen;

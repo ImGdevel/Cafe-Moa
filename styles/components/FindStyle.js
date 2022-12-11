@@ -50,8 +50,8 @@ const FindStyles = StyleSheet.create({
     paddingVertical: 10,
   },
   btnSort: {
-    width: 70,
-    height: "80%",
+    width: "22%",
+    height: "95%",
     marginHorizontal: 4,
     borderRadius: 10,
     borderWidth: 1,

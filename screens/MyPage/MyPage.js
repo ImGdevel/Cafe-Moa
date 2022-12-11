@@ -38,15 +38,14 @@ function MyPageScreen({ navigation }) {
   const getData = async () => {
     if (userData != null) {
       console.log("새로고침");
-      setUserName(userData.getName())
-      setUserEmail(userData.getEmail())
+      setUserName(userData.getName());
+      setUserEmail(userData.getEmail());
       const imgs = await userData.getProfileImage();
-      if(imgs != " "){
-        setUserImage({uri:imgs});
-      }else{
+      if (imgs == " " || imgs == null ) {
         setUserImage(require("../../img/initialProfile.jpg"));
+      } else {
+        setUserImage({ uri: imgs });
       }
-      
     }
   };
 
@@ -88,7 +87,7 @@ function MyPageScreen({ navigation }) {
 
   //유저 삭제
   function GoToDeleteAccountScreen() {
-    navigation.navigate("DeleteUser");
+    navigation.navigate("회원 탈퇴");
   }
 
   return (

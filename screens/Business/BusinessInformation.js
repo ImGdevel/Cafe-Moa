@@ -23,6 +23,9 @@ import { dbService } from "../../FireServer";
 import Star from "../../Components/Star";
 import { getImage } from "../../lib/ImageService";
 import { CafeTable } from "../../Components/CafeTable";
+import { signOut } from "../../lib/AuthService";
+import { List } from "../../lib/DataStructure/List";
+import { getCafeData } from "../../lib/CafeService";
 
 // Array that bring cafe's image
 const imgArr = [];
@@ -32,36 +35,71 @@ const reviewArr = [];
 
 function BusinessInformationScreen({ navigation, route }) {
   const { cafeData: cafeData, userData: userData } = route.params;
-  const [direction, setDirection] = useState("사진");
-  const [modalVisible, setModalVisible] = useState(false);
-  const [openTime, setOpenTime] = useState();
-  const [closeTime, setCloseTime] = useState();
 
-  const openTimeInputRef = createRef();
-  const closeTimeInputRef = createRef();
+  const [direction, setDirection] = useState("사진");
+  const [seatImage, setSeatImage] = useState("");
+  const [imageDatas, setImageDatas] = useState([]);
+  // const [modalVisible, setModalVisible] = useState(false);
+  // const [openTime, setOpenTime] = useState();
+  // const [closeTime, setCloseTime] = useState();
+  // const openTimeInputRef = createRef();
+  // const closeTimeInputRef = createRef();
 
   useEffect(() => {
-    console.log(cafeData.getOpenTime());
-    console.log(cafeData.getCloseTime());
+    changesCafe();
+  }, [route.params?.change]);
+
+  useEffect(() => {
+    dbService
+      .collection("CafeData")
+      .doc(cafeData.getId())
+      .onSnapshot(async (doc) => {
+        setSeatImage(await getImage("Cafe", cafeData.getId(), "seatImage"));
+      });
   }, []);
 
-
-  useEffect(()=>{
-    dbService.collection("CafeData").doc(cafeData.getId()).onSnapshot((doc)=>{
-      cafeData.loadData(doc.data());
-    })
-  },[])
-
-  function SubmitTime() {
-    cafeData.setOpenTime(openTime);
-    cafeData.setCloseTime(closeTime);
-    setModalVisible(!modalVisible);
+  async function changesCafe() {
+    navigation.setParams({
+      cafeData: await getCafeData(cafeData.getId()),
+      change: false,
+    });
   }
+
+  useEffect(() => {
+    loadCafeImages();
+  }, [, cafeData]);
+
+  const loadCafeImages = async () => {
+    const datas = new List();
+    const arr = cafeData.getCafeImage();
+
+    const promises = arr.map(async (id) => {
+      const img = await getImage("Cafe", cafeData.getId(), `Img/${id.id}`);
+      datas.push({ image: img, id: id.id, date: id.date });
+    });
+    await Promise.all(promises);
+
+    const sortdata = datas.sort((a, b) => {
+      return a.date.seconds < b.date.seconds;
+    });
+    setImageDatas(sortdata);
+  };
+
+  const CafeImages = ({ item }) => {
+    return (
+      <TouchableOpacity
+        onPress={() => navigation.navigate("사진 확대", { image: item.image })}
+        style={{ flexDirection: "row" }}
+      >
+        <Image style={getInfoStyle.image} source={{ uri: item.image }} />
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <>
       <View style={getInfoStyle.container}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={getBusinessInfoStyle.timeManagerButton}
           onPress={() => {
             setModalVisible(!modalVisible);
@@ -139,7 +177,7 @@ function BusinessInformationScreen({ navigation, route }) {
             name="time"
             style={{ fontSize: 30, color: "#001D44" }}
           ></Ionicons>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <View style={getFindStyle.container}>
           <View style={getFindStyle.contentContainer}>
             <CafeTable cafeData={cafeData} navigation={navigation} />
@@ -154,20 +192,13 @@ function BusinessInformationScreen({ navigation, route }) {
             navigation={navigation}
             style={getInfoStyle.contentLayout}
             cafeData={cafeData}
+            seatImage={seatImage}
           >
             <FlatList
-              keyExtractor={(item) => item.idx}
-              data={imgArr}
+              keyExtractor={(item) => String(item.id)}
+              data={imageDatas}
               style={getInfoStyle.picArea}
-              renderItem={({ item }) => (
-                <TouchableOpacity>
-                  <View
-                    style={{ flex: 1, flexDirection: "column", margin: 10 }}
-                  >
-                    <Image style={getInfoStyle.image} source={{}} />
-                  </View>
-                </TouchableOpacity>
-              )}
+              renderItem={CafeImages}
               numColumns={3}
             />
           </PreviewLayout>
@@ -185,17 +216,15 @@ function BusinessInformationScreen({ navigation, route }) {
           >
             <Text style={{ color: "white", fontSize: 21 }}>사진 관리하기</Text>
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={getBusinessInfoStyle.reserveButton}
-            onPress={() =>
-              navigation.navigate("Auth", {
-                //cafeData: cafeData,
-                //userData: userData,
-              })
-            }
+            onPress={() =>{
+              signOut();
+              navigation.navigate("Auth");
+            }}
           >
             <Text style={{ color: "red", fontSize: 21 }}>카페 삭제하기</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
     </>
@@ -211,6 +240,7 @@ function PreviewLayout(props) {
     cafeData: cafeData,
     userData: userData,
     navigation: navigation,
+    seatImage: seatImage,
   } = props;
 
   return (
@@ -244,7 +274,7 @@ function PreviewLayout(props) {
           return (
             <View style={{ alignItems: "center", justifyContent: "center" }}>
               <Image
-                source={cafeData ? { uri: cafeData.getSeatImage() } : {}}
+                source={cafeData ? { uri: seatImage } : {}}
                 style={getInfoStyle.seatPic}
               />
             </View>
@@ -283,18 +313,28 @@ function ReviewPage(props) {
           id: doc.id,
           ...doc.data(),
         }));
-        reviews.sort((a,b)=>a.date < b.date);
+        reviews.sort((a, b) => a.date < b.date);
         setreviewDatas(reviews);
       });
-    dbService.collection("CafeData").doc(cafeData.getId()).onSnapshot((doc)=>{
-      if(doc.exists && doc.data().notice != null){
-        setNotice(doc.data().notice)
-      }else{
-        setNotice("");
-      }
-    })
+
+    dbService
+      .collection("CafeData")
+      .doc(cafeData.getId())
+      .onSnapshot((doc) => {
+        if (rating != null) {
+        }
+        const rate = doc.data().rating;
+        setRating(rate);
+        if (doc.exists && doc.data().notice != null) {
+          setNotice(doc.data().notice);
+        } else {
+          setNotice("");
+        }
+      });
+    if (rating == null) {
+      setRating(cafeData.getRating());
+    }
     setNotice(cafeData.getNotice());
-    setRating(cafeData.getRating());
   }, []);
   useEffect(() => {
     loadReview();
@@ -358,16 +398,16 @@ function ReviewPanel(props) {
       for (var i = 0; i < digits - n.length; i++) zero += "0";
     }
     return zero + n;
-  }
+  };
 
-  const getImages = async(id) => {
+  const getImages = async (id) => {
     if (id != null) {
       const img = await getImage("User", id, "profile");
       setImage({ uri: img });
     } else {
       setImage(require("../../img/initialProfile.jpg"));
     }
-  }
+  };
 
   useEffect(() => {
     if (review != null) {
@@ -387,7 +427,6 @@ function ReviewPanel(props) {
       getImages(review.user.id);
     }
   }, []);
-
 
   return (
     <View style={getReviewStyle.reviewContentContainer}>

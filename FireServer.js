@@ -15,4 +15,3 @@ export const authService = firebase.auth();
 export const storageService = firebase.storage();
 export const GoogleMapApiKey = MapApiKey;
 //export const asyncStorage = AsyncStorage;
-

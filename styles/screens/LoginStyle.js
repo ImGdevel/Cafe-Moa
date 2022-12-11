@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   subTitleText: {
-    paddingRight: 200,
+    alignSelf: "baseline",
+    marginLeft:"5%",
   },
 
   formArea: {

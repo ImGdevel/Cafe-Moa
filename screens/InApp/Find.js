@@ -14,6 +14,7 @@ import getFindStyle from "../../styles/components/FindStyle";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { CafeService } from "../../lib/CafeService";
 import { UserDataService } from "../../lib/UserDataService";
+import { dbService } from "../../FireServer";
 
 const EADASF = "Dadsdaa";
 
@@ -66,7 +67,7 @@ function FindScreen({ navigation, route }) {
     for (let i = 0; i < cafeDatas.length; i++) {
       cafeList.push(
         <CafeTable
-          key={i}
+          key={cafeDatas[i].getId()}
           cafeData={cafeDatas[i]}
           userData={userData}
           navigation={navigation}
@@ -77,12 +78,18 @@ function FindScreen({ navigation, route }) {
   };
 
   const search = () => {
+    if(cafeService == null){
+      return;
+    }
     let serchData = cafeService.serchCafeData(textInputValue);
     setcafeDatas(serchData);
   };
 
   
   const sortCafeDataList = (type) => {
+    if(cafeService == null){
+      return;
+    }
     let sortedData = cafeService.sortCafeData(type);
     setcafeDatas(sortedData);
   };
@@ -163,8 +170,17 @@ function CafeTable(props) {
     setCafeLocation(cafe_data.getAdress(1, 3));
     setCafeInformaion( "Open : " + cafe_data.getOpenTime() +":00 ~ Close : " +cafe_data.getCloseTime() +":00");
     setCafeLogoImage(cafe_data.getLogo());
-    setRating(cafe_data.getRating());
+    if(rating == null){
+      setRating(cafe_data.getRating());
+    }else{
+      dbService.collection("CafeData").doc(cafeData.getId()).onSnapshot((data)=>{
+        const rate = data.data().rating;
+        setRating(rate);    
+      })
+    }
+    
   },[,cafe_data])
+
 
   return (
     <TouchableHighlight

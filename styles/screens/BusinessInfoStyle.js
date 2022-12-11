@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginHorizontal: 5,
     marginBottom: 5,
-    width: "42%",
+    width: "84%",
     height: 55,
   },
   timeManagerButton: {

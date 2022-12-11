@@ -42,7 +42,7 @@ function OptionScreen({ navigation, route }) {
           value={isPushEnabled}
         />
       </View>
-      <View style={getOptionStyle.optionBtn}>
+      {/* <View style={getOptionStyle.optionBtn}>
         <View>
           <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>
             <IonIcons
@@ -60,7 +60,7 @@ function OptionScreen({ navigation, route }) {
           onValueChange={ThemeSwitch}
           value={isDarkEnabled}
         />
-      </View>
+      </View> */}
     </ScrollView>
   );
 }

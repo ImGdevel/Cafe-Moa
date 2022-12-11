@@ -19,23 +19,50 @@ import { CafeData } from "../../lib/CafeData";
 import { dbService } from "../../FireServer";
 import Star from "../../Components/Star";
 import { getImage } from "../../lib/ImageService";
-import { ReviewList } from "../../lib/DataStructure/List";
-
-// Array that bring cafe's image
-const imgArr = [];
-
-// Array that bring cafe's review
-const reviewArr = [];
+import { List, ReviewList } from "../../lib/DataStructure/List";
 
 function InformationScreen({ navigation, route }) {
   const { cafeData: cafeData, userData: userData } = route.params;
   const [direction, setDirection] = useState("사진");
-  const [seatImage, setSeatImage] = useState(cafeData.getSeatImage());
+  const [imageDatas, setImageDatas] = useState([]);
 
   useEffect(() => {}, []);
 
-  const loadreview = () => {
-    let Review = ReviewService(cafeData.id);
+  // useEffect(() => {
+  //   dbService.collection("CafeData").doc(cafeData.getId()).onSnapshot((data)=>{
+  //     cafeData.loadData(data.data());
+  //   })
+  // }, []);
+
+  useEffect(()=>{
+    loadCafeImages();
+  },[,cafeData])
+
+  const loadCafeImages = async() =>{
+    const datas = new List();
+    const arr = cafeData.getCafeImage();
+    const promises = arr.map(async (id) => {
+      const img = await getImage("Cafe", cafeData.getId(), `Img/${id.id}`);
+
+      datas.push({ image: img, id: id.id, date: id.date });
+    });
+    await Promise.all(promises);
+
+    const sortdata = datas.sort((a, b) => {
+      return a.date.seconds < b.date.seconds;
+    });
+    setImageDatas(sortdata);
+  };
+
+  const CafeImages = ({ item }) => {
+    return (
+      <TouchableOpacity
+        onPress={() => navigation.navigate("사진 확대", { image: item.image })}
+        style={{ flexDirection: "row" }}
+      >
+        <Image style={getInfoStyle.image} source={{ uri: item.image }} />
+      </TouchableOpacity>
+    );
   };
 
   return (
@@ -62,24 +89,10 @@ function InformationScreen({ navigation, route }) {
             navigation={navigation}
           >
             <FlatList
-              keyExtractor={(item) => item.idx}
-              data={imgArr}
+              keyExtractor={(item) => String(item.id)}
+              data={imageDatas}
               style={getInfoStyle.picArea}
-              renderItem={({ item }) => (
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate("사진 확대", {
-                      // source: "../../img/coffeebayLogo_test.jpg",
-                    })
-                  }
-                >
-                  <View
-                    style={{ flex: 1, flexDirection: "column", margin: 10 }}
-                  >
-                    <Image style={getInfoStyle.image} source={{}} />
-                  </View>
-                </TouchableOpacity>
-              )}
+              renderItem={CafeImages}
               numColumns={3}
             />
           </PreviewLayout>
@@ -243,6 +256,7 @@ function PreviewLayout(props) {
 }
 
 function ReviewPage(props) {
+  
   const {
     navigation: navigation,
     cafeData: cafeData,
@@ -254,8 +268,13 @@ function ReviewPage(props) {
   );
   const [reviewDatas, setreviewDatas] = useState([]);
   const [rating, setRating] = useState();
+  
+  useEffect(() => { 
+    dbService.collection("CafeData").doc(cafeData.getId()).onSnapshot((data)=>{
+      const rate = data.data().rating;
+      setRating(rate);
+    })
 
-  useEffect(() => {
     dbService
       .collection("CafeData")
       .doc(cafeData.getId())
@@ -265,11 +284,10 @@ function ReviewPage(props) {
           id: doc.id,
           ...doc.data(),
         }));
-        reviews.sort((a,b)=>a.date < b.date);
+        reviews.sort((a, b) => a.date < b.date);
         setreviewDatas(reviews);
       });
     setNotice(cafeData.getNotice());
-    setRating(cafeData.getRating());
   }, []);
 
   useEffect(() => {
@@ -282,7 +300,7 @@ function ReviewPage(props) {
     for (let i = 0; i < reviews.length; i++) {
       table.push(<ReviewPanel key={reviews[i].id} review={reviews[i]} />);
     }
-    
+
     setReviewList(table.getArray());
   }
 

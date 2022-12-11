@@ -20,8 +20,6 @@ function WriteNoticeScreen({ navigation, route }) {
     navigation.pop();
   }
 
-
-
   return (
     <View style={styles.container}>
       <View style={{ width: "100%" }}>

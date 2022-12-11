@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
     fontSize: 23,
     fontWeight:"600",
     paddingLeft:15,
+    paddingBottom:10,
   },
   AreaTitleLink:{
     fontSize: 17,
@@ -128,14 +129,20 @@ const styles = StyleSheet.create({
 
 
   AdArea:{
+    borderTopWidth:3,
+    borderTopColor: "#ddd",
+    borderRadius:10,
     marginTop:10,
-    height:200,
+    height:300,
     width:'100%',
   },
 
   AdPanel:{
     height: 200, 
     width: 300 , 
+    justifyContent: "center",
+    alignItems:"center",
+
     marginHorizontal: 10 ,
     borderColor: "#aaa",
     borderWidth: 2,

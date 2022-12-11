@@ -3,6 +3,7 @@ import { TextInput, View, StyleSheet, Button, Image, KeyboardAvoidingView, Scrol
 import Stars from "react-native-stars";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { CafeTable } from "../../Components/CafeTable";
+import { dbService } from "../../FireServer";
 import { pickImage } from "../../lib/ImageService";
 import { ReviewService } from "../../lib/ReviewService";
 
@@ -23,14 +24,18 @@ function ReviewScreen({ navigation , route }) {
   }
 
   const submitAndClear = () => {
-    console.log(star);
     if(star == 0){
       alert("별점을 매겨주세요.");
       return;
     }
-    console.log(star);
     let service = new ReviewService(cafeData, userData);
     service.uploadReview(text,image,star);
+    cafeData.addRatingPoint(star);
+    console.log(cafeData.getId());
+    dbService.collection("CafeData").doc(cafeData.getId()).update({
+      rating: cafeData.getRating()      
+    })
+
     setStar(0);
     setText("");
     navigation.goBack();

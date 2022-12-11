@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   StatusBar,
+  FlatList,
   Alert,
 } from "react-native";
 import getHomeStyle from "../../styles/screens/HomeStyle";
@@ -15,7 +16,13 @@ import { Picker } from "@react-native-picker/picker";
 import { getCafeData } from "../../lib/CafeService";
 import { dbService } from "../../FireServer";
 import { ReservationService } from "../../lib/ReservationService";
-import { UserDataService } from "../../lib/UserDataService";
+import {
+  BuisnessUserDataService,
+  UserDataService,
+} from "../../lib/UserDataService";
+import { getCurrentUserId, signOut } from "../../lib/AuthService";
+import { List } from "../../lib/DataStructure/List";
+import { getImage } from "../../lib/ImageService";
 
 function BusinessHomeScreen({ navigation, route }) {
   const [cafeData, setCafeData] = useState();
@@ -24,51 +31,43 @@ function BusinessHomeScreen({ navigation, route }) {
   const [seatImage, setSeatImage] = useState();
   const [nowTime, setNowTime] = useState(12);
   const [pageLoad, setPageLoad] = useState(false);
+
   const [seatList, setSeatList] = useState();
+  const [seatDatas, setSeatDatas] = useState();
+
   const [offlineList, setOfflineList] = useState([]);
   const [selectedSeat, setSelectedSeat] = useState("");
 
-  function GoToLogoutScreen() {
-    //signOut();
-    navigation.replace("Auth");
-  }
-
-  // picker item에 추가하는 loop
-  const makePickerItem = () => {
-    let seatLoop = [];
-    console.log(cafeData.getSeatCount());
-    for (let i = 1; i <= cafeData.getSeatCount(); i++) {
-      seatLoop.push(<Picker.Item key={i} label={String(i)} value={i} />);
-    }
-    setOfflineList(seatLoop);
-  };
+  
 
   useEffect(() => {
     start();
   }, []);
 
   async function start() {
-    //const user = new BuisnessUserDataService();
-    //await user.getBuisnessUserProfile();
-    //setCafeData(user.getCafeId());
-    const cafeId = "KW8l6oYhXj6g2xcUbstU";
-    setCafeData(await getCafeData(cafeId));
+    const userId = await getCurrentUserId();
+    const userData = (await dbService.collection("BuisnessUser").doc(userId).get()).data();
+    const cafeData = await getCafeData(userData.cafeId);
+    console.log(userId, userData.cafeId);
+    setCafeData(cafeData);
   }
 
+
+  /** 카페 데이터를 성공적으로 가져왔다면 */
   useEffect(() => {
     if (cafeData != null) {
       dbService
         .collection("CafeData")
         .doc(cafeData.getId())
-        .onSnapshot((doc) => {
+        .onSnapshot(async(doc) => {
           cafeData.loadData(doc.data());
+          console.log(cafeData.getId())
+          setSeatImage(await getImage("Cafe",cafeData.getId(), "seatImage"));
         });
-      setSeatImage(cafeData.getSeatImage());
+      
       loadSeat();
     }
-  }, [cafeData]);
-
-  useEffect(() => {}, [route?.seatData]);
+  }, [, cafeData]);
 
   async function loadSeat() {
     const reves = new ReservationService(cafeData.getSeatId());
@@ -88,14 +87,54 @@ function BusinessHomeScreen({ navigation, route }) {
     }
   }, [reserveService, pageLoad]);
 
+  /** 좌석 화면 불러오기 */
   function loadSeatInfo() {
     const seats = reserveService.getSeatDataOnTimeReserve(nowTime, true);
     const list = [];
+    let data = [];
+    
+
     seats.map((item) => {
       list.push(<SeatBtn key={item.seat} number={item.seat} uid={item.uid} />);
+      data.push({ key: item.seat, number: item.seat, uid: item.uid });
     });
+
+    setSeatDatas(data);
     setSeatList(list);
-    makePickerItem();
+    makePickerItem(seats);
+  }
+
+  const makeSeatList = ({ item }) => {
+    return <SeatBtn key={item.key} number={item.number} uid={item.uid} />;
+  };
+
+  function GoToLogoutScreen() {
+    signOut();
+    navigation.replace("Auth");
+  }
+
+  // picker에 아이템 추가
+  const makePickerItem = (list) => {
+    let seatLoop = [];
+    let isIn = false;
+    for (let i = 1; i <= cafeData.getSeatCount(); i++) {
+      list.forEach((element) => {
+        if (element.seat == i) isIn = true;
+      });
+      if (!isIn) {
+        seatLoop.push(<Picker.Item key={i} label={String(i)} value={i} />);
+      }
+      isIn = false;
+    }
+    setOfflineList(seatLoop);
+  };
+
+  async function appSeatSelf(){
+    if(selectedSeat != 0){
+      await reserveService.doSeatReservation(nowTime,selectedSeat,null,true);
+      setPageLoad((fd)=>fd+1);
+      setSelectedSeat(0);
+    }
   }
 
   function SeatBtn({ number, uid }) {
@@ -109,10 +148,12 @@ function BusinessHomeScreen({ navigation, route }) {
         {
           text: "완료",
           onPress: async () => {
-            const user = new UserDataService(uid);
-            const fd = await reserveService.doSeatCancel(nowTime, number);
-            await user.deleteReservationToUser();
-            setPageLoad(fd);
+            await reserveService.doSeatCancel(nowTime, number);
+            setPageLoad((fd) => fd + 1);
+            if (uid != null) {
+              const user = new UserDataService(uid);
+              await user.deleteReservationToUser();
+            }
           },
         },
       ]);
@@ -158,6 +199,7 @@ function BusinessHomeScreen({ navigation, route }) {
               navigation.navigate("카페정보-사업자용", {
                 cafeData: cafeData,
                 userData: userData,
+                change: false,
               });
             }}
           >
@@ -193,7 +235,7 @@ function BusinessHomeScreen({ navigation, route }) {
             </View>
             <View style={getBusinessHomeStyle.pickerBox}>
               <Picker
-                style={{ width: "100%" }}
+                style={getBusinessHomeStyle.pickerContent}
                 selectedValue={selectedSeat}
                 onValueChange={(itemValue, itemIndex) => {
                   setSelectedSeat(itemValue);
@@ -203,7 +245,10 @@ function BusinessHomeScreen({ navigation, route }) {
               </Picker>
             </View>
             <View style={getBusinessHomeStyle.addButtonContainer}>
-              <TouchableOpacity style={getBusinessHomeStyle.addButton}>
+              <TouchableOpacity
+                style={getBusinessHomeStyle.addButton}
+                onPress={appSeatSelf}
+              >
                 <Text style={{ color: "white" }}>추가하기</Text>
               </TouchableOpacity>
             </View>
@@ -215,7 +260,14 @@ function BusinessHomeScreen({ navigation, route }) {
             />
           </View>
           <View style={getBusinessHomeStyle.reservationListContainer}>
-            <View style={getBusinessHomeStyle.reservationList}>{seatList}</View>
+            {/* {seatList} */}
+            <FlatList
+              keyExtractor={(item) => String(item.id)}
+              data={seatDatas}
+              style={getBusinessHomeStyle.reservationList}
+              renderItem={makeSeatList}
+              numColumns={4}
+            />
           </View>
         </ScrollView>
         <View style={getBusinessHomeStyle.logoutContainer}>

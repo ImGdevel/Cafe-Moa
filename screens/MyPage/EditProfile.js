@@ -19,13 +19,13 @@ import { pickImage } from "../../lib/ImageService";
 import { UserDataService } from "../../lib/UserDataService";
 
 function EditProfileScreen({ navigation, route }) {
-  const { cafeData: cafeData, userData: userData } = route.params;
-  console.log(userData);
+  const { userData: userData } = route.params;
   const [image, setImage] = useState();
   const [nickname, setNickname] = useState(userData.getName());
   const [email, setEmail] = useState(userData.getEmail());
   const [passwd, setPasswd] = useState(userData.getPassword());
   const [errorText, setErrorText] = useState("");
+  const [isPW, setIsPW] = useState();
 
   const changeInfoRef = createRef();
 
@@ -98,13 +98,19 @@ function EditProfileScreen({ navigation, route }) {
           </TouchableOpacity>
           <View style={getEditProfileStyle.InputField}>
             <View style={getEditProfileStyle.ChangeBtn}>
-              <Text style={getEditProfileStyle.FieldText}>닉네임</Text>
+              <View style={{ flexDirection: "row" }}>
+                <Text style={getEditProfileStyle.FieldText}>닉네임 |</Text>
+                <Text style={getEditProfileStyle.FieldNextText}>
+                  {nickname}
+                </Text>
+              </View>
               <View style={getEditProfileStyle.confirmContainer}>
                 <TouchableOpacity
                   style={getEditProfileStyle.confirmEditBtn}
                   onPress={() => {
                     setKey(1);
                     setPh("새 닉네임");
+                    setIsPW(false);
                     OpenModal();
                   }}
                 >
@@ -144,13 +150,17 @@ function EditProfileScreen({ navigation, route }) {
               </View>
             </View> */}
             <View style={getEditProfileStyle.ChangeBtn}>
-              <Text style={getEditProfileStyle.FieldText}>비밀번호</Text>
+              <View style={{ flexDirection: "row" }}>
+                <Text style={getEditProfileStyle.FieldText}>비밀번호 |</Text>
+                {/* <Text style={getEditProfileStyle.FieldNextText}>{passwd}</Text> */}
+              </View>
               <View style={getEditProfileStyle.confirmContainer}>
                 <TouchableOpacity
                   style={getEditProfileStyle.confirmEditBtn}
                   onPress={() => {
                     setKey(3);
                     setPh("새 비밀번호");
+                    setIsPW(true);
                     OpenModal();
                   }}
                 >
@@ -204,7 +214,7 @@ function EditProfileScreen({ navigation, route }) {
                             setPasswd(text);
                           }
                         }}
-                        secureTextEntry={false}
+                        secureTextEntry={isPW}
                         autoCapitalize="none"
                       />
                       {key === 3 && (
