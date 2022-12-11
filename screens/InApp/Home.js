@@ -28,23 +28,20 @@ function HomeScreen({ navigation, route }) {
     return unsubscribe;
   }, [navigation, setUserData]);
 
-  useEffect(()=>{
-  
-  },[])
+  useEffect(() => {}, []);
 
   /** 유저 데이터 가져오기 */
   const LoadHomePage = async () => {
     let user = new UserDataService();
     await user.loadUserId();
     await user.getUserProfile();
-    
+
     setUserData(user);
     refresBookMark();
   };
 
   /** 예약 내역 로드 */
   useEffect(() => {
-    
     updateConfirmReservation();
     refresBookMark();
   }, [userData]);
@@ -140,16 +137,17 @@ function HomeScreen({ navigation, route }) {
           </View>
 
           {/** 광고  */}
-          <View style = {getHomeStyle.AdArea}>
+          <View style={getHomeStyle.AdArea}>
             <Text style={getHomeStyle.AreaTitle}> Ad </Text>
-            <ScrollView 
+            <ScrollView
               horizontal={true}
-              showsHorizontalScrollIndicator = {false}>
-                <AdPanel img={require("../../img/Advertisement/Ad1.png")}/>
-                <AdPanel img={require("../../img/Advertisement/Ad2.png")}/>
-                <AdPanel img={require("../../img/Advertisement/Ad3.png")}/>
-                <AdPanel img={require("../../img/Advertisement/Ad4.png")}/>
-                <AdPanel img={require("../../img/Advertisement/Ad5.png")}/>
+              showsHorizontalScrollIndicator={false}
+            >
+              <AdPanel img={require("../../img/Advertisement/Ad1.png")} />
+              <AdPanel img={require("../../img/Advertisement/Ad2.png")} />
+              <AdPanel img={require("../../img/Advertisement/Ad3.png")} />
+              <AdPanel img={require("../../img/Advertisement/Ad4.png")} />
+              <AdPanel img={require("../../img/Advertisement/Ad5.png")} />
             </ScrollView>
           </View>
         </ScrollView>
@@ -168,13 +166,16 @@ function BookMarkPanel(props) {
     if (cafeData != null) {
       setCafeName(cafeData.getName());
       setCafeLocation(cafeData.getAdress(1, 3));
-      if(rating == null){
+      if (rating == null) {
         setRating(cafeData.getRating());
-      }else{
-        dbService.collection("CafeData").doc(cafeData.getId()).onSnapshot((data)=>{
-          const rate = data.data().rating;
-          setRating(rate);    
-        })
+      } else {
+        dbService
+          .collection("CafeData")
+          .doc(cafeData.getId())
+          .onSnapshot((data) => {
+            const rate = data.data().rating;
+            setRating(rate);
+          });
       }
     }
   }, [cafeData]);
@@ -258,7 +259,7 @@ function ReservationView(props) {
           >
             <Text style={getHomeStyle.reserveBtnText}> 예약 내역 확인 </Text>
           </TouchableOpacity>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={getHomeStyle.reserveBtn}
             onPress={() =>
               props.navigation.navigate("카페 정보", {
@@ -267,7 +268,7 @@ function ReservationView(props) {
               })
             }
           >
-            <Text style={getHomeStyle.reserveBtnText}> 카폐 정보 </Text>
+            <Text style={getHomeStyle.reserveBtnText}> 카페 정보 </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -276,17 +277,18 @@ function ReservationView(props) {
 }
 
 /** 광고 패널 */
-function AdPanel({img}){
-  return(
+function AdPanel({ img }) {
+  return (
     <View style={getHomeStyle.AdPanel}>
-      <Image 
+      <Image
         style={{
-        resizeMode: "contain",
-        width: "101%",
-        height: "101%",
-        borderRadius:10,
-      }}
-        source={img}/>
+          resizeMode: "contain",
+          width: "101%",
+          height: "101%",
+          borderRadius: 10,
+        }}
+        source={img}
+      />
     </View>
   );
 }

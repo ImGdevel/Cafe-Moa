@@ -13,9 +13,7 @@ function DeleteUserScreen({ navigation }) {
 
   return (
     <View style={getDeleteUserStyle.container}>
-      <Text style={getDeleteUserStyle.endHeader}>
-        계정을 탈퇴하시겠습니까 ?
-      </Text>
+      <Text style={getDeleteUserStyle.endHeader}>탈퇴하시겠습니까 ?</Text>
       <Text></Text>
       <Text
         style={{
@@ -30,7 +28,7 @@ function DeleteUserScreen({ navigation }) {
         style={getDeleteUserStyle.ConfirmBox}
         onPress={DeleteUser}
       >
-        <Text style={{ fontSize: 15, fontWeight: "500" }}>계정 탈퇴하기▶</Text>
+        <Text style={{ fontSize: 15, fontWeight: "500" }}>회원 탈퇴하기▶</Text>
       </TouchableOpacity>
     </View>
   );
