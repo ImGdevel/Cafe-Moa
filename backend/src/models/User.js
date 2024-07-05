@@ -1,12 +1,16 @@
 // backend/src/models/User.js
-
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const UserSchema = new mongoose.Schema({
-  username: { type: String, required: true },
-  email: { type: String, required: true },
-  password: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now },
+const userSchema = new Schema({
+  userId: { type: Schema.Types.ObjectId },
+  name: { type: String },
+  email: { type: String },
+  password: { type: String },
+  reservation: { type: Schema.Types.ObjectId, ref: 'Reservation' },
+  image: { type: String },
+  bookmark: [{ type: Schema.Types.ObjectId, ref: 'Cafe' }],
+  review: [{ type: Schema.Types.ObjectId, ref: 'Review' }]
 });
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('User', userSchema);
