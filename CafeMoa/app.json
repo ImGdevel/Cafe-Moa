@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "CafeMoa",
+    "slug": "CafeMoa",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./asset/expo/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./asset/expo/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    }, 
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./asset/expo/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    "web": {
+      "favicon": "./asset/expo/favicon.png"
+    }
+  }
+}
