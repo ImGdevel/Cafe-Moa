@@ -1,17 +1,18 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-import java.sql.Timestamp;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.time.LocalTime;
 
 @Entity
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "reservation")
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,14 +23,15 @@ public class Reservation {
     private Cafe cafe;
 
     @ManyToOne
-    @JoinColumn(name = "seat_id")
-    private Seat seat;
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+    @Column(nullable = false)
+    private int seatNumber;
 
-    private Timestamp reservationTime;
+    @Column(nullable = false)
+    private LocalTime startTime;
 
-    // Getters and setters
+    @Column(nullable = false)
+    private LocalTime endTime;
 }

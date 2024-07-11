@@ -1,22 +1,21 @@
 package com.example.demo.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import lombok.*;
+import java.time.LocalTime;
 
-import java.sql.Timestamp;
-
-@Setter
-@Getter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReservationDTO {
     private Long id;
     private Long cafeId;
-    private Long seatId;
-    private Long customerId;
-    private String customerName;
-    private Timestamp reservationTime;
-
-    // Getters and setters
+    private Long userId;
+    private int seatNumber;
+    private LocalTime startTime;
+    private LocalTime endTime;
 }
