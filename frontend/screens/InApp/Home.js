@@ -128,7 +128,7 @@ function HomeScreen({ navigation, route }) {
                 <Text
                   style={{ alignSelf: "center", fontSize: 20, paddingLeft: 20 }}
                 >
-                  등록된 My 카페가 없습니다
+
                 </Text>
               )}
             </ScrollView>

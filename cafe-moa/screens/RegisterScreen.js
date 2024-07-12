@@ -15,12 +15,15 @@ const RegisterScreen = ({ navigation }) => {
   const passwordChkInputRef = useRef(null);
 
   const onSubmitApplication = () => {
-    // 회원가입 기능 구현
+    
+
+
+
   };
 
   const touchProps = {
     activeOpacity: 1,
-    underlayColor: "#A0A0FF",
+    underlayColor: "#2C3972",
     style: styles.btnNormal,
   };
 

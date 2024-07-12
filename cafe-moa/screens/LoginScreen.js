@@ -10,7 +10,14 @@ const LogInScreen = ({ navigation }) => {
   const passwordInputRef = useRef(null);
 
   const onSubmit = () => {
-    // 로그인 기능 구현
+    // 여기서는 로그인 검증 구현
+
+    const sessionData = {
+      userId: userId,
+      userName: '더미 유저', // 임의의 더미 데이터
+      sessionToken: 'dummy-session-token',
+    };
+    navigation.navigate('HomeTabs', { sessionData });
   };
 
   const GoToRegisterScreen = () => {
@@ -18,14 +25,9 @@ const LogInScreen = ({ navigation }) => {
     navigation.navigate('Register');
   };
 
-  const GoToBusinessLogIn = () => {
-    // 사업자 로그인 페이지로 이동
-    navigation.navigate('BusinessLogin');
-  };
-
   const touchProps = {
     activeOpacity: 1,
-    underlayColor: "#A0A0FF",
+    underlayColor: "#2C3972",
     style: styles.btnNormal,
   };
 
@@ -68,9 +70,6 @@ const LogInScreen = ({ navigation }) => {
           </TouchableHighlight>
           <TouchableOpacity style={styles.btnRegister} onPress={GoToRegisterScreen}>
             <Text style={styles.btnRegisterText}>회원가입</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.btnRegister} onPress={GoToBusinessLogIn}>
-            <Text style={styles.btnRegisterText}>사업자 로그인</Text>
           </TouchableOpacity>
         </View>
       </View>
