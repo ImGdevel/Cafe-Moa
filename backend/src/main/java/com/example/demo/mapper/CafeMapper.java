@@ -7,24 +7,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class CafeMapper {
     public CafeDTO toDto(Cafe cafe) {
-        return new CafeDTO(
-                cafe.getId(),
-                cafe.getName(),
-                cafe.getLatitude(),
-                cafe.getLongitude(),
-                cafe.getAddress(),
-                cafe.getOpeningTime(),
-                cafe.getClosingTime(),
-                cafe.getSeatCount(),
-                cafe.getLogoImage(),
-                cafe.getCafeImages(),
-                cafe.getNotice(),
-                cafe.getAverageReviewRating(),
-                cafe.getReviewCount(),
-                cafe.getTotalVisitors(),
-                cafe.getCurrentVisitors(),
-                cafe.getCreatedAt()
-        );
+        return CafeDTO.builder()
+                .id(cafe.getId())
+                .name(cafe.getName())
+                .latitude(cafe.getLatitude())
+                .longitude(cafe.getLongitude())
+                .address(cafe.getAddress())
+                .openingTime(cafe.getOpeningTime())
+                .closingTime(cafe.getClosingTime())
+                .seatCount(cafe.getSeatCount())
+                .logoImage(cafe.getLogoImage())
+                .cafeImages(cafe.getCafeImages())
+                .notice(cafe.getNotice())
+                .averageReviewRating(cafe.getAverageReviewRating())
+                .reviewCount(cafe.getReviewCount())
+                .totalVisitors(cafe.getTotalVisitors())
+                .currentVisitors(cafe.getCurrentVisitors())
+                .build();
     }
 
     public Cafe toEntity(CafeDTO cafeDTO) {
@@ -44,7 +43,6 @@ public class CafeMapper {
                 .reviewCount(cafeDTO.getReviewCount())
                 .totalVisitors(cafeDTO.getTotalVisitors())
                 .currentVisitors(cafeDTO.getCurrentVisitors())
-                .createdAt(cafeDTO.getCreatedAt())
                 .build();
     }
 }
