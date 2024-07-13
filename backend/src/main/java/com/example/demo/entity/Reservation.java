@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -30,8 +31,8 @@ public class Reservation {
     private int seatNumber;
 
     @Column(nullable = false)
-    private LocalTime startTime;
+    private LocalDateTime startTime;
 
     @Column(nullable = false)
-    private LocalTime endTime;
+    private LocalDateTime  endTime;
 }

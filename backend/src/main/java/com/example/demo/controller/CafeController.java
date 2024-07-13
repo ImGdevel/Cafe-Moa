@@ -24,12 +24,9 @@ public class CafeController {
     @PostMapping
     public ResponseEntity<CafeDTO> createCafe(@RequestBody CafeDTO cafeDTO) {
         try {
-            logger.info("Received request to create cafe: {}", cafeDTO);
-
             CafeDTO createdCafe = cafeService.createCafe(cafeDTO);
             return ResponseEntity.ok(createdCafe);
         } catch (RuntimeException ex) {
-            logger.error("Error creating cafe: {}", ex.getMessage(), ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); // 예외 발생 시 500 에러 전송
         }
     }

@@ -4,9 +4,12 @@ import com.example.demo.dto.ReservationDTO;
 import com.example.demo.dto.ReservationRequestDTO;
 import com.example.demo.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -17,9 +20,16 @@ public class ReservationController {
     private ReservationService reservationService;
 
     @PostMapping
-    public ResponseEntity<ReservationDTO> createReservation(@RequestBody ReservationRequestDTO reservationRequestDTO) {
-        ReservationDTO createdReservation = reservationService.createReservation(reservationRequestDTO);
+    public ResponseEntity<ReservationDTO> requestReservation(@RequestBody ReservationRequestDTO reservationRequestDTO) {
+        ReservationDTO createdReservation = reservationService.requestReservation(reservationRequestDTO);
         return ResponseEntity.ok(createdReservation);
+    }
+
+    @GetMapping("/cafe-reservations")
+    public ResponseEntity<List<ReservationDTO>> getReservationsByCafeIdAndDate(
+            @RequestParam Long cafeId, @RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime date) {
+        List<ReservationDTO> reservations = reservationService.getReservationsByCafeIdAndDate(cafeId, date);
+        return ResponseEntity.ok(reservations);
     }
 
     @GetMapping("/{id}")

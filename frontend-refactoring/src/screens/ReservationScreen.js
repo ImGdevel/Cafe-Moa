@@ -14,12 +14,12 @@ const ReservationScreen = ({ navigation, route }) => {
 
   const [cafeData, setCafeData] = useState(cafe_data);
   const [userData, setUserData] = useState(user_data);
-  const [seatImage, setSeatImage] = useState("");
+  const [seatImage, setSeatImage] = useState("/");
   const [selectedSeat, setSelectedSeat] = useState();
   const [modalVisible, setModalVisible] = useState(true);
   const [modalOutput, setModalOutput] = useState("Open Modal");
   const [time, setTime] = useState(0);
-  const [seatList, setSeatList] = useState(null);
+  const [seatList, setSeatList] = useState([]);
   const [nowTime, setNowTime] = useState(12);
 
   useEffect(() => {
@@ -29,35 +29,55 @@ const ReservationScreen = ({ navigation, route }) => {
   const SeatTimeTable = async () => {
     try {
       // 예약 서비스를 통해 좌석 데이터를 가져옵니다.
-      const timeTable = await ReservationService.getSeatData(cafeData.seatId);
-      setSeatList(timeTable);
+      //console.log(cafeData);
+      //const timeTable = await ReservationService.getReservationsByCafeIdAndDate(
+      //  cafeData.id,
+      //  new Date()
+      //);
+      //setSeatList(timeTable);
     } catch (error) {
-      console.error('Error loading seat data:', error);
+      console.error("Error loading seat data:", error);
     }
   };
 
-  var timeLoop = [];
-
-  for (let i = cafe_data.openingTime; i < cafe_data.closingTime; i++) {
-    const clock = `${i < 10 ? "0" + i : i}:00`;
-    let lock = i >= nowTime ? true : false;
-
-    timeLoop.push(
-      <TouchableOpacity
-        key={i}
-        style={[getModalStyle.modalButton, lock ? { backgroundColor: "#bbb" } : undefined]}
-        onPress={() => {
-          if (lock) {
-            setModalOutput("선택");
-            setModalVisible(false);
-            onSelectTime(i);
-          }
-        }}
-      >
-        <Text style={{ alignSelf: "center", fontSize: 20 }}>{clock}</Text>
-      </TouchableOpacity>
-    );
-  }
+  const generateTimeList = () => {
+    const timeLoop = [];
+    const openingTime = parseFloat(cafe_data.openingTime); // 문자열을 숫자로 변환
+    const closingTime = parseFloat(cafe_data.closingTime); // 문자열을 숫자로 변환
+  
+    // 시작 시간부터 종료 시간까지 30분 간격으로 시간을 생성합니다.
+    let currentTime = openingTime;
+    while (currentTime <= closingTime) {
+      const clock = currentTime;
+      const lock = currentTime <= nowTime;
+    
+      timeLoop.push(
+        <TouchableOpacity
+          key={currentTime}
+          style={[
+            getModalStyle.modalButton,
+            lock ? { backgroundColor: "#bbb" } : undefined,
+          ]}
+          disabled={lock}
+          onPress={() => {
+            if (!lock) {
+              setModalOutput("선택");
+              setModalVisible(false);
+              onSelectTime(currentTime);
+            }
+          }}
+        >
+          <Text style={{ alignSelf: "center", fontSize: 20 }}>{clock}:00</Text>
+        </TouchableOpacity>
+      );
+    
+      currentTime += 1.0;
+    }
+    
+  
+    return timeLoop;
+  };
+  
 
   const onSelectTime = (selectedTime) => {
     setTime(selectedTime);
@@ -90,7 +110,9 @@ const ReservationScreen = ({ navigation, route }) => {
         time: time,
         seatNumber: selectedSeat,
       };
-      const createdReservation = await ReservationService.createReservation(reservationRequestDTO);
+      const createdReservation = await ReservationService.createReservation(
+        reservationRequestDTO
+      );
 
       // 예약이 성공하면 알림을 예약합니다.
       Notifications.scheduleNotificationAsync({
@@ -105,7 +127,7 @@ const ReservationScreen = ({ navigation, route }) => {
 
       navigation.navigate("ReservationConfirmation"); // 예약 확인 화면으로 이동
     } catch (error) {
-      console.error('Error submitting reservation:', error);
+      console.error("Error submitting reservation:", error);
       alert("예약에 실패했습니다.");
     }
   };
@@ -125,7 +147,9 @@ const ReservationScreen = ({ navigation, route }) => {
                 시간을 선택해 주세요
               </Text>
             </View>
-            <ScrollView style={getModalStyle.ScrollView}>{timeLoop}</ScrollView>
+            <ScrollView style={getModalStyle.ScrollView}>
+              {generateTimeList()}
+            </ScrollView>
           </View>
         </>
       </Modal>

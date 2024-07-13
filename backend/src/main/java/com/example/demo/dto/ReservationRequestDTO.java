@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Data
@@ -15,6 +16,6 @@ public class ReservationRequestDTO {
     private Long cafeId;
     private Long userId;
     private int seatNumber;
-    private LocalTime startTime;
-    private LocalTime endTime;
+    private LocalDateTime  startTime;
+    private LocalDateTime endTime;
 }
