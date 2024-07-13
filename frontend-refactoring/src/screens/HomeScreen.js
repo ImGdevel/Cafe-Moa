@@ -2,11 +2,15 @@ import React, { useRef, useState, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Image, KeyboardAvoidingView, StyleSheet } from 'react-native';
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-const HomeScreen = ({ navigation, route }) => {
+const HomeScreen = ({ navigation, route, sessionData }) => {
   const [userData, setUserData] = useState("");
   const [reserveCafeInfo, setReserveCafeInfo] = useState();
   const [bookMarkList, setBookMarkList] = useState();
   const [isBookMark, setIsBookMark] = useState(false);
+
+  useEffect(() => {
+    console.log(sessionData);
+  }, [sessionData]);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {

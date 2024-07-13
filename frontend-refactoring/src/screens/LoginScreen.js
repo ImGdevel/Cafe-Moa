@@ -13,8 +13,8 @@ const LogInScreen = ({ navigation }) => {
     // 여기서는 로그인 검증 구현
 
     const sessionData = {
-      userId: userId,
-      userName: '더미 유저', // 임의의 더미 데이터
+      userId: 'userId',
+      userName: '더미 유저',
       sessionToken: 'dummy-session-token',
     };
     navigation.navigate('HomeTabs', { sessionData });
