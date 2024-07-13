@@ -1,7 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import { View, Text, TextInput, TouchableHighlight, TouchableOpacity, KeyboardAvoidingView, StyleSheet } from 'react-native';
+import { AuthContext } from '@api/AuthContext';
+import UserService from '../services/UserService';
 
 const LogInScreen = ({ navigation }) => {
+  const { login } = useContext(AuthContext);
   const [userId, setUserId] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [errorText, setErrorText] = useState('');
@@ -9,15 +12,16 @@ const LogInScreen = ({ navigation }) => {
   const idInputRef = useRef(null);
   const passwordInputRef = useRef(null);
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     // 여기서는 로그인 검증 구현
-
     const sessionData = {
-      userId: 'userId',
+      uid: '2',
       userName: '더미 유저',
       sessionToken: 'dummy-session-token',
     };
-    navigation.navigate('HomeTabs', { sessionData });
+
+    login(sessionData);
+    navigation.navigate('HomeTabs');
   };
 
   const GoToRegisterScreen = () => {

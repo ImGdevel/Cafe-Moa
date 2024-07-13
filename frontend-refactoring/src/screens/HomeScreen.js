@@ -1,35 +1,39 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useContext } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Image, KeyboardAvoidingView, StyleSheet } from 'react-native';
 import CafeTable from '../components/CafeTable';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import CafeService from '../services/CafeService';
 import UserService from '../services/UserService';
+import { AuthContext } from '@api/AuthContext';
 
-const HomeScreen = ({ navigation, route, sessionData }) => {
+const HomeScreen = ({ navigation, route }) => {
+  const { user } = useContext(AuthContext);
   const [userData, setUserData] = useState("");
   const [reserveCafeInfo, setReserveCafeInfo] = useState();
   const [bookMarkList, setBookMarkList] = useState();
   const [isBookMark, setIsBookMark] = useState(false);
 
   useEffect(() => {
-    console.log(sessionData);
-    setUserData(sessionData);
-  }, [sessionData]);
+    //유저 데이터 로드
+    const fetchData = async () => {
+      const userData = await UserService.getUser(user.uid);
+      console.log(userData);
+      setUserData(userData);
+    };
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       loadHomePage();
     });
-
-
-
     return unsubscribe;
   }, [navigation, userData]);
 
   const loadHomePage = async () => {
     try {
       const cafes = await CafeService.getAllCafes();
-      setReserveCafeInfo(cafes); // 서버에서 불러온 데이터를 reserveCafeInfo에 저장
+      setReserveCafeInfo(cafes); 
       setBookMarkList(cafes); 
       setIsBookMark(cafes.length > 0);
     } catch (error) {

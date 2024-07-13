@@ -2,13 +2,16 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import MainStackNavigator from '@navigation/MainStackNavigator';
-import * as Notifications from "expo-notifications";
+import * as Notifications from 'expo-notifications';
+import { AuthProvider } from '@api/AuthContext';
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <MainStackNavigator />
-    </NavigationContainer>
+    <AuthProvider>
+      <NavigationContainer>
+        <MainStackNavigator />
+      </NavigationContainer>
+    </AuthProvider>
   );
 };
 
