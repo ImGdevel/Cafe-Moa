@@ -71,7 +71,7 @@ function CafeDetailScreen({ navigation, route }) {
         <TouchableOpacity
           style={getInfoStyle.reserveButton} 
           onPress={() =>
-            navigation.navigate('예약하기', {
+            navigation.navigate('Reservation', {
               cafeData: cafeData,
               userData: userData,
             })

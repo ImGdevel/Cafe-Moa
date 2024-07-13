@@ -1,6 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Image, KeyboardAvoidingView, StyleSheet } from 'react-native';
+import CafeTable from '../components/CafeTable';
 import Ionicons from "react-native-vector-icons/Ionicons";
+import CafeService from '../services/CafeService';
 
 const HomeScreen = ({ navigation, route, sessionData }) => {
   const [userData, setUserData] = useState("");
@@ -10,6 +12,7 @@ const HomeScreen = ({ navigation, route, sessionData }) => {
 
   useEffect(() => {
     console.log(sessionData);
+    setUserData(sessionData);
   }, [sessionData]);
 
   useEffect(() => {
@@ -20,37 +23,15 @@ const HomeScreen = ({ navigation, route, sessionData }) => {
   }, [navigation, userData]);
 
   const loadHomePage = async () => {
-    // 세션 데이터 기반으로 사용자 정보 및 북마크 데이터 설정
-    if (userData) {
-      setReserveCafeInfo(dummyReservationData);
-      setBookMarkList(dummyBookmarkData);
+    try {
+      const cafes = await CafeService.getAllCafes();
+      setReserveCafeInfo(cafes); // 서버에서 불러온 데이터를 reserveCafeInfo에 저장
+      setBookMarkList(cafes); 
+      setIsBookMark(cafes.length > 0);
+    } catch (error) {
+      console.error('Failed to load home page', error);
     }
   };
-
-  const dummyReservationData = {
-    cafeId: 'dummy-cafe-id',
-    cafeName: 'Dummy Cafe',
-    cafeLocation: '123 Dummy Street',
-    rating: 4.5,
-    logo: 'https://example.com/dummy-logo.png',
-  };
-
-  const dummyBookmarkData = [
-    {
-      id: 'bookmark-1',
-      name: 'Cafe One',
-      address: 'Address One',
-      rating: 4.7,
-      logo: 'https://example.com/logo1.png',
-    },
-    {
-      id: 'bookmark-2',
-      name: 'Cafe Two',
-      address: 'Address Two',
-      rating: 4.3,
-      logo: 'https://example.com/logo2.png',
-    },
-  ];
 
   return (
     <KeyboardAvoidingView style={styles.container}>
@@ -67,11 +48,11 @@ const HomeScreen = ({ navigation, route, sessionData }) => {
               <Text style={styles.areaTitle}>My 모아</Text>
             </View>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-              {dummyBookmarkData.map((cafe) => (
+              {bookMarkList && bookMarkList.map((cafe) => (
                 <BookMarkPanel key={cafe.id} cafeData={cafe} navigation={navigation} />
               ))}
               {!isBookMark && (
-                <Text style={styles.noBookmarkText}></Text>
+                <Text style={styles.noBookmarkText}>No bookmarks yet.</Text>
               )}
             </ScrollView>
           </View>
@@ -126,7 +107,7 @@ const BookMarkPanel = ({ cafeData, navigation }) => (
     <View style={styles.bookmarkImageArea}>
       <Image
         resizeMode="contain"
-        source={{ uri: cafeData.logo }}
+        source={{ uri: cafeData.logoImage }} // "logoImage"로 변경
         style={styles.bookmarkImage}
       />
     </View>
@@ -134,7 +115,7 @@ const BookMarkPanel = ({ cafeData, navigation }) => (
       <View style={styles.bookmarkTextAreaTop}>
         <Text style={styles.cafeName}>{cafeData.name}</Text>
         <Text style={styles.rating}>
-          <Ionicons name="star" style={styles.starIcon} /> {cafeData.rating}
+          <Ionicons name="star" style={styles.starIcon} /> {cafeData.averageReviewRating} // "averageReviewRating"로 변경
         </Text>
       </View>
       <View style={styles.cafeLocationContainer}>

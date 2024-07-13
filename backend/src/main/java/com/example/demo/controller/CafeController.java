@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.CafeDTO;
 import com.example.demo.service.CafeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,14 +18,18 @@ public class CafeController {
     @Autowired
     private CafeService cafeService;
 
+    private static final Logger logger = LoggerFactory.getLogger(CafeController.class);
+
+
     @PostMapping
     public ResponseEntity<CafeDTO> createCafe(@RequestBody CafeDTO cafeDTO) {
         try {
+            logger.info("Received request to create cafe: {}", cafeDTO);
+
             CafeDTO createdCafe = cafeService.createCafe(cafeDTO);
-
-
             return ResponseEntity.ok(createdCafe);
         } catch (RuntimeException ex) {
+            logger.error("Error creating cafe: {}", ex.getMessage(), ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); // 예외 발생 시 500 에러 전송
         }
     }
