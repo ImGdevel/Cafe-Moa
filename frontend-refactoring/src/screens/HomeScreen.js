@@ -3,6 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, Image, KeyboardAvoidingView, 
 import CafeTable from '../components/CafeTable';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import CafeService from '../services/CafeService';
+import UserService from '../services/UserService';
 
 const HomeScreen = ({ navigation, route, sessionData }) => {
   const [userData, setUserData] = useState("");
@@ -19,6 +20,9 @@ const HomeScreen = ({ navigation, route, sessionData }) => {
     const unsubscribe = navigation.addListener('focus', () => {
       loadHomePage();
     });
+
+
+
     return unsubscribe;
   }, [navigation, userData]);
 

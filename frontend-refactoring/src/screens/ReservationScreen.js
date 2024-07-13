@@ -121,7 +121,7 @@ const ReservationScreen = ({ navigation, route }) => {
           body: `약 10분 후 좌석 배정 확정 마감 (${selectedSeat}번 좌석)`,
         },
         trigger: {
-          seconds: 2, // 시연용으로 2초 설정, 실제로는 600으로 변경
+          seconds: 600, // 시연용으로 2초 설정, 실제로는 600으로 변경
         },
       });
 

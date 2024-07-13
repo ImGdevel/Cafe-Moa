@@ -1,6 +1,7 @@
 import axios from 'axios';
+import config from '@config';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://192.168.219.105:8080/api';
+const API_URL =  config.API_URL + '/cafes'
 
 
 class CafeService {
@@ -8,7 +9,7 @@ class CafeService {
   // 카페 생성
   async createCafe(cafeDTO) {
     try {
-      const response = await axios.post(`${API_URL}/cafes`, cafeDTO);
+      const response = await axios.post(API_URL, cafeDTO);
       return response.data;
     } catch (error) {
       throw new Error(`Error creating cafe: ${error.message}`);
@@ -18,7 +19,7 @@ class CafeService {
   // 카페 수정
   async updateCafe(id, cafeDTO) {
     try {
-      const response = await axios.put(`${API_URL}/cafes/${id}`, cafeDTO);
+      const response = await axios.put(`${API_URL}/${id}`, cafeDTO);
       return response.data;
     } catch (error) {
       throw new Error(`Error updating cafe with ID ${id}: ${error.message}`);
@@ -28,7 +29,7 @@ class CafeService {
   // 카페 조회
   async getCafe(id) {
     try {
-      const response = await axios.get(`${API_URL}/cafes/${id}`);
+      const response = await axios.get(`${API_URL}/${id}`);
       return response.data;
     } catch (error) {
       throw new Error(`Error fetching cafe with ID ${id}: ${error.message}`);
@@ -38,7 +39,7 @@ class CafeService {
   // 카페 삭제
   async deleteCafe(id) {
     try {
-      await axios.delete(`${API_URL}/cafes/${id}`);
+      await axios.delete(`${API_URL}/${id}`);
     } catch (error) {
       throw new Error(`Error deleting cafe with ID ${id}: ${error.message}`);
     }
@@ -47,7 +48,7 @@ class CafeService {
   // 모든 카페 조회
   async getAllCafes() {
     try {
-      const response = await axios.get(`${API_URL}/cafes`);
+      const response = await axios.get(API_URL);
       return response.data;
     } catch (error) {
       throw new Error(`Error fetching all cafes: ${error.message}`);
