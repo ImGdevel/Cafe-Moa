@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, Image, TouchableHighlight} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, Image, TouchableHighlight } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 const SORT_DISTANCE = 1;
@@ -10,25 +10,65 @@ const SORT_NOW_VISITORS = 4;
 function ExploreScreen({ navigation, route }) {
   const [userData, setUserData] = useState();
   const [textInputValue, setTextInputValue] = useState('');
-  const [cafeTableList, setcafeTableList] = useState([]);
-  const [cafeDatas, setcafeDatas] = useState([]);
+  const [cafeTableList, setCafeTableList] = useState([]);
+  const [cafeDatas, setCafeDatas] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
       await LoadHomePage();
     });
+    findStart();
     return unsubscribe;
   }, [navigation]);
 
   /** 유저 데이터 가져오기 */
   const LoadHomePage = async () => {
-
+    // 유저 데이터를 불러오는 로직을 추가하세요.
   };
 
   /** 시작 */
-  const FindStart = async () => {
-
+  const findStart = async () => {
+    const dummyData = [
+      {
+        id: 1,
+        name: 'Dummy Cafe 1',
+        latitude: 37.5665,
+        longitude: 126.9780,
+        address: 'Seoul, South Korea',
+        openingTime: '09:00',
+        closingTime: '22:00',
+        seatCount: 30,
+        logoImage: 'https://dummyimage.com/80x80/000/fff.png&text=Cafe1',
+        cafeImages: 'https://dummyimage.com/600x400/000/fff.png&text=Cafe1',
+        notice: 'Welcome to Dummy Cafe 1',
+        averageReviewRating: 4.5,
+        reviewCount: 100,
+        totalVisitors: 200,
+        currentVisitors: 20,
+        createdAt: '2023-01-01',
+      },
+      {
+        id: 2,
+        name: 'Dummy Cafe 2',
+        latitude: 37.5665,
+        longitude: 126.9780,
+        address: 'Seoul, South Korea',
+        openingTime: '09:00',
+        closingTime: '22:00',
+        seatCount: 30,
+        logoImage: 'https://dummyimage.com/80x80/000/fff.png&text=Cafe2',
+        cafeImages: 'https://dummyimage.com/600x400/000/fff.png&text=Cafe2',
+        notice: 'Welcome to Dummy Cafe 1',
+        averageReviewRating: 4.5,
+        reviewCount: 100,
+        totalVisitors: 200,
+        currentVisitors: 20,
+        createdAt: '2023-01-01',
+      },
+      // 더 많은 더미 데이터를 추가하세요.
+    ];
+    setCafeDatas(dummyData);
   };
 
   /** 카페 리스트 출력 */
@@ -40,26 +80,21 @@ function ExploreScreen({ navigation, route }) {
   const CafeListLoad = () => {
     const cafeList = cafeDatas.map((cafeData) => (
       <CafeTable
-        key={cafeData.getId()}
+        key={cafeData.id}
         cafeData={cafeData}
         userData={userData}
         navigation={navigation}
       />
     ));
-    setcafeTableList(cafeList);
+    setCafeTableList(cafeList);
   };
 
   const search = () => {
-    // 카페데이터 불러오기
-
+    // 카페 데이터를 불러오기 위한 검색 로직을 추가하세요.
   };
 
   const sortCafeDataList = (type) => {
-    if (cafeService == null) {
-      return;
-    }
-    const sortedData = cafeService.sortCafeData(type);
-    setcafeDatas(sortedData);
+    // 카페 데이터를 정렬하는 로직을 추가하세요.
   };
 
   return (
@@ -107,36 +142,11 @@ function ExploreScreen({ navigation, route }) {
 function CafeTable(props) {
   const { cafeData, userData, navigation } = props;
 
-  const [cafeName, setCafeName] = useState(cafeData.getName());
-  const [cafeLocation, setCafeLocation] = useState(cafeData.getAdress(1, 3));
-  const [cafeInformation, setCafeInformaion] = useState(
-    `Open : ${cafeData.getOpenTime()}:00 ~ Close : ${cafeData.getCloseTime()}:00`
-  );
-  const [cafeLogoImage, setCafeLogoImage] = useState(cafeData.getLogo());
-  const [rating, setRating] = useState(cafeData.getRating());
-
-  useEffect(() => {
-    setCafeName(cafeData.getName());
-    setCafeLocation(cafeData.getAdress(1, 3));
-    setCafeInformaion(
-      `Open : ${cafeData.getOpenTime()}:00 ~ Close : ${cafeData.getCloseTime()}:00`
-    );
-    setCafeLogoImage(cafeData.getLogo());
-    if (rating == null) {
-      setRating(cafeData.getRating());
-    } else {
-      dbService.collection('CafeData').doc(cafeData.getId()).onSnapshot((data) => {
-        const rate = data.data().rating;
-        setRating(rate);
-      });
-    }
-  }, [cafeData]);
-
   return (
     <TouchableHighlight
       style={styles.CafeTableContainer}
       onPress={() =>
-        navigation.navigate('CafeInfo', {
+        navigation.navigate('CafeDetail', {
           cafeData: cafeData,
           userData: userData,
         })
@@ -148,19 +158,21 @@ function CafeTable(props) {
         <View style={styles.imageContainer}>
           <View style={styles.image}>
             <Image
-              source={{ uri: cafeLogoImage }}
+              source={{ uri: cafeData.logoImage }}
               style={{ width: '100%', height: '100%', borderRadius: 20 }}
             />
           </View>
         </View>
         <View style={styles.contentContainer}>
           <View style={styles.textContent}>
-            <Text style={styles.nameText}>{cafeName}</Text>
-            <Text style={styles.contentText}>{cafeLocation}</Text>
-            <Text style={styles.contentText}>{cafeInformation}</Text>
-            <View styles={styles.iconContainer}>
+            <Text style={styles.nameText}>{cafeData.name}</Text>
+            <Text style={styles.contentText}>{cafeData.address}</Text>
+            <Text style={styles.contentText}>
+              Open : {cafeData.openingTime} ~ Close : {cafeData.closingTime}
+            </Text>
+            <View style={styles.iconContainer}>
               <Text style={styles.icon}>
-                <Ionicons name="star" style={{ color: 'gold' }}></Ionicons> {rating}
+                <Ionicons name="star" style={{ color: 'gold' }}></Ionicons> {cafeData.averageReviewRating}
               </Text>
             </View>
           </View>
