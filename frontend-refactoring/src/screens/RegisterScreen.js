@@ -1,7 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import { View, Text, TextInput, TouchableHighlight, KeyboardAvoidingView, StyleSheet, Switch } from 'react-native';
+import { createUserWithEmailAndPassword } from '@services/AuthService'; // AuthService에서 회원가입 함수 가져오기
+import { AuthContext } from '@api/AuthContext';
+import UserService from '../services/UserService';
 
 const RegisterScreen = ({ navigation }) => {
+  const { login } = useContext(AuthContext);
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
@@ -14,12 +18,45 @@ const RegisterScreen = ({ navigation }) => {
   const passwordInputRef = useRef(null);
   const passwordChkInputRef = useRef(null);
 
-  const onSubmitApplication = () => {
-    
+  const onSubmitApplication = async () => {
+    if (userPassword !== userPasswordChk) {
+      setErrorText('비밀번호가 일치하지 않습니다.');
+      return;
+    }
 
+    try {
+      // Firebase 사용자 생성
+      const userCredential = await createUserWithEmailAndPassword(userEmail, userPassword);
+      console.log('User registered with UID:', userCredential);
 
+      const userDTO = {
+        uid: userCredential,
+        name: userName,
+        email: userEmail,
+        profileImage: "",
+        role: "CUSTOMER"
+      };
 
+      // 앱 서비스에 유저 데이터 등록
+      const user = await UserService.createUser(userDTO);
+
+      const sessionData = {
+        id: user.id,
+        uid: userCredential
+      };
+
+      // 로그인 처리
+      await login(sessionData);
+
+      // HomeTabs 화면으로 이동
+      navigation.navigate('HomeTabs');
+    } catch (error) {
+      console.error('Error registering user:', error.message);
+      setErrorText(error.message);
+    }
   };
+
+
 
   const touchProps = {
     activeOpacity: 1,
@@ -138,7 +175,6 @@ const styles = StyleSheet.create({
   subTitleText: {
     paddingRight: 200,
   },
-
   formArea: {
     marginVertical: 10,
     alignItems: "center",
@@ -187,7 +223,5 @@ const styles = StyleSheet.create({
     fontWeight: "400",
   },
 });
-
-
 
 export default RegisterScreen;

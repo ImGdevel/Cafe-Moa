@@ -1,6 +1,7 @@
 import React, { useRef, useState, useContext } from 'react';
-import { View, Text, TextInput, TouchableHighlight, TouchableOpacity, KeyboardAvoidingView, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableHighlight, TouchableOpacity, KeyboardAvoidingView, StyleSheet, Alert } from 'react-native';
 import { AuthContext } from '@api/AuthContext';
+import { signInUserWithEmailAndPassword } from '../services/AuthService';
 import UserService from '../services/UserService';
 
 const LogInScreen = ({ navigation }) => {
@@ -12,16 +13,62 @@ const LogInScreen = ({ navigation }) => {
   const idInputRef = useRef(null);
   const passwordInputRef = useRef(null);
 
-  const onSubmit = async () => {
-    // 여기서는 로그인 검증 구현
-    const sessionData = {
-      uid: '2',
-      userName: '더미 유저',
-      sessionToken: 'dummy-session-token',
-    };
 
-    login(sessionData);
-    navigation.navigate('HomeTabs');
+    // Step 1: Firebase 사용자 로그인
+    const SginInUser = async () => {
+      try {
+        const uid = await signInUserWithEmailAndPassword(userId, userPassword);
+        return uid;
+      } catch (error) {
+        console.error('Error Sginin user:', error.message);
+        throw error;
+      }
+    };
+  
+    // Step 2: 앱 서비스에 유저 데이터 등록 함수
+    const GetUserID = async (uid) => {
+      try {
+        const user = await UserService.getUserByUID(uid);
+        return user;
+      } catch (error) {
+        console.error('Error registering user:', error.message);
+        throw error;
+      }
+    };
+  
+  // Step 3: 로그인 처리 함수
+  const handleLogin = async (user) => {
+    try {
+      const sessionData = {
+        id: user.id,
+        uid: user.uid
+      };
+      await login(sessionData);
+    } catch (error) {
+      console.error('Error logging in:', error.message);
+      throw error;
+    }
+  };
+
+
+
+  const onSubmit = async () => {
+    try {
+
+      // Step 1: Firebase 아이디와 비밀번호를 사용하여 로그인 시도
+      const userId = await SginInUser();
+
+      // Step 2: 앱 서비스에 유저 데이터 가져오기
+      const sgininUser = await GetUserID(userId);
+
+      // Step 3: 로그인 처리
+      await handleLogin(sgininUser);
+
+      navigation.navigate('HomeTabs');
+    } catch (error) {
+      console.error('Error signing in:', error.message);
+      setErrorText('로그인에 실패했습니다. 다시 시도해주세요.');
+    }
   };
 
   const GoToRegisterScreen = () => {
@@ -122,15 +169,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#001D44",
-    borderRadius: 5,
-  },
-  btnPress: {
-    margin: 5,
-    width: "100%",
-    height: 60,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#A0A0FF",
     borderRadius: 5,
   },
   btnRegister: {

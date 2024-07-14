@@ -4,6 +4,7 @@ import getMyPageStyle from "../styles/screens/MyPageStyle";
 import UserService from "../services/UserService"
 import { AuthContext } from '@api/AuthContext';
 
+
 function MyPageScreen({ navigation }) {
   const { user } = useContext(AuthContext);
   const [userData, setUserData] = useState();
@@ -20,7 +21,7 @@ function MyPageScreen({ navigation }) {
 
   /*유저 데이터 가져오기*/
   const loadUserData = async () => {
-    await UserService.getUser(user.uid).then((data)=>{
+    await UserService.getUser(user.id).then((data)=>{
       setUserData(data);
     }).catch((error)=>{
        console.log("사용자 불러오기 실패 : ", error);

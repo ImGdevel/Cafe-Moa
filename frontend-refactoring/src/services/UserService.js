@@ -36,6 +36,16 @@ class UserService {
     }
   }
 
+  async getUserByUID(uid) {
+    try {
+      const response = await axios.get(`${API_URL}/uid/${uid}`);
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetching user with ID ${id}:`, error);
+      throw error;
+    }
+  }
+
   async deleteUser(id) {
     try {
       await axios.delete(`${API_URL}/${id}`);
@@ -57,32 +67,3 @@ class UserService {
 };
 
 export default new UserService();
-
-/*
-
-    async addDummyData() {
-        try {
-            const dummyUsers = [
-                  {
-                    uid: 'WOISDQWD',
-                    name: 'Alice1',
-                    email: 'alice@email.com',
-                },
-                {
-                    uid: 'SDJOQWIDSOA',
-                    name: 'Bob2',
-                    email: 'bob@email.com',
-                },
-                // 추가적인 더미 카페 데이터를 필요한 만큼 추가하세요
-            ];
-
-    
-            for (let user of dummyUsers) {
-                await axios.post(`${API_URL}`, user);
-            }
-            console.log('Dummy users added successfully!');
-        } catch (error) {
-            console.error('Error adding dummy users:', error);
-        }
-    }
-    */

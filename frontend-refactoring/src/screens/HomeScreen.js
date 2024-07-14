@@ -16,7 +16,8 @@ const HomeScreen = ({ navigation, route }) => {
   useEffect(() => {
     //유저 데이터 로드
     const fetchData = async () => {
-      const userData = await UserService.getUser(user.uid);
+      console.log(user);
+      const userData = await UserService.getUser(user.id);
       console.log(userData);
       setUserData(userData);
     };

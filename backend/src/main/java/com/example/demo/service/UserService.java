@@ -48,6 +48,15 @@ public class UserService {
         return userMapper.toDto(user);
     }
 
+    @Transactional(readOnly = true)
+    public UserDTO getUserByUID(String uid) {
+        User user = userRepository.findByUid(uid);
+        if (user == null) {
+            throw new ResourceNotFoundException("User not found with uid: " + uid);
+        }
+        return userMapper.toDto(user);
+    }
+
     @Transactional
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
