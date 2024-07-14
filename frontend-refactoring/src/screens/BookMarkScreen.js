@@ -1,17 +1,9 @@
 import React, { useState, useEffect } from "react";
-import {
-  Image,
-  TouchableHighlight,
-  View,
-  Text,
-  ScrollView,
-} from "react-native";
-
-import getMyMOAStyle from "../../styles/screens/BookMarkStyle";
-import getBookmarkTableStyles from "../../styles/components/BookmarkTableStyle";
+import { Image, TouchableHighlight, View, Text, ScrollView,} from "react-native";
+import getMyMOAStyle from "../styles/screens/BookMarkStyle";
+import getBookmarkTableStyles from "../styles/components/BookmarkTableStyle";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { getCafeDatas } from "../../lib/CafeService";
-import { dbService } from "../../FireServer";
+
 
 function BookMarkScreen({ navigation, route }) {
   const { userData: userData } = route.params;

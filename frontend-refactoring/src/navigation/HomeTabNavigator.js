@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import HomeScreen from '@screens/HomeScreen';
 import ExploreScreen from '@screens/ExploreScreen';
-import ProfileScreen from '@screens/ProfileScreen';
+import MypageScreen from '@screens/MypageScreen';
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 const Tab = createBottomTabNavigator();
@@ -35,8 +35,8 @@ const HomeTabNavigator = ({ route }) => {
         {props => <HomeScreen {...props} sessionData={route.params?.sessionData} />}
       </Tab.Screen>
       <Tab.Screen 
-        name="Profile" 
-        component={ProfileScreen} 
+        name="Mypage" 
+        component={MypageScreen} 
         options={{
           headerShown: false,
           tabBarIcon: ({ focused }) => (

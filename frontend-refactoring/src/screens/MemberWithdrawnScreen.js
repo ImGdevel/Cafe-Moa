@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
 
-import { signOut } from "../../lib/AuthService";
+import AuthService from "../services/AuthService"
 
-import getDeleteUserStyle from "../../styles/screens/DeleteUserStyle";
+import getDeleteUserStyle from "../styles/screens/DeleteUserStyle";
 
-function DeleteUserScreen({ navigation }) {
+function MemberWithdrawnScreen({ navigation }) {
   function DeleteUser() {
-    signOut();
+    //AuthService... 로그 아웃 구현
     navigation.replace("Auth");
   }
 
@@ -34,4 +34,4 @@ function DeleteUserScreen({ navigation }) {
   );
 }
 
-export default DeleteUserScreen;
+export default MemberWithdrawnScreen;

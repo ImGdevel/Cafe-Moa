@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {
-  Image,
-  TouchableOpacity,
-  View,
-  Text,
-  KeyboardAvoidingView,
-} from "react-native";
+import { Image, TouchableOpacity, View, Text, KeyboardAvoidingView,} from "react-native";
+import getMyPageStyle from "../styles/screens/MyPageStyle";
+import UserService from "../services/UserService"
 
-import getMyPageStyle from "../../styles/screens/MyPageStyle";
-import { signOut } from "../../lib/AuthService";
-import { UserDataService } from "../../lib/UserDataService";
 
 function MyPageScreen({ navigation }) {
   const [userData, setUserData] = useState();
@@ -19,16 +12,16 @@ function MyPageScreen({ navigation }) {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", async () => {
-      LoadHomePage();
+      await loadUserData()
     });
     return unsubscribe;
   }, [navigation, setUserData]);
 
-  /** 유저 데이터 가져오기 */
-  const LoadHomePage = async () => {
-    let user = new UserDataService();
-    await user.getUserProfile();
-    setUserData(user);
+  /*유저 데이터 가져오기*/
+  const loadUserData = async () => {
+    await UserService.getUser(user.uid).then((data)=>{
+      setUserData(data);
+    })
   };
 
   useEffect(() => {
@@ -38,11 +31,11 @@ function MyPageScreen({ navigation }) {
   const getData = async () => {
     if (userData != null) {
       console.log("새로고침");
-      setUserName(userData.getName());
-      setUserEmail(userData.getEmail());
-      const imgs = await userData.getProfileImage();
+      setUserName(userData.name);
+      setUserEmail(userData.email);
+      const imgs = ""
       if (imgs == " " || imgs == null ) {
-        setUserImage(require("../../img/initialProfile.jpg"));
+        setUserImage(require("@img/initialProfile.jpg"));
       } else {
         setUserImage({ uri: imgs });
       }
@@ -51,7 +44,7 @@ function MyPageScreen({ navigation }) {
 
   //옵션
   function GoToOptionScreen() {
-    navigation.navigate("옵션", {
+    navigation.navigate("Option", {
       userData: userData,
     });
   }
@@ -59,7 +52,7 @@ function MyPageScreen({ navigation }) {
   //북마크
   function GoToMyMOAScreen() {
     console.log("데이터", userData);
-    navigation.navigate("북마크", {
+    navigation.navigate("Bookmark", {
       userData: userData,
     });
   }
@@ -67,21 +60,20 @@ function MyPageScreen({ navigation }) {
   // 리뷰
   function GoToMyReviewScreen() {
     console.log("데이터", userData);
-    navigation.navigate("My Review", {
+    navigation.navigate("MyReview", {
       userData: userData,
     });
   }
 
   //테스트 중
   function GoToEditProfileScreen() {
-    navigation.navigate("개인정보수정", {
+    navigation.navigate("ProfileEdit", {
       userData: userData,
     });
   }
 
   //로그아웃
   function GoToLogoutScreen() {
-    signOut();
     navigation.replace("Auth");
   }
 
