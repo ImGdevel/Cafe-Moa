@@ -23,7 +23,7 @@ function OptionScreen({ navigation, route }) {
       <View style={getOptionStyle.subtitleHeader}>
         <Text sytle={{ fontSize: 20 }}>일반</Text>
       </View>
-      <View style={getOptionStyle.optionBtn}>
+      <View style={getOptionStyle.optionButton}>
         <View>
           <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>
             <IonIcons
@@ -42,7 +42,7 @@ function OptionScreen({ navigation, route }) {
           value={isPushEnabled}
         />
       </View>
-      {/* <View style={getOptionStyle.optionBtn}>
+      {/* <View style={getOptionStyle.optionButton}>
         <View>
           <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>
             <IonIcons

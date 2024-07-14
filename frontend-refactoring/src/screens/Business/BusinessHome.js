@@ -93,7 +93,7 @@ function BusinessHomeScreen({ navigation, route }) {
     let data = [];
 
     seats.map((item) => {
-      list.push(<SeatBtn key={item.seat} number={item.seat} uid={item.uid} />);
+      list.push(<SeatButton key={item.seat} number={item.seat} uid={item.uid} />);
       data.push({ key: item.seat, number: item.seat, uid: item.uid });
     });
 
@@ -103,7 +103,7 @@ function BusinessHomeScreen({ navigation, route }) {
   }
 
   const makeSeatList = ({ item }) => {
-    return <SeatBtn key={item.key} number={item.number} uid={item.uid} />;
+    return <SeatButton key={item.key} number={item.number} uid={item.uid} />;
   };
 
   function GoToLogoutScreen() {
@@ -135,7 +135,7 @@ function BusinessHomeScreen({ navigation, route }) {
     }
   }
 
-  function SeatBtn({ number, uid }) {
+  function SeatButton({ number, uid }) {
     const onSeat = () => {
       Alert.alert("", `${number}번 좌석을 사용완료합니다.`, [
         {
@@ -272,7 +272,7 @@ function BusinessHomeScreen({ navigation, route }) {
         </ScrollView>
         <View style={getBusinessHomeStyle.logoutContainer}>
           <TouchableOpacity
-            style={getBusinessHomeStyle.logoutBtn}
+            style={getBusinessHomeStyle.logoutButton}
             onPress={GoToLogoutScreen}
           >
             <Text style={{ color: "black", fontSize: 21 }}>로그아웃</Text>

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView, FlatList } from 'react-native';
-import getInfoStyle from "@styles/screens/InfoStyle";
-import getCafeTableStyle from "@styles/components/CafeTableStyle";
-import getFindStyle from "@styles/components/FindStyle";
+import getInfoStyle from "../styles/screens/InfoStyle";
+import getFindStyle from "../styles/components/FindStyle";
 import getReviewStyle from "../styles/components/ReviewStyle";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ReviewService from '../services/ReviewService';
 import CafeTable from '../components/CafeTableNon';
+import ReviewPanel from '../components/ReviewPanel';
 
 function CafeDetailScreen({ navigation, route }) {
   const { cafeData, userData } = route.params;
@@ -77,15 +77,6 @@ function CafeDetailScreen({ navigation, route }) {
         </PreviewLayout>
       </View>
 
-      <TouchableOpacity
-          style={getReviewStyle.reviewButton}
-          onPress={() => {
-            navigation.navigate('Review', { cafeData, userData });
-          }}
-        >
-          <Text style={getReviewStyle.reviewButtonText}>리뷰 작성하기</Text>
-        </TouchableOpacity>
-      
       <View style={getInfoStyle.btnContainer}>
         <TouchableOpacity
           style={getInfoStyle.reserveButton} 
@@ -146,7 +137,6 @@ function ReviewPage({ navigation, cafeData, userData }) {
     const fetchReviews = async () => {
       try {
         const reviews = await ReviewService.getReviewsByCafeId(cafeData.id);
-        console.log(reviews);
         setReviewDatas(reviews);
       } catch (error) {
         console.error('Error fetching reviews:', error);
@@ -193,59 +183,6 @@ function ReviewPage({ navigation, cafeData, userData }) {
       </View>
       <View>{reviewList}</View>
     </ScrollView>
-  );
-}
-
-
-
-function ReviewPanel({ review }) {
-  const [userName, setUserName] = useState('사용자');
-  const [date, setDate] = useState('날짜');
-  const [text, setText] = useState('');
-  const [image, setImage] = useState(null);
-/*
-  useEffect(() => {
-    if (review) {
-      const reviewDate = new Date(review.createdAt); // createdAt을 Date 객체로 파싱
-      setUserName(review.authorName); // 예제에서는 authorName이 없으므로 적절한 사용자 데이터를 가져오는 방식으로 수정 필요
-      setDate(
-        `${leadingZeros(reviewDate.getMonth() + 1, 2)}/${leadingZeros(reviewDate.getDate(), 2)} (${leadingZeros(reviewDate.getHours(), 2)}:${leadingZeros(reviewDate.getMinutes(), 2)})`
-      );
-      setText(review.content);
-      getAuthorImage(review.authorId); // authorId를 사용해 사용자 이미지 가져오기 함수 호출
-    }
-  }, [review]);
-
-  const getAuthorImage = async (authorId) => {
-    if (authorId) {
-      // 사용자 데이터를 가져오는 로직 (UserDTO와 연결되는 방식으로 수정 필요)
-    } else {
-      setImage(require('@img/initialProfile.jpg')); // 기본 이미지 설정
-    }
-  };
-
-  const leadingZeros = (n, digits) => {
-    let zero = '';
-    n = n.toString();
-    if (n.length < digits) {
-      for (let i = 0; i < digits - n.length; i++) zero += '0';
-    }
-    return zero + n;
-  };
-*/
-  return (
-    <View style={getReviewStyle.reviewContainer}>
-      {/* <View style={getReviewStyle.reviewHeader}>
-        <Image style={getReviewStyle.profileImage} source={image} />
-        <View style={getReviewStyle.reviewInfo}>
-          <View style={getReviewStyle.reviewMeta}>
-            <Text style={getReviewStyle.reviewUser}>{userName}</Text>
-            <Text style={getReviewStyle.reviewDate}>{date}</Text>
-          </View>
-        </View>
-      </View>
-      <Text style={getReviewStyle.reviewText}>{text}</Text> */}
-    </View>
   );
 }
 

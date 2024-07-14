@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "flex-start",
   },
-  optionBtn: {
+  optionButton: {
     backgroundColor: "white",
     flex: 1,
     borderBottomWidth: 1,

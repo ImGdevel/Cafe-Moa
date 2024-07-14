@@ -100,6 +100,11 @@ const styles = StyleSheet.create({
     width: "80%",
     height: 55,
   },
+  reserveButtonText: {
+    fontSize: 20,
+    color: "white",
+    fontWeight: "500",
+  },
   btnContainer: {
     alignItems: "center",
     justifyContent: "center",

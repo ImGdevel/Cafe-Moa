@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
   },
-  logoutBtn: {
+  logoutButton: {
     backgroundColor: "#ccc",
     alignItems: "center",
     justifyContent: "center",

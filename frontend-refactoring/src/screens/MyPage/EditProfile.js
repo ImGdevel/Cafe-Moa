@@ -88,7 +88,7 @@ function EditProfileScreen({ navigation, route }) {
       <KeyboardAvoidingView style={getEditProfileStyle.container}>
         <ScrollView style={{ width: "100%", height: "100%" }}>
           <TouchableOpacity
-            style={getEditProfileStyle.ProfilePicBtn}
+            style={getEditProfileStyle.ProfilePicButton}
             onPress={PickImage}
           >
             <Image
@@ -97,7 +97,7 @@ function EditProfileScreen({ navigation, route }) {
             ></Image>
           </TouchableOpacity>
           <View style={getEditProfileStyle.InputField}>
-            <View style={getEditProfileStyle.ChangeBtn}>
+            <View style={getEditProfileStyle.ChangeButton}>
               <View style={{ flexDirection: "row" }}>
                 <Text style={getEditProfileStyle.FieldText}>닉네임 |</Text>
                 <Text style={getEditProfileStyle.FieldNextText}>
@@ -106,7 +106,7 @@ function EditProfileScreen({ navigation, route }) {
               </View>
               <View style={getEditProfileStyle.confirmContainer}>
                 <TouchableOpacity
-                  style={getEditProfileStyle.confirmEditBtn}
+                  style={getEditProfileStyle.confirmEditButton}
                   onPress={() => {
                     setKey(1);
                     setPh("새 닉네임");
@@ -126,11 +126,11 @@ function EditProfileScreen({ navigation, route }) {
                 </TouchableOpacity>
               </View>
             </View>
-            {/* <View style={getEditProfileStyle.ChangeBtn}>
+            {/* <View style={getEditProfileStyle.ChangeButton}>
               <Text style={getEditProfileStyle.FieldText}>이메일</Text>
               <View style={getEditProfileStyle.confirmContainer}>
                 <TouchableOpacity
-                  style={getEditProfileStyle.confirmEditBtn}
+                  style={getEditProfileStyle.confirmEditButton}
                   onPress={() => {
                     setKey(2);
                     setPh("새 이메일");
@@ -149,14 +149,14 @@ function EditProfileScreen({ navigation, route }) {
                 </TouchableOpacity>
               </View>
             </View> */}
-            <View style={getEditProfileStyle.ChangeBtn}>
+            <View style={getEditProfileStyle.ChangeButton}>
               <View style={{ flexDirection: "row" }}>
                 <Text style={getEditProfileStyle.FieldText}>비밀번호 |</Text>
                 {/* <Text style={getEditProfileStyle.FieldNextText}>{passwd}</Text> */}
               </View>
               <View style={getEditProfileStyle.confirmContainer}>
                 <TouchableOpacity
-                  style={getEditProfileStyle.confirmEditBtn}
+                  style={getEditProfileStyle.confirmEditButton}
                   onPress={() => {
                     setKey(3);
                     setPh("새 비밀번호");

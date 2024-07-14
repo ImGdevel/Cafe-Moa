@@ -115,14 +115,14 @@ function CafeTable({ cafeData, userData, navigation }) {
       flex: 1,
       backgroundColor: '#fff',
     },
-    reserveBtnContainer: {
+    reserveButtonContainer: {
       height: 48,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-evenly',
       backgroundColor: '#fff',
     },
-    reserveBtn: {
+    reserveButton: {
       width: '45%',
       height: '95%',
       marginBottom: '3%',
@@ -131,7 +131,7 @@ function CafeTable({ cafeData, userData, navigation }) {
       alignItems: 'center',
       justifyContent: 'center',
     },
-    reserveBtnText: {
+    reserveButtonText: {
       color: '#fff',
       fontSize: 18,
     },

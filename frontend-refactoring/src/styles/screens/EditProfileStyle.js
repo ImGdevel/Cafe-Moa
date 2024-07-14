@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     alignItems: "center",
   },
-  ProfilePicBtn: {
+  ProfilePicButton: {
     width: 180,
     height: 180,
     marginVertical: "10%",
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "flex-start",
   },
-  ChangeBtn: {
+  ChangeButton: {
     width: "100%",
     height: 60,
     justifyContent: "space-between",
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     lineHeight:37,
     paddingLeft:10,
   },
-  confirmEditBtn: {
+  confirmEditButton: {
     width: "100%",
     height: "100%",
     borderRadius: 10,

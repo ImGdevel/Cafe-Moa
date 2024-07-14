@@ -71,7 +71,7 @@ function LocationSelectionScreen({ navigation, route }){
       </View>
       <View style={styles.footContainer}>
         <TouchableOpacity
-          style={styles.submitBtn}
+          style={styles.submitButton}
           onPress={onSubmit}
         >
           <Text style={{color:"#fff", fontSize: 20}}>
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     alignItems:"center",
     justifyContent:"center",
   },
-  submitBtn:{
+  submitButton:{
     width:"80%",
     height:60,
     backgroundColor:"#001D44",

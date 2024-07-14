@@ -182,7 +182,7 @@ function CafeCreatFormScreen({ navigation, route }) {
                 }
               />
               <TouchableOpacity
-                style={getInputStyle.locationBtn}
+                style={getInputStyle.locationButton}
                 onPress={goMap}
               >
                 <Text> 위치 설정 </Text>
@@ -314,7 +314,7 @@ function CafeCreatFormScreen({ navigation, route }) {
           </View>
         </View>
       </ScrollView>
-      <View style={getInputStyle.submitBtnContainer}>
+      <View style={getInputStyle.submitButtonContainer}>
         <TouchableOpacity
           style={getInputStyle.submitButton}
           onPress={SubmitCreateCafe}

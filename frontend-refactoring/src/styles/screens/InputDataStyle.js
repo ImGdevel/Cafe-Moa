@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: "10",
   },
-  locationBtn: {
+  locationButton: {
     justifyContent: "center",
     alignItems: "center",
     width: "45%",
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderRadius: 15,
   },
-  submitBtnContainer: {
+  submitButtonContainer: {
     width: "100%",
     height: 80,
     justifyContent: "center",

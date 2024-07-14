@@ -84,22 +84,22 @@ const ReservationView = ({ cafeData, navigation }) => {
         <View style={styles.reserveCafeContainer}>
           <CafeTable cafeData={cafeData} navigation={navigation} />
         </View>
-        <View style={styles.reserveBtnContainer}>
+        <View style={styles.reserveButtonContainer}>
           <TouchableOpacity
-            style={styles.reserveBtn}
+            style={styles.reserveButton}
             onPress={() =>
               navigation.navigate('ConfirmReservation', { cafeData })
             }
           >
-            <Text style={styles.reserveBtnText}>예약 내역 확인</Text>
+            <Text style={styles.reserveButtonText}>예약 내역 확인</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.reserveBtn}
+            style={styles.reserveButton}
             onPress={() =>
               navigation.navigate('카페 정보', { cafeData })
             }
           >
-            <Text style={styles.reserveBtnText}>카페 정보</Text>
+            <Text style={styles.reserveButtonText}>카페 정보</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -179,14 +179,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  reserveBtnContainer: {
+  reserveButtonContainer: {
     height: 48,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
     backgroundColor: '#fff',
   },
-  reserveBtn: {
+  reserveButton: {
     width: '45%',
     height: '95%',
     marginBottom: '3%',
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  reserveBtnText: {
+  reserveButtonText: {
     color: '#fff',
     fontSize: 18,
   },

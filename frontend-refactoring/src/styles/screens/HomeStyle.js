@@ -54,14 +54,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
-  reserveBtnContainer: {
+  reserveButtonContainer: {
     height: 48,
     flexDirection: "row",
     alignItems:"center",
     justifyContent:"space-evenly",
     backgroundColor: "#fff",
   },
-  reserveBtn:{
+  reserveButton:{
     width: "45%",
     height: "95%",
     marginBottom: "3%",
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  reserveBtnText:{
+  reserveButtonText:{
     color:"#fff",
     fontSize: 18,
   },

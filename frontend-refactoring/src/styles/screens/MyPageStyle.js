@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     height: "15%",
     width: "100%",
   },
-  infoBtn: {
+  infoButton: {
     backgroundColor: "#001D44",
     alignItems: "center",
     justifyContent: "center",

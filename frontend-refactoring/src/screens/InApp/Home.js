@@ -245,9 +245,9 @@ function ReservationView(props) {
             navigation={navigation}
           />
         </View>
-        <View style={getHomeStyle.reserveBtnContainer}>
+        <View style={getHomeStyle.reserveButtonContainer}>
           <TouchableOpacity
-            style={getHomeStyle.reserveBtn}
+            style={getHomeStyle.reserveButton}
             onPress={() =>
               props.navigation.navigate("ConfirmReservation", {
                 cafeData: cafeData,
@@ -255,10 +255,10 @@ function ReservationView(props) {
               })
             }
           >
-            <Text style={getHomeStyle.reserveBtnText}> 예약 내역 확인 </Text>
+            <Text style={getHomeStyle.reserveButtonText}> 예약 내역 확인 </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={getHomeStyle.reserveBtn}
+            style={getHomeStyle.reserveButton}
             onPress={() =>
               props.navigation.navigate("카페 정보", {
                 cafeData: cafeData,
@@ -266,7 +266,7 @@ function ReservationView(props) {
               })
             }
           >
-            <Text style={getHomeStyle.reserveBtnText}> 카페 정보 </Text>
+            <Text style={getHomeStyle.reserveButtonText}> 카페 정보 </Text>
           </TouchableOpacity>
         </View>
       </View>

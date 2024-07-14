@@ -196,7 +196,7 @@ const ReservationScreen = ({ navigation, route }) => {
               </Picker>
             </View>
             <TouchableOpacity
-              style={getReserveStyle.reserveBtn}
+              style={getReserveStyle.reserveButton}
               onPress={submitReservation}
             >
               <Text style={{ color: "white", fontSize: 15 }}>예약하기</Text>

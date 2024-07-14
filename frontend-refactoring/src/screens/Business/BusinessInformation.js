@@ -367,7 +367,7 @@ function ReviewPage(props) {
           <Text style={getReviewStyle.ratingsText}>{rating}</Text>
         </View>
         <TouchableOpacity
-          style={getReviewStyle.reviewBtn}
+          style={getReviewStyle.reviewButton}
           onPress={() => {
             navigation.navigate("공지 작성", {
               cafeData: cafeData,
@@ -375,7 +375,7 @@ function ReviewPage(props) {
             });
           }}
         >
-          <Text style={getReviewStyle.reviewBtnText}>카페 공지 작성</Text>
+          <Text style={getReviewStyle.reviewButtonText}>카페 공지 작성</Text>
         </TouchableOpacity>
       </View>
       <View>{reviewList}</View>

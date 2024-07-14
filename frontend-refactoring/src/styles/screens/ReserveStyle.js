@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     width: "90%",
     height: "100%",
   },
-  reserveBtn: {
+  reserveButton: {
     backgroundColor: "#001D44",
     alignItems: "center",
     justifyContent: "center",

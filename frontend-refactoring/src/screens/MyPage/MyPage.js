@@ -104,7 +104,7 @@ function MyPageScreen({ navigation }) {
           <Text style={{ fontWeight: "400", fontSize: 15 }}>{userEmail}</Text>
           <Text></Text>
           <TouchableOpacity
-            style={getMyPageStyle.infoBtn}
+            style={getMyPageStyle.infoButton}
             onPress={GoToEditProfileScreen}
           >
             <Text style={{ color: "white", fontSize: 20 }}>개인정보변경</Text>
