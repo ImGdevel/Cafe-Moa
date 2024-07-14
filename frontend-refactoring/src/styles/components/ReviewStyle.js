@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "500",
   },
-  reviewBtn: {
+  reviewButton: {
     width: "50%",
     height: 50,
     marginHorizontal: 45,
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#001D44",
     borderRadius: 4,
   },
-  reviewBtnText: {
+  reviewButtonText: {
     fontSize: 20,
     color: "white",
     fontWeight: "500",

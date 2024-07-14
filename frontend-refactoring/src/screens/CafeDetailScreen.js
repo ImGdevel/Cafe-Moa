@@ -3,8 +3,10 @@ import { View, Text, Image, TouchableOpacity, ScrollView, FlatList } from 'react
 import getInfoStyle from "@styles/screens/InfoStyle";
 import getCafeTableStyle from "@styles/components/CafeTableStyle";
 import getFindStyle from "@styles/components/FindStyle";
-import getReviewStyle from "@styles/components/ReviewStyle";
+import getReviewStyle from "../styles/components/ReviewStyle";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import ReviewService from '../services/ReviewService';
+import CafeTable from '../components/CafeTableNon';
 
 function CafeDetailScreen({ navigation, route }) {
   const { cafeData, userData } = route.params;
@@ -12,7 +14,6 @@ function CafeDetailScreen({ navigation, route }) {
   const [imageDatas, setImageDatas] = useState([]);
 
   useEffect(() => {
-    console.log("submit",cafeData);
     loadCafeImages();
   }, [cafeData]);
 
@@ -58,16 +59,33 @@ function CafeDetailScreen({ navigation, route }) {
           userData={userData}
           navigation={navigation}
         >
-          <FlatList
-            keyExtractor={(item, index) => index.toString()}
-            data={imageDatas}
-            style={getInfoStyle.picArea}
-            renderItem={CafeImages}
-            numColumns={3}
-          />
+          {direction === '사진' ? (
+            <FlatList
+              keyExtractor={(item, index) => index.toString()}
+              data={imageDatas}
+              style={getInfoStyle.picArea}
+              renderItem={CafeImages}
+              numColumns={3}
+            />
+          ) : direction === '좌석' ? (
+            <View style={getInfoStyle.seatContainer}>
+              <Image source={cafeData ? { uri: cafeData.seatImage } : {}} style={getInfoStyle.seatPic} />
+            </View>
+          ) : (
+            <ReviewPage cafeData={cafeData} userData={userData} navigation={navigation} />
+          )}
         </PreviewLayout>
       </View>
 
+      <TouchableOpacity
+          style={getReviewStyle.reviewButton}
+          onPress={() => {
+            navigation.navigate('Review', { cafeData, userData });
+          }}
+        >
+          <Text style={getReviewStyle.reviewButtonText}>리뷰 작성하기</Text>
+        </TouchableOpacity>
+      
       <View style={getInfoStyle.btnContainer}>
         <TouchableOpacity
           style={getInfoStyle.reserveButton} 
@@ -85,70 +103,6 @@ function CafeDetailScreen({ navigation, route }) {
   );
 }
 
-function CafeTable({ cafeData, userData, navigation }) {
-  const [cafeName, setCafeName] = useState(cafeData.name);
-  const [cafeLocation, setCafeLocation] = useState(cafeData.address);
-  const [cafeInformation, setCafeInformation] = useState(
-    `Open : ${cafeData.openingTime} ~ Close : ${cafeData.closingTime}`
-  );
-  const [cafeLogoImage, setCafeLogoImage] = useState(cafeData.logoImage);
-
-  useEffect(() => {
-    setCafeName(cafeData.name);
-    setCafeLocation(cafeData.address);
-    setCafeInformation(`Open : ${cafeData.openingTime} ~ Close : ${cafeData.closingTime}`);
-    setCafeLogoImage(cafeData.logoImage);
-  }, [cafeData]);
-
-  const Bookmark = () => {
-    const cafeId = cafeData.id;
-    const [icon, setIcon] = useState('heart-outline');
-    const [iconStyle, setIconStyle] = useState({ fontSize: 30, color: 'black' });
-    const [checked, setChecked] = useState(false);
-
-    useEffect(() => {
-      // if (userData.isBookmarked(cafeId)) {
-      //   setIcon('heart');
-      //   setIconStyle({ fontSize: 30, color: '#e00' });
-      //   setChecked(true);
-      // }
-    }, []);
-
-    const bookMarked = async () => {
-      if (checked) {
-        await userData.deleteBookmark(cafeId);
-        setIcon('heart-outline');
-        setIconStyle({ fontSize: 30, color: 'black' });
-        setChecked(false);
-      } else {
-        await userData.addBookmark(cafeId);
-        setIcon('heart');
-        setIconStyle({ fontSize: 30, color: '#e00' });
-        setChecked(true);
-      }
-    };
-
-    return <Ionicons name={icon} style={iconStyle} onPress={bookMarked} />;
-  };
-
-  return (
-    <View style={getCafeTableStyle.container}>
-      <View style={getCafeTableStyle.imageContainer}>
-        <Image source={{ uri: cafeLogoImage }} style={getInfoStyle.cafeLogo} />
-      </View>
-      <View style={getCafeTableStyle.contentContainer}>
-        <View style={getCafeTableStyle.textContent}>
-          <View style={getCafeTableStyle.divideContent}>
-            <Text style={getCafeTableStyle.nameText}>{cafeName}</Text>
-            <Bookmark />
-          </View>
-          <Text style={getCafeTableStyle.contentText}>{cafeLocation}</Text>
-          <Text style={getCafeTableStyle.contentText}>{cafeInformation}</Text>
-        </View>
-      </View>
-    </View>
-  );
-}
 
 function PreviewLayout({ children, values, selectedValue, setSelectedValue, cafeData, userData, navigation }) {
   return (
@@ -175,15 +129,7 @@ function PreviewLayout({ children, values, selectedValue, setSelectedValue, cafe
           </TouchableOpacity>
         ))}
       </View>
-      {selectedValue === '사진' ? (
-        <View style={getInfoStyle.container}>{children}</View>
-      ) : selectedValue === '좌석' ? (
-        <View style={getInfoStyle.seatContainer}>
-          <Image source={cafeData ? { uri: cafeData.seatImage } : {}} style={getInfoStyle.seatPic} />
-        </View>
-      ) : (
-        <ReviewPage cafeData={cafeData} userData={userData} navigation={navigation} />
-      )}
+      <View style={getInfoStyle.container}>{children}</View>
     </View>
   );
 }
@@ -194,13 +140,26 @@ function ReviewPage({ navigation, cafeData, userData }) {
   const [rating, setRating] = useState(cafeData.averageReviewRating || 0);
   const [reviewDatas, setReviewDatas] = useState([]);
 
-
   useEffect(() => {
-    //
+    console.log(cafeData);
+
+    const fetchReviews = async () => {
+      try {
+        const reviews = await ReviewService.getReviewsByCafeId(cafeData.id);
+        console.log(reviews);
+        setReviewDatas(reviews);
+      } catch (error) {
+        console.error('Error fetching reviews:', error);
+      }
+    };
+
+    if (cafeData.id) {
+      fetchReviews();
+    }
   }, [cafeData.id]);
 
   useEffect(() => {
-    const loadReview = async () => {
+    const loadReview = () => {
       const reviews = reviewDatas.map((review) => (
         <ReviewPanel key={review.id} review={review} />
       ));
@@ -237,12 +196,14 @@ function ReviewPage({ navigation, cafeData, userData }) {
   );
 }
 
+
+
 function ReviewPanel({ review }) {
   const [userName, setUserName] = useState('사용자');
   const [date, setDate] = useState('날짜');
   const [text, setText] = useState('');
   const [image, setImage] = useState(null);
-
+/*
   useEffect(() => {
     if (review) {
       const reviewDate = new Date(review.createdAt); // createdAt을 Date 객체로 파싱
@@ -271,20 +232,19 @@ function ReviewPanel({ review }) {
     }
     return zero + n;
   };
-
+*/
   return (
     <View style={getReviewStyle.reviewContainer}>
-      <View style={getReviewStyle.reviewHeader}>
+      {/* <View style={getReviewStyle.reviewHeader}>
         <Image style={getReviewStyle.profileImage} source={image} />
         <View style={getReviewStyle.reviewInfo}>
-          {/* Star 컴포넌트로 변경해야 할 수 있음 */}
           <View style={getReviewStyle.reviewMeta}>
             <Text style={getReviewStyle.reviewUser}>{userName}</Text>
             <Text style={getReviewStyle.reviewDate}>{date}</Text>
           </View>
         </View>
       </View>
-      <Text style={getReviewStyle.reviewText}>{text}</Text>
+      <Text style={getReviewStyle.reviewText}>{text}</Text> */}
     </View>
   );
 }

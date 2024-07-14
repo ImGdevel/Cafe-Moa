@@ -23,7 +23,8 @@ const MainStackNavigator = () => {
       <Stack.Screen name="CafeDetail" component={CafeDetailScreen} />
       <Stack.Screen name="Reservation" component={ReservationScreen} />
       <Stack.Screen name="ReservationConfirmation" component={ReservationConfirmationScreen} options={{ headerShown: false }}/>
-      <Stack.Screen name="ReviewScreen" component={ReviewScreen} />
+      <Stack.Screen name="Review" component={ReviewScreen} />
+
     </Stack.Navigator>
   );
 };

@@ -4,7 +4,9 @@ import com.example.demo.dto.ReviewDTO;
 import com.example.demo.entity.Cafe;
 import com.example.demo.entity.Review;
 import com.example.demo.entity.User;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ReviewMapper {
 
     public ReviewDTO toDto(Review review) {

@@ -1,11 +1,12 @@
 import axios from 'axios';
+import config from '@config';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://192.168.219.105:8080/api';
+const API_URL =  config.API_URL + '/reservations';
 
 class ReservationService {
   async requestReservation(reservationRequestDTO) {
     try {
-      const response = await axios.post(`${API_URL}/reservations`, reservationRequestDTO);
+      const response = await axios.post(API_URL, reservationRequestDTO);
       return response.data;
     } catch (error) {
       console.error('Error creating reservation:', error);
@@ -15,7 +16,7 @@ class ReservationService {
 
   async getReservation(id) {
     try {
-      const response = await axios.get(`${API_URL}/reservations/${id}`);
+      const response = await axios.get(`${API_URL}/${id}`);
       return response.data;
     } catch (error) {
       console.error(`Error fetching reservation with ID ${id}:`, error);
@@ -25,7 +26,7 @@ class ReservationService {
 
   async deleteReservation(id) {
     try {
-      await axios.delete(`${API_URL}/reservations/${id}`);
+      await axios.delete(`${API_URL}/${id}`);
     } catch (error) {
       console.error(`Error deleting reservation with ID ${id}:`, error);
       throw error;
@@ -34,7 +35,7 @@ class ReservationService {
 
   async getAllReservations() {
     try {
-      const response = await axios.get(`${API_URL}/reservations`);
+      const response = await axios.get(API_URL);
       return response.data;
     } catch (error) {
       console.error('Error fetching all reservations:', error);
@@ -46,7 +47,7 @@ class ReservationService {
     try {
       const isoDate = date.toISOString();
       console.log(cafeId, isoDate)
-      const response = await axios.get(`${API_URL}/reservations/cafe-reservations`, {
+      const response = await axios.get(`${API_URL}/cafe-reservations`, {
         params: { cafeId, date: isoDate }
       });
       return response.data;
