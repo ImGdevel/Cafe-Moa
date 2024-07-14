@@ -2,51 +2,63 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Image;
 import com.example.demo.repository.ImageRepository;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
 public class ImageService {
 
-    @Value("${image.upload.dir}") // application.properties에서 설정된 디렉토리 경로를 가져오기 위한 어노테이션
-    private String uploadDir;
+    private final Path rootLocation = Paths.get("uploads");
 
-    @Autowired
-    private ImageRepository imageRepository;
-
-    public void saveImage(MultipartFile file) throws IOException {
-        // 파일이 비어있는지 체크
-        if (file.isEmpty()) {
-            throw new IllegalArgumentException("Uploaded file is empty");
+    @PostConstruct
+    public void init() {
+        try {
+            Files.createDirectories(rootLocation);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not initialize storage!", e);
         }
+    }
 
-        // 파일을 업로드할 디렉토리 경로 생성
-        Path uploadPath = Paths.get(uploadDir);
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
+    public String saveImage(MultipartFile file) {
+        try {
+            if (file.isEmpty()) {
+                throw new RuntimeException("Failed to store empty file.");
+            }
+            String filename = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
+            Files.copy(file.getInputStream(), this.rootLocation.resolve(filename),
+                    StandardCopyOption.REPLACE_EXISTING);
+            return filename;
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to store file.", e);
         }
+    }
 
-        // 파일의 원본 이름 가져오기
-        String originalFileName = file.getOriginalFilename();
-        // UUID를 이용해 파일 이름 변환 (중복 방지)
-        String fileName = UUID.randomUUID().toString() + "_" + originalFileName;
-
-        // 파일 저장 경로 설정
-        Path filePath = uploadPath.resolve(fileName);
-        Files.copy(file.getInputStream(), filePath);
-
-        // 파일 경로를 데이터베이스에 저장
-        Image image = new Image();
-        image.setPath(fileName); // 경로를 저장하거나 원하는 필드 설정
-
-        imageRepository.save(image); // 데이터베이스에 저장
+    public Resource loadImage(String filename) {
+        try {
+            Path file = rootLocation.resolve(filename);
+            Resource resource = new UrlResource(file.toUri());
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            } else {
+                throw new RuntimeException("Could not read file: " + filename);
+            }
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("Could not read file: " + filename, e);
+        }
     }
 }

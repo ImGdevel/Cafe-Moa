@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Image, TouchableOpacity, View, Text, ScrollView, Switch, StyleSheet,} from "react-native";
 import IonIcons from "react-native-vector-icons/Ionicons";
+import getOptionStyle from "@styles/screens/OptionStyle";
 
 function OptionScreen({ navigation, route }) {
   const [isPushEnabled, setIsPushEnabled] = useState(false);
@@ -10,11 +11,11 @@ function OptionScreen({ navigation, route }) {
   const ThemeSwitch = () => setIsDarkEnabled((previousState) => !previousState);
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.subtitleHeader}>
+    <ScrollView style={getOptionStyle.container}>
+      <View style={getOptionStyle.subtitleHeader}>
         <Text sytle={{ fontSize: 20 }}>일반</Text>
       </View>
-      <View style={styles.optionButton}>
+      <View style={getOptionStyle.optionButton}>
         <View>
           <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>
             <IonIcons
@@ -23,7 +24,7 @@ function OptionScreen({ navigation, route }) {
             ></IonIcons>
             {"\t"}푸시 알림
           </Text>
-          <Text style={{ color: "#bbb" }}>푸시 알림 수신 기능 On/Off</Text>
+          <Text style={{ color: "#bbb", fontSize: 10 }}>푸시 알림 수신 기능 On/Off</Text>
         </View>
         <Switch
           trackColor={{ false: "#767577", true: "#81b0ff" }}
@@ -55,36 +56,5 @@ function OptionScreen({ navigation, route }) {
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    backgroundColor: "#ddd",
-  },
-  subtitleHeader: {
-    flex: 1,
-    width: "100%",
-    height: 30,
-    paddingLeft: 10,
-    borderBottomWidth: 1,
-    borderColor: "#ccc",
-    justifyContent: "center",
-    alignItems: "flex-start",
-  },
-  optionButton: {
-    backgroundColor: "white",
-    flex: 1,
-    borderBottomWidth: 1,
-    borderColor: "#ccc",
-    paddingHorizontal: 10,
-    justifyContent: "space-between",
-    alignItems: "center",
-    flexDirection: "row",
-    height: 60,
-    width: "100%",
-  },
-});
 
 export default OptionScreen;

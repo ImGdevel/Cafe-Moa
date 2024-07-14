@@ -1,27 +1,17 @@
 import React, { useState, useEffect, createRef } from "react";
-import {
-  Image,
-  TouchableOpacity,
-  View,
-  Text,
-  TextInput,
-  KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  Keyboard,
-  ScrollView,
-} from "react-native";
-import * as ImagePicker from "expo-image-picker";
+import { Image, TouchableOpacity, View, Text, TextInput, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, ScrollView,} from "react-native";
 import Modal from "react-native-modal";
-
 import getEditProfileStyle from "../styles/screens/EditProfileStyle";
 import getModalStyle from "../styles/components/ModalStyle";
+import ImageService from "../services/ImageService";
+
 
 function EditProfileScreen({ navigation, route }) {
   const { userData: userData } = route.params;
   const [image, setImage] = useState();
-  const [nickname, setNickname] = useState(userData.getName());
-  const [email, setEmail] = useState(userData.getEmail());
-  const [passwd, setPasswd] = useState(userData.getPassword());
+  const [nickname, setNickname] = useState(userData.name);
+  const [email, setEmail] = useState(userData.email);
+  const [passwd, setPasswd] = useState(userData.email);
   const [errorText, setErrorText] = useState("");
   const [isPW, setIsPW] = useState();
 
@@ -36,19 +26,42 @@ function EditProfileScreen({ navigation, route }) {
   }, []);
 
   async function start() {
-    const getimage = await userData.getProfileImage();
-    if (getimage == null) {
+    const getimage = ImageService.getImage('photo.jpg')
+    
+    if (getimage == null || getimage == undefined) {
       setImage(require("@img/initialProfile.jpg"));
     } else {
       setImage({ uri: getimage });
     }
   }
 
-  const PickImage = async () => {
-    const imageuri = await pickImage();
-    userData.uploadProfileImage(imageuri);
-    setImage({ uri: imageuri });
+  const selectImage = async () => {
+    try {
+      const selectedImage = await ImageService.selectImage();
+      console.log("이미지",selectedImage)
+      if (selectedImage) {
+        setImage(selectedImage);
+
+        uploadImage();
+      }
+    } catch (error) {
+      console.error('Error selecting image:', error);
+      Alert.alert('잘못된 접근입니다', error);
+    }
   };
+
+  const uploadImage = async () => {
+    if (!image) {
+      return;
+    }
+    try {
+      await ImageService.uploadImage(image);
+
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    }
+  };
+
 
   function checkCorrectPW(text) {
     // 비밀번호가 일치하지 않으면 초기화한다.
@@ -68,11 +81,11 @@ function EditProfileScreen({ navigation, route }) {
       console.log(nickname);
       await userData.setUserProfile(nickname, email, passwd);
       console.log(userData.getName());
-      // } else if (key == 2) {
-      //   // email 바꾼 경우
-      //   console.log(email);
-      //   await userData.setUserProfile(nickname, email, passwd);
-      //   console.log(userData.getEmail());
+      } else if (key == 2) {
+        // email 바꾼 경우
+        console.log(email);
+        await userData.setUserProfile(nickname, email, passwd);
+        console.log(userData.getEmail());
     } else if (key == 3) {
       console.log(passwd);
       await userData.setUserProfile(nickname, email, passwd);
@@ -87,7 +100,7 @@ function EditProfileScreen({ navigation, route }) {
         <ScrollView style={{ width: "100%", height: "100%" }}>
           <TouchableOpacity
             style={getEditProfileStyle.ProfilePicButton}
-            onPress={PickImage}
+            onPress={selectImage}
           >
             <Image
               style={{ width: 180, height: 180, borderRadius: 90 }}
@@ -124,8 +137,8 @@ function EditProfileScreen({ navigation, route }) {
                 </TouchableOpacity>
               </View>
             </View>
-            {/* <View style={getEditProfileStyle.ChangeButton}>
-              <Text style={getEditProfileStyle.FieldText}>이메일</Text>
+            <View style={getEditProfileStyle.ChangeButton}>
+              <Text style={getEditProfileStyle.FieldText}>이메일 |</Text>
               <View style={getEditProfileStyle.confirmContainer}>
                 <TouchableOpacity
                   style={getEditProfileStyle.confirmEditButton}
@@ -146,11 +159,11 @@ function EditProfileScreen({ navigation, route }) {
                   </Text>
                 </TouchableOpacity>
               </View>
-            </View> */}
+            </View>
             <View style={getEditProfileStyle.ChangeButton}>
               <View style={{ flexDirection: "row" }}>
                 <Text style={getEditProfileStyle.FieldText}>비밀번호 |</Text>
-                {/* <Text style={getEditProfileStyle.FieldNextText}>{passwd}</Text> */}
+                <Text style={getEditProfileStyle.FieldNextText}>{passwd}</Text>
               </View>
               <View style={getEditProfileStyle.confirmContainer}>
                 <TouchableOpacity
