@@ -54,4 +54,13 @@ public class CafeController {
         List<CafeDTO> cafes = cafeService.getAllCafes();
         return ResponseEntity.ok(cafes);
     }
+
+    @GetMapping("/near")
+    public ResponseEntity<List<CafeDTO>> getCafesNearLocation(
+            @RequestParam double longitude,
+            @RequestParam double latitude,
+            @RequestParam double distanceMeters) {
+        List<CafeDTO> cafes = cafeService.getCafesNearLocation(longitude, latitude, distanceMeters * 0.01);
+        return ResponseEntity.ok(cafes);
+    }
 }

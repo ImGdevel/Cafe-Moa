@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, Image,
 import { Ionicons } from '@expo/vector-icons';
 import CafeService from '../services/CafeService'; // Import CafeService
 import UserService from '../services/UserService'; // Import CafeService
+import GeoLocationService from '../api/GeoLocationService'
 
 const SORT_DISTANCE = 1;
 const SORT_RATING = 2;
@@ -14,24 +15,40 @@ function ExploreScreen({ navigation, route }) {
   const [textInputValue, setTextInputValue] = useState('');
   const [cafeTableList, setCafeTableList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [location, setLocation] = useState({latitude:0, longitude : 0});
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
-      await LoadHomePage();
+
     });
     return unsubscribe;
   }, [navigation]);
 
-  /** 유저 데이터 가져오기 */
-  const LoadHomePage = async () => {
+  useEffect(() => {
+    loadCafeData();
+  }, []);
 
-  };
+  async function loadGeoLocation() {
+    // 위치 정보 가져오기
+    await GeoLocationService.getGeoLocation();
+  
+    // 가져온 위치 정보 확인
+    let { location, errorMsg } = GeoLocationService.getLocationData();
+
+    if (errorMsg) {
+      console.error('Error fetching location:', errorMsg);
+    } else if (location) {
+      setLocation({ latitude: location.coords.latitude, longitude : location.coords.longitude});
+    }
+  }
 
   /** 카페 데이터 불러오기 */
   const loadCafeData = async () => {
     try {
+      await loadGeoLocation();
+
       setLoading(true);
-      const cafes = await CafeService.getAllCafes();
+      const cafes = await CafeService.getCafesNearLocation(location.latitude, location.longitude, 100000);
       setCafeTableList(cafes.map(cafeData => (
         <CafeTable
           key={cafeData.id}
@@ -47,17 +64,60 @@ function ExploreScreen({ navigation, route }) {
     }
   };
 
-  useEffect(() => {
-    loadCafeData();
-  }, []);
+
 
   const search = () => {
-    // 카페 데이터를 검색하기 위한 로직 추가
+    const searchText = textInputValue.trim().toLowerCase();
+  
+    // 모든 카페 데이터에서 검색어에 맞는 카페 필터링
+    const filteredCafes = cafeTableList.filter(cafe => {
+      return cafe.props.cafeData.name.toLowerCase().includes(searchText) ||
+             cafe.props.cafeData.address.toLowerCase().includes(searchText);
+    });
+  
+    setCafeTableList(filteredCafes);
   };
 
   const sortCafeDataList = (type) => {
-    // 카페 데이터를 정렬하는 로직 추가
+    let sortedCafes = [...cafeTableList];
+  
+    switch (type) {
+      case SORT_DISTANCE:
+        // 거리순 정렬 로직 추가
+        sortedCafes.sort((cafeA, cafeB) => {
+          // 예시: 거리에 따라 정렬하는 비교 로직
+          // return cafeA.distance - cafeB.distance;
+          return 0;
+        });
+        break;
+      case SORT_RATING:
+        // 별점순 정렬 로직 추가
+        console.log("별점순")
+        sortedCafes.sort((cafeA, cafeB) => {
+          return cafeB.props.cafeData.averageReviewRating - cafeA.props.cafeData.averageReviewRating;
+        });
+        break;
+      case SORT_VISITORS:
+        // 방문자순 정렬 로직 추가
+        
+        sortedCafes.sort((cafeA, cafeB) => {
+          return cafeB.props.cafeData.totalVisitors - cafeA.props.cafeData.totalVisitors;
+        });
+        break;
+      case SORT_NOW_VISITORS:
+        // 예약자순 정렬 로직 추가
+        sortedCafes.sort((cafeA, cafeB) => {
+          return cafeB.props.cafeData.currentVisitors - cafeA.props.cafeData.currentVisitors;
+        });
+        break;
+      default:
+        break;
+    }
+  
+    // 정렬된 카페 데이터를 설정
+    setCafeTableList(sortedCafes);
   };
+  
 
   return (
     <View style={styles.container}>

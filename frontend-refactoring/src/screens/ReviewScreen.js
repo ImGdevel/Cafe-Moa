@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { TextInput, View, StyleSheet, Button, Image, KeyboardAvoidingView, ScrollView, TouchableOpacity, Text, } from "react-native";
 import Stars from "react-native-stars";
 import Ionicons from "react-native-vector-icons/Ionicons";
-
+import ReviewService from "../services/ReviewService";
 
 
 function ReviewScreen({ navigation , route }) {
-  /*
+  
   const { cafeData: cafeData, userData: userData } = route.params;
   const [text, setText] = useState("");
   const [star, setStar] = useState(0);
@@ -21,30 +21,31 @@ function ReviewScreen({ navigation , route }) {
     }
   }
 
-  const submitAndClear = () => {
+  const submitAndClear = async() => {
     if(star == 0){
       alert("별점을 매겨주세요.");
       return;
     }
-    let service = new ReviewService(cafeData, userData);
-    service.uploadReview(text,image,star);
-    cafeData.addRatingPoint(star);
-    console.log(cafeData.getId());
-    dbService.collection("CafeData").doc(cafeData.getId()).update({
-      rating: cafeData.getRating()      
-    })
+    const reviewDTO = {
+        cafeId: cafeData.id,
+        userId: userData.id,
+        content: text,
+        rating: star,
+    }
+
+    await ReviewService.createReview(reviewDTO)
 
     setStar(0);
     setText("");
     navigation.goBack();
   };
-*/
+
   return (
     <KeyboardAvoidingView 
       style={styles.container}
       >
       <ScrollView style={styles.viewContainer}>
-        {/* <CafeTable
+       <CafeTable
           cafeData={cafeData}
           userData={userData}
         />
@@ -82,7 +83,7 @@ function ReviewScreen({ navigation , route }) {
           >
             <Image style={{flex:1}} source={image}/>
         </TouchableOpacity>*/}
-        {/* <TextInput
+        <TextInput
           style={styles.textInput}
           onChangeText={(text) => setText( text )}
           value={text}
@@ -95,7 +96,7 @@ function ReviewScreen({ navigation , route }) {
           onPress={submitAndClear}
         >
         <Text style ={{color: "white", fontSize: 20, fontWeight: "700"}}>리뷰 작성하기</Text>
-        </TouchableOpacity> */} 
+        </TouchableOpacity> 
       </ScrollView>
     </KeyboardAvoidingView>
   );

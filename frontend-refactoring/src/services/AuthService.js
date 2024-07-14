@@ -26,6 +26,7 @@ export const createUserWithEmailAndPassword = async (email, password) => {
     return user.uid;
   } catch (error) {
     handleAuthError(error);
+    throw error;
   }
 };
 
@@ -59,7 +60,7 @@ const handleAuthError = (error) => {
   switch (errorCode) {
     case 'auth/wrong-password':
       alert('비밀번호가 틀렸습니다.');
-      throw '비밀번호가 틀렸습니다.';
+      break;
     case 'auth/invalid-email':
       alert('잘못된 이메일 형식입니다.');
       break;
@@ -74,9 +75,8 @@ const handleAuthError = (error) => {
       break;
     case 'auth/weak-password':
       alert('비밀번호가 너무 취약합니다.');
-      throw '비밀번호가 너무 취약합니다.';
+      break;
     default:
       alert(errorMessage);
-      throw errorMessage;
   }
 };

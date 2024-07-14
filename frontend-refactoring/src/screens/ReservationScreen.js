@@ -29,7 +29,8 @@ const ReservationScreen = ({ navigation, route }) => {
   }, []);
 
   const loadUserData = async () => {
-    await UserService.getUser(user.uid).then((data)=>{
+    console.log(user.id)
+    await UserService.getUser(user.id).then((data)=>{
       setUserData(data);
     })
   };

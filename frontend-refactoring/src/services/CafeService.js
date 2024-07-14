@@ -54,6 +54,22 @@ class CafeService {
       throw new Error(`Error fetching all cafes: ${error.message}`);
     }
   }
+
+  // 특정 위치 주변의 카페 조회
+  async getCafesNearLocation(longitude, latitude, distanceMeters) {
+    try {
+      const response = await axios.get(`${API_URL}/near`, {
+        params: {
+          longitude: longitude,
+          latitude: latitude,
+          distanceMeters: distanceMeters
+        }
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error(`Error fetching cafes near location: ${error.message}`);
+    }
+  }
 }
 
 export default new CafeService();

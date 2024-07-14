@@ -58,6 +58,23 @@ public class CafeService {
         return cafeMapper.toDto(cafe);
     }
 
+    @Transactional(readOnly = true)
+    public List<CafeDTO> getCafesNearLocation(double latitude, double longitude, double distanceMeters) {
+        double earthRadiusKm = 6371; // Radius of the Earth in kilometers
+        double latDegrees = Math.toDegrees(distanceMeters / earthRadiusKm);
+        double lonDegrees = latDegrees / Math.cos(Math.toRadians(latitude));
+
+        double latitudeMin = latitude - latDegrees;
+        double latitudeMax = latitude + latDegrees;
+        double longitudeMin = longitude - lonDegrees;
+        double longitudeMax = longitude + lonDegrees;
+
+        List<Cafe> cafes = cafeRepository.findByLatitudeBetweenAndLongitudeBetween(latitudeMin, latitudeMax, longitudeMin, longitudeMax);
+        return cafes.stream()
+                .map(cafeMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
     @Transactional
     public void deleteCafe(Long id) {
         Cafe cafe = cafeRepository.findById(id)

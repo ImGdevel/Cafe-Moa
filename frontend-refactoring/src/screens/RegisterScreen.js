@@ -18,45 +18,90 @@ const RegisterScreen = ({ navigation }) => {
   const passwordInputRef = useRef(null);
   const passwordChkInputRef = useRef(null);
 
-  const onSubmitApplication = async () => {
-    if (userPassword !== userPasswordChk) {
-      setErrorText('비밀번호가 일치하지 않습니다.');
-      return;
-    }
-
+  // Step 1: Firebase 사용자 생성 함수
+  const createUser = async () => {
     try {
-      // Firebase 사용자 생성
-      const userCredential = await createUserWithEmailAndPassword(userEmail, userPassword);
-      console.log('User registered with UID:', userCredential);
+      const userId = await createUserWithEmailAndPassword(userEmail, userPassword);
+      console.log('User registered with UID:', userId);
+      return userId;
+    } catch (error) {
+      console.error('Error creating user:', error.message);
+      throw error;
+    }
+  };
 
+  // Step 2: 앱 서비스에 유저 데이터 등록 함수
+  const registerUser = async (userId) => {
+    try {
       const userDTO = {
-        uid: userCredential,
+        uid: userId,
         name: userName,
         email: userEmail,
         profileImage: "",
         role: "CUSTOMER"
       };
-
-      // 앱 서비스에 유저 데이터 등록
       const user = await UserService.createUser(userDTO);
-
-      const sessionData = {
-        id: user.id,
-        uid: userCredential
-      };
-
-      // 로그인 처리
-      await login(sessionData);
-
-      // HomeTabs 화면으로 이동
-      navigation.navigate('HomeTabs');
+      return user;
     } catch (error) {
       console.error('Error registering user:', error.message);
-      setErrorText(error.message);
+      throw error;
     }
   };
 
+  // Step 3: 로그인 처리 함수
+  const handleLogin = async (user) => {
+    try {
+      const sessionData = {
+        id: user.id,
+        uid: user.uid
+      };
+      await login(sessionData);
+    } catch (error) {
+      console.error('Error logging in:', error.message);
+      throw error;
+    }
+  };
 
+  // 사용자 등록 절차 함수
+  const onSubmitApplication = async () => {
+    setErrorText("");
+    if (!userName) {
+      setErrorText("이름을 입력해주세요");
+      return;
+    }
+    if (!userEmail) {
+      setErrorText("이메일을 입력해주세요");
+      return;
+    }
+    if (!userPassword) {
+      setErrorText("비밀번호를 입력해주세요");
+      return;
+    }
+    if (userPasswordChk != userPassword) {
+      setErrorText("비밀번호가 일치하지 않습니다");
+      return;
+    }
+
+    let userId = null;
+    let createdUser = null;
+
+    try {
+      // Step 1: Firebase 사용자 생성
+      userId = await createUser();
+
+      // Step 2: 앱 서비스에 유저 데이터 등록
+      createdUser = await registerUser(userId);
+
+      // Step 3: 로그인 처리
+      await handleLogin(createdUser);
+
+      // Step 4: HomeTabs 화면으로 이동
+      navigation.navigate('HomeTabs');
+    } catch (error) {
+      console.error('Error during registration:', error.message);
+      setErrorText(error.message);
+    }
+  };
 
   const touchProps = {
     activeOpacity: 1,
