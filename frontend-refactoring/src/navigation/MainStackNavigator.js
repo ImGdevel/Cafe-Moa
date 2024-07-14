@@ -27,7 +27,7 @@ const MainStackNavigator = () => {
       <Stack.Screen name="Reservation" component={ReservationScreen} />
       <Stack.Screen name="ReservationConfirmation" component={ReservationConfirmationScreen} options={{ headerShown: false }}/>
       <Stack.Screen name="Review" component={ReviewScreen} />
-      <Stack.Screen name="BookMark" component={BookMarkScreen} />
+      <Stack.Screen name="Bookmark" component={BookMarkScreen} />
 
       <Stack.Screen name="MemberWithdrawn" component={MemberWithdrawnScreen} />
     </Stack.Navigator>
