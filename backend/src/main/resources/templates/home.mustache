@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home Page</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .site-icon {
+            font-size: 24px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        .post-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        article {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        article h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="site-icon">Site Icon</div>
+            <nav>
+                <ul>
+                    <li><a href="#">Post</a></li>
+                    <li><a href="#">Post List</a></li>
+                    <li><a href="#">Search</a></li>
+                </ul>
+            </nav>
+            <div class="user-info">
+                <!-- If user is logged in, display user info; otherwise, display Sign In and Sign Up buttons -->
+                <!-- Example: Logged in -->
+                <span>Welcome, {{id}}! <a href="#">Logout</a></span>
+
+                <!-- Example: Not logged in -->
+                <!-- <button onclick="location.href='#'">Sign In</button>
+                <button onclick="location.href='#'">Sign Up</button> -->
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="post-list">
+            <!-- Display your post list here -->
+            <article>
+                <h2>Post Title</h2>
+                <p>Post content goes here...</p>
+            </article>
+            <!-- Add more articles as needed -->
+        </section>
+    </main>
+</body>
+</html>

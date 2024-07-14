@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "cafe-moa",
+    "slug": "cafe-moa",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/icon_temp.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#001D44"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon_temp.png",
+        "backgroundColor": "#001D44"
+      },
+      "package": "com.anonymous.cafemoa"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
