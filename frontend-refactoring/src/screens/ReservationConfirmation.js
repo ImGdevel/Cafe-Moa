@@ -9,8 +9,7 @@ function ReserveEndScreen({ navigation }) {
   }, []);
 
   function GoToHomeScreen() {
-    navigation.popToTop();
-    navigation.navigate("홈");
+    navigation.navigate("HomeTabs");
   }
 
   return (

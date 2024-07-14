@@ -12,6 +12,7 @@ function CafeDetailScreen({ navigation, route }) {
   const [imageDatas, setImageDatas] = useState([]);
 
   useEffect(() => {
+    console.log("submit",cafeData);
     loadCafeImages();
   }, [cafeData]);
 

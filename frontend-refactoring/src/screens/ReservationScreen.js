@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import Modal from 'react-native-modal';
 import { Picker } from "@react-native-picker/picker";
+import * as Notifications from "expo-notifications";
 import getReserveStyle from "@styles/screens/ReserveStyle";
 import getCafeTableStyle from "@styles/components/CafeTableStyle";
 import getModalStyle from "@styles/components/ModalStyle";
 import ReservationService from "../services/ReservationService";
-import CafeService from "../services/CafeService";
-import * as Notifications from "expo-notifications";
+import UserService from "../services/UserService";
+import { AuthContext } from '@api/AuthContext';
 
 const ReservationScreen = ({ navigation, route }) => {
-  const { cafeData: cafe_data, userData: user_data } = route.params;
-
-  const [cafeData, setCafeData] = useState(cafe_data);
-  const [userData, setUserData] = useState(user_data);
+  
+  const { user } = useContext(AuthContext);
+  const [cafeData, setCafeData] = useState(route.params.cafeData);
+  const [userData, setUserData] = useState();
   const [seatImage, setSeatImage] = useState("/");
   const [selectedSeat, setSelectedSeat] = useState();
   const [modalVisible, setModalVisible] = useState(true);
@@ -23,8 +24,15 @@ const ReservationScreen = ({ navigation, route }) => {
   const [nowTime, setNowTime] = useState(12);
 
   useEffect(() => {
+    loadUserData();
     SeatTimeTable();
   }, []);
+
+  const loadUserData = async () => {
+    await UserService.getUser(user.uid).then((data)=>{
+      setUserData(data);
+    })
+  };
 
   const SeatTimeTable = async () => {
     try {
@@ -42,8 +50,8 @@ const ReservationScreen = ({ navigation, route }) => {
 
   const generateTimeList = () => {
     const timeLoop = [];
-    const openingTime = parseFloat(cafe_data.openingTime); // 문자열을 숫자로 변환
-    const closingTime = parseFloat(cafe_data.closingTime); // 문자열을 숫자로 변환
+    const openingTime = parseFloat(cafeData.openingTime); // 문자열을 숫자로 변환
+    const closingTime = parseFloat(cafeData.closingTime); // 문자열을 숫자로 변환
   
     // 시작 시간부터 종료 시간까지 30분 간격으로 시간을 생성합니다.
     let currentTime = openingTime;
@@ -63,7 +71,8 @@ const ReservationScreen = ({ navigation, route }) => {
             if (!lock) {
               setModalOutput("선택");
               setModalVisible(false);
-              onSelectTime(currentTime);
+              setTime(currentTime);
+              makePickerItem(currentTime);
             }
           }}
         >
@@ -80,8 +89,7 @@ const ReservationScreen = ({ navigation, route }) => {
   
 
   const onSelectTime = (selectedTime) => {
-    setTime(selectedTime);
-    makePickerItem(selectedTime);
+
   };
 
   const makePickerItem = (selectedTime) => {
@@ -103,29 +111,33 @@ const ReservationScreen = ({ navigation, route }) => {
 
   const submitReservation = async () => {
     try {
-      // 예약 요청을 생성합니다.
+      const currentDate = new Date();
+      const startTime = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), time, 0, 0);
+      const endTime = new Date(startTime.getTime() + 60 * 60 * 1000); // 시작 시간으로부터 1시간 후
+
       const reservationRequestDTO = {
-        userId: userData.userId,
-        cafeId: cafeData.cafeId,
-        time: time,
+        userId: userData.id,
+        cafeId: cafeData.id,
+        startTime: startTime,
+        endTime: endTime,
         seatNumber: selectedSeat,
       };
-      const createdReservation = await ReservationService.createReservation(
-        reservationRequestDTO
-      );
+      console.log(reservationRequestDTO);
 
-      // 예약이 성공하면 알림을 예약합니다.
-      Notifications.scheduleNotificationAsync({
-        content: {
-          title: `CafeMoa ${cafeData.name} 예약알림`,
-          body: `약 10분 후 좌석 배정 확정 마감 (${selectedSeat}번 좌석)`,
-        },
-        trigger: {
-          seconds: 600, // 시연용으로 2초 설정, 실제로는 600으로 변경
-        },
-      });
-
-      navigation.navigate("ReservationConfirmation"); // 예약 확인 화면으로 이동
+      await ReservationService.requestReservation(reservationRequestDTO)
+      .then((data)=>{
+        // 예약이 성공하면 알림을 예약합니다.
+        Notifications.scheduleNotificationAsync({
+          content: {
+            title: `CafeMoa ${cafeData.name} 예약알림`,
+            body: `약 10분 후 좌석 배정 확정 마감 (${selectedSeat}번 좌석)`,
+          },
+          trigger: {
+            seconds: 600, // 시연용으로 2초 설정, 실제로는 600으로 변경
+          },
+        });
+        navigation.navigate("ReservationConfirmation"); // 예약 확인 화면으로 이동
+      })
     } catch (error) {
       console.error("Error submitting reservation:", error);
       alert("예약에 실패했습니다.");

@@ -109,7 +109,6 @@ function ExploreScreen({ navigation, route }) {
 
 function CafeTable(props) {
   const { cafeData, userData, navigation } = props;
-
   return (
     <TouchableHighlight
       style={styles.CafeTableContainer}
