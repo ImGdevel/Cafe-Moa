@@ -13,10 +13,8 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import Modal from "react-native-modal";
 
-import getEditProfileStyle from "../../styles/screens/EditProfileStyle";
-import getModalStyle from "../../styles/components/ModalStyle";
-import { pickImage } from "../../lib/ImageService";
-import { UserDataService } from "../../lib/UserDataService";
+import getEditProfileStyle from "../styles/screens/EditProfileStyle";
+import getModalStyle from "../styles/components/ModalStyle";
 
 function EditProfileScreen({ navigation, route }) {
   const { userData: userData } = route.params;
@@ -40,7 +38,7 @@ function EditProfileScreen({ navigation, route }) {
   async function start() {
     const getimage = await userData.getProfileImage();
     if (getimage == null) {
-      setImage(require("../../img/initialProfile.jpg"));
+      setImage(require("@img/initialProfile.jpg"));
     } else {
       setImage({ uri: getimage });
     }

@@ -9,7 +9,9 @@ import ReservationScreen from '@screens/ReservationScreen';
 import ReservationConfirmationScreen from '@screens/ReservationConfirmationScreen';
 import ReviewScreen from '@screens/ReviewScreen';
 import BookMarkScreen from '@screens/BookMarkScreen';
-
+import MyReviewScreen from '@screens/MyReviewScreen';
+import OptionScreen from '@screens/OptionScreen';
+import EditProfileScreen from '@screens/EditProfileScreen';
 import MemberWithdrawnScreen from '@screens/MemberWithdrawnScreen';
 import { AuthContext } from '@api/AuthContext';
 
@@ -28,7 +30,9 @@ const MainStackNavigator = () => {
       <Stack.Screen name="ReservationConfirmation" component={ReservationConfirmationScreen} options={{ headerShown: false }}/>
       <Stack.Screen name="Review" component={ReviewScreen} />
       <Stack.Screen name="Bookmark" component={BookMarkScreen} />
-
+      <Stack.Screen name="MyReview" component={MyReviewScreen} />
+      <Stack.Screen name="Option" component={OptionScreen} />
+      <Stack.Screen name="EditProfile" component={EditProfileScreen} />
       <Stack.Screen name="MemberWithdrawn" component={MemberWithdrawnScreen} />
     </Stack.Navigator>
   );

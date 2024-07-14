@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Image, TouchableOpacity, View, Text, KeyboardAvoidingView,} from "react-native";
 import getMyPageStyle from "../styles/screens/MyPageStyle";
 import UserService from "../services/UserService"
-
+import { AuthContext } from '@api/AuthContext';
 
 function MyPageScreen({ navigation }) {
+  const { user } = useContext(AuthContext);
   const [userData, setUserData] = useState();
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
@@ -21,6 +22,8 @@ function MyPageScreen({ navigation }) {
   const loadUserData = async () => {
     await UserService.getUser(user.uid).then((data)=>{
       setUserData(data);
+    }).catch((error)=>{
+       console.log("사용자 불러오기 실패 : ", error);
     })
   };
 
@@ -34,7 +37,7 @@ function MyPageScreen({ navigation }) {
       setUserName(userData.name);
       setUserEmail(userData.email);
       const imgs = ""
-      if (imgs == " " || imgs == null ) {
+      if (imgs == "" || imgs == null ) {
         setUserImage(require("@img/initialProfile.jpg"));
       } else {
         setUserImage({ uri: imgs });
@@ -67,7 +70,7 @@ function MyPageScreen({ navigation }) {
 
   //테스트 중
   function GoToEditProfileScreen() {
-    navigation.navigate("ProfileEdit", {
+    navigation.navigate("EditProfile", {
       userData: userData,
     });
   }
@@ -79,7 +82,7 @@ function MyPageScreen({ navigation }) {
 
   //유저 삭제
   function GoToDeleteAccountScreen() {
-    navigation.navigate("회원 탈퇴");
+    navigation.navigate("MemberWithdrawn");
   }
 
   return (

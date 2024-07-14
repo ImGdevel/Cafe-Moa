@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Image,
-  TouchableOpacity,
-  View,
-  Text,
-  ScrollView,
-  Switch,
-} from "react-native";
-
-import getOptionStyle from "../../styles/screens/OptionStyle";
+import { Image, TouchableOpacity, View, Text, ScrollView, Switch, StyleSheet,} from "react-native";
 import IonIcons from "react-native-vector-icons/Ionicons";
 
 function OptionScreen({ navigation, route }) {
@@ -19,11 +10,11 @@ function OptionScreen({ navigation, route }) {
   const ThemeSwitch = () => setIsDarkEnabled((previousState) => !previousState);
 
   return (
-    <ScrollView style={getOptionStyle.container}>
-      <View style={getOptionStyle.subtitleHeader}>
+    <ScrollView style={styles.container}>
+      <View style={styles.subtitleHeader}>
         <Text sytle={{ fontSize: 20 }}>일반</Text>
       </View>
-      <View style={getOptionStyle.optionButton}>
+      <View style={styles.optionButton}>
         <View>
           <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>
             <IonIcons
@@ -42,7 +33,7 @@ function OptionScreen({ navigation, route }) {
           value={isPushEnabled}
         />
       </View>
-      {/* <View style={getOptionStyle.optionButton}>
+      <View style={getOptionStyle.optionButton}>
         <View>
           <Text style={{ color: "black", fontWeight: "500", fontSize: 20 }}>
             <IonIcons
@@ -60,9 +51,40 @@ function OptionScreen({ navigation, route }) {
           onValueChange={ThemeSwitch}
           value={isDarkEnabled}
         />
-      </View> */}
+      </View>
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#ddd",
+  },
+  subtitleHeader: {
+    flex: 1,
+    width: "100%",
+    height: 30,
+    paddingLeft: 10,
+    borderBottomWidth: 1,
+    borderColor: "#ccc",
+    justifyContent: "center",
+    alignItems: "flex-start",
+  },
+  optionButton: {
+    backgroundColor: "white",
+    flex: 1,
+    borderBottomWidth: 1,
+    borderColor: "#ccc",
+    paddingHorizontal: 10,
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexDirection: "row",
+    height: 60,
+    width: "100%",
+  },
+});
 
 export default OptionScreen;

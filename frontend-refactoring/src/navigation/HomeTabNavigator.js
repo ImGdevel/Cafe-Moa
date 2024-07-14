@@ -35,10 +35,10 @@ const HomeTabNavigator = ({ route }) => {
         {props => <HomeScreen {...props} sessionData={route.params?.sessionData} />}
       </Tab.Screen>
       <Tab.Screen 
-        name="Mypage" 
+        name="마이페이지" 
         component={MypageScreen} 
         options={{
-          headerShown: false,
+          headerShown: true,
           tabBarIcon: ({ focused }) => (
             <Ionicons name="person-circle-outline" style={{ color: focused ? "#001D44" : "#ccc" }} size={25}/>
           ),

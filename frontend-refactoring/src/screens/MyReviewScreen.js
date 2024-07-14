@@ -9,12 +9,9 @@ import {
   Alert,
 } from "react-native";
 
-import getMyReviewStyle from "../../styles/screens/MyReviewStyle";
-import getReviewStyle from "../../styles/components/ReviewStyle";
-import Star from "../../Components/Star";
-import { getCafeData, getCafeDatas } from "../../lib/CafeService";
-import { getImage } from "../../lib/ImageService";
-import { dbService, MyDatabase } from "../../FireServer";
+import getMyReviewStyle from "../styles/screens/MyReviewStyle";
+import getReviewStyle from "../styles/components/ReviewStyle";
+import Star from "../components/Star";
 
 function MyReviewScreen({ navigation, route }) {
   const [userData, setUserData] = useState(route.params.userData);
@@ -91,7 +88,7 @@ function MyReviewScreen({ navigation, route }) {
         const img = await getImage("User", id, "profile");
         setImage({ uri: img });
       } else {
-        setImage(require("../../img/initialProfile.jpg"));
+        setImage(require("@img/initialProfile.jpg"));
       }
     }
     function deletAlert(){
