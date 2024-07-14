@@ -1,10 +1,13 @@
 package com.example.demo.service;
 
+
 import com.example.demo.Exception.ResourceNotFoundException;
 import com.example.demo.dto.ReviewDTO;
+import com.example.demo.entity.Cafe;
 import com.example.demo.entity.Review;
 import com.example.demo.entity.User;
 import com.example.demo.mapper.ReviewMapper;
+import com.example.demo.repository.CafeRepository;
 import com.example.demo.repository.ReviewRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,34 +24,31 @@ public class ReviewService {
     private ReviewRepository reviewRepository;
 
     @Autowired
+    private CafeRepository cafeRepository;
+
+    @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private ReviewMapper reviewMapper;
 
+    @Transactional
     public ReviewDTO createReview(ReviewDTO reviewDTO) {
-        // Validate author existence
-        User author = userRepository.findById(reviewDTO.getAuthorId())
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + reviewDTO.getAuthorId()));
+        Cafe cafe = cafeRepository.findById(reviewDTO.getCafeId())
+                .orElseThrow(() -> new ResourceNotFoundException("Cafe not found with id: " + reviewDTO.getCafeId()));
 
-        // Create Review entity
+        User user = userRepository.findById(reviewDTO.getUserId())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + reviewDTO.getUserId()));
+
         Review review = Review.builder()
-                .rating(reviewDTO.getRating())
+                .cafe(cafe)
+                .author(user)
                 .content(reviewDTO.getContent())
-                .author(author)
+                .rating(reviewDTO.getRating())
                 .build();
 
-        // Save Review entity
         review = reviewRepository.save(review);
 
-        // Map to DTO and return
-        return reviewMapper.toDto(review);
-    }
-
-    @Transactional(readOnly = true)
-    public ReviewDTO getReview(Long id) {
-        Review review = reviewRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Review not found with id: " + id));
         return reviewMapper.toDto(review);
     }
 
@@ -60,11 +60,33 @@ public class ReviewService {
     }
 
     @Transactional(readOnly = true)
-    public List<ReviewDTO> getAllReviews() {
-        List<Review> review = reviewRepository.findAll();
-        return review.stream()
+    public ReviewDTO getReviewById(Long id) {
+        Review review = reviewRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Review not found with id: " + id));
+        return reviewMapper.toDto(review);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ReviewDTO> getReviewsByCafeId(Long cafeId) {
+        List<Review> reviews = reviewRepository.findByCafeId(cafeId);
+        return reviews.stream()
                 .map(reviewMapper::toDto)
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public List<ReviewDTO> getReviewsByUserId(Long userId) {
+        List<Review> reviews = reviewRepository.findByAuthorId(userId);
+        return reviews.stream()
+                .map(reviewMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<ReviewDTO> getAllReviews() {
+        List<Review> reviews = reviewRepository.findAll();
+        return reviews.stream()
+                .map(reviewMapper::toDto)
+                .collect(Collectors.toList());
+    }
 }

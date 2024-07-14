@@ -6,7 +6,8 @@ import RegisterScreen from '@screens/RegisterScreen';
 import HomeTabNavigator from '@navigation/HomeTabNavigator';
 import CafeDetailScreen from '@screens/CafeDetailScreen';
 import ReservationScreen from '@screens/ReservationScreen';
-import ReservationConfirmation from '@screens/ReservationConfirmation';
+import ReservationConfirmationScreen from '@screens/ReservationConfirmationScreen';
+import ReviewScreen from '@screens/ReviewScreen';
 import { AuthContext } from '@api/AuthContext';
 
 const Stack = createStackNavigator();
@@ -21,7 +22,8 @@ const MainStackNavigator = () => {
       <Stack.Screen name="HomeTabs" component={HomeTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="CafeDetail" component={CafeDetailScreen} />
       <Stack.Screen name="Reservation" component={ReservationScreen} />
-      <Stack.Screen name="ReservationConfirmation" component={ReservationConfirmation} options={{ headerShown: false }}/>
+      <Stack.Screen name="ReservationConfirmation" component={ReservationConfirmationScreen} options={{ headerShown: false }}/>
+      <Stack.Screen name="ReviewScreen" component={ReviewScreen} />
     </Stack.Navigator>
   );
 };

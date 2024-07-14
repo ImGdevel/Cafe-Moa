@@ -13,10 +13,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ReviewDTO {
     private Long id;
-    private float rating;
-    private LocalDateTime createdAt;
-    private Long authorId; // Assuming DTO holds author's ID instead of full User object
+    private Long cafeId;
+    private Long userId;
     private String content;
-
-    // Getters and setters (with Builder pattern)
+    private double rating;
+    private LocalDateTime createdAt;
 }

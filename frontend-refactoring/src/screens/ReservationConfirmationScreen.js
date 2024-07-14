@@ -3,7 +3,7 @@ import { View, StyleSheet, Image, Text } from "react-native";
 
 import getReserveStyle from "@styles/screens/ReserveEndStyle";
 
-function ReserveEndScreen({ navigation }) {
+function ReservationConfirmationScreen({ navigation }) {
   useEffect(() => {
     setTimeout(() => GoToHomeScreen(), 1500);
   }, []);
@@ -20,4 +20,4 @@ function ReserveEndScreen({ navigation }) {
   );
 }
 
-export default ReserveEndScreen;
+export default ReservationConfirmationScreen;

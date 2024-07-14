@@ -1,11 +1,10 @@
 package com.example.demo.mapper;
 
 import com.example.demo.dto.ReviewDTO;
+import com.example.demo.entity.Cafe;
 import com.example.demo.entity.Review;
 import com.example.demo.entity.User;
-import org.springframework.stereotype.Component;
 
-@Component
 public class ReviewMapper {
 
     public ReviewDTO toDto(Review review) {
@@ -15,10 +14,11 @@ public class ReviewMapper {
 
         return ReviewDTO.builder()
                 .id(review.getId())
+                .cafeId(review.getCafe().getId())
+                .userId(review.getAuthor().getId())
+                .content(review.getContent())
                 .rating(review.getRating())
                 .createdAt(review.getCreatedAt())
-                .authorId(review.getAuthor().getId()) // Assuming authorId in DTO
-                .content(review.getContent())
                 .build();
     }
 
@@ -27,16 +27,19 @@ public class ReviewMapper {
             return null;
         }
 
-        Review review = Review.builder()
-                .id(reviewDTO.getId())
-                .rating(reviewDTO.getRating())
-                .content(reviewDTO.getContent())
-                .build();
+        Review review = new Review();
+        review.setContent(reviewDTO.getContent());
+        review.setRating(reviewDTO.getRating());
 
-        // Set author (assuming authorId is provided in DTO)
-        User author = new User();
-        author.setId(reviewDTO.getAuthorId());
-        review.setAuthor(author);
+        // Set Cafe entity
+        Cafe cafe = new Cafe();
+        cafe.setId(reviewDTO.getCafeId());
+        review.setCafe(cafe);
+
+        // Set User entity
+        User user = new User();
+        user.setId(reviewDTO.getUserId());
+        review.setAuthor(user);
 
         return review;
     }
